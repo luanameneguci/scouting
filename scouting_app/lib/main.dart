@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/jogadores.dart';
+import 'package:scouting_app/notificacoes.dart';
+import 'package:scouting_app/relatorios.dart';
+import 'package:scouting_app/perfil.dart';
 
 void main() => runApp(const HomePage());
 
@@ -34,10 +38,8 @@ class _NavigationState extends State<Navigation> {
             currentPageIndex = index;
           });
         },
-        
         indicatorColor: Colors.amber,
         selectedIndex: currentPageIndex,
-
         destinations: const <Widget>[
           NavigationDestination(
             selectedIcon: Icon(Icons.home_outlined),
@@ -55,17 +57,16 @@ class _NavigationState extends State<Navigation> {
             ),
             label: 'Messages',
           ),
-           NavigationDestination(
+          NavigationDestination(
             selectedIcon: Icon(Icons.home_outlined),
             icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
-           NavigationDestination(
+          NavigationDestination(
             selectedIcon: Icon(Icons.home_outlined),
             icon: Icon(Icons.home_outlined),
             label: 'Home',
           ),
-          
         ],
       ),
       body: <Widget>[
