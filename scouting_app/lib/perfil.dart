@@ -19,7 +19,7 @@ class _PerfilPageState extends State<PerfilPage> {
         children: [
           ListTile(
             title: Text(
-              'Mudar palavra passe',
+              'Contactos',
               style: TextStyle(color: Colors.white),
             ),
             trailing: Icon(Icons.chevron_right, color: Colors.grey),
