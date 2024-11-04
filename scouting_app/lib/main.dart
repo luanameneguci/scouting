@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scouting_app/jogadores.dart';
 import 'package:scouting_app/notificacoes.dart';
 import 'package:scouting_app/relatorios.dart';
-import 'package:scouting_app/perfil.dart';
+import 'package:scouting_app/perfil.dart'; // Import PerfilPage
 
 void main() => runApp(const HomePage());
 
@@ -58,19 +58,17 @@ class _NavigationState extends State<Navigation> {
             label: 'Messages',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.home_outlined),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            icon: Icon(Icons.notifications_none_outlined),
+            label: '',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.home_outlined),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            icon: Icon(Icons.person),
+            label: '',
           ),
         ],
       ),
       body: <Widget>[
-        /// Home page
+        // Home page
         Card(
           shadowColor: Colors.transparent,
           margin: const EdgeInsets.all(8.0),
@@ -83,8 +81,8 @@ class _NavigationState extends State<Navigation> {
             ),
           ),
         ),
-
-        /// Notifications page
+        
+        // Notifications page
         const Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
@@ -106,8 +104,8 @@ class _NavigationState extends State<Navigation> {
             ],
           ),
         ),
-
-        /// Messages page
+        
+        // Messages page
         ListView.builder(
           reverse: true,
           itemCount: 2,
@@ -148,6 +146,17 @@ class _NavigationState extends State<Navigation> {
             );
           },
         ),
+        
+        // Notifications (another page for consistency in layout)
+        Center(
+          child: Text(
+            'Notifications page',
+            style: theme.textTheme.titleLarge,
+          ),
+        ),
+        
+        // Perfil page (uses PerfilPage here)
+        PerfilPage(),
       ][currentPageIndex],
     );
   }
