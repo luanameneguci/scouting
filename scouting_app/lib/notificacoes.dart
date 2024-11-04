@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NotificacoesPage extends StatefulWidget {
+  const NotificacoesPage({super.key});
+
   @override
   _NotificacoesPageState createState() => _NotificacoesPageState();
 }
@@ -10,9 +12,9 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notificações'),
+        title: const Text('Notificações'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Esta é a página de notificações'),
       ),
     );

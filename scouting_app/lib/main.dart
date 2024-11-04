@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app/jogadores.dart';
-import 'package:scouting_app/notificacoes.dart';
-import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/perfil.dart'; // Import PerfilPage
 
 void main() => runApp(const HomePage());
@@ -81,7 +78,7 @@ class _NavigationState extends State<Navigation> {
             ),
           ),
         ),
-        
+
         // Notifications page
         const Padding(
           padding: EdgeInsets.all(8.0),
@@ -104,7 +101,7 @@ class _NavigationState extends State<Navigation> {
             ],
           ),
         ),
-        
+
         // Messages page
         ListView.builder(
           reverse: true,
@@ -146,7 +143,7 @@ class _NavigationState extends State<Navigation> {
             );
           },
         ),
-        
+
         // Notifications (another page for consistency in layout)
         Center(
           child: Text(
@@ -154,7 +151,7 @@ class _NavigationState extends State<Navigation> {
             style: theme.textTheme.titleLarge,
           ),
         ),
-        
+
         // Perfil page (uses PerfilPage here)
         PerfilPage(),
       ][currentPageIndex],

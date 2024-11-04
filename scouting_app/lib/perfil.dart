@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PerfilPage extends StatefulWidget {
+  const PerfilPage({super.key});
+
   @override
   _PerfilPageState createState() => _PerfilPageState();
 }
@@ -10,7 +12,7 @@ class _PerfilPageState extends State<PerfilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Perfil'),
+        title: const Text('Perfil'),
         backgroundColor: Colors.black,
         elevation: 0,
       ),
@@ -18,38 +20,38 @@ class _PerfilPageState extends State<PerfilPage> {
       body: ListView(
         children: [
           ListTile(
-            title: Text(
+            title: const Text(
               'Contactos',
               style: TextStyle(color: Colors.white),
             ),
-            trailing: Icon(Icons.chevron_right, color: Colors.grey),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () {
               // Add functionality for changing password
             },
           ),
-          Divider(color: Colors.grey),
+          const Divider(color: Colors.grey),
           ListTile(
-            title: Text(
+            title: const Text(
               'Política de privacidade',
               style: TextStyle(color: Colors.white),
             ),
-            trailing: Icon(Icons.chevron_right, color: Colors.grey),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () {
               // Add functionality for privacy policy
             },
           ),
-          Divider(color: Colors.grey),
+          const Divider(color: Colors.grey),
           ListTile(
-            title: Text(
+            title: const Text(
               'Aparência',
               style: TextStyle(color: Colors.white),
             ),
-            trailing: Icon(Icons.chevron_right, color: Colors.grey),
+            trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () {
               // Add functionality for appearance settings
             },
           ),
-          Divider(color: Colors.grey),
+          const Divider(color: Colors.grey),
         ],
       ),
     );
