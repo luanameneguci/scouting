@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/perfil.dart';
+import 'package:scouting_app/perfil.dart';
+import 'package:scouting_app/tarefas.dart';
+import 'package:scouting_app/relatorios.dart';
+import 'package:scouting_app/jogadores.dart';
+import 'package:scouting_app/notificacoes.dart';
 import 'package:scouting_app/perfil.dart'; // Import PerfilPage
 
 void main() => runApp(const HomePage());
@@ -65,70 +71,15 @@ class _NavigationState extends State<Navigation> {
       ),
       body: <Widget>[
         // Home page
-        Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Home page',
-                style: theme.textTheme.titleLarge,
-              ),
-            ),
-          ),
-        ),
 
-        Card(
-          shadowColor: Colors.black,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Relatórios page',
-                style: theme.textTheme.titleLarge,
-              ),
-            ),
-          ),
-        ),
-
-         Card(
-          shadowColor: Colors.transparent,
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text(
-                'Jogadores page',
-                style: theme.textTheme.titleLarge,
-              ),
-            ),
-          ),
-        ),
-
+        TarefasPage(),
 
         // Notifications page
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 1'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-               Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 2'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-             
-            ],
-          ),
-        ),
+        RelatoriosPage(),
 
+        JogadoresPage(),
+
+        NotificacoesPage(),
 
         // Perfil page (uses PerfilPage here)
         PerfilPage(),
