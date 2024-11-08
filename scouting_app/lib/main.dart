@@ -30,6 +30,7 @@ class _NavigationState extends State<Navigation> {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       bottomNavigationBar: NavigationBar(
+        backgroundColor: Colors.grey[900],        
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
@@ -37,22 +38,20 @@ class _NavigationState extends State<Navigation> {
         },
         indicatorColor: Colors.amber,
         selectedIndex: currentPageIndex,
+    
         destinations: const <Widget>[
           NavigationDestination(
             selectedIcon: Icon(Icons.home_outlined),
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home_outlined,size: 30, color: Colors.amber),
             label: '',
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.notifications_none_outlined)),
+            icon: Icon(Icons.post_add),
             label: '',
           ),
           NavigationDestination(
-            icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.messenger_sharp),
-            ),
-            label: 'Messages',
+            icon: Icon(Icons.person_search),          
+            label: '',
           ),
           NavigationDestination(
             icon: Icon(Icons.notifications_none_outlined),
@@ -79,6 +78,33 @@ class _NavigationState extends State<Navigation> {
           ),
         ),
 
+        Card(
+          shadowColor: Colors.black,
+          margin: const EdgeInsets.all(8.0),
+          child: SizedBox.expand(
+            child: Center(
+              child: Text(
+                'Relatórios page',
+                style: theme.textTheme.titleLarge,
+              ),
+            ),
+          ),
+        ),
+
+         Card(
+          shadowColor: Colors.transparent,
+          margin: const EdgeInsets.all(8.0),
+          child: SizedBox.expand(
+            child: Center(
+              child: Text(
+                'Jogadores page',
+                style: theme.textTheme.titleLarge,
+              ),
+            ),
+          ),
+        ),
+
+
         // Notifications page
         const Padding(
           padding: EdgeInsets.all(8.0),
@@ -91,66 +117,18 @@ class _NavigationState extends State<Navigation> {
                   subtitle: Text('This is a notification'),
                 ),
               ),
-              Card(
+               Card(
                 child: ListTile(
                   leading: Icon(Icons.notifications_sharp),
                   title: Text('Notification 2'),
                   subtitle: Text('This is a notification'),
                 ),
               ),
+             
             ],
           ),
         ),
 
-        // Messages page
-        ListView.builder(
-          reverse: true,
-          itemCount: 2,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 0) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.all(8.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    'Hello',
-                    style: theme.textTheme.bodyLarge!
-                        .copyWith(color: theme.colorScheme.onPrimary),
-                  ),
-                ),
-              );
-            }
-            return Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primary,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Text(
-                  'Hi!',
-                  style: theme.textTheme.bodyLarge!
-                      .copyWith(color: theme.colorScheme.onPrimary),
-                ),
-              ),
-            );
-          },
-        ),
-
-        // Notifications (another page for consistency in layout)
-        Center(
-          child: Text(
-            'Notifications page',
-            style: theme.textTheme.titleLarge,
-          ),
-        ),
 
         // Perfil page (uses PerfilPage here)
         PerfilPage(),
