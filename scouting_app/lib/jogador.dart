@@ -16,7 +16,7 @@ class _JogadorPageState extends State<JogadorPage> {
         title: const Text('Jogador'),
       ),
       body: const Center(
-        child: Text('This is the Jogador page'),
+        child: Text('This is the Jogador page. quem vai realizar esta página é Rodrigo Oliveira 26511'),
       ),
     );
   }

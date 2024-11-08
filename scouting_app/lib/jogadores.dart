@@ -16,7 +16,7 @@ class _JogadoresPageState extends State<JogadoresPage> {
         title: const Text('Jogadores'),
       ),
       body: const Center(
-        child: Text('This is the Jogadores page'),
+        child: Text('This is the Jogadores page. Quem vai realizar esta página é Renata Farias 24820'),
       ),
     );
   }

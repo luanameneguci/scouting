@@ -15,7 +15,7 @@ class _NovoJogadorState extends State<NovoJogador> {
         title: const Text('Novo Jogador'),
       ),
       body: const Center(
-        child: Text('Conteúdo da nova rota'),
+        child: Text('Página de novo jogador. Quem vai realizar esta página é Rafael Nogueira 26504'),
       ),
     );
   }

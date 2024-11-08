@@ -15,7 +15,7 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
         title: const Text('Notificações'),
       ),
       body: const Center(
-        child: Text('Esta é a página de notificações'),
+        child: Text('Esta é a página de notificações. Quem vai realizar esta página é Rodrigo Oliveira 26511'),
       ),
     );
   }
