@@ -15,9 +15,23 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
       appBar: AppBar(
         title: const Text('Relatórios'),
       ),
-      body: const Center(
-        child: Text('Conteúdo dos Relatórios. Quem vai realizar esta página é Francisca Palma 25393'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('Conteúdo dos Relatórios. Quem vai realizar esta página é Francisca Palma 25393'),
+            ElevatedButton(
+              child: const Text('Novo relatório'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NovoRelatorio()),
+                );
+              },
+            ),
+          ]
       ),
+    )
     );
   }
 }

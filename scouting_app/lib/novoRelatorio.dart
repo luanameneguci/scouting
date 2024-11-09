@@ -16,9 +16,23 @@ class _NovoRelatorioState extends State<NovoRelatorio> {
       appBar: AppBar(
         title: const Text('Novo Relatorio'),
       ),
-      body: const Center(
-        child: Text('Página de novo Relatorio. Quem vai realizar esta página é Rafael Nogueira 26504'),
+       body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('This is the Novo relatorio page. Quem vai realizar esta página é Rafael Nogueira'),
+            ElevatedButton(            
+              child: const Text('Novo jogador'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NovoJogador()),
+                );
+              },
+            ),
+          ]
       ),
+    )
     );
   }
 }

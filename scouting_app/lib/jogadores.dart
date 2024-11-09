@@ -13,11 +13,26 @@ class _JogadoresPageState extends State<JogadoresPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jogadores'),
+        title: const Text('Relatórios'),
       ),
-      body: const Center(
-        child: Text('This is the Jogadores page. Quem vai realizar esta página é Renata Farias 24820'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('This is the Jogadores page. Quem vai realizar esta página é Renata Farias 24820'),
+            ElevatedButton(            
+              child: const Text('Jogador específico'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const JogadorPage()),
+                );
+              },
+            ),
+          ]
       ),
+    )
     );
   }
 }
+
