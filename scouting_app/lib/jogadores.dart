@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:country_icons/country_icons.dart';
 
 class JogadoresPage extends StatefulWidget {
   const JogadoresPage({super.key});
@@ -13,28 +14,28 @@ class _JogadoresPageState extends State<JogadoresPage> {
       'nome': 'Francisco Machado',
       'posicao': 'MCO',
       'idade': 19,
-      'pais': '🇵🇹',
+      'paisCode': 'pt',
       'estrelas': 5
     },
     {
       'nome': 'Elisse Ben Seghir',
       'posicao': 'ME',
       'idade': 19,
-      'pais': '🇫🇷',
+      'paisCode': 'fr',
       'estrelas': 4
     },
     {
       'nome': 'Samuel Omorodion',
       'posicao': 'PL',
       'idade': 20,
-      'pais': '🇪🇸',
+      'paisCode': 'es',
       'estrelas': 2
     },
     {
       'nome': 'M\'bala Nzola',
       'posicao': 'PL',
       'idade': 28,
-      'pais': '🇦🇴',
+      'paisCode': 'ao',
       'estrelas': 3
     },
   ];
@@ -74,8 +75,11 @@ class _JogadoresPageState extends State<JogadoresPage> {
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 5.0),
                     child: ListTile(
-                      leading: CircleAvatar(
-                        child: Text(jogador['pais']),
+                      leading: Image.asset(
+                        'icons/flags/png/${jogador['paisCode']}.png',
+                        package: 'country_icons',
+                        width: 30,
+                        height: 30,
                       ),
                       title: Text(
                         jogador['nome'],
@@ -89,8 +93,11 @@ class _JogadoresPageState extends State<JogadoresPage> {
                           Row(
                             children: List.generate(
                               jogador['estrelas'],
-                              (starIndex) => const Icon(Icons.star,
-                                  size: 15, color: Colors.amber),
+                              (starIndex) => const Icon(
+                                Icons.star,
+                                size: 15,
+                                color: Colors.amber,
+                              ),
                             ),
                           ),
                         ],
