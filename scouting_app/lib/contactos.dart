@@ -40,7 +40,7 @@ class _ContactosPageState extends State<ContactosPage>{
             ),
             const SizedBox(height: 16),
             const Text(
-              'Morad a',
+              'Morada',
               style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
@@ -51,43 +51,11 @@ class _ContactosPageState extends State<ContactosPage>{
             const Spacer(),
             Center(
               child: Image.asset(
-                'assets/logo.png', // Coloque a imagem do logotipo no caminho correto em assets
-                width: 120,
-                height: 120,
-                color: Colors.white, // Deixa a imagem branca
+                'images/logo.png', // Coloque a imagem do logotipo no caminho
               ),
             ),
-            const SizedBox(height: 16),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF1E1E1E),
-        selectedItemColor: const Color(0xFFFFD000), // Cor amarela para item selecionado
-        unselectedItemColor: Colors.white54,
-        currentIndex: 4, // Define o índice selecionado como o último
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.post_add),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_search),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_none_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
       ),
     );
   }
