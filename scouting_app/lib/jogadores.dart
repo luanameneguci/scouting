@@ -55,9 +55,6 @@ class _JogadoresPageState extends State<JogadoresPage> {
               decoration: InputDecoration(
                 hintText: 'Buscar jogador',
                 prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
               ),
               onChanged: (query) {
                 setState(() {
