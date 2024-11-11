@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app/perfil.dart';
-import 'package:scouting_app/perfil.dart';
 import 'package:scouting_app/tarefas.dart';
 import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/jogadores.dart';
@@ -18,23 +16,32 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: Color(0xFF333333),
-          scaffoldBackgroundColor: Color(0xFF333333),
-          cardColor: Color(0xFF444444),
-          colorScheme: ColorScheme.dark(
-            primary: Color(0xFF333333),
-            secondary: Color(0xFFFFD600), // Yellow accent color
+          primaryColor: const Color.fromARGB(255, 23, 23, 23),
+          scaffoldBackgroundColor:const Color.fromARGB(255, 30, 30, 30),
+          cardColor: const Color.fromARGB(255, 43, 43, 43),
+          colorScheme: const ColorScheme.dark(
+            primary: Color.fromARGB(255, 30, 30, 30),
+            secondary: Color.fromARGB(255, 255, 208, 0), // Yellow accent color
           ),
-          
-          buttonTheme: ButtonThemeData(
-            buttonColor: Color(0xFFFFD600),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
           ),
-          iconTheme: IconThemeData(color: Color(0xFFFFD600)),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Color(0xFF333333),
-            selectedItemColor: Color(0xFFFFD600),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 255, 208, 0)),
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+            ),
+          ),
+          iconTheme: const IconThemeData(color: Color.fromARGB(255, 255, 208, 0), ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Color.fromARGB(255, 30, 30, 30),
+            selectedItemColor: Color.fromARGB(255, 255, 208, 0),
             unselectedItemColor: Colors.white54,
           ),
           useMaterial3: true),
