@@ -8,6 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _hasError = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,26 +26,57 @@ class _LoginPageState extends State<LoginPage> {
                 fit: BoxFit.contain,
               ),
             ),
+            const SizedBox(height: 18),
             Text(
               'Bem-vindo de volta!',
               style: Theme.of(context).textTheme.headlineLarge,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 18),
+            const SizedBox(height: 18),
             TextField(
               decoration: InputDecoration(
                 labelText: 'Email',
+                errorText: _hasError ? 'Invalid email' : null,
+                border: OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(18), 
+                  borderSide: _hasError
+                      ? const BorderSide(
+                          color: Colors.red,
+                          width: 2.0,
+                        )
+                      : BorderSide
+                          .none, 
+                ),
+                
               ),
             ),
-            SizedBox(height: 18),
+            const SizedBox(height: 18),
             TextField(
               decoration: InputDecoration(
                 labelText: 'Palavra-passe',
+                errorText: _hasError ? 'Invalid password' : null,
+                border: OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(18), 
+                  borderSide: _hasError
+                      ? const BorderSide(
+                          color: Colors.red,
+                          width: 2.0,
+                        )
+                      : BorderSide
+                          .none, 
+                ),
+               
               ),
             ),
             SizedBox(height: 18),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  _hasError = !_hasError; 
+                });
+              },
               child: Text(
                 'Entrar',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -52,17 +85,15 @@ class _LoginPageState extends State<LoginPage> {
             Spacer(),
             TextButton(
               onPressed: () {
-                // Handle the tap event
               },
               style: TextButton.styleFrom(
-                padding: EdgeInsets.zero, // Remove default padding
-                minimumSize: Size(50, 30), // Adjust as needed
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.center,
               ),
               child: Text(
-                'Click here',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                'Esqueci-me da palavra-passe',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 255, 208, 0)),
               ),
             ),
           ],
