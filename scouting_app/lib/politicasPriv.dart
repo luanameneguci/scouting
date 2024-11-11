@@ -17,7 +17,7 @@ class _PoliticasPrivPageState extends State<PoliticasPrivPage> {
       body: ListView(
         children: <Widget>[
           ExpansionTile(
-            title: const Text('Section 1'),
+            title: const Text('Identificação do responsável pelo tratamento', style: TextStyle(fontWeight: FontWeight.bold)),
             children: <Widget>[
               ListTile(
                 title: const Text('Content for Section 1'),
@@ -25,16 +25,14 @@ class _PoliticasPrivPageState extends State<PoliticasPrivPage> {
             ],
           ),
           ExpansionTile(
-            title: const Text('Section 2'),
-            children: <Widget>[
+            title: const Text('Informação, consentimento e finalidade do tratamento', style: TextStyle(fontWeight: FontWeight.bold)),            children: <Widget>[
               ListTile(
                 title: const Text('Content for Section 2'),
               ),
             ],
           ),
           ExpansionTile(
-            title: const Text('Section 3'),
-            children: <Widget>[
+            title: const Text(, style: TextStyle(fontWeight: FontWeight.bold)),            children: <Widget>[
               ListTile(
                 title: const Text('Content for Section 3'),
               ),
