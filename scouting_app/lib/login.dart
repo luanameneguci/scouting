@@ -14,8 +14,28 @@ class _LoginPageState extends State<LoginPage>{
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: const Center(
-        child: Text('This is the Login page.. Quem vai realizar esta página é Rafael Silva 25422'),
+      body:  Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Email',
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Palavra-passe',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () { },
+              child:  Text('Entrar'),
+            ),
+          ],
+        ),
       ),
     );
   }
