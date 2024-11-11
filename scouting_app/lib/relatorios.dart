@@ -23,7 +23,7 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          'Relatórios',
+          'Histórico de relatórios',
           style: TextStyle(color: Colors.white, fontSize: 24),
         ),
       ),
