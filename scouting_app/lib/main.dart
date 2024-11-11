@@ -37,12 +37,23 @@ class HomePage extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: Colors.white,
           ),
+           headlineSmall: GoogleFonts.lato(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+          ),
           bodyLarge: GoogleFonts.lato(
             fontSize: 16.0,
             color: Colors.white,
           ),
           bodyMedium: GoogleFonts.lato(
             fontSize: 14.0,
+            fontWeight: FontWeight.w300,
+            color: Colors.white70,
+          ),
+           bodySmall: GoogleFonts.lato(
+            fontSize: 12.0,
+            fontWeight: FontWeight.w300,
             color: Colors.white70,
           ),
         ),
