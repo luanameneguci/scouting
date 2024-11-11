@@ -86,11 +86,12 @@ class HomePage extends StatelessWidget {
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Color.fromARGB(255, 30, 30, 30),
+            
             selectedItemColor: Color.fromARGB(255, 255, 208, 0),
             unselectedItemColor: Colors.white54,
           ),
           useMaterial3: true),
-      home: const HomePage(),
+      home: const Navigation(),
     );
   }
 }
