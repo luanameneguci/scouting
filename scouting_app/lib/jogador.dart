@@ -115,8 +115,7 @@ class _JogadorPageState extends State<JogadorPage> {
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.yellow,
-                  onPrimary: Colors.black,
+                  foregroundColor: Colors.black, backgroundColor: Colors.yellow,
                   padding: const EdgeInsets.symmetric(
                     vertical: 16.0, // Aumentar o tamanho do botão
                     horizontal: 40.0, // Aumentar o tamanho do botão
