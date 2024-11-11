@@ -26,17 +26,10 @@ class _JogadorPageState extends State<JogadorPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Francisco',
+                      'Francisco Machado',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24.0,
-                      ),
-                    ),
-                    Text(
-                      'Machado',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.0,
+                        fontSize: 20.0, // Diminuir o tamanho da fonte
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -63,46 +56,52 @@ class _JogadorPageState extends State<JogadorPage> {
               ],
             ),
             const SizedBox(height: 16.0),
-            Table(
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              children: [
-                TableRow(
-                  children: [
-                    _buildTableCell('Posição'),
-                    _buildTableCell('Atacante'),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    _buildTableCell('Clube'),
-                    _buildTableCell('AC Viseu'),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    _buildTableCell('Rating Final'),
-                    _buildTableCell('4'),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    _buildTableCell('Escalão'),
-                    _buildTableCell('Sub 23'),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    _buildTableCell('Idade'),
-                    _buildTableCell('19'),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    _buildTableCell('Nacionalidade'),
-                    _buildTableCell('Portugal'),
-                  ],
-                ),
-              ],
+            Expanded(
+              child: Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                columnWidths: const <int, TableColumnWidth>{
+                  0: IntrinsicColumnWidth(),
+                  1: FlexColumnWidth(),
+                },
+                children: [
+                  TableRow(
+                    children: [
+                      _buildTableCell('Posição', true),
+                      _buildTableCell('Atacante', false),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      _buildTableCell('Clube', true),
+                      _buildTableCell('AC Viseu', false),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      _buildTableCell('Rating Final', true),
+                      _buildTableCell('4', false),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      _buildTableCell('Escalão', true),
+                      _buildTableCell('Sub 23', false),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      _buildTableCell('Idade', true),
+                      _buildTableCell('19', false),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      _buildTableCell('Nacionalidade', true),
+                      _buildTableCell('Portugal', false),
+                    ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16.0),
             Center(
@@ -116,10 +115,11 @@ class _JogadorPageState extends State<JogadorPage> {
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black, backgroundColor: Colors.yellow,
+                  primary: Colors.yellow,
+                  onPrimary: Colors.black,
                   padding: const EdgeInsets.symmetric(
-                    vertical: 12.0,
-                    horizontal: 24.0,
+                    vertical: 16.0, // Aumentar o tamanho do botão
+                    horizontal: 40.0, // Aumentar o tamanho do botão
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -133,10 +133,10 @@ class _JogadorPageState extends State<JogadorPage> {
     );
   }
 
-  Widget _buildTableCell(String text) {
+  Widget _buildTableCell(String text, bool isHeader) {
     return Container(
-      padding: const EdgeInsets.all(8.0),
-      color: const Color(0xFF1F1F1F),
+      padding: const EdgeInsets.all(16.0), // Aumentar o espaço nas linhas
+      color: isHeader ? const Color(0xFF1F1F1F) : const Color(0xFF2C2C2C),
       child: Text(
         text,
         style: const TextStyle(color: Colors.white),
