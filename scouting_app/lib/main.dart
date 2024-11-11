@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/jogador.dart';
 import 'package:scouting_app/tarefas.dart';
 import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/jogadores.dart';
@@ -107,7 +108,7 @@ class _NavigationState extends State<Navigation> {
 
         JogadoresPage(),
 
-        LoginPage(),
+        JogadorPage(),
 
         // Perfil page (uses PerfilPage here)
         PerfilPage(),
