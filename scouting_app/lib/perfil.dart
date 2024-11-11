@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'contactos.dart'; // Importa o arquivo contactos.dart
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -26,7 +27,10 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () {
-              // Add functionality for changing password
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ContactosPage()),
+              );
             },
           ),
           const Divider(color: Colors.grey),
@@ -37,7 +41,7 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () {
-              // Add functionality for privacy policy
+              // Adicione a funcionalidade para a política de privacidade
             },
           ),
           const Divider(color: Colors.grey),
@@ -48,7 +52,7 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () {
-              // Add functionality for appearance settings
+              // Adicione a funcionalidade para configurações de aparência
             },
           ),
           const Divider(color: Colors.grey),
