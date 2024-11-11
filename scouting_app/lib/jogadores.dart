@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class JogadoresPage extends StatefulWidget {
   const JogadoresPage({super.key});
@@ -13,28 +14,28 @@ class _JogadoresPageState extends State<JogadoresPage> {
       'nome': 'Francisco Machado',
       'posicao': 'MCO',
       'idade': 19,
-      'pais': '🇵🇹',
+      'pais': 'assets/flags/portugal.svg',
       'estrelas': 5
     },
     {
       'nome': 'Elisse Ben Seghir',
       'posicao': 'ME',
       'idade': 19,
-      'pais': '🇫🇷',
+      'pais': 'assets/flags/france.svg',
       'estrelas': 4
     },
     {
       'nome': 'Samuel Omorodion',
       'posicao': 'PL',
       'idade': 20,
-      'pais': '🇪🇸',
+      'pais': 'assets/flags/spain.svg',
       'estrelas': 2
     },
     {
       'nome': 'M\'bala Nzola',
       'posicao': 'PL',
       'idade': 28,
-      'pais': '🇦🇴',
+      'pais': 'assets/flags/angola.svg',
       'estrelas': 3
     },
   ];
@@ -44,26 +45,34 @@ class _JogadoresPageState extends State<JogadoresPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text('Consultar jogadores'),
+        backgroundColor: Colors.black,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Buscar jogador',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[800],
+                borderRadius: BorderRadius.circular(8.0),
               ),
-              onChanged: (query) {
-                setState(() {
-                  searchQuery = query.toLowerCase();
-                });
-              },
+              child: TextField(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Buscar jogador',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+                onChanged: (query) {
+                  setState(() {
+                    searchQuery = query.toLowerCase();
+                  });
+                },
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(
@@ -75,25 +84,36 @@ class _JogadoresPageState extends State<JogadoresPage> {
                     return Container(); // Hide player if it doesn't match the search query
                   }
                   return Card(
+                    color: Colors.grey[900],
                     margin: const EdgeInsets.symmetric(vertical: 5.0),
                     child: ListTile(
-                      leading: CircleAvatar(
-                        child: Text(jogador['pais']),
+                      leading: SvgPicture.asset(
+                        jogador['pais'],
+                        width: 30,
+                        height: 30,
                       ),
                       title: Text(
                         jogador['nome'],
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Row(
                         children: [
                           Text(
-                              '${jogador['posicao']} • ${jogador['idade']} anos'),
+                            '${jogador['posicao']}  •  ${jogador['idade']}',
+                            style: TextStyle(color: Colors.grey[400]),
+                          ),
                           const SizedBox(width: 10),
                           Row(
                             children: List.generate(
-                              jogador['estrelas'],
-                              (starIndex) => const Icon(Icons.star,
-                                  size: 15, color: Colors.amber),
+                              5,
+                              (starIndex) => Icon(
+                                starIndex < jogador['estrelas']
+                                    ? Icons.star
+                                    : Icons.star_border,
+                                size: 15,
+                                color: Colors.amber,
+                              ),
                             ),
                           ),
                         ],
