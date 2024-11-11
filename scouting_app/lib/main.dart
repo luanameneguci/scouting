@@ -16,77 +16,76 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-         brightness: Brightness.dark,
-          primaryColor: const Color.fromARGB(255, 23, 23, 23),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
-          cardColor: const Color.fromARGB(255, 43, 43, 43),
-          colorScheme: const ColorScheme.dark(
-            primary: Color.fromARGB(255, 30, 30, 30),
-            secondary: Color.fromARGB(255, 255, 208, 0), // Yellow accent color
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromARGB(255, 23, 23, 23),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
+        cardColor: const Color.fromARGB(255, 43, 43, 43),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromARGB(255, 30, 30, 30),
+          secondary: Color.fromARGB(255, 255, 208, 0), // Yellow accent color
+        ),
+        textTheme: GoogleFonts.latoTextTheme(
+          Theme.of(context).textTheme,
+        ).copyWith(
+          headlineLarge: GoogleFonts.lato(
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
-           textTheme: GoogleFonts.latoTextTheme(
-            Theme.of(context).textTheme,
-          ).copyWith(
-            headlineLarge: GoogleFonts.lato(
-              fontSize: 32.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-            headlineMedium: GoogleFonts.lato(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-            bodyLarge: GoogleFonts.lato(
-              fontSize: 16.0,
-              color: Colors.white,
-            ),
-            bodyMedium: GoogleFonts.lato(
-              fontSize: 14.0,
-              color: Colors.white70,
-            ),
-          ), 
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: const Color.fromARGB(
-                255, 58, 58, 58), // Background color for input fields
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(18), // Roundness
-              borderSide: BorderSide.none, // No border
-            ),
-            labelStyle: const TextStyle(
-              color: Colors.grey, // Color for the label when not selected
-            ),
-            floatingLabelStyle: const TextStyle(
-              color: Colors.white, // Color for the label when selected
-            ),
-            contentPadding:const EdgeInsets.all(18.0),
+          headlineMedium: GoogleFonts.lato(
+            fontSize: 20.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Colors.white, // Set cursor color to white
+          bodyLarge: GoogleFonts.lato(
+            fontSize: 16.0,
+            color: Colors.white,
           ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                  const Color.fromARGB(255, 255, 208, 0)),
-              shape: WidgetStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
-              ),
-              padding: WidgetStateProperty.all(
-                const EdgeInsets.all(18.0), // Padding for the button
+          bodyMedium: GoogleFonts.lato(
+            fontSize: 14.0,
+            color: Colors.white70,
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color.fromARGB(
+              255, 58, 58, 58), // Background color for input fields
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18), // Roundness
+            borderSide: BorderSide.none, // No border
+          ),
+          labelStyle: const TextStyle(
+            color: Colors.grey, // Color for the label when not selected
+          ),
+          floatingLabelStyle: const TextStyle(
+            color: Colors.white, // Color for the label when selected
+          ),
+          contentPadding: const EdgeInsets.all(18.0),
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.white, // Set cursor color to white
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor:
+                WidgetStateProperty.all(const Color.fromARGB(255, 255, 208, 0)),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
               ),
             ),
+            padding: WidgetStateProperty.all(
+              const EdgeInsets.all(18.0), // Padding for the button
+            ),
           ),
-          iconTheme: const IconThemeData(
-            color: Color.fromARGB(255, 255, 208, 0),
-          ),
-
+        ),
+        iconTheme: const IconThemeData(
+          color: Color.fromARGB(255, 255, 208, 0),
+        ),
         splashFactory: NoSplash.splashFactory,
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const JogadoresPage(),
     );
   }
 }
@@ -161,10 +160,9 @@ class _NavigationState extends State<Navigation> {
     return Container(
       transform: Matrix4.translationValues(0.0, 6.0, 0.0),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.amber : Colors.transparent,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10)
-      ),
+          color: isSelected ? Colors.amber : Colors.transparent,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(10)),
       padding: const EdgeInsets.only(
         top: 4.0,
         bottom: 4.0,
