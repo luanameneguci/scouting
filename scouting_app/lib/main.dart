@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app/jogador.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:scouting_app/perfil.dart';
 import 'package:scouting_app/tarefas.dart';
 import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/jogadores.dart';
 import 'package:scouting_app/notificacoes.dart';
-import 'package:scouting_app/perfil.dart'; 
+import 'package:google_fonts/google_fonts.dart';
 import 'package:scouting_app/login.dart';
 
 void main() => runApp(const HomePage());
@@ -18,7 +16,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          brightness: Brightness.dark,
+         brightness: Brightness.dark,
           primaryColor: const Color.fromARGB(255, 23, 23, 23),
           scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
           cardColor: const Color.fromARGB(255, 43, 43, 43),
@@ -26,7 +24,7 @@ class HomePage extends StatelessWidget {
             primary: Color.fromARGB(255, 30, 30, 30),
             secondary: Color.fromARGB(255, 255, 208, 0), // Yellow accent color
           ),
-          textTheme: GoogleFonts.latoTextTheme(
+           textTheme: GoogleFonts.latoTextTheme(
             Theme.of(context).textTheme,
           ).copyWith(
             headlineLarge: GoogleFonts.lato(
@@ -47,7 +45,7 @@ class HomePage extends StatelessWidget {
               fontSize: 14.0,
               color: Colors.white70,
             ),
-          ),
+          ), 
           inputDecorationTheme: InputDecorationTheme(
             filled: true,
             fillColor: const Color.fromARGB(
@@ -84,14 +82,11 @@ class HomePage extends StatelessWidget {
           iconTheme: const IconThemeData(
             color: Color.fromARGB(255, 255, 208, 0),
           ),
-          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            backgroundColor: Color.fromARGB(255, 30, 30, 30),
-            
-            selectedItemColor: Color.fromARGB(255, 255, 208, 0),
-            unselectedItemColor: Colors.white54,
-          ),
-          useMaterial3: true),
-      home: const Navigation(),
+
+        splashFactory: NoSplash.splashFactory,
+        useMaterial3: true,
+      ),
+      home: const LoginPage(),
     );
   }
 }
@@ -104,60 +99,83 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  int currentPageIndex = 0;
+  int _selectedIndex = 0;
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    TarefasPage(),
+    RelatoriosPage(),
+    JogadoresPage(),
+    NotificacoesPage(),
+    PerfilPage()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.grey[900],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.amber,
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home_outlined),
-            icon: Icon(Icons.home_outlined, size: 30, color: Colors.amber),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: const Color.fromARGB(
+            255, 23, 23, 23), // Set a general dark background
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: _buildIcon(Icons.home_outlined, 0),
             label: '',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.post_add),
+          BottomNavigationBarItem(
+            icon: _buildIcon(Icons.post_add_outlined, 1),
             label: '',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.person_search),
+          BottomNavigationBarItem(
+            icon: _buildIcon(Icons.person_search_outlined, 2),
             label: '',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.notifications_none_outlined),
+          BottomNavigationBarItem(
+            icon: _buildIcon(Icons.notifications_none_outlined, 3),
             label: '',
           ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
+          BottomNavigationBarItem(
+            icon: _buildIcon(Icons.person_outlined, 4),
             label: '',
           ),
         ],
       ),
-      body: <Widget>[
-        // Home page
+    );
+  }
 
-        TarefasPage(),
-
-        // Notifications page
-        RelatoriosPage(),
-
-        JogadoresPage(),
-
-        NotificacoesPage(),
-
-        // Perfil page (uses PerfilPage here)
-        PerfilPage(),
-      ][currentPageIndex],
+  // Custom widget method to add background color to selected icons
+  Widget _buildIcon(IconData iconData, int index) {
+    bool isSelected = index == _selectedIndex;
+    return Container(
+      transform: Matrix4.translationValues(0.0, 6.0, 0.0),
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.amber : Colors.transparent,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(10)
+      ),
+      padding: const EdgeInsets.only(
+        top: 4.0,
+        bottom: 4.0,
+        left: 20.0,
+        right: 20.0,
+      ), // Padding for background effect
+      child: Icon(
+        size: 27,
+        iconData,
+        color: isSelected ? Colors.black : Colors.amber, // Icon color
+      ),
     );
   }
 }
