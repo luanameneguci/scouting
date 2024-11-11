@@ -34,16 +34,17 @@ class HomePage extends StatelessWidget {
           ),
           headlineMedium: GoogleFonts.lato(
             fontSize: 20.0,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w400,
             color: Colors.white,
           ),
-           headlineSmall: GoogleFonts.lato(
+          headlineSmall: GoogleFonts.lato(
             fontSize: 18.0,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w400,
             color: Colors.white,
           ),
           bodyLarge: GoogleFonts.lato(
             fontSize: 16.0,
+            fontWeight: FontWeight.w400,
             color: Colors.white,
           ),
           bodyMedium: GoogleFonts.lato(
@@ -51,9 +52,9 @@ class HomePage extends StatelessWidget {
             fontWeight: FontWeight.w300,
             color: Colors.white70,
           ),
-           bodySmall: GoogleFonts.lato(
+          bodySmall: GoogleFonts.lato(
             fontSize: 12.0,
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.w200,
             color: Colors.white70,
           ),
         ),
