@@ -19,41 +19,34 @@ class _ContactosPageState extends State<ContactosPage>{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+             Text(
               'Email',
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+             style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
             const Text(
               'clube@academicodeviseu.pt',
-              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             const SizedBox(height: 16),
-            const Text(
+             Text(
               'Telefone',
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
-            const Text(
+             Text(
               '232 423 268',
-              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             const SizedBox(height: 16),
-            const Text(
+             Text(
               'Morada',
-              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
             const Text(
               'Rua serrado, Bloco 5BA R/C ESQ. E DIR.;\nBloco 5B r/c dir.\n3510-005 - Viseu',
-              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             const Spacer(),
-            Center(
-              child: Image.asset(
-                'images/logo.png', // Coloque a imagem do logotipo no caminho
-              ),
-            ),
+          
           ],
         ),
       ),
