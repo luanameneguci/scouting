@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
             unselectedItemColor: Colors.white54,
           ),
           useMaterial3: true),
-      home: const LoginPage(),
+      home: const HomePage(),
     );
   }
 }
