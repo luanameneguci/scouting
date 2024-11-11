@@ -25,7 +25,7 @@ class _JogadorPageState extends State<JogadorPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Francisco Machado',
                       style: TextStyle(
                         color: Colors.white,
@@ -42,7 +42,7 @@ class _JogadorPageState extends State<JogadorPage> {
                           height: 24,
                         ),
                         const SizedBox(width: 8.0),
-                        const Text(
+                        Text(
                           '22/07/2005',
                           style: TextStyle(
                             color: Colors.white,
@@ -115,8 +115,7 @@ class _JogadorPageState extends State<JogadorPage> {
                   style: TextStyle(color: Colors.black),
                 ),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: Colors.yellow,
+                  foregroundColor: Colors.black, backgroundColor: Colors.yellow,
                   padding: const EdgeInsets.symmetric(
                     vertical: 16.0, // Aumentar o tamanho do botão
                     horizontal: 40.0, // Aumentar o tamanho do botão
