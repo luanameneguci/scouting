@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
         splashFactory: NoSplash.splashFactory,
         useMaterial3: true,
       ),
-      home: const JogadoresPage(),
+      home: const Navigation(),
     );
   }
 }
