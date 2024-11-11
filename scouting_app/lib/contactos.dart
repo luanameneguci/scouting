@@ -40,7 +40,7 @@ class _ContactosPageState extends State<ContactosPage>{
             ),
             const SizedBox(height: 16),
             const Text(
-              'Morada',
+              'Morad a',
               style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
