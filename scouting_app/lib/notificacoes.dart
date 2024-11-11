@@ -31,11 +31,11 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
-                          children: const [
+                          children: [
                             Text(
                               'Hoje',
                               style: TextStyle(
@@ -78,7 +78,8 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.black, backgroundColor: Colors.white,
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
@@ -89,7 +90,8 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.black, backgroundColor: Colors.yellow,
+                            foregroundColor: Colors.black,
+                            backgroundColor: Colors.yellow,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
