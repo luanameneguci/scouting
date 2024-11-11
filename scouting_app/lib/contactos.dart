@@ -50,41 +50,10 @@ class _ContactosPageState extends State<ContactosPage>{
             Center(
               child: Image.asset(
                 'images/logo.png', // Coloque a imagem do logotipo no caminho correto em assets
-                width: 120,
-                height: 120,
                 ),
             ),
-            const SizedBox(height: 16),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF1E1E1E),
-        selectedItemColor: const Color(0xFFFFD000), // Cor amarela para item selecionado
-        unselectedItemColor: Colors.white54,
-        currentIndex: 4, // Define o índice selecionado como o último
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.post_add),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_search),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_none_outlined),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
       ),
     );
   }
