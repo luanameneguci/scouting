@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:scouting_app/main.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -73,9 +73,10 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 18),
             ElevatedButton(
               onPressed: () {
-                setState(() {
-                  _hasError = !_hasError; 
-                });
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Navigation()),
+              );
               },
               child: Text(
                 'Entrar',
@@ -85,6 +86,9 @@ class _LoginPageState extends State<LoginPage> {
             Spacer(),
             TextButton(
               onPressed: () {
+                 setState(() {
+                  _hasError = !_hasError; 
+                });
               },
               style: TextButton.styleFrom(
                 alignment: Alignment.center,

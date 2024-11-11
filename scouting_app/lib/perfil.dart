@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'contactos.dart'; // Importa o arquivo contactos.dart
+import 'package:scouting_app/contactos.dart';
+import 'package:scouting_app/politicasPriv.dart';
 
 class PerfilPage extends StatefulWidget {
   const PerfilPage({super.key});
@@ -41,8 +42,10 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.grey),
             onTap: () {
-              // Adicione a funcionalidade para a política de privacidade
-            },
+Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PoliticasPrivPage()),
+              );            },
           ),
           const Divider(color: Colors.grey),
           ListTile(
