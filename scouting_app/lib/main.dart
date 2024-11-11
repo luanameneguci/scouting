@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
             color: Colors.white,
           ),
           bodyLarge: GoogleFonts.lato(
-            fontSize: 16.0,
+            fontSize: 18.0,
             color: Colors.white,
           ),
           bodyMedium: GoogleFonts.lato(
