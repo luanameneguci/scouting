@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:country_icons/country_icons.dart';
+import 'package:flag/flag.dart';
 
 class JogadoresPage extends StatefulWidget {
   const JogadoresPage({super.key});
@@ -14,28 +14,28 @@ class _JogadoresPageState extends State<JogadoresPage> {
       'nome': 'Francisco Machado',
       'posicao': 'MCO',
       'idade': 19,
-      'paisCode': 'pt',
+      'paisCode': 'PT',
       'estrelas': 5
     },
     {
       'nome': 'Elisse Ben Seghir',
       'posicao': 'ME',
       'idade': 19,
-      'paisCode': 'fr',
+      'paisCode': 'FR',
       'estrelas': 4
     },
     {
       'nome': 'Samuel Omorodion',
       'posicao': 'PL',
       'idade': 20,
-      'paisCode': 'es',
+      'paisCode': 'ES',
       'estrelas': 2
     },
     {
       'nome': 'M\'bala Nzola',
       'posicao': 'PL',
       'idade': 28,
-      'paisCode': 'ao',
+      'paisCode': 'AO',
       'estrelas': 3
     },
   ];
@@ -75,11 +75,11 @@ class _JogadoresPageState extends State<JogadoresPage> {
                   return Card(
                     margin: const EdgeInsets.symmetric(vertical: 5.0),
                     child: ListTile(
-                      leading: Image.asset(
-                        'icons/flags/png/${jogador['paisCode']}.png',
-                        package: 'country_icons',
+                      leading: Flag.fromString(
+                        jogador['paisCode'],
                         width: 30,
                         height: 30,
+                        fit: BoxFit.fill,
                       ),
                       title: Text(
                         jogador['nome'],
