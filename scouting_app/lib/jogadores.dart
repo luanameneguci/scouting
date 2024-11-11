@@ -54,7 +54,7 @@ class _JogadoresPageState extends State<JogadoresPage> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Buscar jogador',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -82,7 +82,7 @@ class _JogadoresPageState extends State<JogadoresPage> {
                       ),
                       title: Text(
                         jogador['nome'],
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Row(
                         children: [

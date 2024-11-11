@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/main.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -39,14 +38,17 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Email',
                 errorText: _hasError ? 'Invalid email' : null,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius:
+                      BorderRadius.circular(18), 
                   borderSide: _hasError
                       ? const BorderSide(
                           color: Colors.red,
                           width: 2.0,
                         )
-                      : BorderSide.none,
+                      : BorderSide
+                          .none, 
                 ),
+                
               ),
             ),
             const SizedBox(height: 18),
@@ -55,40 +57,43 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Palavra-passe',
                 errorText: _hasError ? 'Invalid password' : null,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius:
+                      BorderRadius.circular(18), 
                   borderSide: _hasError
                       ? const BorderSide(
                           color: Colors.red,
                           width: 2.0,
                         )
-                      : BorderSide.none,
+                      : BorderSide
+                          .none, 
                 ),
+               
               ),
             ),
-            const SizedBox(height: 18),
+            SizedBox(height: 18),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Navigation()),
-                );
+                context,
+                MaterialPageRoute(builder: (context) => const Navigation()),
+              );
               },
-              child: const Text(
+              child: Text(
                 'Entrar',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            const Spacer(),
+            Spacer(),
             TextButton(
               onPressed: () {
-                setState(() {
-                  _hasError = !_hasError;
+                 setState(() {
+                  _hasError = !_hasError; 
                 });
               },
               style: TextButton.styleFrom(
                 alignment: Alignment.center,
               ),
-              child: const Text(
+              child: Text(
                 'Esqueci-me da palavra-passe',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,

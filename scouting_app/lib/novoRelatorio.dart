@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class RelatorioScreen extends StatefulWidget {
-  const RelatorioScreen({super.key});
-
   @override
   _RelatorioScreenState createState() => _RelatorioScreenState();
 }
@@ -24,8 +22,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title:
-            const Text("Novo Relatório", style: TextStyle(color: Colors.white)),
+        title: Text("Novo Relatório", style: TextStyle(color: Colors.white)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,8 +35,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
               children: [
                 DropdownButton<String>(
                   value: selectedEscalao,
-                  hint: const Text("Escalão",
-                      style: TextStyle(color: Colors.white)),
+                  hint: Text("Escalão", style: TextStyle(color: Colors.white)),
                   dropdownColor: Colors.black,
                   onChanged: (value) {
                     setState(() => selectedEscalao = value);
@@ -47,15 +43,13 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                   items: ["Escalão 1", "Escalão 2"].map((e) {
                     return DropdownMenuItem(
                       value: e,
-                      child:
-                          Text(e, style: const TextStyle(color: Colors.white)),
+                      child: Text(e, style: TextStyle(color: Colors.white)),
                     );
                   }).toList(),
                 ),
                 DropdownButton<String>(
                   value: selectedAtleta,
-                  hint: const Text("Atleta",
-                      style: TextStyle(color: Colors.white)),
+                  hint: Text("Atleta", style: TextStyle(color: Colors.white)),
                   dropdownColor: Colors.black,
                   onChanged: (value) {
                     setState(() => selectedAtleta = value);
@@ -63,15 +57,13 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                   items: ["Atleta 1", "Atleta 2"].map((e) {
                     return DropdownMenuItem(
                       value: e,
-                      child:
-                          Text(e, style: const TextStyle(color: Colors.white)),
+                      child: Text(e, style: TextStyle(color: Colors.white)),
                     );
                   }).toList(),
                 ),
                 DropdownButton<String>(
                   value: selectedClube,
-                  hint: const Text("Clube",
-                      style: TextStyle(color: Colors.white)),
+                  hint: Text("Clube", style: TextStyle(color: Colors.white)),
                   dropdownColor: Colors.black,
                   onChanged: (value) {
                     setState(() => selectedClube = value);
@@ -79,42 +71,32 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                   items: ["Clube 1", "Clube 2"].map((e) {
                     return DropdownMenuItem(
                       value: e,
-                      child:
-                          Text(e, style: const TextStyle(color: Colors.white)),
+                      child: Text(e, style: TextStyle(color: Colors.white)),
                     );
                   }).toList(),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Avaliações
-            _buildRatingRow(
-                "Técnica", tecnica, (val) => setState(() => tecnica = val)),
-            _buildRatingRow("Velocidade", velocidade,
-                (val) => setState(() => velocidade = val)),
-            _buildRatingRow("Atitude Competitiva", atitudeCompetitiva,
-                (val) => setState(() => atitudeCompetitiva = val)),
-            _buildRatingRow("Inteligência", inteligencia,
-                (val) => setState(() => inteligencia = val)),
+            _buildRatingRow("Técnica", tecnica, (val) => setState(() => tecnica = val)),
+            _buildRatingRow("Velocidade", velocidade, (val) => setState(() => velocidade = val)),
+            _buildRatingRow("Atitude Competitiva", atitudeCompetitiva, (val) => setState(() => atitudeCompetitiva = val)),
+            _buildRatingRow("Inteligência", inteligencia, (val) => setState(() => inteligencia = val)),
 
             // Altura e Morfologia
-            const SizedBox(height: 16),
-            _buildOptionRow("Altura", ["Baixo", "Médio", "Alto"], altura,
-                (val) => setState(() => altura = val)),
-            _buildOptionRow(
-                "Morfologia",
-                ["Ectomorfo", "Mesomorfo", "Endomorfo"],
-                morfologia,
-                (val) => setState(() => morfologia = val)),
+            SizedBox(height: 16),
+            _buildOptionRow("Altura", ["Baixo", "Médio", "Alto"], altura, (val) => setState(() => altura = val)),
+            _buildOptionRow("Morfologia", ["Ectomorfo", "Mesomorfo", "Endomorfo"], morfologia, (val) => setState(() => morfologia = val)),
 
             // Notas
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             TextField(
               maxLines: 4,
               decoration: InputDecoration(
                 hintText: "Notas",
-                hintStyle: const TextStyle(color: Colors.white54),
+                hintStyle: TextStyle(color: Colors.white54),
                 filled: true,
                 fillColor: Colors.grey[900],
                 border: OutlineInputBorder(
@@ -122,21 +104,21 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                   borderSide: BorderSide.none,
                 ),
               ),
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
             ),
 
             // Botão Confirmar
-            const Spacer(),
+            Spacer(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  textStyle: const TextStyle(fontSize: 18),
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  textStyle: TextStyle(fontSize: 18),
                 ),
-                child: const Text("Confirmar"),
+                child: Text("Confirmar"),
               ),
             ),
           ],
@@ -149,7 +131,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(color: Colors.white)),
+        Text(title, style: TextStyle(color: Colors.white)),
         Row(
           children: List.generate(4, (index) {
             return IconButton(
@@ -165,12 +147,11 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
     );
   }
 
-  Widget _buildOptionRow(String title, List<String> options,
-      String? selectedOption, Function(String) onChanged) {
+  Widget _buildOptionRow(String title, List<String> options, String? selectedOption, Function(String) onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(color: Colors.white)),
+        Text(title, style: TextStyle(color: Colors.white)),
         Row(
           children: options.map((option) {
             return Row(
@@ -181,7 +162,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                   onChanged: (value) => onChanged(value!),
                   activeColor: Colors.yellow,
                 ),
-                Text(option, style: const TextStyle(color: Colors.white)),
+                Text(option, style: TextStyle(color: Colors.white)),
               ],
             );
           }).toList(),

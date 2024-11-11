@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/jogador.dart';
 
 class TarefasPage extends StatefulWidget {
   const TarefasPage({super.key});
@@ -17,10 +18,7 @@ class _TarefasPageState extends State<TarefasPage> {
       backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-        title: const Text(
-          'Olá,',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text('Olá,', style: TextStyle(color: Colors.white),),
       ),
       body: Center(
         child: ListView.separated(
@@ -33,8 +31,7 @@ class _TarefasPageState extends State<TarefasPage> {
               child: Center(child: Text('Entry ${entries[index]}')),
             );
           },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
+          separatorBuilder: (BuildContext context, int index) => const Divider(),
         ),
       ),
     );
