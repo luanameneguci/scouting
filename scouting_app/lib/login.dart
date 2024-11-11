@@ -7,16 +7,37 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>{
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: const Center(
-        child: Text('This is the Login page.. Quem vai realizar esta página é Rafael Silva 25422'),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Login'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: 20.0), // Add padding to the sides
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                  ),
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Palavra-passe',
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Entrar'),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
