@@ -97,7 +97,7 @@ class HomePage extends StatelessWidget {
         splashFactory: NoSplash.splashFactory,
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const Navigation(),
     );
   }
 }
