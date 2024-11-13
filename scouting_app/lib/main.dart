@@ -3,7 +3,7 @@ import 'package:scouting_app/perfil.dart';
 import 'package:scouting_app/tarefas.dart';
 import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/jogadores.dart';
-import 'package:scouting_app/notificacoes.dart';
+import 'package:scouting_app/jogador.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scouting_app/login.dart';
 
@@ -116,7 +116,7 @@ class _NavigationState extends State<Navigation> {
     TarefasPage(),
     RelatoriosPage(),
     JogadoresPage(),
-    NotificacoesPage(),
+    JogadorPage(),
     PerfilPage()
   ];
 
