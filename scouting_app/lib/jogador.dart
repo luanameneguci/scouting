@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flags/flags.dart'; // Importa a biblioteca de bandeiras
 
 class JogadorPage extends StatefulWidget {
   const JogadorPage({super.key});
@@ -15,8 +16,7 @@ class _JogadorPageState extends State<JogadorPage> {
         title: const Text('Jogador'),
       ),
       backgroundColor: const Color(0xFF2C2C2C), // Fundo do ecrã cinzento escuro
-      body: 
-        SingleChildScrollView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(18.0), // Adiciona o padding de 18 px
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,11 +37,7 @@ class _JogadorPageState extends State<JogadorPage> {
                     const SizedBox(height: 8.0),
                     Row(
                       children: [
-                        Image.asset(
-                          'assets/portugal_flag.png', // Adicione a bandeira de Portugal
-                          width: 24,
-                          height: 24,
-                        ),
+                        Flags.getMiniFlag('PT', 24, 16), // Adicione a bandeira de Portugal
                         const SizedBox(width: 8.0),
                         Text(
                           '22/07/2005',
