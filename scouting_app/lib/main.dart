@@ -5,6 +5,7 @@ import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/jogadores.dart';
 import 'package:scouting_app/notificacoes.dart';
 import 'package:google_fonts/google_fonts.dart';
+// ignore: unused_import
 import 'package:scouting_app/login.dart';
 
 void main() => runApp(const HomePage());
@@ -38,7 +39,7 @@ class HomePage extends StatelessWidget {
             color: Colors.white,
           ),
           bodyLarge: GoogleFonts.lato(
-            fontSize: 16.0,
+            fontSize: 18.0,
             color: Colors.white,
           ),
           bodyMedium: GoogleFonts.lato(
