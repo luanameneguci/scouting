@@ -55,14 +55,32 @@ class _JogadoresPageState extends State<JogadoresPage> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Buscar jogador',
-                prefixIcon: null, // Remove the default prefix icon
-                suffixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.search), // Search icon on the right
-                    const SizedBox(width: 8),
-                    Icon(Icons.filter_list), // Filter icon on the right
-                  ],
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 8.0), // Add padding to the right
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal:
+                                4.0), // Add horizontal padding for each icon
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.grey[600], // Set to lighter grey color
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal:
+                                4.0), // Add horizontal padding for each icon
+                        child: Icon(
+                          Icons.tune,
+                          color: Colors.grey[600], // Set to lighter grey color
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               onChanged: (query) {
