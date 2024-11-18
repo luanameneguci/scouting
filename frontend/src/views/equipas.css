@@ -7,17 +7,78 @@
 }
 
 .equipas-wrapper .sidebar {
-    max-width: 30%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.equipas-wrapper .sidebar .field-options {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.equipas-wrapper .sidebar .field-options>*:first-child {
+    flex: 1;
+}
+
+.equipas-wrapper .sidebar .field-wrapper {
+    flex: 1;
+    width: 100%;
 
 }
+
 .equipas-wrapper .sidebar .football-field {
-    aspect-ratio: 1 / 1.5;
-    max-width: 40%;
     width: 100%;
-    height: auto;
+    height: 100%;
+    min-height: 30vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    gap:1rem
 }
+
+.equipas-wrapper .football-field>* {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    gap:1rem;
+
+}
+.equipas-wrapper .football-field>*>.player{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.equipas-wrapper .football-field>*>.player .rating{
+    padding: .2rem .5rem;
+    background-color: var(--black-color);
+    border-radius: 9999px;
+    width: fit-content;
+}
+@media (max-aspect-ratio: 1.7 / 1) {
+    .equipas-wrapper {
+        flex-direction: column;
+    }
+
+    .equipas-wrapper .sidebar .football-field {
+        width: 60vw;
+        height: 90vh;
+        margin: auto;
+    }
+}
+
 .equipas-wrapper .content {
-    flex: 1;
+    flex: 2.7;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -45,6 +106,10 @@
     align-items: center;
 }
 
+.equipas-wrapper .searchbar:focus-within {
+    outline: 0.08rem solid var(--gray-600-color);
+}
+
 .equipas-wrapper .searchbar input {
     border: 0;
     background-color: transparent;
@@ -52,9 +117,13 @@
     flex: 1;
 }
 
+.equipas-wrapper .searchbar input:focus {
+    outline: 0;
+}
+
+
 .equipas-wrapper .searchbar .icon {
     color: var(--gray-500-color);
-
 }
 
 .equipas-wrapper .filter-button {
@@ -128,8 +197,8 @@
 .equipas-wrapper .radio-input {
     width: 1.6rem;
     height: 1.6rem;
-    background-color: var(--gray-800-color);
-    border: 0.16rem solid var(--gray-500-color);
+    background-color: transparent;
+    border: 0.16rem solid var(--gray-600-color);
     border-radius: 50%;
     appearance: none;
     cursor: pointer;
@@ -147,4 +216,89 @@
     background-color: var(--white-color);
     border-radius: 50%;
     transform: translate(-50%, -50%);
+}
+
+.equipa-switch .switch {
+    position: relative;
+    display: inline-block;
+    width: 2.8rem;
+    height: 1.6rem;
+}
+
+.equipa-switch .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.equipa-switch .switch-label {
+    margin-right: 1rem;
+}
+
+.equipa-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray-600-color);
+    transition: .4s;
+    border-radius: 2rem;
+}
+
+.equipa-switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.2rem;
+    width: 1.2rem;
+    left: .2rem;
+    bottom: .2rem;
+    background-color: var(--white-color);
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.equipa-switch input:checked+.slider {
+    background-color: var(--accent-color);
+}
+
+.equipa-switch input:checked+.slider:before {
+    transform: translateX(1.2rem);
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    flex: 1;
+}
+
+.dropdown {
+    width: 100%;
+    padding: 1rem 1rem;
+    height: 100%;
+    border: none;
+    border-radius: .2rem;
+    background-color: var(--gray-800-color);
+    color: var(--white-color);
+    cursor: pointer;
+    appearance: none;
+}
+
+.dropdown>option {
+    background-color: var(--gray-800-color);
+}
+
+.dropdown:focus {
+    outline: 0.08rem solid var(--gray-600-color);
+}
+
+.table-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.table-wrapper {
+    flex: 1;
 }

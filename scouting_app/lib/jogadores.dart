@@ -83,50 +83,67 @@ class _JogadoresPageState extends State<JogadoresPage> {
                   ),
                 ),
               ),
-              onChanged: (query) {
+              onChanged: (value) {
                 setState(() {
-                  searchQuery = query.toLowerCase();
+                  searchQuery = value;
                 });
               },
             ),
-            const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
                 itemCount: jogadores.length,
                 itemBuilder: (context, index) {
                   final jogador = jogadores[index];
-                  if (!jogador['nome'].toLowerCase().contains(searchQuery)) {
-                    return Container(); // Hide player if it doesn't match the search query
+                  final nome = jogador['nome'];
+                  final posicao = jogador['posicao'];
+                  final idade = jogador['idade'];
+                  final paisCode = jogador['paisCode'];
+                  final estrelas = jogador['estrelas'];
+
+                  if (searchQuery.isNotEmpty &&
+                      !nome.toLowerCase().contains(searchQuery.toLowerCase())) {
+                    return Container();
                   }
+
                   return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 5.0),
+                    elevation: 2,
+                    color: const Color.fromARGB(255, 35, 35, 35),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 0.0),
                     child: ListTile(
                       leading: Flag.fromString(
-                        jogador['paisCode'],
+                        paisCode,
                         width: 30,
                         height: 30,
-                        fit: BoxFit.fill,
                       ),
-                      title: Text(
-                        jogador['nome'],
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Row(
-                        children: [
-                          Text(
-                              '${jogador['posicao']} • ${jogador['idade']} anos'),
-                          const SizedBox(width: 10),
-                          Row(
-                            children: List.generate(
-                              jogador['estrelas'],
-                              (starIndex) => const Icon(
-                                Icons.star,
-                                size: 15,
-                                color: Colors.amber,
-                              ),
-                            ),
+                      title: GestureDetector(
+                        onTap: () {
+                          if (nome == 'Francisco Machado') {
+                            Navigator.pushNamed(context, '/jogador');
+                          }
+                        },
+                        child: Text(
+                          nome,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
+                        ),
+                      ),
+                      subtitle: Text(
+                        '$posicao | $idade anos',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: List.generate(
+                          estrelas,
+                          (index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 20.0,
+                          ),
+                        ),
                       ),
                     ),
                   );
