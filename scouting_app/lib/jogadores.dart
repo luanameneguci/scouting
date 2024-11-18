@@ -32,7 +32,7 @@ class _JogadoresPageState extends State<JogadoresPage> {
       'estrelas': 2
     },
     {
-      'nome': "M'bala Nzola",
+      'nome': 'M\'bala Nzola',
       'posicao': 'PL',
       'idade': 28,
       'paisCode': 'AO',
@@ -41,7 +41,6 @@ class _JogadoresPageState extends State<JogadoresPage> {
   ];
 
   String searchQuery = '';
-  bool isFilterVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,194 +48,110 @@ class _JogadoresPageState extends State<JogadoresPage> {
       appBar: AppBar(
         title: const Text('Consultar jogadores'),
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Buscar jogador',
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isFilterVisible = true;
-                              });
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: Icon(
-                                Icons.tune,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  onChanged: (query) {
-                    setState(() {
-                      searchQuery = query.toLowerCase();
-                    });
-                  },
-                ),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: jogadores.length,
-                    itemBuilder: (context, index) {
-                      final jogador = jogadores[index];
-                      if (!jogador['nome']
-                          .toLowerCase()
-                          .contains(searchQuery)) {
-                        return Container();
-                      }
-                      return Card(
-                        margin: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: ListTile(
-                          leading: Flag.fromString(
-                            jogador['paisCode'],
-                            width: 30,
-                            height: 30,
-                            fit: BoxFit.fill,
-                          ),
-                          title: Text(
-                            jogador['nome'],
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Row(
-                            children: [
-                              Text(
-                                  '${jogador['posicao']} • ${jogador['idade']} anos'),
-                              const SizedBox(width: 10),
-                              Row(
-                                children: List.generate(
-                                  jogador['estrelas'],
-                                  (starIndex) => const Icon(
-                                    Icons.star,
-                                    size: 15,
-                                    color: Colors.amber,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Buscar jogador',
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 8.0), // Add padding to the right
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal:
+                                4.0), // Add horizontal padding for each icon
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.grey[600], // Set to lighter grey color
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          if (isFilterVisible)
-            Positioned.fill(
-              child: Material(
-                color: Colors.black54,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isFilterVisible = false;
-                    });
-                  },
-                  child: Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[900],
-                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            'Filtros',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          _buildFilterDropdown(
-                              'Posição', ['Ataque', 'Defesa', 'Meio']),
-                          const SizedBox(height: 10),
-                          _buildFilterDropdown(
-                              'Clube', ['Clube A', 'Clube B', 'Clube C']),
-                          const SizedBox(height: 10),
-                          _buildFilterDropdown(
-                              'Rating', ['1', '2', '3', '4', '5']),
-                          const SizedBox(height: 10),
-                          _buildFilterDropdown(
-                              'Escalão', ['Sub 20', 'Sub 23', 'Profissional']),
-                          const SizedBox(height: 10),
-                          _buildFilterDropdown('Ano de nascimento',
-                              ['2000', '2001', '2002', '2024']),
-                          const SizedBox(height: 20),
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                isFilterVisible = false;
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.yellow,
-                              foregroundColor: Colors.black,
-                            ),
-                            child: const Text('Aplicar filtros'),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal:
+                                4.0), // Add horizontal padding for each icon
+                        child: Icon(
+                          Icons.tune,
+                          color: Colors.grey[600], // Set to lighter grey color
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
             ),
-        ],
-      ),
-    );
-  }
+            Expanded(
+              child: ListView.builder(
+                itemCount: jogadores.length,
+                itemBuilder: (context, index) {
+                  final jogador = jogadores[index];
+                  final nome = jogador['nome'];
+                  final posicao = jogador['posicao'];
+                  final idade = jogador['idade'];
+                  final paisCode = jogador['paisCode'];
+                  final estrelas = jogador['estrelas'];
 
-  Widget _buildFilterDropdown(String label, List<String> items) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[800],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: DropdownButton<String>(
-        value: items.first,
-        dropdownColor: Colors.grey[800],
-        iconEnabledColor: Colors.white,
-        underline: Container(),
-        isExpanded: true,
-        items: items.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(
-              value,
-              style: const TextStyle(color: Colors.white),
+                  if (searchQuery.isNotEmpty &&
+                      !nome.toLowerCase().contains(searchQuery.toLowerCase())) {
+                    return Container();
+                  }
+
+                  return Card(
+                    elevation: 2,
+                    color: const Color.fromARGB(255, 35, 35, 35),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 0.0),
+                    child: ListTile(
+                      leading: Flag.fromString(
+                        paisCode,
+                        width: 30,
+                        height: 30,
+                      ),
+                      title: GestureDetector(
+                        onTap: () {
+                          if (nome == 'Francisco Machado') {
+                            Navigator.pushNamed(context, '/jogador');
+                          }
+                        },
+                        child: Text(
+                          nome,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      subtitle: Text(
+                        '$posicao | $idade anos',
+                        style: const TextStyle(color: Colors.grey),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: List.generate(
+                          estrelas,
+                          (index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-          );
-        }).toList(),
-        onChanged: (String? newValue) {},
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/notificacoes.dart';
 import 'package:scouting_app/perfil.dart';
 import 'package:scouting_app/tarefas.dart';
 import 'package:scouting_app/relatorios.dart';
@@ -97,8 +98,9 @@ class HomePage extends StatelessWidget {
         splashFactory: NoSplash.splashFactory,
         useMaterial3: true,
       ),
-      home: const Navigation(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => const LoginPage(),
         '/jogador': (context) => const JogadorPage(),
       },
     );
@@ -119,7 +121,7 @@ class _NavigationState extends State<Navigation> {
     TarefasPage(),
     RelatoriosPage(),
     JogadoresPage(),
-    JogadorPage(),
+    NotificacoesPage(),
     PerfilPage()
   ];
 

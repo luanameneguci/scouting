@@ -14,7 +14,7 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
       appBar: AppBar(
         title: const Text('Notificações'),
       ),
-      backgroundColor: const Color(0xFF2C2C2C), // Fundo do ecrã cinzento escuro
+      backgroundColor: const Color.fromARGB(255, 30, 30, 30), // Fundo do ecrã cinzento escuro
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
@@ -22,7 +22,7 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
           itemBuilder: (context, index) {
             return Card(
               margin: const EdgeInsets.symmetric(vertical: 8.0),
-              color: const Color(0xFF1F1F1F), // Cor de fundo do card
+              color: const Color.fromARGB(255, 51, 51, 51), // Cor de fundo do card
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
@@ -48,7 +48,7 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
                             Icon(
                               Icons.circle,
                               size: 10.0,
-                              color: Colors.yellow, // Ponto amarelo
+                              color: Colors.amber, // Ponto amarelo
                             ),
                             SizedBox(width: 5.0),
                             Text(
@@ -89,7 +89,7 @@ class _NotificacoesPageState extends State<NotificacoesPage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.black, backgroundColor: Colors.yellow,
+                            foregroundColor: Colors.black, backgroundColor: Colors.amber,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
