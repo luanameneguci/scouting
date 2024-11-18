@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const Navigation(),
+        '/': (context) => const LoginPage(),
         '/jogador': (context) => const JogadorPage(),
       },
     );
