@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/jogador.dart';
 import 'package:scouting_app/novoRelatorio.dart';
-import 'package:intl/intl.dart'; // Add this import to work with dates
+import 'package:intl/intl.dart';
 
 class TarefasPage extends StatefulWidget {
   const TarefasPage({super.key});
@@ -10,7 +10,7 @@ class TarefasPage extends StatefulWidget {
   _TarefasPageState createState() => _TarefasPageState();
 }
 
-enum FilterOption { week, month, all } // Define filter options
+enum FilterOption { week, month, all, specificMonth }
 
 class _TarefasPageState extends State<TarefasPage> {
   final List<String> jogadores = <String>[
@@ -26,32 +26,45 @@ class _TarefasPageState extends State<TarefasPage> {
     'Clube 1 x Clube 2'
   ];
   final List<String> gameDays = <String>[
-    '2024-11-12',
-    '2024-11-15',
-    '2024-12-01',
-    '2024-12-10'
+    '2024-11-20',
+    '2024-11-25',
+    '2024-11-29',
+    '2025-07-10'
   ];
-  final List<String> gameTimes = <String>[
-    '14:00',
-    '16:00',
-    '18:00',
-    '20:00'
-  ];
+  final List<String> gameTimes = <String>['14:00', '16:00', '18:00', '20:00'];
 
-  FilterOption selectedFilter = FilterOption.all; // Default filter option
+  FilterOption selectedFilter = FilterOption.all;
+  String? selectedMonth;
+
+  List<String> getNext12Months() {
+    List<String> months = [];
+    DateTime now = DateTime.now();
+
+    for (int i = 0; i < 12; i++) {
+      DateTime month = DateTime(now.year, now.month + i, 1);
+      months.add(DateFormat('MMMM yyyy').format(month));
+    }
+    return months;
+  }
 
   List<int> getFilteredIndexes() {
     DateTime now = DateTime.now();
     DateTime weekFromNow = now.add(const Duration(days: 7));
-    DateTime monthFromNow = DateTime(now.year, now.month + 1, now.day);
+    DateTime nextMonth = DateTime(now.year, now.month + 1, 1);
 
     List<int> filteredIndexes = [];
 
     for (int i = 0; i < gameDays.length; i++) {
       DateTime gameDate = DateTime.parse(gameDays[i]);
       if (selectedFilter == FilterOption.all ||
-          (selectedFilter == FilterOption.week && gameDate.isBefore(weekFromNow)) ||
-          (selectedFilter == FilterOption.month && gameDate.isBefore(monthFromNow))) {
+          (selectedFilter == FilterOption.week &&
+              gameDate.isBefore(weekFromNow) &&
+              gameDate.isAfter(now)) ||
+          (selectedFilter == FilterOption.month &&
+              gameDate.isBefore(nextMonth)) ||
+          (selectedFilter == FilterOption.specificMonth &&
+              selectedMonth != null &&
+              DateFormat('MMMM yyyy').format(gameDate) == selectedMonth)) {
         filteredIndexes.add(i);
       }
     }
@@ -61,6 +74,7 @@ class _TarefasPageState extends State<TarefasPage> {
   @override
   Widget build(BuildContext context) {
     List<int> filteredIndexes = getFilteredIndexes();
+    List<String> next12Months = getNext12Months();
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 30, 30),
@@ -76,42 +90,93 @@ class _TarefasPageState extends State<TarefasPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.only(top: 15, left: 10),
-              child: Text(
-                'Próximos jogos',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Filter by:', style: TextStyle(color: Colors.white)),
-                const SizedBox(width: 10),
-                DropdownButton<FilterOption>(
-                  value: selectedFilter,
-                  dropdownColor: const Color.fromARGB(255, 43, 43, 43),
-                  iconEnabledColor: Colors.white,
-                  style: const TextStyle(color: Colors.white),
-                  items: const [
-                    DropdownMenuItem(
-                      value: FilterOption.all,
-                      child: Text('All'),
-                    ),
-                    DropdownMenuItem(
-                      value: FilterOption.week,
-                      child: Text('This Week'),
-                    ),
-                    DropdownMenuItem(
-                      value: FilterOption.month,
-                      child: Text('This Month'),
-                    ),
-                  ],
-                  onChanged: (FilterOption? newValue) {
-                    setState(() {
-                      selectedFilter = newValue!;
-                    });
-                  },
+                // Title on the left
+                Container(
+                  padding: const EdgeInsets.only(top: 0, left: 10),
+                  child: Text(
+                    'Próximos jogos',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                // Filter dropdowns on the right
+                Container(
+                  height: 30,
+                  padding: const EdgeInsets.only(left: 10),
+                  decoration: BoxDecoration(
+                    color:
+                        const Color.fromARGB(255, 50, 50, 50), // Lighter color
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton<FilterOption>(
+                          icon: const Icon(
+                            Icons.tune, // Set the custom icon here
+                            color:
+                                Color.fromRGBO(95, 99, 104, 1), // Customize icon color if needed
+                          ),
+                          value: selectedFilter,
+                          dropdownColor: const Color.fromARGB(255, 43, 43, 43),
+                          style: const TextStyle(color: Colors.white),
+                          items: const [
+                            DropdownMenuItem(
+                              value: FilterOption.all,
+                              child: Text('Todos'),
+                            ),
+                            DropdownMenuItem(
+                              value: FilterOption.week,
+                              child: Text('Próximos 7 dias'),
+                            ),
+                            DropdownMenuItem(
+                              value: FilterOption.month,
+                              child: Text('Este mês'),
+                            ),
+                            DropdownMenuItem(
+                              value: FilterOption.specificMonth,
+                              child: Text('Select Month'),
+                            ),
+                          ],
+                          onChanged: (FilterOption? newValue) {
+                            setState(() {
+                              selectedFilter = newValue!;
+                              if (selectedFilter !=
+                                  FilterOption.specificMonth) {
+                                selectedMonth = null;
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      if (selectedFilter == FilterOption.specificMonth)
+                        DropdownButton<String>(
+                          value: selectedMonth,
+                          hint: const Text(
+                            "Choose month",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          dropdownColor: const Color.fromARGB(255, 43, 43, 43),
+                          iconEnabledColor: Colors.white,
+                          style: const TextStyle(color: Colors.white),
+                          items: next12Months.map((String month) {
+                            return DropdownMenuItem<String>(
+                              value: month,
+                              child: Text(month),
+                            );
+                          }).toList(),
+                          onChanged: (String? newMonth) {
+                            setState(() {
+                              selectedMonth = newMonth;
+                            });
+                          },
+                        ),
+                    ],
+                  ),
                 ),
               ],
             ),
