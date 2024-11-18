@@ -101,3 +101,9 @@ input::placeholder {
   width: 100vw;
   position: fixed;
 }
+
+.text-secondary{
+  color: var(--gray-500-color);
+  font-size: .8rem;
+
+}
