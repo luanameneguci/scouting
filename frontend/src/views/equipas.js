@@ -22,9 +22,26 @@ export default function Equipas() {
     return (
         <div className='equipas-wrapper'>
             <div className="sidebar">
-                <div className='field-options'>aaa</div>
+                <div className='field-options'>
+                    <h2>Equipas</h2>
+                    <div className='equipa-switch'>
+                        <span className="switch-label">Sombra</span>
+
+                        <label className="switch">
+                            <input type="checkbox" />
+                            <span className="slider round"></span>
+                        </label>
+                    </div>
+                    <div className="dropdown-container">
+                        <select className="dropdown">
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+                    </div>
+                </div>
                 <div className='field-wrapper'>
-                    <div className='football-field bg-color-gray-800 rounded'>a</div>
+                    <div className='football-field rounded bg-color-gray-800'>a</div>
                 </div>
             </div>
             <div className="content">
