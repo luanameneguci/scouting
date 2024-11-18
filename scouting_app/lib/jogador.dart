@@ -105,7 +105,7 @@ class _JogadorPageState extends State<JogadorPage> {
             const SizedBox(height: 12),
             ElevatedButton.icon(
               onPressed: () {
-                // Ação do botão
+                Navigator.pushNamed(context, '/novo_relatorio');
               },
               icon: const Icon(Icons.add, color: Colors.black),
               label: const Text(

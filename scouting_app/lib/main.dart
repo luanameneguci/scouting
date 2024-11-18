@@ -5,6 +5,7 @@ import 'package:scouting_app/tarefas.dart';
 import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/jogadores.dart';
 import 'package:scouting_app/jogador.dart';
+import 'package:scouting_app/novorelatorio.dart'; // Importando a nova página de relatório
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scouting_app/login.dart';
 
@@ -102,6 +103,7 @@ class HomePage extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/jogador': (context) => const JogadorPage(),
+        '/novo_relatorio': (context) => RelatorioScreen(),
       },
     );
   }
