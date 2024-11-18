@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { setupContentNavbarMargin } from './utils';
 import './equipas.css';
 
+const items = [1, 2, 3, 4, 5];
+const FootballFieldPlayers = () => {
+    return (
+        <div className='player'>
+            <p className='position'>EE</p>
+            <div className='rating'>5 ★</div>
+            <p className='name font-bold'>António<br/>Mendes</p>
+            <p className='year text-secondary'>2000</p>
+        </div>
+    );
+};
+
 export default function Equipas() {
     const [selectedRadio, setSelectedRadio] = useState(null);
 
@@ -34,14 +46,33 @@ export default function Equipas() {
                     </div>
                     <div className="dropdown-container">
                         <select className="dropdown">
-                            <option value="option1">Option 1</option>
-                            <option value="option2">Option 2</option>
-                            <option value="option3">Option 3</option>
+                            <option value="seniores">Séniores</option>
+                            <option value="sub-18">SUB-18</option>
+                            <option value="sub-17">SUB-17</option>
                         </select>
                     </div>
                 </div>
                 <div className='field-wrapper'>
-                    <div className='football-field rounded bg-color-gray-800'>a</div>
+                    <div className='football-field rounded bg-color-gray-800'>
+                        <div>
+                            {items.map(() => {
+                                return FootballFieldPlayers();
+                            })}
+                        </div>
+                        <div>
+                            {items.map(() => {
+                                return FootballFieldPlayers();
+                            })}
+                        </div>                   <div>
+                            {items.map(() => {
+                                return FootballFieldPlayers();
+                            })}
+                        </div>                   <div>
+                            {items.slice(0, 2).map(() => {
+                                return FootballFieldPlayers();
+                            })}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="content">
@@ -93,46 +124,52 @@ export default function Equipas() {
                         <label htmlFor="redes" className="font-bold">GR</label>
                     </div>
                 </div>
-                <div>
-                    <table className="bg-color-gray-800 rounded width-100">
-                        <thead>
-                            <tr>
-                                <th scope="col" className="center-align">#</th>
-                                <th scope="col" className="left-align">First</th>
-                                <th scope="col" className="left-align">Last</th>
-                                <th scope="col" className="left-align">Handle</th>
-                                <th scope="col" className="right-align">Age</th>
-                                <th scope="col" className="left-align">Position</th>
-                                <th scope="col" className="left-align">Team</th>
-                                <th scope="col" className="left-align">Country</th>
-                                <th scope="col" className="left-align">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className="center-align">1</td>
-                                <td className="left-align">John</td>
-                                <td className="left-align">Doe</td>
-                                <td className="left-align">@jdoe</td>
-                                <td className="right-align">25</td>
-                                <td className="left-align">Forward</td>
-                                <td className="left-align">Team A</td>
-                                <td className="left-align">USA</td>
-                                <td className="left-align">Active</td>
-                            </tr>
-                            <tr>
-                                <td className="center-align">1</td>
-                                <td className="left-align">John</td>
-                                <td className="left-align">Doe</td>
-                                <td className="left-align">@jdoe</td>
-                                <td className="right-align">25</td>
-                                <td className="left-align">Forward</td>
-                                <td className="left-align">Team A</td>
-                                <td className="left-align">USA</td>
-                                <td className="left-align">Active</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div className='table-container'>
+                    <div className='table-wrapper'>
+                        <table className="bg-color-gray-800 rounded width-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col" className="center-align">Inserido</th>
+                                    <th scope="col" className="left-align">Nome</th>
+                                    <th scope="col" className="right-align">Rating</th>
+                                    <th scope="col" className="right-align">Rating Médio</th>
+                                    <th scope="col" className="left-align">Posição</th>
+                                    <th scope="col" className="right-align">Ano</th>
+                                    <th scope="col" className="left-align">Escalão</th>
+                                    <th scope="col" className="left-align">Nacionalidade</th>
+                                    <th scope="col" className="left-align">Clube Atual</th>
+                                    <th scope="col" className="left-align">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="center-align">1</td>
+                                    <td className="left-align">John</td>
+                                    <td className="right-align">Doe</td>
+                                    <td className="right-align">@jdoe</td>
+                                    <td className="left-align">25</td>
+                                    <td className="right-align">Forward</td>
+                                    <td className="left-align">Team A</td>
+                                    <td className="left-align">USA</td>
+                                    <td className="left-align">Active</td>
+                                    <td className="left-align">sim</td>
+                                </tr>
+                                <tr>
+                                    <td className="center-align">1</td>
+                                    <td className="left-align">John</td>
+                                    <td className="right-align">Doe</td>
+                                    <td className="right-align">@jdoe</td>
+                                    <td className="left-align">25</td>
+                                    <td className="right-align">Forward</td>
+                                    <td className="left-align">Team A</td>
+                                    <td className="left-align">USA</td>
+                                    <td className="left-align">Active</td>
+                                    <td className="left-align">sim</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Paginação</p>
                 </div>
             </div>
         </div>
