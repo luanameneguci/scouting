@@ -107,6 +107,7 @@ input::placeholder {
   background-color: var(--gray-800-color);
   width: 100vw;
   position: fixed;
+  z-index: 9999;
 }
 
 .navbar>*:not(:last-child) {
