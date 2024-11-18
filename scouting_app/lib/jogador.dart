@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flags/flags.dart'; // Importa a biblioteca de bandeiras
+import 'package:flag/flag.dart'; // Usando o pacote flag corretamente
 
 class JogadorPage extends StatefulWidget {
   const JogadorPage({super.key});
@@ -37,7 +37,11 @@ class _JogadorPageState extends State<JogadorPage> {
                     const SizedBox(height: 8.0),
                     Row(
                       children: [
-                        Flags.getMiniFlag('PT', 24, 16), // Adicione a bandeira de Portugal
+                        Flag.fromString(
+                          'PT', // Código do país (Portugal)
+                          width: 30,
+                          height: 20,
+                        ),
                         const SizedBox(width: 8.0),
                         Text(
                           '22/07/2005',
