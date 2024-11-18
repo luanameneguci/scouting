@@ -15,7 +15,7 @@ class _JogadorPageState extends State<JogadorPage> {
       appBar: AppBar(
         title: const Text('Jogador'),
       ),
-      backgroundColor: Colors.transparent, // Fundo do ecrã cinzento escuro
+      backgroundColor: const Color.fromARGB(255, 30, 30, 30), // Fundo do ecrã cinzento escuro
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18.0), // Adiciona o padding de 18 px
         child: Column(
