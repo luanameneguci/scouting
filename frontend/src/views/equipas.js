@@ -35,7 +35,7 @@ export default function Equipas() {
         <div className='equipas-wrapper'>
             <div className="sidebar">
                 <div className='field-options'>
-                    <h2>Equipas</h2>
+                    <h1>Equipas</h1>
                     <div className='equipa-switch'>
                         <span className="switch-label">Sombra</span>
 
