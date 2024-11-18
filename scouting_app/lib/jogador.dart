@@ -15,7 +15,7 @@ class _JogadorPageState extends State<JogadorPage> {
       appBar: AppBar(
         title: const Text('Jogador'),
       ),
-      backgroundColor: const Color(0xFF2C2C2C), // Fundo do ecrã cinzento escuro
+      backgroundColor: Colors.transparent, // Fundo do ecrã cinzento escuro
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18.0), // Adiciona o padding de 18 px
         child: Column(
@@ -132,7 +132,7 @@ class _JogadorPageState extends State<JogadorPage> {
   Widget _buildTableCell(String text, bool isHeader) {
     return Container(
       padding: const EdgeInsets.all(16.0), // Aumentar o espaço nas linhas
-      color: isHeader ? const Color(0xFF1F1F1F) : const Color(0xFF2C2C2C),
+      color: isHeader ? const Color.fromARGB(255, 50, 50, 50) : const Color.fromARGB(255, 0, 0, 0),
       child: Text(
         text,
         style: const TextStyle(color: Colors.white),
