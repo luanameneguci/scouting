@@ -98,6 +98,9 @@ class HomePage extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Navigation(),
+      routes: {
+        '/jogador': (context) => const JogadorPage(),
+      },
     );
   }
 }
