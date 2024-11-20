@@ -1,56 +1,55 @@
 import Equipas from './views/equipas';
-import { BrowserRouter as Router, Route, Link, Routes, useNavigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import './App.css';
 
 function App() {
+  
   return (
     <Router>
       <div className='wrapper'>
         <div className='navbar'>
-          <div className='rounded font-bold'>
+          <NavLink to="/" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
             <span className="material-symbols-outlined icon">
               home
             </span>
-          </div>
-          <div className='rounded font-bold selected'>
+          </NavLink>
+          <NavLink to="/atletas" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
             <span className="material-symbols-outlined icon">
               groups
             </span>
             Atletas
-          </div>
-          <div className='rounded font-bold'>
+          </NavLink>
+          <NavLink to="/equipa" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
             <span className="material-symbols-outlined icon">
               sports_and_outdoors
             </span>
             Equipas
-          </div>
-          <div className='rounded font-bold'>
+          </NavLink>
+          <NavLink to="/credenciais" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
             <span className="material-symbols-outlined icon">
               key
             </span>
             Credenciais
-          </div>
-          <div className='rounded font-bold'>
+          </NavLink>
+          <NavLink to="/relatorios" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
             <span className="material-symbols-outlined icon">
               check_circle
             </span>
             Relatórios
-          </div>
-          <div className='rounded font-bold'>
+          </NavLink>
+          <NavLink to="/jogos" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
             <span className="material-symbols-outlined icon">
               event
             </span>
             Jogos
-          </div>
+          </NavLink>
           <div><div>utilizador</div></div>
         </div>
         <Routes>
           <Route path="/equipa/:tipo/:escalao" element={<Equipas />} />
-
         </Routes>
       </div>
     </Router>
-
   );
 }
 
