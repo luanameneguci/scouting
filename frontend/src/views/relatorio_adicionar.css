@@ -1,12 +1,5 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
+
+  .add-relatorio-container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
@@ -14,41 +7,41 @@ body {
     border-radius: 8px;
   }
   
-  .form-section {
+  .add-relatorio-container .form-section {
     margin-bottom: 20px;
   }
   
-  h2 {
+  .add-relatorio-container h2 {
     color: #ffc107;
     margin-bottom: 10px;
   }
   
-  .form-group {
+  .add-relatorio-container .form-group {
     margin-bottom: 15px;
   }
   
-  .form-row {
+  .add-relatorio-container .form-row {
     display: flex;
     justify-content: space-between;
   }
   
-  .form-row .form-group {
+  .add-relatorio-container .form-row .form-group {
     flex: 1;
     margin-right: 10px;
   }
   
-  .form-row .form-group:last-child {
+  .add-relatorio-container .form-row .form-group:last-child {
     margin-right: 0;
   }
   
-  label {
+  .add-relatorio-container label {
     display: block;
     margin-bottom: 5px;
     font-size: 14px;
   }
   
-  input,
-  select {
+  .add-relatorio-container input,
+  .add-relatorio-container select {
     width: 100%;
     padding: 8px;
     border: none;
@@ -56,13 +49,13 @@ body {
     font-size: 14px;
   }
   
-  input:disabled,
-  select:disabled {
+  .add-relatorio-container input:disabled,
+  .add-relatorio-container select:disabled {
     background-color: #555;
     color: #aaa;
   }
   
-  .btn {
+  .add-relatorio-container .btn {
     display: block;
     width: 100%;
     padding: 10px;
@@ -74,7 +67,7 @@ body {
     cursor: pointer;
   }
   
-  .btn:hover {
+  .add-relatorio-container .btn:hover {
     background-color: #e0a800;
   }
   

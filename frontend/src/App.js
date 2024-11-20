@@ -1,7 +1,5 @@
 import Equipas from './views/equipas';
-HEAD
 import RelatorioAdicionar from './views/relatorio_adicionar';
-import { BrowserRouter as Router, Route, Link, Routes, useNavigate, useLocation } from "react-router-dom";
 import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import './App.css';
 

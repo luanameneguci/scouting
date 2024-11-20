@@ -3,7 +3,7 @@ import './relatorio_adicionar.css';
 
 const RelatorioAdicionar = () => {
   return (
-    <div className="container">
+    <div className="add-relatorio-container">
       {/* Seção Atleta Existente */}
       <div className="form-section">
         <h2>Atleta Existente</h2>

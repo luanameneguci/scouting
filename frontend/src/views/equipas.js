@@ -42,7 +42,7 @@ const StarRating = ({ rating, setRating }) => {
 export default function Equipas() {
     const [selectedRadio, setSelectedRadio] = useState(null);
     const [rating, setRating] = useState(0);
-
+    const [isFilterModalVisible, setIsFilterModalVisible] = useState(false); 
     useEffect(() => {
         setupContentNavbarMargin('equipas-wrapper');
     }, []);
@@ -60,6 +60,12 @@ export default function Equipas() {
             console.log(`Selected: ${value}`);
         }
     };
+
+    const handleFilterButtonClick = (event) => {
+        event.preventDefault(); // Prevent default form submission
+        setIsFilterModalVisible(!isFilterModalVisible); // Toggle modal visibility
+    };
+
 
     return (
         <div className='equipas-wrapper'>
@@ -125,7 +131,7 @@ export default function Equipas() {
                                 search
                             </span>
                         </div>
-                        <button className='filter-button rounded'>Filtrar</button>
+                        <button className='filter-button rounded' onClick={handleFilterButtonClick}>Filtrar</button>
                     </div>
                     <div className='radio-buttons'>
                         <input
@@ -211,29 +217,88 @@ export default function Equipas() {
                         </table>
                     </div>
                     <p>Paginação</p>
-                    <div className='filters-container height-100 width-100'>
+                    <div className={`filters-container height-100 width-100 ${isFilterModalVisible ? '' : 'hidden'}`}>
                         <form className='filters'>
                             <div className='filters-head'>
-                                <button className='filter-button rounded'>
+                                <button className='filter-button rounded' onClick={handleFilterButtonClick}>
                                     <span className="material-symbols-outlined icon">
                                         close
-                                    </span>                                </button>
-                                    <button className='filter-button rounded'>
-                                        Limpar Filtros
-                                    </button>
+                                    </span>
+                                </button>
+                                <button className='filter-button rounded' type="button">
+                                    Limpar Filtros
+                                </button>
                             </div>
                             <div className='rating-minimo'>
-                                <label>Rating Mínimo:</label>
+                                <label className='font-bold'>Rating Mínimo:</label>
                                 <hr />
                                 <StarRating rating={rating} setRating={setRating} />
                             </div>
-                            <div className='rating-medio-minimo'></div>
-                            <div className='ano-nascimento'></div>
-                            <div className='escalao'></div>
-                            <div className='posicao'></div>
-                            <div className='clube'></div>
-                            <div className='nacionalidade'></div>
-
+                            <div className='rating-medio-minimo'>
+                                <label className='font-bold'>Rating Médio Mínimo:</label>
+                                <hr />
+                                <div>
+                                    <input type='number' max='4' min="0" />
+                                    <span className='text-secondary'>&emsp;/4</span>
+                                </div>
+                            </div>
+                            <div className='ano-nascimento'>
+                                <label className='font-bold'>Ano de Nascimento:</label>
+                                <div>
+                                    <div>
+                                        <input type='number' max='2024' min="1950" />
+                                        <span className='text-secondary'>&emsp;min.</span>
+                                    </div>
+                                    <hr />
+                                    <div>
+                                        <input type='number' max='2024' min="1950" />
+                                        <span className='text-secondary'>&emsp;máx.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='escalao'>
+                                <label className='font-bold'>Escalão:</label>
+                                <div>
+                                    <div>
+                                        <select>
+                                            <option value="seniores">Séniores</option>
+                                            <option value="sub-18">SUB-18</option>
+                                            <option value="sub-17">SUB-17</option>
+                                        </select>
+                                        <span className='text-secondary'>&emsp;min.</span>
+                                    </div>
+                                    <hr />
+                                    <div>
+                                        <select>
+                                            <option value="seniores">Séniores</option>
+                                            <option value="sub-18">SUB-18</option>
+                                            <option value="sub-17">SUB-17</option>
+                                        </select>
+                                        <span className='text-secondary'>&emsp;máx.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='posicao'>
+                                <label className='font-bold'>Posição:</label>
+                                <p>falta este</p>
+                            </div>
+                            <div className='clube'>
+                                <label className='font-bold'>Clube:</label>
+                                <select>
+                                    <option value="fcporto">FC Porto</option>
+                                    <option value="slbenfica">SL Benfica</option>
+                                    <option value="sportingcp">Sporting CP</option>
+                                </select>
+                            </div>
+                            <div className='nacionalidade'>
+                                <label className='font-bold'>Nacionalidade:</label>
+                                <select>
+                                    <option value="portugues">Portugal</option>
+                                    <option value="ingles">Inglaterra</option>
+                                    <option value="frances">França</option>
+                                </select>
+                            </div>
+                            <button className=' submit-button rounded-pill font-bold' > Filtrar </button>
                         </form>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
 }
 
 /* Navbar */
-.navbar {
+.adicionar-jogo-wrapper .navbar {
     display: flex;
     background-color: #000000;
     padding: 10px;
@@ -20,19 +20,19 @@
     margin-bottom: 20px;
 }
 
-.navbar-item {
+.adicionar-jogo-wrapper .navbar-item {
     color: #ffffff;
     font-size: 14px;
     cursor: pointer;
 }
 
-.navbar-item.active {
+.adicionar-jogo-wrapper .navbar-item.active {
     color: #ffcc00;
     font-weight: bold;
 }
 
 /* Título */
-.page-title {
+.adicionar-jogo-wrapper .page-title {
     font-size: 20px;
     margin-bottom: 20px;
     text-align: center;
@@ -40,7 +40,7 @@
 }
 
 /* Formulário */
-.form {
+.adicionar-jogo-wrapper .form {
     background-color: #333333;
     padding: 30px;
     border-radius: 8px;
@@ -50,18 +50,18 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Adiciona sombra */
 }
 
-.form-group {
+.adicionar-jogo-wrapper .form-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.form-group label {
+.adicionar-jogo-wrapper .form-group label {
     font-weight: bold;
 }
 
-.form-group input,
-.form-group select {
+.adicionar-jogo-wrapper .form-group input,
+.adicionar-jogo-wrapper .form-group select {
     padding: 10px;
     border: none;
     border-radius: 4px;
@@ -70,7 +70,7 @@
     font-size: 14px;
 }
 
-.submit-button {
+.adicionar-jogo-wrapper .submit-button {
     background-color: #ffcc00;
     color: #000000;
     padding: 10px 15px;
@@ -83,6 +83,6 @@
     transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
+.adicionar-jogo-wrapper .submit-button:hover {
     background-color: #e6b800;
 }
