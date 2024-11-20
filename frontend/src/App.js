@@ -1,4 +1,5 @@
 import Equipas from './views/equipas';
+import RelatorioAdicionar from './views/relatorio_adicionar';
 import { BrowserRouter as Router, Route, Link, Routes, useNavigate, useLocation } from "react-router-dom";
 import './App.css';
 
@@ -46,6 +47,7 @@ function App() {
         </div>
         <Routes>
           <Route path="/equipa/:tipo/:escalao" element={<Equipas />} />
+          <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
 
         </Routes>
       </div>
