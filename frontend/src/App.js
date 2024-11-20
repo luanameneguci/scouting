@@ -1,4 +1,5 @@
 import Equipas from './views/equipas';
+import AdicionarJogo from './views/adicionarjogo'; // Verifique o caminho correto
 import { BrowserRouter as Router, Route, Link, Routes, useNavigate, useLocation } from "react-router-dom";
 import './App.css';
 
@@ -46,8 +47,10 @@ function App() {
         </div>
         <Routes>
           <Route path="/equipa/:tipo/:escalao" element={<Equipas />} />
-
+          <Route path="/adicionarjogo" element={<AdicionarJogo />} />
+          
         </Routes>
+        
       </div>
     </Router>
 

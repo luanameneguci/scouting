@@ -1,0 +1,88 @@
+/* Layout Principal */
+.adicionar-jogo-wrapper {
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    min-height: 100vh; /* Ocupa toda a altura da página */
+    display: flex; /* Utiliza Flexbox para centralizar */
+    flex-direction: column; /* Organiza os elementos em coluna */
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    background-color: #000000;
+    padding: 10px;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.navbar-item {
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.navbar-item.active {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* Título */
+.page-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%; /* Alinha o texto na largura total */
+}
+
+/* Formulário */
+.form {
+    background-color: #333333;
+    padding: 30px;
+    border-radius: 8px;
+    display: grid;
+    gap: 20px;
+    width: 400px; /* Define uma largura fixa */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Adiciona sombra */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.submit-button {
+    background-color: #ffcc00;
+    color: #000000;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #e6b800;
+}
