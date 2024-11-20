@@ -9,7 +9,10 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
   String? selectedEscalao;
   String? selectedAtleta;
   String? selectedClube;
-  String? jogoSelecionado;
+  String? selectedJogo;
+  TextEditingController searchAtletaController = TextEditingController();
+  TextEditingController searchClubeController = TextEditingController();
+  TextEditingController searchJogoController = TextEditingController();
   int tecnica = 1;
   int velocidade = 3;
   int atitudeCompetitiva = 4;
@@ -18,6 +21,8 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
   String? morfologia = "Mesomorfo";
   bool isEscalaoDropdownOpen = false;
   bool isAtletaDropdownOpen = false;
+  bool isClubeDropdownOpen = false;
+  bool isJogosDropdownOpen = false;
 
   final Map<String, List<String>> jogosPorEscalao = {
     "Profissional": ["Porto x Benfica 19:30", "Sporting x Braga 20:30"],
@@ -30,9 +35,44 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
     "Sub 10": ["Time17 x Time18 11:00"]
   };
 
-  List<String> atletas = ["Fernando Machado", "Carlos Silva", "João Santos"]; // Lista inicial de atletas
+  List<String> atletas = ["Fernando Machado", "Carlos Silva", "João Santos", "André Pereira", "Miguel Oliveira", "Rui Costa", "Pedro Santos", "Luís Fernandes"];
+  List<String> clubes = ["Clube 1", "Clube 2", "Clube 3", "Clube 4", "Clube 5", "Clube 6", "Clube 7", "Clube 8"];
+  List<String> jogos = [];
 
-  List<String> jogos = []; // Lista de jogos do escalão selecionado
+  @override
+  void dispose() {
+    searchAtletaController.dispose();
+    searchClubeController.dispose();
+    searchJogoController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildSearchBar(TextEditingController controller, String hint, Function(String) onChanged) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: TextField(
+        controller: controller,
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(color: Colors.white54),
+          prefixIcon: Icon(Icons.search, color: Colors.white54),
+          filled: true,
+          fillColor: Colors.black45,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: EdgeInsets.symmetric(vertical: 8),
+        ),
+        onChanged: onChanged,
+      ),
+    );
+  }
+
+  String _truncateText(String text, {int maxLength = 10}) {
+    return text.length > maxLength ? '${text.substring(0, maxLength)}...' : text;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,107 +87,76 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Barra de filtros
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey[900],
                 borderRadius: BorderRadius.circular(8),
               ),
-              
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  // Linha de filtros principais
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Escalão
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isEscalaoDropdownOpen = !isEscalaoDropdownOpen;
-                          jogos = []; // Limpa os jogos ao abrir o dropdown
-                        });
-                      },
-                      child: _buildDropdownButton(
-                        selectedEscalao ?? "Escalão",
-                        width: 100,
-                      ),
-                    ),
-                     // Dropdown de Atletas
-    Container(
-      margin: EdgeInsets.only(top: 8),
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: [
-          ...atletas.map((atleta) {
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedAtleta = atleta;
-                  isAtletaDropdownOpen = false;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  atleta,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            );
-          }).toList(),
-          Divider(color: Colors.grey),
-          GestureDetector(
-            onTap: () {
-              // Lógica para criar novo jogador
-              // Adicione aqui a funcionalidade adicional se necessário
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Row(
-                children: [
-                  Icon(Icons.add, color: Colors.amber),
-                  SizedBox(width: 8),
-                  Text("Criar jogador", style: TextStyle(color: Colors.amber)),
-                ],
-              ),
-            ),
-          ),
-        ],
-      )
-    );
-  }
-                      // Clube
-                      _buildDropdown(
-                        selectedClube,
-                        "Clube",
-                        ["Clube 1", "Clube 2"],
-                        (value) {
-                          setState(() => selectedClube = value);
+                      // Escalão Dropdown Button
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isEscalaoDropdownOpen = true;
+                            isJogosDropdownOpen = false;
+                            isAtletaDropdownOpen = false;
+                            isClubeDropdownOpen = false;
+                          });
                         },
-                        width: 100,
+                        child: _buildDropdownButton(
+                          _truncateText(selectedEscalao ?? "Escalão", maxLength: 8),
+                          width: 100,
+                        ),
                       ),
-                    ]
+                      // Atleta Dropdown Button
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            searchAtletaController.clear();
+                            isAtletaDropdownOpen = true;
+                            isEscalaoDropdownOpen = false;
+                            isJogosDropdownOpen = false;
+                            isClubeDropdownOpen = false;
+                          });
+                        },
+                        child: _buildDropdownButton(
+                          _truncateText(selectedAtleta ?? "Atleta", maxLength: 8),
+                          width: 100,
+                        ),
+                      ),
+                      // Clube Dropdown Button
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            searchClubeController.clear();
+                            isClubeDropdownOpen = true;
+                            isEscalaoDropdownOpen = false;
+                            isJogosDropdownOpen = false;
+                            isAtletaDropdownOpen = false;
+                          });
+                        },
+                        child: _buildDropdownButton(
+                          _truncateText(selectedClube ?? "Clube", maxLength: 8),
+                          width: 100,
+                        ),
+                      ),
+                    ],
                   ),
-                 // Dropdown de Escalão ou Jogos
-          if (isEscalaoDropdownOpen || jogos.isNotEmpty)
-            Positioned(
-              top: 80, // Ajusta esta posição para alinhar com a barra de filtros
-              left: 16,
-              right: 16,
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[900],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: jogos.isEmpty
-                    ? Wrap(
+                  // Escalão Dropdown Content
+                  if (isEscalaoDropdownOpen)
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Wrap(
                         spacing: 8.0,
                         runSpacing: 8.0,
                         children: [
@@ -158,6 +167,9 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                                   selectedEscalao = escalao;
                                   jogos = jogosPorEscalao[escalao] ?? [];
                                   isEscalaoDropdownOpen = false;
+                                  isJogosDropdownOpen = true;
+                                  selectedJogo = null;
+                                  searchJogoController.clear();
                                 });
                               },
                               child: Container(
@@ -179,51 +191,205 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                               ),
                             ),
                         ],
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    ),
+                  // Jogos Dropdown Content
+                  if (isJogosDropdownOpen)
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
                         children: [
-                          for (var jogo in jogos)
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  jogoSelecionado = jogo;
-                                  jogos = []; // Fecha o dropdown
-                                });
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Text(
-                                  jogo,
-                                  style: TextStyle(
-                                    color: Colors.amber,
-                                    fontSize: 16,
+                          _buildSearchBar(
+                              searchJogoController, 'Pesquisar Jogo', (value) {
+                            setState(() {});
+                          }),
+                          Container(
+                            height: 200,
+                            child: ListView(
+                              children: jogos
+                                  .where((jogo) => jogo
+                                      .toLowerCase()
+                                      .contains(searchJogoController.text.toLowerCase()))
+                                  .take(5)
+                                  .map((jogo) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedJogo = jogo;
+                                      isJogosDropdownOpen = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 8),
+                                    margin: EdgeInsets.only(top: 4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      jogo,
+                                      style: TextStyle(color: Colors.white),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              }).toList(),
                             ),
+                          ),
                         ],
                       ),
+                    ),
+                  // Atleta Dropdown Content
+                  if (isAtletaDropdownOpen)
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          _buildSearchBar(
+                              searchAtletaController, 'Pesquisar Atleta', (value) {
+                            setState(() {});
+                          }),
+                          Container(
+                            height: 200,
+                            child: ListView(
+                              children: [
+                                ...atletas
+                                    .where((atleta) => atleta
+                                        .toLowerCase()
+                                        .contains(searchAtletaController.text.toLowerCase()))
+                                    .take(5)
+                                    .map((atleta) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedAtleta = atleta;
+                                        isAtletaDropdownOpen = false;
+                                      });
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 8),
+                                      margin: EdgeInsets.only(top: 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Text(
+                                        atleta,
+                                        style: TextStyle(color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                                Divider(color: Colors.grey),
+                                GestureDetector(
+                                  onTap: () {
+                                    // Lógica para criar novo jogador
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.add, color: Colors.amber),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        "Criar jogador",
+                                        style: TextStyle(color: Colors.amber),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  // Clube Dropdown Content
+                  if (isClubeDropdownOpen)
+                    Container(
+                      margin: EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          _buildSearchBar(
+                              searchClubeController, 'Pesquisar Clube', (value) {
+                            setState(() {});
+                          }),
+                          Container(
+                            height: 200,
+                            child: ListView(
+                              children: clubes
+                                  .where((clube) => clube
+                                      .toLowerCase()
+                                      .contains(searchClubeController.text.toLowerCase()))
+                                  .take(5)
+                                  .map((clube) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedClube = clube;
+                                      isClubeDropdownOpen = false;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 8),
+                                    margin: EdgeInsets.only(top: 4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      clube,
+                                      style: TextStyle(color: Colors.white),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
               ),
             ),
-        ],
-      ),
-    ),
-            
-            // Avaliações com número ao lado do título
+            // Rating Rows
             _buildRatingRow("Técnica", tecnica, (val) => setState(() => tecnica = val)),
-            _buildRatingRow("Velocidade", velocidade, (val) => setState(() => velocidade = val)),
-            _buildRatingRow("Atitude Competitiva", atitudeCompetitiva, (val) => setState(() => atitudeCompetitiva = val)),
-            _buildRatingRow("Inteligência", inteligencia, (val) => setState(() => inteligencia = val)),
-
-            // Altura e Morfologia
+            _buildRatingRow(
+                "Velocidade", velocidade, (val) => setState(() => velocidade = val)),
+            _buildRatingRow("Atitude Competitiva", atitudeCompetitiva,
+                (val) => setState(() => atitudeCompetitiva = val)),
+            _buildRatingRow("Inteligência", inteligencia,
+                (val) => setState(() => inteligencia = val)),
             SizedBox(height: 16),
-            _buildOptionRow("Altura", ["Baixo", "Médio", "Alto"], altura, (val) => setState(() => altura = val)),
-            _buildOptionRow("Morfologia", ["Ectomorfo", "Mesomorfo", "Endomorfo"], morfologia, (val) => setState(() => morfologia = val)),
-
-            // Notas
+            // Option Rows
+            _buildOptionRow("Altura", ["Baixo", "Médio", "Alto"], altura,
+                (val) => setState(() => altura = val)),
+            _buildOptionRow("Morfologia", ["Ectomorfo", "Mesomorfo", "Endomorfo"],
+                morfologia, (val) => setState(() => morfologia = val)),
             SizedBox(height: 16),
+            // Notes TextField
             TextField(
               maxLines: 4,
               decoration: InputDecoration(
@@ -238,9 +404,8 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
               ),
               style: TextStyle(color: Colors.white),
             ),
-
-            // Botão Confirmar
             SizedBox(height: 16),
+            // Confirm Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -248,9 +413,17 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  textStyle: TextStyle(fontSize: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
-                child: Text("Confirmar"),
+                child: Text(
+                  "Confirmar",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ],
@@ -259,7 +432,6 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
     );
   }
 
-  // Método para criar botão dropdown
   Widget _buildDropdownButton(String text, {double width = 120}) {
     return Container(
       width: width,
@@ -268,111 +440,23 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
         color: Colors.black,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        text.length > 15 ? "${text.substring(0, 15)}..." : text,
-        style: TextStyle(color: Colors.white),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-   // Dropdown de Atletas com opção de criar novo jogador
-  Widget _buildAtletaDropdown() {
-    return Container(
-      margin: EdgeInsets.only(top: 8),
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          for (var atleta in atletas)
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedAtleta = atleta;
-                  isAtletaDropdownOpen = false;
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                child: Text(
-                  atleta,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          Divider(color: Colors.grey),
-          GestureDetector(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              child: Row(
-                children: [
-                  Icon(Icons.add, color: Colors.amber),
-                  SizedBox(width: 8),
-                  Text(
-                    "Criar jogador",
-                    style: TextStyle(color: Colors.amber),
-                  ),
-                ],
-              ),
-            ),
+          Text(
+            text,
+            style: TextStyle(color: Colors.white),
+            overflow: TextOverflow.ellipsis,
+          ),
+          Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
           ),
         ],
       ),
     );
   }
 
-  // Método para criar botões uniformes
-  Widget _buildDropdownButton2(String text, {double width = 120}) {
-    return Container(
-      width: width,
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        text.length > 8 ? "${text.substring(0, 8)}..." : text,
-        style: TextStyle(color: Colors.white),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  // Método para dropdowns
-  Widget _buildDropdown(
-    String? selectedValue,
-    String hint,
-    List<String> options,
-    Function(String?) onChanged, {
-    double width = 120,
-  }) {
-    return DropdownButton<String>(
-      value: selectedValue,
-      hint: Text(hint, style: TextStyle(color: Colors.white)),
-      dropdownColor: Colors.black,
-      onChanged: onChanged,
-      items: options.map((e) {
-        return DropdownMenuItem(
-          value: e,
-          child: Text(
-            e.length > 8 ? "${e.substring(0, 8)}..." : e,
-            style: TextStyle(color: Colors.white),
-          ),
-        );
-      }).toList(),
-      style: TextStyle(color: Colors.white),
-      iconEnabledColor: Colors.white,
-      isDense: true,
-      underline: SizedBox(),
-      itemHeight: 48,
-      menuMaxHeight: 200,
-    );
-  }
-
-  // Método para avaliação de critérios
   Widget _buildRatingRow(String title, int rating, Function(int) onChanged) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -422,7 +506,6 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
     );
   }
 
-  // Método para opções de altura e morfologia
   Widget _buildOptionRow(String title, List<String> options, String? selectedOption, Function(String) onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
