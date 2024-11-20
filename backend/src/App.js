@@ -1,16 +1,20 @@
 const express = require('express');
+const homeRouter = require('./src/routes/home');
+const equipasRouter = require('./src/routes/equipas');
+
 const app = express();
+
+const port = 3000;
+
 //Configurações
 app.set('port', process.env.PORT || 3000);
 //Middlewares
 app.use(express.json());
-//Rotas
-app.use('/teste',(req,res)=>{
-res.send("Rota TESTE.");
+
+//Routers
+app.use('/', homeRouter);
+app.use('/equipa', equipasRouter);
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
-app.use('/',(req,res)=>{
-res.send("Hello World");
-});
-app.listen(app.get('port'),()=>{
-console.log("Start server on port "+app.get('port'))
-})
