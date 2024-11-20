@@ -155,9 +155,8 @@
 
 @media (max-aspect-ratio: 1.7 / 1) and (max-width: 768px) {
     .equipas-wrapper .sidebar .football-field {
-        width: 100%;
+        width: 80vw;
         height: 90vh;
-        margin: 0;
     }
 }
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom'; // Replaced useHistory with useNavigate
 import { setupContentNavbarMargin } from './utils';
 import './equipas.css';
 
@@ -40,18 +41,30 @@ const StarRating = ({ rating, setRating }) => {
 };
 
 export default function Equipas() {
+    const { idEquipa } = useParams();
+    const navigate = useNavigate(); // Replaced useHistory with useNavigate
     const [selectedRadio, setSelectedRadio] = useState(null);
     const [rating, setRating] = useState(0);
-    const [isFilterModalVisible, setIsFilterModalVisible] = useState(false); 
-    useEffect(() => {
+    const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+    const [isSombra, setIsSombra] = useState(false); // New state for "Própria" or "Sombra"
+    const [escalao, setEscalao] = useState(0); // New state for "escalão"
+
+    useEffect(() => { // Margem top depenendo da altura da navbar
         setupContentNavbarMargin('equipas-wrapper');
     }, []);
 
-    useEffect(() => {
+    useEffect(() => { // Quando, nos filtros, o rating é alterado
         console.log(`Current rating: ${rating}`);
     }, [rating]);
 
-    const handleRadioClick = (value) => {
+    useEffect(() => { // Quando o isSombra ou o escalao é alterado
+        // Falta a função para que quando o utilize altere o escalao ou o isSombra, encontrar o id da equipa e atualizar a página com a info da mesma
+        if (idEquipa) {
+            navigate(`/equipa/${idEquipa}`); // Navigate to the current idEquipa
+        }
+    }, [isSombra, escalao]);
+
+    const handleRadioClick = (value) => { //Radio das opções de posição (ATA, MED, DEF, GR)
         if (selectedRadio === value) {
             setSelectedRadio(null);
             console.log(`Deselected: ${value}`);
@@ -61,9 +74,9 @@ export default function Equipas() {
         }
     };
 
-    const handleFilterButtonClick = (event) => {
-        event.preventDefault(); // Prevent default form submission
-        setIsFilterModalVisible(!isFilterModalVisible); // Toggle modal visibility
+    const handleFilterButtonClick = (event) => { // Abrir e fechar o modal de filtros
+        event.preventDefault();
+        setIsFilterModalVisible(!isFilterModalVisible);
     };
 
 
@@ -73,18 +86,19 @@ export default function Equipas() {
                 <div className='field-options'>
                     <h1>Equipas</h1>
                     <div className='equipa-switch'>
-                        <span className="switch-label">Sombra</span>
-
+                        <span className="switch-label">{isSombra ? 'Sombra' : 'Própria'}</span>
                         <label className="switch">
-                            <input type="checkbox" />
+                            <input type="checkbox" onChange={() => {
+                                setIsSombra(!isSombra);
+                            }} checked={isSombra} />
                             <span className="slider round"></span>
                         </label>
                     </div>
                     <div className="dropdown-container">
-                        <select className="dropdown">
-                            <option value="seniores">Séniores</option>
-                            <option value="sub-18">SUB-18</option>
-                            <option value="sub-17">SUB-17</option>
+                        <select className="dropdown" value={escalao} onChange={(e) => setEscalao(parseInt(e.target.value))}>
+                            <option value={0}>Séniores</option>
+                            <option value={1}>SUB-18</option>
+                            <option value={2}>SUB-17</option>
                         </select>
                     </div>
                 </div>
@@ -134,6 +148,7 @@ export default function Equipas() {
                         <button className='filter-button rounded' onClick={handleFilterButtonClick}>Filtrar</button>
                     </div>
                     <div className='radio-buttons'>
+                        <label htmlFor="atacantes" className="font-bold">ATA</label>
                         <input
                             type="radio"
                             className="radio-input"
@@ -141,8 +156,8 @@ export default function Equipas() {
                             checked={selectedRadio === 'atacantes'}
                             onClick={() => handleRadioClick('atacantes')}
                         />
-                        <label htmlFor="atacantes" className="font-bold">ATA</label>
 
+                        <label htmlFor="medios" className="font-bold">MED</label>
                         <input
                             type="radio"
                             className="radio-input"
@@ -150,8 +165,8 @@ export default function Equipas() {
                             checked={selectedRadio === 'medios'}
                             onClick={() => handleRadioClick('medios')}
                         />
-                        <label htmlFor="medios" className="font-bold">MED</label>
 
+                        <label htmlFor="defesas" className="font-bold">DEF</label>
                         <input
                             type="radio"
                             className="radio-input"
@@ -159,8 +174,8 @@ export default function Equipas() {
                             checked={selectedRadio === 'defesas'}
                             onClick={() => handleRadioClick('defesas')}
                         />
-                        <label htmlFor="defesas" className="font-bold">DEF</label>
 
+                        <label htmlFor="redes" className="font-bold">GR</label>
                         <input
                             type="radio"
                             className="radio-input"
@@ -168,7 +183,6 @@ export default function Equipas() {
                             checked={selectedRadio === 'redes'}
                             onClick={() => handleRadioClick('redes')}
                         />
-                        <label htmlFor="redes" className="font-bold">GR</label>
                     </div>
                 </div>
                 <div className='table-container'>

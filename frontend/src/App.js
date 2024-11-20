@@ -47,7 +47,7 @@ function App() {
           <div><div>utilizador</div></div>
         </div>
         <Routes>
-          <Route path="/equipa/:tipo/:escalao" element={<Equipas />} />
+          <Route path="/equipa/:idEquipa" element={<Equipas />} />
         HEAD
           <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
         </Routes>
