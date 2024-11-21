@@ -1,6 +1,7 @@
 const express = require('express');
-const homeRouter = require('./src/routes/home');
-const equipasRouter = require('./src/routes/equipas');
+const homeRouter = require('./routes/home.js');
+const equipasRouter = require('./routes/equipas.js');
+/* const  tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(express.json());
 //Routers
 app.use('/', homeRouter);
 app.use('/equipa', equipasRouter);
+/* app.use('/tipoEquipa', tipoEquipasRouter); */
+
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

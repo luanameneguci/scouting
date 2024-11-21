@@ -2,10 +2,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Equipas Page');
-});
+const EquipaController = require("../controllers/EquipaController.js");
 
+router.get("/", EquipaController.equipa_list); 
 /*
 Precisa de:
  - GET /:tipo/escaloes - Todos os escalões das equipas (prop e sombra dep)
