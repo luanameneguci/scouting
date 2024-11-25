@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './adicionarjogo.css'; // Supondo que você tenha esse arquivo de estilo
+import { setupContentNavbarMargin } from './utils';
 
 export default function AdicionarJogo() {
     const [formData, setFormData] = useState({
@@ -7,7 +8,8 @@ export default function AdicionarJogo() {
         clube2: '',
         data: '',
         hora: '',
-        treinador: ''
+        treinador: '',
+        escalão: ''  // Adicionando estado para o escalão
     });
 
     const handleChange = (e) => {
@@ -19,6 +21,10 @@ export default function AdicionarJogo() {
         e.preventDefault();
         console.log("Dados do Formulário:", formData);
     };
+
+    useEffect(() => { // Margem top dependendo da altura da navbar
+        setupContentNavbarMargin('adicionar-jogo-wrapper');
+    }, []);
 
     return (
         <div className="adicionar-jogo-wrapper">
@@ -72,6 +78,29 @@ export default function AdicionarJogo() {
                         value={formData.hora}
                         onChange={handleChange}
                     />
+                </div>
+
+                {/* Campo de Escalão */}
+                <div className="form-group">
+                    <label htmlFor="escalao">Escalão</label>
+                    <select
+                        name="escalao"
+                        id="escalao"
+                        value={formData.escalão}
+                        onChange={handleChange}
+                    >
+                        <option value="">Selecione</option>
+                        <option value="Escalão A"> Sub-10</option>
+                        <option value="Escalão B"> Sub-11</option>
+                        <option value="Escalão C"> Sub-12 A</option>
+                        <option value="Escalão D"> Sub-12 B</option>
+                        <option value="Escalão E"> Sub-13</option>
+                        <option value="Escalão F"> Sub-14</option>
+                        <option value="Escalão G"> Sub-16 A</option>
+                        <option value="Escalão H"> Sub-16 B</option>
+                        <option value="Escalão I"> Sub-19</option>
+                        <option value="Escalão J"> Sub-23</option>
+                    </select>
                 </div>
 
                 <div className="form-group">
