@@ -5,10 +5,10 @@ const equipasRouter = require('./routes/equipas.js');
 
 const app = express();
 
-const port = 3000;
+const port = 8080;
 
 //Configurações
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 //Middlewares
 app.use(express.json());
 
