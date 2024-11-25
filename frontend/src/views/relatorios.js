@@ -1,5 +1,5 @@
 import React from 'react';
-import './relatorios.css'; // Arquivo de estilos
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 
 const Relatorios = () => {
   const handleAction = (action, id) => {
