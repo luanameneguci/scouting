@@ -1,17 +1,18 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import Equipas from './views/equipas';
 import Atletas from './views/atletas';
 import RelatorioAdicionar from './views/relatorio_adicionar';
 import Adicionarjogo from './views/adicionarjogo';
-import Relatorios from './views/relatorios';
-import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap para elementos estruturais
+import './App.css'; 
 
 function App() {
   return (
     <Router>
-      <div className='wrapper'>
-        <div className='navbar'>
+      <div>
+        {/* Navbar fixa no topo */}
+        <div className="navbar fixed-top">
           <NavLink to="/" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
             <span className="material-symbols-outlined icon">
               home
@@ -49,14 +50,16 @@ function App() {
           </NavLink>
           <div><div>utilizador</div></div>
         </div>
-        <Routes>
-          <Route path="/equipa/:idEquipa" element={<Equipas />} />
-          <Route path="/atletas" element={<Atletas />} /> {/* Adicionada a rota para a página de Atletas */}
-          <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
-          <Route path="/relatorios" element={<Relatorios/>} />
-          <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
-        </Routes>
 
+        {/* Espaçamento para o conteúdo não ser escondido pela navbar */}
+        <div className="wrapper" style={{ marginTop: '70px' }}>
+          <Routes>
+            <Route path="/equipa/:idEquipa" element={<Equipas />} />
+            <Route path="/atletas" element={<Atletas />} />
+            <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
+            <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );
