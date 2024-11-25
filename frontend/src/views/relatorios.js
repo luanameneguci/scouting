@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 
-const App = () => {
+const Relatorios = () => {
   const handleAction = (action, id) => {
     alert(`Ação: ${action}, ID: ${id}`);
   };
@@ -75,4 +75,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Relatorios;

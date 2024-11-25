@@ -10,6 +10,6 @@ router.post("/criar", JogoController.criar);
 
 router.delete("/apagar/:id_jogo", JogoController.apagar);
 
-router.get("/:id_jogo", JogoController.listarPorAtleta);
+router.get("/:id_atleta", JogoController.listarPorAtleta);
 
 module.exports = router;

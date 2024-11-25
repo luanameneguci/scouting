@@ -6,6 +6,7 @@ import RelatorioAdicionar from './views/relatorio_adicionar';
 import Adicionarjogo from './views/adicionarjogo';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap para elementos estruturais
 import './App.css'; 
+import Relatorios from './views/relatorios';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
             <Route path="/atletas" element={<Atletas />} />
             <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
             <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
+            <Route path='/relatorios' element={<Relatorios />} />
           </Routes>
         </div>
       </div>
