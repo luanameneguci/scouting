@@ -5,6 +5,7 @@ import Adicionarjogo from './views/adicionarjogo';
 import Relatorios from './views/relatorios';
 import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
