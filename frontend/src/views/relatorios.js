@@ -23,7 +23,7 @@ const Relatorios = () => {
           />
           <button className="reports-add-button">Adicionar</button>
         </div>
-        <table className="reports-table">
+        <table className="reports-table rounded bg-color-gray-800">
           <thead>
             <tr>
               <th>ID</th>
@@ -47,7 +47,7 @@ const Relatorios = () => {
                       : "reports-status-false"
                   }
                 >
-                  {report.confirmed ? "✔" : "!"}
+                  {report.confirmed ? "✓" : <span className="material-symbols-outlined icon">error</span>}
                 </td>
                 <td>{report.athlete}</td>
                 <td>{report.date}</td>

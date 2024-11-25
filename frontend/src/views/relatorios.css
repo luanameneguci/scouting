@@ -1,7 +1,6 @@
-
-  /* Container principal */
   .reports-container {
     padding: 20px;
+    width: 100%;
   }
   
   /* Barra de ferramentas */
@@ -9,64 +8,66 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    
   }
   
   .reports-search-input {
     padding: 10px;
     width: 300px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    background-color: #2a2a2a;
-    color: white;
+    border: 1px solid var(--gray-700-color);
+    background-color: var(--gray-800-color);
+    color: var(--white-color);
+    border-radius: 9999px;
   }
   
   .reports-add-button {
-    padding: 10px 20px;
-    background-color: yellow;
+    padding: 10px 30px;
+    background-color: var(--accent-color);
     border: none;
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
+    color: var(--black-color);
+    transition: .3s;
+    border-radius: 9999px;
+
   }
   
   .reports-add-button:hover {
-    background-color: #ffcc00;
+    background-color: var(--light-accent-color);
   }
   
   /* Tabela */
   .reports-table {
     width: 100%;
     border-collapse: collapse;
+    overflow: hidden;
   }
   
   .reports-table thead th {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #444;
-    background-color: #2a2a2a;
+    border-bottom: 1px solid var(--gray-700-color);
   }
   
   .reports-table tbody td {
     padding: 10px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid var(--gray-700-color);
   }
   
-  .reports-table tbody tr:nth-child(even) {
-    background-color: #222;
-  }
-  
+
   /* Estilos de status */
   .reports-status-true {
-    color: green;
+    color: var(--green-color);
   }
   
-  .reports-status-false {
-    color: orange;
+  .reports-status-false span {
+    color: orange!important;
   }
   
   /* Botões de ações */
   .reports-actions-button {
-    color: white;
+    color: var(--white-color);
     background: none;
     border: none;
     cursor: pointer;
@@ -78,15 +79,11 @@
     text-decoration: underline;
   }
   
-  .reports-actions-view {
-    color: blue;
-  }
-  
   .reports-actions-transfer {
-    color: yellow;
+    color: var(--blue-color);
   }
   
   .reports-actions-remove {
-    color: red;
+    color: var(--red-color);
   }
   
