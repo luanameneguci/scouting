@@ -4,6 +4,7 @@ import RelatorioValidar from './views/relatorioValidar';
 import Adicionarjogo from './views/adicionarjogo';
 import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import './App.css';
+import Relatorios from './views/relatorios';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/atletas" element={<Atletas />} /> {/* Adicionada a rota para a página de Atletas */}
           <Route path="/relatorio/validar" element={<RelatorioValidar />} />
           <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
+          <Route path="/relatorios" element={<Relatorios />} />
         </Routes>
 
       </div>
