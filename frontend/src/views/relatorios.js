@@ -1,7 +1,7 @@
 import React from 'react';
 import './relatorios.css'; // Arquivo de estilos
 
-const App = () => {
+const Relatorios = () => {
   const handleAction = (action, id) => {
     alert(`Ação: ${action}, ID: ${id}`);
   };
@@ -83,4 +83,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Relatorios;
