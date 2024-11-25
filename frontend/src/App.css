@@ -135,8 +135,25 @@ input::placeholder {
   color: var(--gray-800-color);
 }
 
+.navbar a {
+  color: #fff; /* Cor branca para os links */
+  text-decoration: none; /* Remover sublinhado */
+}
+
 
 .navbar>*:last-child {
   flex: 1;
   text-align: end;
+}
+
+body {
+  background-color: #333; /* Cor acinzentada */
+  color: #fff; /* Texto branco para contraste */
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  background-color: #333; /* Fundo acinzentado */
+  min-height: 100vh; /* Garantir que o fundo cubra toda a altura */
 }
