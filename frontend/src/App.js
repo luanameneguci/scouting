@@ -4,6 +4,7 @@ import RelatorioAdicionar from './views/relatorio_adicionar';
 import Adicionarjogo from './views/adicionarjogo';
 import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
