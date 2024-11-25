@@ -1,5 +1,6 @@
 import Equipas from './views/equipas';
 import RelatorioAdicionar from './views/relatorio_adicionar';
+import Adicionarjogo from './views/adicionarjogo';
 import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import './App.css';
 
@@ -50,7 +51,9 @@ function App() {
           <Route path="/equipa/:idEquipa" element={<Equipas />} />
         HEAD
           <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
+          <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         </Routes>
+
       </div>
     </Router>
   );
