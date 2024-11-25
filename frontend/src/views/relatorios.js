@@ -13,64 +13,72 @@ const Relatorios = () => {
   ];
 
   return (
-    <div className="container mt-4">
-      <div className="d-flex justify-content-between mb-3">
-        <input
-          type="text"
-          placeholder="Pesquisar por nome de atleta"
-          className="form-control w-50"
-        />
-        <button className="btn btn-warning">Adicionar</button>
-      </div>
-      <table className="table table-dark table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Confirmado</th>
-            <th>Atleta</th>
-            <th>Data e Hora</th>
-            <th>Treinador</th>
-            <th>Clube (casa)</th>
-            <th>Clube (fora)</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reports.map((report) => (
-            <tr key={report.id}>
-              <td>{report.id}</td>
-              <td className={report.confirmed ? "text-success" : "text-warning"}>
-                {report.confirmed ? "✔" : "!"}
-              </td>
-              <td>{report.athlete}</td>
-              <td>{report.date}</td>
-              <td>{report.coach}</td>
-              <td>{report.homeClub}</td>
-              <td>{report.awayClub}</td>
-              <td>
-                <button
-                  className="btn btn-link text-primary p-0"
-                  onClick={() => handleAction("Ver", report.id)}
-                >
-                  Ver
-                </button>
-                <button
-                  className="btn btn-link text-warning p-0"
-                  onClick={() => handleAction("Transferir", report.id)}
-                >
-                  Transferir
-                </button>
-                <button
-                  className="btn btn-link text-danger p-0"
-                  onClick={() => handleAction("Remover", report.id)}
-                >
-                  Remover
-                </button>
-              </td>
+    <div className="reports-container">
+      <main>
+        <div className="reports-toolbar">
+          <input
+            type="text"
+            placeholder="Pesquisar por nome de atleta"
+            className="reports-search-input"
+          />
+          <button className="reports-add-button">Adicionar</button>
+        </div>
+        <table className="reports-table rounded bg-color-gray-800">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Confirmado</th>
+              <th>Atleta</th>
+              <th>Data e Hora</th>
+              <th>Treinador</th>
+              <th>Clube (casa)</th>
+              <th>Clube (fora)</th>
+              <th>Ações</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {reports.map((report) => (
+              <tr key={report.id}>
+                <td>{report.id}</td>
+                <td
+                  className={
+                    report.confirmed
+                      ? "reports-status-true"
+                      : "reports-status-false"
+                  }
+                >
+                  {report.confirmed ? "✓" : <span className="material-symbols-outlined icon">error</span>}
+                </td>
+                <td>{report.athlete}</td>
+                <td>{report.date}</td>
+                <td>{report.coach}</td>
+                <td>{report.homeClub}</td>
+                <td>{report.awayClub}</td>
+                <td>
+                  <button
+                    className="reports-actions-button reports-actions-view"
+                    onClick={() => handleAction("Ver", report.id)}
+                  >
+                    Ver
+                  </button>
+                  <button
+                    className="reports-actions-button reports-actions-transfer"
+                    onClick={() => handleAction("Transferir", report.id)}
+                  >
+                    Transferir
+                  </button>
+                  <button
+                    className="reports-actions-button reports-actions-remove"
+                    onClick={() => handleAction("Remover", report.id)}
+                  >
+                    Remover
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </main>
     </div>
   );
 };
