@@ -1,73 +1,109 @@
+.add-relatorio-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: transparent; /* Remove o fundo do retângulo */
+  border-radius: 8px;
+}
 
-  .add-relatorio-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 8px;
-  }
-  
-  .add-relatorio-container .form-section {
-    margin-bottom: 20px;
-  }
-  
-  .add-relatorio-container h2 {
-    color: #ffc107;
-    margin-bottom: 10px;
-  }
-  
-  .add-relatorio-container .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .add-relatorio-container .form-row {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .add-relatorio-container .form-row .form-group {
-    flex: 1;
-    margin-right: 10px;
-  }
-  
-  .add-relatorio-container .form-row .form-group:last-child {
-    margin-right: 0;
-  }
-  
-  .add-relatorio-container label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-  }
-  
-  .add-relatorio-container input,
-  .add-relatorio-container select {
-    width: 100%;
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .add-relatorio-container input:disabled,
-  .add-relatorio-container select:disabled {
-    background-color: #555;
-    color: #aaa;
-  }
-  
-  .add-relatorio-container .btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #ffc107;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #000;
-    cursor: pointer;
-  }
-  
-  .add-relatorio-container .btn:hover {
-    background-color: #e0a800;
-  }
-  
+.add-relatorio-container .form-section {
+  margin-bottom: 20px;
+}
+
+.add-relatorio-container h2 {
+  color: #ffc107;
+  margin-bottom: 10px;
+}
+
+.add-relatorio-container .novo-atleta-section {
+  position: relative;
+}
+
+.add-relatorio-container .novo-atleta-header {
+  margin-bottom: 10px;
+}
+
+.add-relatorio-container .novo-atleta-line {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.add-relatorio-container .novo-atleta-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-relatorio-container .novo-atleta-title {
+  color: white; /* Muda a cor do título "Novo atleta" para branco */
+  margin: 0;
+}
+
+.add-relatorio-container .toggle-icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.add-relatorio-container .toggle-icon.expanded {
+  transform: rotate(0deg);
+}
+
+.add-relatorio-container .toggle-icon.collapsed {
+  transform: rotate(180deg);
+}
+
+.add-relatorio-container .form-group {
+  margin-bottom: 15px;
+}
+
+.add-relatorio-container .form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-relatorio-container .form-row .form-group {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.add-relatorio-container .form-row .form-group:last-child {
+  margin-right: 0;
+}
+
+.add-relatorio-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.add-relatorio-container input,
+.add-relatorio-container select {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.add-relatorio-container input:disabled,
+.add-relatorio-container select:disabled {
+  background-color: #555;
+  color: #aaa;
+}
+
+.add-relatorio-container .btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #ffc107;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+}
+
+.add-relatorio-container .btn:hover {
+  background-color: #e0a800;
+}
