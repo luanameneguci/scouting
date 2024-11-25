@@ -109,6 +109,9 @@ input::placeholder {
   width: 100vw;
   position: fixed;
   z-index: 9999;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
 .navbar>*:not(:last-child) {
@@ -135,8 +138,25 @@ input::placeholder {
   color: var(--gray-800-color);
 }
 
+.navbar a {
+  color: #fff; /* Cor branca para os links */
+  text-decoration: none; /* Remover sublinhado */
+}
+
 
 .navbar>*:last-child {
   flex: 1;
   text-align: end;
+}
+
+body {
+  background-color:  var(--gray-800-color);
+  color: #fff; /* Texto branco para contraste */
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  background-color:  var(--gray-800-color);
+  min-height: 100vh; /* Garantir que o fundo cubra toda a altura */
 }
