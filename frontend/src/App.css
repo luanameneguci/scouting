@@ -71,7 +71,7 @@ input::placeholder {
 }
 
 .rounded {
-  border-radius: .8rem;
+  border-radius: .8rem!important;
 }
 
 .rounded-pill {
@@ -109,6 +109,9 @@ input::placeholder {
   width: 100vw;
   position: fixed;
   z-index: 9999;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
 .navbar>*:not(:last-child) {
@@ -135,8 +138,23 @@ input::placeholder {
   color: var(--gray-800-color);
 }
 
+.navbar a {
+  color: #fff; 
+  text-decoration: none; 
+}
 
 .navbar>*:last-child {
   flex: 1;
   text-align: end;
+}
+
+body {
+  background-color:  var(--gray-700-color);
+  color: #fff; 
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  background-color:  var(--gray-700-color);
 }

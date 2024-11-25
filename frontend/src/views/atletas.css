@@ -1,0 +1,90 @@
+.searchbar {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background-color: #343a40; /* Cor de fundo escura */
+    width: clamp(10rem, 80%, 22rem); /* Largura adaptativa */
+    justify-content: space-between;
+  }
+  
+  .searchbar input {
+    border: none;
+    background-color: transparent;
+    padding: 0.5rem;
+    flex: 1;
+    color: #fff; /* Texto branco */
+  }
+  
+  .searchbar input::placeholder {
+    color: #ccc; /* Cor do placeholder */
+  }
+  
+  .searchbar input:focus {
+    outline: none;
+  }
+  
+  .searchbar .icon {
+    color: #aaa; /* Cor do ícone */
+  }
+  
+
+  .table-container {
+    margin-top: 1rem;
+  }
+  
+  .table-wrapper {
+    border-radius: 8px;
+    overflow: hidden; /* Remove bordas fora do container */
+  }
+  
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #343a40; /* Fundo escuro */
+    color: #fff; /* Texto branco */
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    text-align: left; /* Alinhamento padrão */
+    border: 1px solid #555; /* Borda sutil */
+  }
+  
+  .table th {
+    text-align: center; /* Alinhamento centralizado para cabeçalhos */
+    background-color: #212529; /* Fundo diferenciado */
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #2d3238; /* Listras alternadas */
+  }
+  
+  .table tr:hover {
+    background-color: #3a3f44; /* Fundo ao passar o mouse */
+  }
+  
+  .table img {
+    border-radius: 4px; /* Borda arredondada para bandeiras */
+  }
+  
+  .table .text-secondary {
+    color: #aaa; /* Texto secundário */
+  }
+  
+  .table .btn-sm {
+    font-size: 0.85rem; /* Botões menores */
+    padding: 0.3rem 0.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .table-wrapper {
+      overflow-x: auto; /* Permite scroll horizontal em telas menores */
+    }
+  
+    .searchbar {
+      width: 100%; /* Barra de busca ocupa largura total */
+    }
+  }
+  

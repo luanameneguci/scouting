@@ -1,10 +1,12 @@
 import Equipas from './views/equipas';
-import RelatorioAdicionar from './views/relatorio_adicionar';
+import Atletas from './views/atletas';
+import RelatorioValidar from './views/relatorioValidar';
+import Adicionarjogo from './views/adicionarjogo';
 import { BrowserRouter as Router, Route, NavLink, Routes } from "react-router-dom";
 import './App.css';
+import Relatorios from './views/relatorios';
 
 function App() {
-  
   return (
     <Router>
       <div className='wrapper'>
@@ -48,9 +50,12 @@ function App() {
         </div>
         <Routes>
           <Route path="/equipa/:idEquipa" element={<Equipas />} />
-        HEAD
-          <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
+          <Route path="/atletas" element={<Atletas />} /> {/* Adicionada a rota para a página de Atletas */}
+          <Route path="/relatorio/validar" element={<RelatorioValidar />} />
+          <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
+          <Route path="/relatorios" element={<Relatorios />} />
         </Routes>
+
       </div>
     </Router>
   );
