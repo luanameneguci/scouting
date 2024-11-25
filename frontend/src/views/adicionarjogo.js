@@ -31,6 +31,20 @@ export default function AdicionarJogo() {
             <h1 className="page-title">Jogos / Adicionar Jogo</h1>
 
             <form className="form" onSubmit={handleSubmit}>
+            <div className="form-group">
+                    <label htmlFor="clube1">Atleta</label>
+                    <select
+                        name="Atleta 1"
+                        id="1"
+                        value={formData.clube1}
+                        onChange={handleChange}
+                    >
+                        <option value="">Selecione</option>
+                        <option value="Clube A">Atleta A</option>
+                        <option value="Clube B">Atleta B</option>
+                    </select>
+                </div>
+        
                 <div className="form-group">
                     <label htmlFor="clube1">Clube 1</label>
                     <select
