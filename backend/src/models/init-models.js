@@ -35,10 +35,10 @@ function initModels(sequelize) {
   var funcao = _funcao(sequelize, DataTypes);
   var jogo = _jogo(sequelize, DataTypes);
   var nacionalidade = _nacionalidade(sequelize, DataTypes);
-  var notificacoes = _notificacoes(sequelize, DataTypes);
-  var relatorio = _relatorio(sequelize, DataTypes);
   var tipoutilizador = _tipoutilizador(sequelize, DataTypes);
   var utilizador = _utilizador(sequelize, DataTypes);
+  var notificacoes = _notificacoes(sequelize, DataTypes);
+  var relatorio = _relatorio(sequelize, DataTypes);
   
   // Initialize junction tables
   var EquipaAtleta = _EquipaAtleta(sequelize, DataTypes);
@@ -123,13 +123,13 @@ function initModels(sequelize) {
     funcao,
     jogo,
     nacionalidade,
-    notificacoes,
     posicao,
     relatorio,
     statusatleta,
     tipoequipa,
     tipoutilizador,
     utilizador,
+    notificacoes,
     EquipaAtleta,
     EscalaoDivisao,
     JogoAtleta,
