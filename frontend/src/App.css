@@ -139,10 +139,9 @@ input::placeholder {
 }
 
 .navbar a {
-  color: #fff; /* Cor branca para os links */
-  text-decoration: none; /* Remover sublinhado */
+  color: #fff; 
+  text-decoration: none; 
 }
-
 
 .navbar>*:last-child {
   flex: 1;
@@ -150,13 +149,12 @@ input::placeholder {
 }
 
 body {
-  background-color:  var(--gray-800-color);
-  color: #fff; /* Texto branco para contraste */
+  background-color:  var(--gray-700-color);
+  color: #fff; 
   margin: 0;
   padding: 0;
 }
 
 .wrapper {
-  background-color:  var(--gray-800-color);
-  min-height: 100vh; /* Garantir que o fundo cubra toda a altura */
+  background-color:  var(--gray-700-color);
 }
