@@ -5,7 +5,7 @@ import Atletas from './views/atletas';
 import RelatorioAdicionar from './views/relatorio_adicionar';
 import Adicionarjogo from './views/adicionarjogo';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap para elementos estruturais
-import './App.css'; // Seus estilos personalizados
+import './App.css'; 
 
 function App() {
   return (
