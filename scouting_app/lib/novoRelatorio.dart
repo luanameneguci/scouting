@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/relatorios.dart';
 
 class RelatorioScreen extends StatefulWidget {
   @override
@@ -409,7 +410,12 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RelatoriosPage()),
+              );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   padding: EdgeInsets.symmetric(vertical: 16),
