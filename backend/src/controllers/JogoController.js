@@ -52,19 +52,46 @@ controllers.criar = async (req, res) => {
       }
     };  
 
-controllers.listarPorAtleta = async (req, res) => {
-  const { id_atleta } = req.params;
-  const data = await Relatorio.findAll({
-    where: { id_atleta: id_atleta },
-  })
-    .then(function (data) {
-      return data;
-    })
-    .catch((error) => {
-      return error;
-    });
-  res.json({ success: true, data: data });
-};
+    controllers.listarPorAtleta = async (req, res) => {
+        const { id } = req.params;
+      
+        try {
+          // Fetch the game
+          const jogo = await Jogo.findAll({
+            where: { id_atleta: id },
+            include: [
+              {
+                model: JogoAtleta,
+                include: [{ model: Atleta, attributes: ['id_atleta', 'nome'] }],
+              },
+              {
+                model: JogoClube,
+                include: [{ model: Clube, attributes: ['id_clube', 'nome'] }],
+              },
+            ],
+          });
+      
+          if (!jogo) {
+            return res.status(404).json({
+              success: false,
+              message: "Game not found",
+            });
+          }
+      
+          res.status(200).json({
+            success: true,
+            data: jogo,
+          });
+        } catch (error) {
+          console.error("Erro:", error);
+          res.status(500).json({
+            success: false,
+            message: "Failed to fetch game details.",
+            error: error.message,
+          });
+        }
+      };
+      
 
 controllers.listar = async (req, res) => {
   const data = await Relatorio.findAll({})
@@ -88,3 +115,32 @@ controllers.apagar = async (req, res) => {
 };
 
 module.exports = controllers;
+/* 
+const { Atleta, Jogo } = require('../models'); // Adjust model paths as needed
+
+async function findGamesForAthlete(athleteId) {
+  try {
+    // Find the athlete and include related games
+    const athlete = await Atleta.findByPk(athleteId, {
+      include: [
+        {
+          model: Jogo,
+          as: "id_jogo_jogos", // Alias defined in your `belongsToMany` for Atleta -> Jogo
+        },
+      ],
+    });
+
+    if (!athlete) {
+      return console.log("Athlete not found");
+    }
+
+    // Display the games
+    console.log("Athlete's Games:", athlete.id_jogo_jogos); // Access via alias
+  } catch (error) {
+    console.error("Error fetching games for athlete:", error);
+  }
+}
+
+// Call the function with an athlete's ID
+findGamesForAthlete(101); // Replace with a valid athlete ID
+ */
