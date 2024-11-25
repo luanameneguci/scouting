@@ -15,9 +15,42 @@
   margin-bottom: 10px;
 }
 
+.add-relatorio-container .novo-atleta-section {
+  position: relative;
+}
+
+.add-relatorio-container .novo-atleta-header {
+  margin-bottom: 10px;
+}
+
+.add-relatorio-container .novo-atleta-line {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.add-relatorio-container .novo-atleta-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .add-relatorio-container .novo-atleta-title {
   color: white; /* Muda a cor do título "Novo atleta" para branco */
-  margin-bottom: 30px; /* Adiciona espaço maior entre o título e o próximo campo */
+  margin: 0;
+}
+
+.add-relatorio-container .toggle-icon {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.add-relatorio-container .toggle-icon.expanded {
+  transform: rotate(0deg);
+}
+
+.add-relatorio-container .toggle-icon.collapsed {
+  transform: rotate(180deg);
 }
 
 .add-relatorio-container .form-group {

@@ -1,0 +1,94 @@
+.athlete-table {
+    width: 100%;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    background-color: #222;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  .search-input {
+    width: 60%;
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .add-button {
+    padding: 8px 16px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    background-color: #ffdd33;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #333;
+  }
+  
+  .table tr:nth-child(odd) {
+    background-color: #2a2a2a;
+  }
+  
+  .table td img.flag-icon {
+    width: 20px;
+    height: 14px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  .action-button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9em;
+    cursor: pointer;
+  }
+  
+  .action-button.add {
+    background-color: #ffcc00;
+    color: #000;
+  }
+  
+  .action-button.add:hover {
+    background-color: #ffdd33;
+  }
+  
+  .action-button.remove {
+    background-color: #ff6666;
+    color: #fff;
+  }
+  
+  .action-button.remove:hover {
+    background-color: #ff9999;
+  }
+  
