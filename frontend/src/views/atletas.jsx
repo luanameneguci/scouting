@@ -44,10 +44,9 @@ export default function Atletas() {
               <span role="img" aria-label="Portugal">🇵🇹</span> Portugal
             </td>
             <td className="text-left action-column">
-                <button className="action-button remove">
-                  Remover
-                </button>
-              </td>
+              <button className="action-button remove">Remover</button>
+              <button className="action-button profile">Perfil</button>
+            </td>
           </tr>
           <tr>
             <td className="text-left">Inativo</td>
@@ -60,10 +59,9 @@ export default function Atletas() {
               <span role="img" aria-label="Portugal">🇵🇹</span> Portugal
             </td>
             <td className="text-left action-column">
-                <button className="action-button remove">
-                  Remover
-                </button>
-              </td>
+              <button className="action-button remove">Remover</button>
+              <button className="action-button profile">Perfil</button>
+            </td>
           </tr>
           <tr>
             <td className="text-left">Ativo</td>
@@ -76,12 +74,8 @@ export default function Atletas() {
               <span role="img" aria-label="Portugal">🇵🇹</span> Portugal
             </td>
             <td className="text-left action-column">
-              <td className="text-left action-column">
-                <button className="action-button remove">
-                  Remover
-                </button>
-              </td>
-
+              <button className="action-button remove">Remover</button>
+              <button className="action-button profile">Perfil</button>
             </td>
           </tr>
         </tbody>
