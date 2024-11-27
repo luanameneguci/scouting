@@ -1,90 +1,164 @@
-.searchbar {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    background-color: #343a40; /* Cor de fundo escura */
-    width: clamp(10rem, 80%, 22rem); /* Largura adaptativa */
-    justify-content: space-between;
-  }
-  
-  .searchbar input {
-    border: none;
-    background-color: transparent;
-    padding: 0.5rem;
-    flex: 1;
-    color: #fff; /* Texto branco */
-  }
-  
-  .searchbar input::placeholder {
-    color: #ccc; /* Cor do placeholder */
-  }
-  
-  .searchbar input:focus {
-    outline: none;
-  }
-  
-  .searchbar .icon {
-    color: #aaa; /* Cor do ícone */
-  }
-  
+/* Geral */
+.atletas-page {
+  padding: 6rem 2rem 2rem;
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
-  .table-container {
-    margin-top: 1rem;
-  }
-  
-  .table-wrapper {
-    border-radius: 8px;
-    overflow: hidden; /* Remove bordas fora do container */
-  }
-  
-  .table {
-    border-collapse: collapse;
-    width: 100%;
-    background-color: #343a40; /* Fundo escuro */
-    color: #fff; /* Texto branco */
-  }
-  
-  .table th,
-  .table td {
-    padding: 0.75rem;
-    text-align: left; /* Alinhamento padrão */
-    border: 1px solid #555; /* Borda sutil */
-  }
-  
-  .table th {
-    text-align: center; /* Alinhamento centralizado para cabeçalhos */
-    background-color: #212529; /* Fundo diferenciado */
-  }
-  
-  .table tr:nth-child(even) {
-    background-color: #2d3238; /* Listras alternadas */
-  }
-  
-  .table tr:hover {
-    background-color: #3a3f44; /* Fundo ao passar o mouse */
-  }
-  
-  .table img {
-    border-radius: 4px; /* Borda arredondada para bandeiras */
-  }
-  
-  .table .text-secondary {
-    color: #aaa; /* Texto secundário */
-  }
-  
-  .table .btn-sm {
-    font-size: 0.85rem; /* Botões menores */
-    padding: 0.3rem 0.5rem;
-  }
-  
-  @media (max-width: 768px) {
-    .table-wrapper {
-      overflow-x: auto; /* Permite scroll horizontal em telas menores */
-    }
-  
-    .searchbar {
-      width: 100%; /* Barra de busca ocupa largura total */
-    }
-  }
-  
+.TituloEquipas {
+  padding-bottom: 1rem;
+}
+
+/* Wrapper for search bar and button */
+.searchbar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between search bar and button */
+  margin-bottom: 1.5rem;
+}
+
+/* Barra de busca */
+.searchbar-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--gray-800-color);
+  padding: 0.75rem 1rem;
+  border-radius: 1.5rem;
+  width: 300px; /* Fixed width for search bar */
+  height: 3rem; /* Ensures consistent height */
+}
+
+.searchbar-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #fff;
+  outline: none;
+  font-size: 1rem;
+}
+
+.searchbar-icon {
+  color: #888;
+  cursor: pointer;
+}
+
+/* Adicionar Button */
+.add-button {
+  background-color: #ffcc00;
+  border: none;
+  color: #000;
+  padding: 0 1rem; /* Padding to define button width */
+  border-radius: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  height: 3rem; /* Matches the height of the search bar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  width: 10rem;
+}
+
+.add-button:hover {
+  background-color: #ffdb4d;
+}
+
+/* Tabela */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--gray-800-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid #444;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.custom-table th.text-left,
+.custom-table td.text-left {
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: var(--gray-800-color);
+  font-weight: bold;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: var(--gray-700-color); /* Lighter gray for even rows */
+}
+
+.custom-table tr:nth-child(odd) {
+  background-color: var(--gray-800-color); /* Darker gray for odd rows */
+}
+
+.custom-table .text-left {
+  text-align: left;
+}
+
+.custom-table .text-right {
+  text-align: right;
+}
+
+.custom-table .text-center {
+  text-align: center;
+}
+
+/* Ações */
+.action-column {
+  display: flex;
+  flex-direction: column; /* Stacks actions vertically */
+  gap: 0.5rem; /* Space between action buttons */
+}
+
+.action-button {
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 4px;
+  border-color: var(--gray-800-color);
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: inline-block;
+  min-width: 120px; /* Ensures consistent button width */
+  text-align: center;
+}
+
+/* Remover Button */
+.action-button.remove {
+  background: none; /* No background */
+  border: none; /* No border */
+  color: #ff0000; /* Red text for "Remover" */
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline;
+
+}
+
+.action-button.remove span {
+  color: #ffffff; /* White text for "Perfil" */
+  margin-left: 0.5rem; /* Spacing between "Remover" and "Perfil" */
+}
+
+
+/* Adicionar Button in Table */
+.action-button.add {
+  background-color: #f0ad4e; /* Bootstrap orange */
+  color: #fff;
+}
+
+.action-button.add:hover {
+  background-color: #ec971f; /* Darker orange on hover */
+}
