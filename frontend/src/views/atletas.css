@@ -70,29 +70,69 @@
 /* Tabela */
 .custom-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate; /* Allows border-radius to take effect */
+  border-spacing: 0; /* Keeps internal borders aligned properly */
   background-color: var(--gray-800-color);
-  border-radius: 8px;
+  border-radius: 8px; /* Rounds the edges of the entire table */
   overflow: hidden;
+  position: relative; /* Ensure proper alignment for rounded corners */
 }
 
 .custom-table th,
 .custom-table td {
-  padding: 0.75rem;
+  padding: 0.5rem; /* Same padding for both header and data rows */
   text-align: center;
   border: 1px solid #444;
   color: #fff;
   font-size: 0.9rem;
 }
 
-.custom-table th.text-left,
-.custom-table td.text-left {
-  text-align: left;
-}
 
+/* Table Headers */
 .custom-table th {
   background-color: var(--gray-800-color);
   font-weight: bold;
+  border-right: none; /* Remove vertical borders */
+  border-left: none; /* Remove vertical borders */
+  padding: 0.5rem; /* Ensure header padding matches the data cells */
+  text-align: left;
+}
+
+/* Round corners for top-left and top-right */
+.custom-table th:first-child {
+  border-top-left-radius: 8px; /* Top-left corner rounded */
+}
+
+.custom-table th:last-child {
+  border-top-right-radius: 8px; /* Top-right corner rounded */
+}
+
+/* Round corners for bottom-left and bottom-right */
+.custom-table tr:last-child td:first-child {
+  border-bottom-left-radius: 8px; /* Bottom-left corner rounded */
+}
+
+.custom-table tr:last-child td:last-child {
+  border-bottom-right-radius: 8px; /* Bottom-right corner rounded */
+}
+
+/* Remove borders on the external edges */
+.custom-table th:first-child,
+.custom-table td:first-child {
+  border-left: none; /* No left border for the first column */
+}
+
+.custom-table th:last-child,
+.custom-table td:last-child {
+  border-right: none; /* No right border for the last column */
+}
+
+.custom-table tr:first-child th {
+  border-top: none; /* No top border for the first row */
+}
+
+.custom-table tr:last-child td {
+  border-bottom: none; /* No bottom border for the last row */
 }
 
 /* Action Column */
@@ -122,4 +162,13 @@
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
+}
+
+/* Even and Odd Row Colors */
+.custom-table tr:nth-child(even) {
+  background-color: var(--gray-700-color); /* Lighter gray for even rows */
+}
+
+.custom-table tr:nth-child(odd) {
+  background-color: var(--gray-800-color); /* Darker gray for odd rows */
 }
