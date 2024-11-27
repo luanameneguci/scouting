@@ -10,7 +10,8 @@ body {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #333;
+  /* Remover fundo e bordas */
+  background-color: transparent;
   border-radius: 8px;
 }
 
@@ -19,8 +20,9 @@ body {
 }
 
 h2 {
-  color: #ffc107;
-  margin-bottom: 10px;
+  /* Alterar a cor dos títulos para branco */
+  color: #fff;
+  margin-bottom: 20px; /* Adicionar mais espaço abaixo do título */
 }
 
 .form-group {
@@ -68,7 +70,8 @@ select:disabled {
   padding: 10px;
   background-color: #ffc107;
   border: none;
-  border-radius: 4px;
+  /* Deixar os cantos dos botões mais redondos */
+  border-radius: 20px;
   font-size: 16px;
   color: #000;
   cursor: pointer;
@@ -76,4 +79,15 @@ select:disabled {
 
 .btn:hover {
   background-color: #e0a800;
+}
+
+/* Criar uma linha entre o botão "Selecionar atleta existente" e o título "Novo atleta" */
+.line {
+  border-top: 1px solid #fff; /* Mudar a cor da linha para branco */
+  margin: 20px 0;
+}
+
+/* Ajustar a posição do conteúdo da página para não ficar coberto pela navbar */
+.content {
+  padding-top: 80px; /* Ajustar conforme necessário */
 }
