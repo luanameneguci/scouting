@@ -1,0 +1,30 @@
+.navbar-landing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: .4rem 8vw;
+    width: 100vw;
+    position: fixed;
+    z-index: 9999;
+    background-color: var(--gray-800-color);
+}
+
+.navbar-landing>.login {
+    background-color: var(--accent-color);
+    display: flex;
+    gap: .8rem;
+    text-transform: uppercase;
+    align-items: center;
+    padding: .6rem 1.8rem;
+    text-decoration: none;
+
+}
+.navbar-landing>.login,
+.navbar-landing>.login * {
+    color: var(--gray-800-color);   
+}
+.navbar-landing>*:first-child img{
+    height: 4em;
+}
