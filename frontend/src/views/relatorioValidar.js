@@ -111,15 +111,14 @@ const RelatorioValidar = () => {
             <input type="text" placeholder="https://www.google.pt" />
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>Nome do Encarregado de Educação</label>
-              <input type="text" placeholder="John Doe" />
-            </div>
-            <div className="form-group">
-              <label>Contacto do Encarregado de Educação</label>
-              <input type="text" placeholder="912345678" />
-            </div>
+          <div className="form-group">
+            <label>Nome do Encarregado de Educação</label>
+            <input type="text" placeholder="John Doe" />
+          </div>
+          
+          <div className="form-group">
+            <label>Contacto do Encarregado de Educação</label>
+            <input type="text" placeholder="912345678" />
           </div>
 
           <button className="btn">Adicionar</button>

@@ -1,8 +1,13 @@
 import React from 'react';
+import './relatorios.css'; // Importando os estilos fornecidos
 
 const Relatorios = () => {
   const handleAction = (action, id) => {
     alert(`Ação: ${action}, ID: ${id}`);
+  };
+
+  const handleSearch = () => {
+    alert('Pesquisar clicado!');
   };
 
   const reports = [
@@ -20,9 +25,13 @@ const Relatorios = () => {
             placeholder="Pesquisar por nome de atleta"
             className="reports-search-input"
           />
+          {/* Ícone de Pesquisa como Botão */}
+          <button className="reports-search-button" onClick={handleSearch}>
+            <span className="material-symbols-outlined">search</span>
+          </button>
           <button className="reports-add-button">Adicionar</button>
         </div>
-        <table className="reports-table rounded bg-color-gray-800">
+        <table className="reports-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -40,13 +49,9 @@ const Relatorios = () => {
               <tr key={report.id}>
                 <td>{report.id}</td>
                 <td
-                  className={
-                    report.confirmed
-                      ? "reports-status-true"
-                      : "reports-status-false"
-                  }
+                  className={report.confirmed ? "reports-status-true" : "reports-status-false"}
                 >
-                  {report.confirmed ? "✓" : <span className="material-symbols-outlined icon">error</span>}
+                  {report.confirmed ? "✓" : <span className="material-symbols-outlined">error</span>}
                 </td>
                 <td>{report.athlete}</td>
                 <td>{report.date}</td>
