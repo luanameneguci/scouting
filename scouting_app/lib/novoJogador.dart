@@ -16,12 +16,57 @@ class _NovoJogadorScreenState extends State<NovoJogadorScreen> {
   String? nomeEncarregado;
   String? contatoEncarregado;
 
+  bool isNacionalidadeDropdownOpen = false;
+  bool isPosicaoDropdownOpen = false;
+  bool isClubeDropdownOpen = false;
+
+  final List<String> nacionalidades = [
+    "Português",
+    "Brasileiro",
+    "Espanhol",
+    "Inglês",
+    "Francês",
+    "Alemão"
+  ];
+  final List<String> posicoes = ["Guarda-redes", "Defesa", "Médio", "Avançado"];
+  final List<String> clubes = [
+    "Clube 1",
+    "Clube 2",
+    "Clube 3",
+    "Clube 4",
+    "Clube 5",
+    "Clube 6",
+    "Clube 7",
+    "Clube 8"
+  ];
+
   TextEditingController dataNascimentoController = TextEditingController();
+
+  bool isFormValid = false; // Estado do botão de submissão
 
   @override
   void dispose() {
     dataNascimentoController.dispose();
     super.dispose();
+  }
+
+  void _validateForm() {
+    setState(() {
+      isFormValid = nome != null &&
+          nome!.isNotEmpty &&
+          dataNascimento != null &&
+          dataNascimento!.isNotEmpty &&
+          selectedNacionalidade != null &&
+          selectedNacionalidade!.isNotEmpty &&
+          selectedPosicao != null &&
+          selectedPosicao!.isNotEmpty &&
+          selectedClube != null &&
+          selectedClube!.isNotEmpty &&
+          nomeEncarregado != null &&
+          nomeEncarregado!.isNotEmpty &&
+          contatoEncarregado != null &&
+          contatoEncarregado!.isNotEmpty;
+    });
   }
 
   @override
@@ -39,17 +84,105 @@ class _NovoJogadorScreenState extends State<NovoJogadorScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTextField("Nome", (value) => nome = value),
+              _buildTextField("Nome", (value) {
+                nome = value;
+                _validateForm();
+              }),
               _buildDataNascimentoField(),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isNacionalidadeDropdownOpen = true;
+                          isPosicaoDropdownOpen = false;
+                          isClubeDropdownOpen = false;
+                        });
+                      },
+                      child: _buildDropdownField(
+                        _truncateText(selectedNacionalidade ?? "Nacionalidade", maxLength: 8),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isPosicaoDropdownOpen = true;
+                          isNacionalidadeDropdownOpen = false;
+                          isClubeDropdownOpen = false;
+                        });
+                      },
+                      child: _buildDropdownField(
+                        _truncateText(selectedPosicao ?? "Posição", maxLength: 8),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isClubeDropdownOpen = true;
+                          isNacionalidadeDropdownOpen = false;
+                          isPosicaoDropdownOpen = false;
+                        });
+                      },
+                      child: _buildDropdownField(
+                        _truncateText(selectedClube ?? "Clube", maxLength: 8),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (isNacionalidadeDropdownOpen)
+                _buildDropdownContent(nacionalidades, (nacionalidade) {
+                  setState(() {
+                    selectedNacionalidade = nacionalidade;
+                    isNacionalidadeDropdownOpen = false;
+                    _validateForm();
+                  });
+                }),
+              if (isPosicaoDropdownOpen)
+                _buildDropdownContent(posicoes, (posicao) {
+                  setState(() {
+                    selectedPosicao = posicao;
+                    isPosicaoDropdownOpen = false;
+                    _validateForm();
+                  });
+                }),
+              if (isClubeDropdownOpen)
+                _buildDropdownContent(clubes, (clube) {
+                  setState(() {
+                    selectedClube = clube;
+                    isClubeDropdownOpen = false;
+                    _validateForm();
+                  });
+                }),
+              _buildTextField("Nome do Encarregado", (value) {
+                nomeEncarregado = value;
+                _validateForm();
+              }),
+              _buildTextField("Contato do Encarregado", (value) {
+                contatoEncarregado = value;
+                _validateForm();
+              }),
               SizedBox(height: 16),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _isFormValid()
+                  onPressed: isFormValid
                       ? () {
                           print("Novo jogador criado:");
                           print("Nome: $nome");
-                          print("Data de Nascimento: ${dataNascimentoController.text}");
+                          print("Data de Nascimento: $dataNascimento");
+                          print("Nacionalidade: $selectedNacionalidade");
+                          print("Posição: $selectedPosicao");
+                          print("Clube: $selectedClube");
+                          print("Nome do Encarregado: $nomeEncarregado");
+                          print("Contato do Encarregado: $contatoEncarregado");
                           Navigator.pop(context);
                         }
                       : null,
@@ -99,61 +232,141 @@ class _NovoJogadorScreenState extends State<NovoJogadorScreen> {
   Widget _buildDataNascimentoField() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        controller: dataNascimentoController,
-        keyboardType: TextInputType.number,
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          labelText: "Data de Nascimento (DD/MM/AAAA)",
-          labelStyle: TextStyle(color: Colors.white54),
-          filled: true,
-          fillColor: Colors.grey[900],
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none,
-          ),
-          hintText: "DD/MM/AAAA",
-          hintStyle: TextStyle(color: Colors.white54),
-        ),
-        onChanged: (value) {
-          String sanitized = value.replaceAll(RegExp(r'[^0-9/]'), '');
-          String formatted = _formatDateInput(sanitized);
-          dataNascimentoController.value = TextEditingValue(
-            text: formatted,
-            selection: TextSelection.collapsed(offset: formatted.length),
+      child: GestureDetector(
+        onTap: () async {
+          DateTime? selectedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime.now(),
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: ThemeData.dark().copyWith(
+                  colorScheme: ColorScheme.dark(
+                    primary: Colors.amber,
+                    onPrimary: Colors.black,
+                    surface: Colors.grey[900]!,
+                    onSurface: Colors.white,
+                  ),
+                  dialogBackgroundColor: const Color.fromARGB(255, 23, 23, 23),
+                ),
+                child: child!,
+              );
+            },
           );
+
+          if (selectedDate != null) {
+            setState(() {
+              dataNascimento = "${selectedDate.day.toString().padLeft(2, '0')}/"
+                  "${selectedDate.month.toString().padLeft(2, '0')}/"
+                  "${selectedDate.year}";
+              dataNascimentoController.text = dataNascimento!;
+              _validateForm();
+            });
+          }
         },
+        child: AbsorbPointer(
+          child: TextField(
+            controller: dataNascimentoController,
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              labelText: "Data de Nascimento",
+              labelStyle: TextStyle(color: Colors.white54),
+              filled: true,
+              fillColor: Colors.grey[900],
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  String _formatDateInput(String input) {
-    List<String> parts = input.split('/');
-    String day = parts.isNotEmpty ? parts[0] : '';
-    String month = parts.length > 1 ? parts[1] : '';
-    String year = parts.length > 2 ? parts[2] : '';
-
-    if (day.length > 2) {
-      month = day.substring(2) + month;
-      day = day.substring(0, 2);
-    }
-
-    if (month.length > 2) {
-      year = month.substring(2) + year;
-      month = month.substring(0, 2);
-    }
-
-    String formatted = day;
-    if (day.length == 2) formatted += '/';
-    formatted += month;
-    if (month.length == 2) formatted += '/';
-    formatted += year;
-
-    return formatted;
+  Widget _buildDropdownField(String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: TextStyle(color: Colors.white),
+            overflow: TextOverflow.ellipsis,
+          ),
+          Icon(
+            Icons.arrow_drop_down,
+            color: Colors.white,
+          ),
+        ],
+      ),
+    );
   }
 
-  bool _isFormValid() {
-    return nome != null &&
-        dataNascimentoController.text.isNotEmpty;
+  Widget _buildDropdownContent(List<String> options, Function(String) onSelected) {
+    return Container(
+      margin: EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          TextField(
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: 'Pesquisar',
+              hintStyle: TextStyle(color: Colors.white54),
+              filled: true,
+              fillColor: Colors.grey[800],
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+            ),
+            onChanged: (value) {
+              setState(() {});
+            },
+          ),
+          Container(
+            height: 200,
+            child: ListView(
+              children: options.map((option) {
+                return GestureDetector(
+                  onTap: () {
+                    onSelected(option);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                    margin: EdgeInsets.only(top: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      option,
+                      style: TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _truncateText(String text, {required int maxLength}) {
+    return text.length > maxLength ? "${text.substring(0, maxLength)}…" : text;
   }
 }
