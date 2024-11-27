@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/relatorios.dart';
+import 'package:scouting_app/novoJogador.dart';
 
 class RelatorioScreen extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class RelatorioScreen extends StatefulWidget {
 }
 
 class _RelatorioScreenState extends State<RelatorioScreen> {
+  String? temporaryEscalao;
   String? selectedEscalao;
   String? selectedAtleta;
   String? selectedClube;
@@ -14,12 +16,12 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
   TextEditingController searchAtletaController = TextEditingController();
   TextEditingController searchClubeController = TextEditingController();
   TextEditingController searchJogoController = TextEditingController();
-  int tecnica = 1;
-  int velocidade = 3;
-  int atitudeCompetitiva = 4;
-  int inteligencia = 2;
-  String? altura = "Baixo";
-  String? morfologia = "Mesomorfo";
+  int tecnica = 0;
+  int velocidade = 0;
+  int atitudeCompetitiva = 0;
+  int inteligencia = 0;
+  String? altura;
+  String? morfologia;
   bool isEscalaoDropdownOpen = false;
   bool isAtletaDropdownOpen = false;
   bool isClubeDropdownOpen = false;
@@ -36,8 +38,26 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
     "Sub 10": ["Time17 x Time18 11:00"]
   };
 
-  List<String> atletas = ["Fernando Machado", "Carlos Silva", "João Santos", "André Pereira", "Miguel Oliveira", "Rui Costa", "Pedro Santos", "Luís Fernandes"];
-  List<String> clubes = ["Clube 1", "Clube 2", "Clube 3", "Clube 4", "Clube 5", "Clube 6", "Clube 7", "Clube 8"];
+  List<String> atletas = [
+    "Fernando Machado",
+    "Carlos Silva",
+    "João Santos",
+    "André Pereira",
+    "Miguel Oliveira",
+    "Rui Costa",
+    "Pedro Santos",
+    "Luís Fernandes"
+  ];
+  List<String> clubes = [
+    "Clube 1",
+    "Clube 2",
+    "Clube 3",
+    "Clube 4",
+    "Clube 5",
+    "Clube 6",
+    "Clube 7",
+    "Clube 8"
+  ];
   List<String> jogos = [];
 
   @override
@@ -73,6 +93,19 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
 
   String _truncateText(String text, {int maxLength = 10}) {
     return text.length > maxLength ? '${text.substring(0, maxLength)}...' : text;
+  }
+
+  bool _isFormValid() {
+    return selectedEscalao != null &&
+                selectedAtleta != null &&
+        selectedClube != null &&
+        selectedJogo != null &&
+        tecnica > 0 &&
+        velocidade > 0 &&
+        atitudeCompetitiva > 0 &&
+        inteligencia > 0 &&
+        altura != null &&
+        morfologia != null;
   }
 
   @override
@@ -165,18 +198,16 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  selectedEscalao = escalao;
+                                  temporaryEscalao = escalao;
                                   jogos = jogosPorEscalao[escalao] ?? [];
                                   isEscalaoDropdownOpen = false;
                                   isJogosDropdownOpen = true;
-                                  selectedJogo = null;
-                                  searchJogoController.clear();
+                                  selectedJogo = null; // Limpa a seleção do jogo anterior.
                                 });
                               },
                               child: Container(
                                 width: 100,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 12),
+                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                                 decoration: BoxDecoration(
                                   color: Colors.black,
                                   borderRadius: BorderRadius.circular(8),
@@ -184,8 +215,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                                 child: Center(
                                   child: Text(
                                     escalao,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14),
+                                    style: TextStyle(color: Colors.white, fontSize: 14),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -205,30 +235,28 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                       ),
                       child: Column(
                         children: [
-                          _buildSearchBar(
-                              searchJogoController, 'Pesquisar Jogo', (value) {
+                          _buildSearchBar(searchJogoController, 'Pesquisar Jogo', (value) {
                             setState(() {});
                           }),
                           Container(
                             height: 200,
                             child: ListView(
                               children: jogos
-                                  .where((jogo) => jogo
-                                      .toLowerCase()
-                                      .contains(searchJogoController.text.toLowerCase()))
+                                  .where((jogo) => jogo.toLowerCase().contains(searchJogoController.text.toLowerCase()))
                                   .take(5)
                                   .map((jogo) {
                                 return GestureDetector(
                                   onTap: () {
                                     setState(() {
                                       selectedJogo = jogo;
+                                      selectedEscalao = temporaryEscalao; // Confirma o escalão ao selecionar o jogo.
                                       isJogosDropdownOpen = false;
+                                      temporaryEscalao = null; // Limpa a variável temporária.
                                     });
                                   },
                                   child: Container(
                                     width: double.infinity,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 8),
+                                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                                     margin: EdgeInsets.only(top: 4),
                                     decoration: BoxDecoration(
                                       color: Colors.black,
@@ -258,8 +286,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                       ),
                       child: Column(
                         children: [
-                          _buildSearchBar(
-                              searchAtletaController, 'Pesquisar Atleta', (value) {
+                          _buildSearchBar(searchAtletaController, 'Pesquisar Atleta', (value) {
                             setState(() {});
                           }),
                           Container(
@@ -267,9 +294,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                             child: ListView(
                               children: [
                                 ...atletas
-                                    .where((atleta) => atleta
-                                        .toLowerCase()
-                                        .contains(searchAtletaController.text.toLowerCase()))
+                                    .where((atleta) => atleta.toLowerCase().contains(searchAtletaController.text.toLowerCase()))
                                     .take(5)
                                     .map((atleta) {
                                   return GestureDetector(
@@ -281,8 +306,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                                     },
                                     child: Container(
                                       width: double.infinity,
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12, horizontal: 8),
+                                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                                       margin: EdgeInsets.only(top: 4),
                                       decoration: BoxDecoration(
                                         color: Colors.black,
@@ -296,22 +320,25 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                                     ),
                                   );
                                 }).toList(),
-                                Divider(color: Colors.grey),
-                                GestureDetector(
-                                  onTap: () {
-                                    // Lógica para criar novo jogador
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.add, color: Colors.amber),
-                                      SizedBox(width: 8),
-                                      Text(
-                                        "Criar jogador",
-                                        style: TextStyle(color: Colors.amber),
-                                      ),
-                                    ],
-                                  ),
+                              ],
+                            ),
+                          ),
+                          Divider(color: Colors.grey),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => NovoJogadorScreen()), // Navegação para a página de novo jogador
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.add, color: Colors.amber),
+                                SizedBox(width: 8),
+                                Text(
+                                  "Criar jogador",
+                                  style: TextStyle(color: Colors.amber),
                                 ),
                               ],
                             ),
@@ -330,17 +357,14 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                       ),
                       child: Column(
                         children: [
-                          _buildSearchBar(
-                              searchClubeController, 'Pesquisar Clube', (value) {
+                          _buildSearchBar(searchClubeController, 'Pesquisar Clube', (value) {
                             setState(() {});
                           }),
                           Container(
                             height: 200,
                             child: ListView(
                               children: clubes
-                                  .where((clube) => clube
-                                      .toLowerCase()
-                                      .contains(searchClubeController.text.toLowerCase()))
+                                  .where((clube) => clube.toLowerCase().contains(searchClubeController.text.toLowerCase()))
                                   .take(5)
                                   .map((clube) {
                                 return GestureDetector(
@@ -352,8 +376,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                                   },
                                   child: Container(
                                     width: double.infinity,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 8),
+                                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                                     margin: EdgeInsets.only(top: 4),
                                     decoration: BoxDecoration(
                                       color: Colors.black,
@@ -377,18 +400,13 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
             ),
             // Rating Rows
             _buildRatingRow("Técnica", tecnica, (val) => setState(() => tecnica = val)),
-            _buildRatingRow(
-                "Velocidade", velocidade, (val) => setState(() => velocidade = val)),
-            _buildRatingRow("Atitude Competitiva", atitudeCompetitiva,
-                (val) => setState(() => atitudeCompetitiva = val)),
-            _buildRatingRow("Inteligência", inteligencia,
-                (val) => setState(() => inteligencia = val)),
+            _buildRatingRow("Velocidade", velocidade, (val) => setState(() => velocidade = val)),
+                        _buildRatingRow("Atitude Competitiva", atitudeCompetitiva, (val) => setState(() => atitudeCompetitiva = val)),
+            _buildRatingRow("Inteligência", inteligencia, (val) => setState(() => inteligencia = val)),
             SizedBox(height: 16),
             // Option Rows
-            _buildOptionRow("Altura", ["Baixo", "Médio", "Alto"], altura,
-                (val) => setState(() => altura = val)),
-            _buildOptionRow("Morfologia", ["Ectomorfo", "Mesomorfo", "Endomorfo"],
-                morfologia, (val) => setState(() => morfologia = val)),
+            _buildOptionRow("Altura", ["Baixo", "Médio", "Alto"], altura, (val) => setState(() => altura = val)),
+            _buildOptionRow("Morfologia", ["Ectomorfo", "Mesomorfo", "Endomorfo"], morfologia, (val) => setState(() => morfologia = val)),
             SizedBox(height: 16),
             // Notes TextField
             TextField(
@@ -410,12 +428,14 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RelatoriosPage()),
-              );
-                },
+                onPressed: _isFormValid()
+                    ? () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RelatoriosPage()),
+                        );
+                      }
+                    : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.amber,
                   padding: EdgeInsets.symmetric(vertical: 16),
@@ -530,7 +550,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: selectedOption == option ? Colors.amber : Colors.grey,
+                                                color: selectedOption == option ? Colors.amber : Colors.grey,
                         width: 2,
                       ),
                     ),
@@ -557,5 +577,12 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
         ),
       ],
     );
+  }
+
+  bool _isFormValidado() {
+    return selectedEscalao != null &&
+           selectedAtleta != null &&
+           selectedClube != null &&
+           selectedJogo != null;
   }
 }
