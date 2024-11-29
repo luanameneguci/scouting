@@ -1,0 +1,11 @@
+.hero-section{
+    height: 80vw;
+    position: relative;
+}
+.hero-section img{
+    height: 80vw;
+    background-size: cover;
+    position: absolute;
+    opacity: .8;
+    background-color: red;
+}

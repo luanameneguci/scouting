@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('EquipaAtleta', {
+  const EquipaAtleta = sequelize.define('EquipaAtleta', {
     id_equipa: {
       type: DataTypes.INTEGER,
       allowNull: false,

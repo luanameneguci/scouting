@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('EscalaoDivisao', {
+  const EscalaoDivisao = sequelize.define('EscalaoDivisao', {
     id_escalao: {
       type: DataTypes.INTEGER,
       allowNull: false,
