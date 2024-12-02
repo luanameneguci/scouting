@@ -9,53 +9,59 @@
 }
 
 .TituloEquipas {
-  padding-bottom: 1rem;
+  text-align: left; /* Align title to the left */
+  margin-bottom: 1rem; /* Add spacing below the title */
 }
 
-/* Wrapper for search bar and button */
-.searchbar-wrapper {
+
+.searchbar-wrapper-atletas {
   display: flex;
-  align-items: center;
-  gap: 1rem; 
+  justify-content: flex-start; /* Align items to the left */
+  gap: 1rem; /* Space between the search bar and the button */
   margin-bottom: 1.5rem;
 }
 
-/* Barra de busca */
-.searchbar-container {
+.searchbar {
   display: flex;
+  padding: 0 1rem;
+  width: clamp(10rem, 80%, 22rem); /* Dynamically responsive width */
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
   background-color: var(--gray-800-color);
-  padding: 0.75rem 1rem;
-  border-radius: 1.5rem;
-  width: 300px; 
-  height: 3rem; 
+  border-radius: 9999px; /* Fully rounded edges */
 }
 
-.searchbar-input {
+.searchbar:focus-within {
+  outline: 0.08rem solid var(--gray-600-color); /* Outline on focus */
+}
+
+.searchbar input {
+  border: 0;
+  background-color: transparent;
+  padding: 1rem;
   flex: 1;
-  border: none;
-  background: transparent;
-  color: #fff;
-  outline: none;
-  font-size: 1rem;
+  color: #fff; /* Ensure input text color matches the theme */
 }
 
-.searchbar-icon {
-  color: #888;
-  cursor: pointer;
+.searchbar input:focus {
+  outline: 0; /* Remove default input outline */
 }
+
+.searchbar .icon {
+  color: var(--gray-500-color); /* Adjust icon color */
+}
+
 
 /* Adicionar Button */
 .add-button {
   background-color: #ffcc00;
   border: none;
   color: #000;
-  padding: 0 1rem; 
+  padding: 0 1rem; /* Padding to define button width */
   border-radius: 1.5rem;
   font-weight: bold;
   cursor: pointer;
-  height: 3rem; 
+  height: 3rem; /* Matches the height of the search bar */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,107 +73,70 @@
   background-color: #ffdb4d;
 }
 
+
 /* Tabela */
 .custom-table {
   width: 100%;
-  border-collapse: separate; 
-  border-spacing: 0; 
+  border-collapse: collapse;
   background-color: var(--gray-800-color);
-  border-radius: 8px; 
+  border-radius: 8px; /* Rounded edges for the entire table */
   overflow: hidden;
-  position: relative; 
+  margin-top: 20px;
 }
 
-/* Table Headers */
-.custom-table th {
-  background-color: var(--gray-800-color);
-  font-weight: bold;
-  border-right: none; 
-  border-left: none; 
-  padding: 0.5rem; 
-  text-align: left; 
+.custom-table thead th {
+  padding: 12px;
+  text-align: left; /* Align headers to the left */
+  border-bottom: 2px solid var(--gray-700-color);
+  color: var(--white-color);
+  background-color: var(--gray-900-color);
 }
 
-/* Round corners for top-left and top-right */
-.custom-table th:first-child {
-  border-top-left-radius: 8px; 
+.custom-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-700-color);
+  color: var(--white-color);
 }
 
-.custom-table th:last-child {
-  border-top-right-radius: 8px; 
+.custom-table tbody tr:hover {
+  background-color: var(--gray-700-color); /* Add hover effect for rows */
 }
 
-/* Round corners for bottom-left and bottom-right */
-.custom-table tr:last-child td:first-child {
-  border-bottom-left-radius: 8px; 
-}
-
-.custom-table tr:last-child td:last-child {
-  border-bottom-right-radius: 8px; 
-}
-
-/* Remove borders on the external edges */
-.custom-table th:first-child,
-.custom-table td:first-child {
-  border-left: none; 
-}
-
-.custom-table th:last-child,
-.custom-table td:last-child {
-  border-right: none; 
-}
-
-.custom-table tr:first-child th {
-  border-top: none; 
-}
-
-.custom-table tr:last-child td {
-  border-bottom: none; 
-}
-
-/* Align table rows (data cells) to the left */
+/* Align data cells to the left */
 .custom-table td {
-  text-align: left; 
-  padding: 0.5rem; 
-  border: 1px solid #444;
-  color: #fff;
+  text-align: left;
   font-size: 0.9rem;
 }
 
-/* Action Column */
+/* Action Buttons */
 .action-column {
   display: flex;
-  flex-direction: row; 
-  gap: 0.5rem; 
+  gap: 10px;
 }
 
-/* Remover Button */
+.action-button {
+  color: var(--white-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.action-button:hover {
+  text-decoration: underline;
+}
+
 .action-button.remove {
-  background: none;
-  border: none;
-  color: #ff0000;
-  font-family: "Lato", sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
+  color: var(--red-color); /* Red for "Remover" */
 }
 
-/* Perfil Button */
 .action-button.profile {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-family: "Lato", sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
+  color: var(--blue-color); /* Blue for "Perfil" */
 }
 
-/* Even and Odd Row Colors */
-.custom-table tr:nth-child(even) {
-  background-color: var(--gray-700-color); 
-}
 
-.custom-table tr:nth-child(odd) {
-  background-color: var(--gray-800-color); 
+.custom-table tbody tr {
+  background-color: var(--gray-800-color); /* Uniform background color for all rows */
 }

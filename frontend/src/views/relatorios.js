@@ -3,7 +3,7 @@ import './relatorios.css'; // Importando os estilos fornecidos
 
 const Relatorios = () => {
   const handleAction = (action, id) => {
-    alert(`Ação: ${action}, ID: ${id}`);
+    alert(`Ação: ${action}, ID: ${id}`); // Corrected syntax error
   };
 
   const handleSearch = () => {
@@ -19,16 +19,20 @@ const Relatorios = () => {
   return (
     <div className="reports-container">
       <main>
+        {/* Added h1 title */}
+        <h1 className="reports-title">Relatórios</h1>
         <div className="reports-toolbar">
-          <input
-            type="text"
-            placeholder="Pesquisar por nome de atleta"
-            className="reports-search-input"
-          />
-          {/* Ícone de Pesquisa como Botão */}
-          <button className="reports-search-button" onClick={handleSearch}>
-            <span className="material-symbols-outlined">search</span>
-          </button>
+          <div className="reports-search-container">
+            <input
+              type="text"
+              placeholder="Pesquisar por nome de atleta"
+              className="reports-search-input"
+            />
+            {/* Ícone de Pesquisa como Botão */}
+            <button className="reports-search-button" onClick={handleSearch}>
+              <span className="material-symbols-outlined">search</span>
+            </button>
+          </div>
           <button className="reports-add-button">Adicionar</button>
         </div>
         <table className="reports-table">

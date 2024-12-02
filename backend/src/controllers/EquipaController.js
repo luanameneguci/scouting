@@ -72,6 +72,7 @@ controllers.escaloes_equipa = async (req, res) => {
   const { tipoEquipa } = req.params;
 
 }
+
 controllers.alterar_posicao_atleta = async (req, res) => {
   const { idEquipa, idAtleta, novaPosicao } = req.params;
 

@@ -1,0 +1,66 @@
+.avaliacao-container {
+    color: white;
+    padding: 20px;
+    max-width: 900px; /* Aumenta a largura máxima do contêiner */
+    margin: auto;
+  }
+  
+  .avaliacao-container .campo {
+    margin-bottom: 35px;
+  }
+  
+  .avaliacao-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .avaliacao-container input[type="text"],
+  .avaliacao-container select,
+  .avaliacao-container textarea {
+    width: 100%;
+    padding: 12px; /* Aumenta o padding para dar mais espaço nas caixas de texto */
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: #3c3c3c;
+    color: white;
+  }
+  
+  .avaliacao-container textarea {
+    resize: none;
+  }
+  
+  .avaliacao-container .avaliacoes, .opcoes {
+    margin-top: 10px;
+    display: flex;
+    gap: 45px; /* Aumenta o espaçamento entre as bolas */
+    flex-wrap: wrap;
+  }
+  
+  .avaliacao-container .bola-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaçamento entre a bola e o número/texto */
+  }
+  
+  .avaliacao-container .bola {
+    width: 20px; /* Ajusta o tamanho das bolas */
+    height: 20px; /* Ajusta o tamanho das bolas */
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+  }
+  
+  .avaliacao-container .bola.selecionada {
+    background-color: white;
+  }
+  
+  .avaliacao-container .numero, .texto {
+    font-size: 14px; /* Ajusta o tamanho do texto */
+  }
+  
+  .avaliacao-container h1 {
+    text-align: center;
+    margin-bottom: 30px; /* Aumenta o espaçamento inferior do título */
+  }
+  
