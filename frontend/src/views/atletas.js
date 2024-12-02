@@ -1,25 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Import do React Router
 import './atletas.css';
 
 export default function Atletas() {
   return (
     <div className="atletas-page">
       <h1 className="TituloEquipas">Atletas</h1>
-      <div className="searchbar-wrapper">
-        {/* Barra de busca */}
-        <div className="searchbar-container">
+      <div className="searchbar-wrapper-atletas">
+        {/* Search bar */}
+        <div className="searchbar bg-color-gray-800 rounded-pill">
           <input
             type="text"
-            className="searchbar-input"
+            className="form-control"
             placeholder="Procurar por nome de atleta"
           />
-          <span className="searchbar-icon material-symbols-outlined">search</span>
+          <span className="material-symbols-outlined icon">search</span>
         </div>
-        {/* Botão Adicionar */}
-        <Link to="/atletasAdicionar"> {/* Link atualizado para /atletasAdicionar */}
-          <button className="add-button">Adicionar</button>
-        </Link>
+        {/* Add Button */}
+        <button className="add-button">Adicionar</button>
       </div>
       {/* Tabela */}
       <table className="custom-table">

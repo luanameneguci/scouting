@@ -9,6 +9,7 @@ const RelatorioConfirmar = () => {
   const [altura, setAltura] = useState(null);
   const [morfologia, setMorfologia] = useState(null);
   const [apontamentos, setApontamentos] = useState("");
+  const [atleta, setAtleta] = useState(""); // Estado inicial do nome do atleta vazio
 
   return (
     <div className="avaliacao-container">
@@ -16,7 +17,12 @@ const RelatorioConfirmar = () => {
       
       <div className="campo">
         <label>Atleta</label>
-        <input type="text" value="John Doe" disabled />
+        <input 
+          type="text" 
+          value={atleta} 
+          onChange={(e) => setAtleta(e.target.value)} // Permite editar o nome do atleta
+          placeholder="Digite o nome do atleta" // Placeholder para o campo de texto
+        />
       </div>
 
       <div className="campo">
@@ -33,48 +39,62 @@ const RelatorioConfirmar = () => {
         </select>
       </div>
 
-      <div className="avaliacoes">
+      <div className="campo">
         <label>Técnica</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${tecnica === num ? 'selecionada' : ''}`}
-              onClick={() => setTecnica(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${tecnica === num ? 'selecionada' : ''}`}
+                onClick={() => setTecnica(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Velocidade</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${velocidade === num ? 'selecionada' : ''}`}
-              onClick={() => setVelocidade(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${velocidade === num ? 'selecionada' : ''}`}
+                onClick={() => setVelocidade(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Atitude Competitiva</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${atitude === num ? 'selecionada' : ''}`}
-              onClick={() => setAtitude(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${atitude === num ? 'selecionada' : ''}`}
+                onClick={() => setAtitude(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Inteligência</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${inteligencia === num ? 'selecionada' : ''}`}
-              onClick={() => setInteligencia(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${inteligencia === num ? 'selecionada' : ''}`}
+                onClick={() => setInteligencia(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
       </div>
@@ -83,11 +103,13 @@ const RelatorioConfirmar = () => {
         <label>Altura</label>
         <div className="opcoes">
           {['Baixo', 'Médio', 'Alto'].map((opcao) => (
-            <span
-              key={opcao}
-              className={`bola ${altura === opcao ? 'selecionada' : ''}`}
-              onClick={() => setAltura(opcao)}
-            ></span>
+            <div key={opcao} className="bola-container">
+              <span
+                className={`bola ${altura === opcao ? 'selecionada' : ''}`}
+                onClick={() => setAltura(opcao)}
+              ></span>
+              <span className="texto">{opcao}</span>
+            </div>
           ))}
         </div>
       </div>
@@ -96,11 +118,13 @@ const RelatorioConfirmar = () => {
         <label>Morfologia</label>
         <div className="opcoes">
           {['Ectomorfo', 'Mesomorfo', 'Endomorfo'].map((opcao) => (
-            <span
-              key={opcao}
-              className={`bola ${morfologia === opcao ? 'selecionada' : ''}`}
-              onClick={() => setMorfologia(opcao)}
-            ></span>
+            <div key={opcao} className="bola-container">
+              <span
+                className={`bola ${morfologia === opcao ? 'selecionada' : ''}`}
+                onClick={() => setMorfologia(opcao)}
+              ></span>
+              <span className="texto">{opcao}</span>
+            </div>
           ))}
         </div>
       </div>
