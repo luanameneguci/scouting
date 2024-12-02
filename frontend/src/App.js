@@ -4,6 +4,7 @@ import './App.css';
 import Equipas from './views/equipas';
 import Atletas from './views/atletas';
 import RelatorioValidar from './views/relatorioValidar';
+import RelatorioConfirmar from './views/relatorioConfirmar';
 import Adicionarjogo from './views/adicionarjogo';
 import Relatorios from './views/relatorios';
 import NavBackoffice from './components/navBackoffice';
@@ -34,6 +35,7 @@ function AppContent() {
         <Route path="/equipa/:idEquipa" element={<Equipas />} />
         <Route path="/atletas" element={<Atletas />} /> {/* Adicionada a rota para a página de Atletas */}
         <Route path="/relatorio/validar" element={<RelatorioValidar />} />
+        <Route path="/relatorio/confirmar" element={<RelatorioConfirmar />} />
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
       </Routes>
