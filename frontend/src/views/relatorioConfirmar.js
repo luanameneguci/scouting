@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import './relatorioConfirmar.css';
 
-const relatorioConfirmar = () => {
+const RelatorioConfirmar = () => {
   const [tecnica, setTecnica] = useState(null);
   const [velocidade, setVelocidade] = useState(null);
   const [atitude, setAtitude] = useState(null);
   const [inteligencia, setInteligencia] = useState(null);
   const [altura, setAltura] = useState(null);
   const [morfologia, setMorfologia] = useState(null);
+  const [apontamentos, setApontamentos] = useState("");
 
   return (
     <div className="avaliacao-container">
@@ -106,10 +107,14 @@ const relatorioConfirmar = () => {
 
       <div className="campo">
         <label>Apontamentos</label>
-        <textarea placeholder="Apontamentos"></textarea>
+        <textarea 
+          placeholder="Apontamentos"
+          value={apontamentos}
+          onChange={(e) => setApontamentos(e.target.value)}
+        ></textarea>
       </div>
     </div>
   );
 };
 
-export default relatorioConfirmar;
+export default RelatorioConfirmar;
