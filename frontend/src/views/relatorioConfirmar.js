@@ -33,48 +33,62 @@ const RelatorioConfirmar = () => {
         </select>
       </div>
 
-      <div className="avaliacoes">
+      <div className="campo">
         <label>Técnica</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${tecnica === num ? 'selecionada' : ''}`}
-              onClick={() => setTecnica(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${tecnica === num ? 'selecionada' : ''}`}
+                onClick={() => setTecnica(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Velocidade</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${velocidade === num ? 'selecionada' : ''}`}
-              onClick={() => setVelocidade(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${velocidade === num ? 'selecionada' : ''}`}
+                onClick={() => setVelocidade(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Atitude Competitiva</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${atitude === num ? 'selecionada' : ''}`}
-              onClick={() => setAtitude(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${atitude === num ? 'selecionada' : ''}`}
+                onClick={() => setAtitude(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Inteligência</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
-            <span
-              key={num}
-              className={`bola ${inteligencia === num ? 'selecionada' : ''}`}
-              onClick={() => setInteligencia(num)}
-            ></span>
+            <div key={num} className="bola-container">
+              <span
+                className={`bola ${inteligencia === num ? 'selecionada' : ''}`}
+                onClick={() => setInteligencia(num)}
+              ></span>
+              <span className="numero">{num}</span>
+            </div>
           ))}
         </div>
       </div>
@@ -83,11 +97,13 @@ const RelatorioConfirmar = () => {
         <label>Altura</label>
         <div className="opcoes">
           {['Baixo', 'Médio', 'Alto'].map((opcao) => (
-            <span
-              key={opcao}
-              className={`bola ${altura === opcao ? 'selecionada' : ''}`}
-              onClick={() => setAltura(opcao)}
-            ></span>
+            <div key={opcao} className="bola-container">
+              <span
+                className={`bola ${altura === opcao ? 'selecionada' : ''}`}
+                onClick={() => setAltura(opcao)}
+              ></span>
+              <span className="texto">{opcao}</span>
+            </div>
           ))}
         </div>
       </div>
@@ -96,11 +112,13 @@ const RelatorioConfirmar = () => {
         <label>Morfologia</label>
         <div className="opcoes">
           {['Ectomorfo', 'Mesomorfo', 'Endomorfo'].map((opcao) => (
-            <span
-              key={opcao}
-              className={`bola ${morfologia === opcao ? 'selecionada' : ''}`}
-              onClick={() => setMorfologia(opcao)}
-            ></span>
+            <div key={opcao} className="bola-container">
+              <span
+                className={`bola ${morfologia === opcao ? 'selecionada' : ''}`}
+                onClick={() => setMorfologia(opcao)}
+              ></span>
+              <span className="texto">{opcao}</span>
+            </div>
           ))}
         </div>
       </div>
