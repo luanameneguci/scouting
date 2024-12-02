@@ -33,7 +33,7 @@ const RelatorioConfirmar = () => {
         </select>
       </div>
 
-      <div className="avaliacoes">
+      <div className="campo">
         <label>Técnica</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
@@ -44,7 +44,9 @@ const RelatorioConfirmar = () => {
             ></span>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Velocidade</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
@@ -55,7 +57,9 @@ const RelatorioConfirmar = () => {
             ></span>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Atitude Competitiva</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
@@ -66,7 +70,9 @@ const RelatorioConfirmar = () => {
             ></span>
           ))}
         </div>
+      </div>
 
+      <div className="campo">
         <label>Inteligência</label>
         <div className="opcoes">
           {[1, 2, 3, 4].map((num) => (
