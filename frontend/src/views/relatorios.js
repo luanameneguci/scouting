@@ -19,6 +19,8 @@ const Relatorios = () => {
   return (
     <div className="reports-container">
       <main>
+        <h1 className="TituloEquipas">Relatórios</h1>
+      
         <div className="reports-toolbar">
           <input
             type="text"
