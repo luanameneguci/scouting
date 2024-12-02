@@ -9,6 +9,7 @@ import Relatorios from './views/relatorios';
 import NavBackoffice from './components/navBackoffice';
 import NavLanding from './components/navLanding';
 import LandingPage from './views/landing/landingPage';
+import Credenciais from './views/credenciais';
 
 
 function App() {
@@ -36,6 +37,7 @@ function AppContent() {
         <Route path="/relatorio/validar" element={<RelatorioValidar />} />
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
+        <Route path="/credenciais" element={<Credenciais />} />
       </Routes>
     </div>
   );

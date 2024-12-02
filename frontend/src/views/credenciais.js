@@ -7,9 +7,9 @@ const Credenciais = () => {
   };
 
   const users = [
-    { active: true, name: "John Doe", email: "johndoe@email.com", password: "********", telefone: "912334678", perfil: "Treinador" },
-    { active: true, name: "John Doe", email: "johndoe@email.com", password: "********", telefone: "912334678", perfil: "Treinador" },
-    { active: true, name: "John Doe", email: "johndoe@email.com", password: "********", telefone: "912334678", perfil: "Treinador" },
+    { active: true, name: "John Doe", email: "johndoe@email.com", password: "soufadesopa", telefone: "912334678", perfil: "Treinador" },
+    { active: true, name: "John Doe", email: "johndoe@email.com", password: "tostamistaradical!t", telefone: "912334678", perfil: "Treinador" },
+    { active: true, name: "John Doe", email: "johndoe@email.com", password: "elaéovelhaelaéchonégo", telefone: "912334678", perfil: "Treinador" },
   ];
 
   return (
