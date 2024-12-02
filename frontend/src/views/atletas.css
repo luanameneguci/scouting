@@ -15,40 +15,43 @@
 }
 
 
-/* Wrapper for search bar and button */
-.searchbar-wrapper {
+.searchbar-wrapper-atletas {
   display: flex;
-  align-items: center;
-  gap: 1rem; /* Space between search bar and button */
+  justify-content: flex-start; /* Align items to the left */
+  gap: 1rem; /* Space between the search bar and the button */
   margin-bottom: 1.5rem;
 }
 
-/* Barra de busca */
-.searchbar-container {
+.searchbar {
   display: flex;
+  padding: 0 1rem;
+  width: clamp(10rem, 80%, 22rem); /* Dynamically responsive width */
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
   background-color: var(--gray-800-color);
-  padding: 0.75rem 1rem;
-  border-radius: 1.5rem; /* Ensure rounded edges */
-  width: 300px; /* Fixed width for the search bar */
-  height: 3rem; /* Consistent height */
-  box-sizing: border-box; /* Ensure padding is included in the total size */
+  border-radius: 9999px; /* Fully rounded edges */
 }
 
-.searchbar-input {
+.searchbar:focus-within {
+  outline: 0.08rem solid var(--gray-600-color); /* Outline on focus */
+}
+
+.searchbar input {
+  border: 0;
+  background-color: transparent;
+  padding: 1rem;
   flex: 1;
-  border: none;
-  background: transparent;
-  color: #fff;
-  outline: none;
-  font-size: 1rem;
+  color: #fff; /* Ensure input text color matches the theme */
 }
 
-.searchbar-icon {
-  color: #888;
-  cursor: pointer;
+.searchbar input:focus {
+  outline: 0; /* Remove default input outline */
 }
+
+.searchbar .icon {
+  color: var(--gray-500-color); /* Adjust icon color */
+}
+
 
 /* Adicionar Button */
 .add-button {
