@@ -1,12 +1,4 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #1c1c1c;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
+.validar-relatorio-content {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
@@ -14,41 +6,41 @@ body {
   border-radius: 8px;
 }
 
-.form-section {
+.validar-relatorio-content .form-section {
   margin-bottom: 20px;
 }
 
-h2 {
+.validar-relatorio-content h2 {
   color: #fff;
   margin-bottom: 20px; /* Adicionar mais espaço abaixo do título */
 }
 
-.form-group {
+.validar-relatorio-content .form-group {
   margin-bottom: 22px; /* Espaçamento uniforme entre os grupos de formulários */
 }
 
-.form-row {
+.validar-relatorio-content .form-row {
   display: flex;
   justify-content: space-between;
 }
 
-.form-row .form-group {
+.validar-relatorio-content .form-row .form-group {
   flex: 1;
   margin-right: 14px;
 }
 
-.form-row .form-group:last-child {
+.validar-relatorio-content .form-row .form-group:last-child {
   margin-right: 0;
 }
 
-label {
+.validar-relatorio-content label {
   display: block;
   margin-bottom: 8px;
   font-size: 14px;
 }
 
-input,
-select {
+.validar-relatorio-content input,
+.validar-relatorio-content select {
   width: 100%;
   padding: 12px; /* Aumentar a altura das caixas de texto */
   border: none;
@@ -56,13 +48,13 @@ select {
   font-size: 14px;
 }
 
-input:disabled,
-select:disabled {
+.validar-relatorio-content input:disabled,
+.validar-relatorio-content select:disabled {
   background-color: #555;
   color: #aaa;
 }
 
-.btn {
+.validar-relatorio-content .btn {
   display: block;
   width: 100%;
   padding: 10px;
@@ -74,15 +66,15 @@ select:disabled {
   cursor: pointer;
 }
 
-.btn:hover {
+.validar-relatorio-content .btn:hover {
   background-color: #e0a800;
 }
 
-.line {
+.validar-relatorio-content .line {
   border-top: 1px solid #fff; /* Mudar a cor da linha para branco */
   margin: 20px 0;
 }
 
-.content {
+.validar-relatorio-content {
   padding-top: 80px; /* Ajustar conforme necessário */
 }
