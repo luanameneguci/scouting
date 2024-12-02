@@ -39,9 +39,15 @@
     flex-wrap: wrap;
   }
   
+  .bola-container {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espaçamento entre a bola e o número/texto */
+  }
+  
   .bola {
-    width: 30px; /* Aumenta o tamanho das bolas */
-    height: 30px; /* Aumenta o tamanho das bolas */
+    width: 20px; /* Ajusta o tamanho das bolas */
+    height: 20px; /* Ajusta o tamanho das bolas */
     border-radius: 50%;
     border: 2px solid white;
     cursor: pointer;
@@ -49,6 +55,10 @@
   
   .bola.selecionada {
     background-color: white;
+  }
+  
+  .numero, .texto {
+    font-size: 14px; /* Ajusta o tamanho do texto */
   }
   
   h1 {
