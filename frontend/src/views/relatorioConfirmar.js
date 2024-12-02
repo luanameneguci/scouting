@@ -9,6 +9,7 @@ const RelatorioConfirmar = () => {
   const [altura, setAltura] = useState(null);
   const [morfologia, setMorfologia] = useState(null);
   const [apontamentos, setApontamentos] = useState("");
+  const [atleta, setAtleta] = useState(""); // Estado inicial do nome do atleta vazio
 
   return (
     <div className="avaliacao-container">
@@ -16,7 +17,12 @@ const RelatorioConfirmar = () => {
       
       <div className="campo">
         <label>Atleta</label>
-        <input type="text" value="John Doe" disabled />
+        <input 
+          type="text" 
+          value={atleta} 
+          onChange={(e) => setAtleta(e.target.value)} // Permite editar o nome do atleta
+          placeholder="Digite o nome do atleta" // Placeholder para o campo de texto
+        />
       </div>
 
       <div className="campo">
