@@ -7,7 +7,7 @@
   }
   
   .campo {
-    margin-bottom: 20px;
+    margin-bottom: 35px;
   }
   
   label {
@@ -20,9 +20,9 @@
   select,
   textarea {
     width: 100%;
-    padding: 15px; /* Aumenta o padding para dar mais espaço nas caixas de texto */
-    margin-top: 5px;
-    border-radius: 4px;
+    padding: 12px; /* Aumenta o padding para dar mais espaço nas caixas de texto */
+    margin-top: 10px;
+    border-radius: 10px;
     border: 1px solid #ccc;
     background-color: #3c3c3c;
     color: white;
@@ -35,14 +35,14 @@
   .avaliacoes, .opcoes {
     margin-top: 10px;
     display: flex;
-    gap: 20px; /* Aumenta o espaçamento entre as bolas */
+    gap: 45px; /* Aumenta o espaçamento entre as bolas */
     flex-wrap: wrap;
   }
   
   .bola-container {
     display: flex;
     align-items: center;
-    gap: 5px; /* Espaçamento entre a bola e o número/texto */
+    gap: 15px; /* Espaçamento entre a bola e o número/texto */
   }
   
   .bola {
