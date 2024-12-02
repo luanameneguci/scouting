@@ -11,7 +11,6 @@
 .TituloEquipas {
   text-align: left; /* Align title to the left */
   margin-bottom: 1rem; /* Add spacing below the title */
-  padding-bottom: 1rem; /* Adjust padding for consistency */
 }
 
 
@@ -74,107 +73,70 @@
   background-color: #ffdb4d;
 }
 
+
 /* Tabela */
 .custom-table {
   width: 100%;
-  border-collapse: separate; /* Allows border-radius to take effect */
-  border-spacing: 0; /* Keeps internal borders aligned properly */
+  border-collapse: collapse;
   background-color: var(--gray-800-color);
-  border-radius: 8px; /* Rounds the edges of the entire table */
+  border-radius: 8px; /* Rounded edges for the entire table */
   overflow: hidden;
-  position: relative; /* Ensure proper alignment for rounded corners */
+  margin-top: 20px;
 }
 
-/* Table Headers */
-.custom-table th {
-  background-color: var(--gray-800-color);
-  font-weight: bold;
-  border-right: none; /* Remove vertical borders */
-  border-left: none; /* Remove vertical borders */
-  padding: 1rem; /* Added padding to increase height */
-  text-align: left; /* Ensure headers are aligned to the left */
+.custom-table thead th {
+  padding: 12px;
+  text-align: left; /* Align headers to the left */
+  border-bottom: 2px solid var(--gray-700-color);
+  color: var(--white-color);
+  background-color: var(--gray-900-color);
 }
 
-/* Round corners for top-left and top-right */
-.custom-table th:first-child {
-  border-top-left-radius: 8px; /* Top-left corner rounded */
+.custom-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-700-color);
+  color: var(--white-color);
 }
 
-.custom-table th:last-child {
-  border-top-right-radius: 8px; /* Top-right corner rounded */
+.custom-table tbody tr:hover {
+  background-color: var(--gray-700-color); /* Add hover effect for rows */
 }
 
-/* Round corners for bottom-left and bottom-right */
-.custom-table tr:last-child td:first-child {
-  border-bottom-left-radius: 8px; /* Bottom-left corner rounded */
-}
-
-.custom-table tr:last-child td:last-child {
-  border-bottom-right-radius: 8px; /* Bottom-right corner rounded */
-}
-
-/* Remove borders on the external edges */
-.custom-table th:first-child,
-.custom-table td:first-child {
-  border-left: none; /* No left border for the first column */
-}
-
-.custom-table th:last-child,
-.custom-table td:last-child {
-  border-right: none; /* No right border for the last column */
-}
-
-.custom-table tr:first-child th {
-  border-top: none; /* No top border for the first row */
-}
-
-.custom-table tr:last-child td {
-  border-bottom: none; /* No bottom border for the last row */
-}
-
-/* Align table rows (data cells) to the left */
+/* Align data cells to the left */
 .custom-table td {
-  text-align: left; /* Align all data cells to the left */
-  padding: 0.5rem; /* Ensure consistent padding */
-  border: 1px solid #444;
-  color: #fff;
+  text-align: left;
   font-size: 0.9rem;
 }
 
-/* Action Column */
+/* Action Buttons */
 .action-column {
   display: flex;
-  flex-direction: row; /* Display buttons side by side */
-  gap: 0.5rem; /* Space between buttons */
+  gap: 10px;
 }
 
-/* Remover Button */
+.action-button {
+  color: var(--white-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.action-button:hover {
+  text-decoration: underline;
+}
+
 .action-button.remove {
-  background: none;
-  border: none;
-  color: #ff0000;
-  font-family: "Lato", sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
+  color: var(--red-color); /* Red for "Remover" */
 }
 
-/* Perfil Button */
 .action-button.profile {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-family: "Lato", sans-serif;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
+  color: var(--blue-color); /* Blue for "Perfil" */
 }
 
-/* Even and Odd Row Colors */
-.custom-table tr:nth-child(even) {
-  background-color: var(--gray-700-color); /* Lighter gray for even rows */
-}
 
-.custom-table tr:nth-child(odd) {
-  background-color: var(--gray-800-color); /* Darker gray for odd rows */
+.custom-table tbody tr {
+  background-color: var(--gray-800-color); /* Uniform background color for all rows */
 }
