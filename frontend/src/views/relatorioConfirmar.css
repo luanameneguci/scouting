@@ -1,24 +1,23 @@
 .avaliacao-container {
-    font-family: Arial, sans-serif;
     color: white;
     padding: 20px;
     max-width: 900px; /* Aumenta a largura máxima do contêiner */
     margin: auto;
   }
   
-  .campo {
+  .avaliacao-container .campo {
     margin-bottom: 35px;
   }
   
-  label {
+  .avaliacao-container label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
   }
   
-  input[type="text"],
-  select,
-  textarea {
+  .avaliacao-container input[type="text"],
+  .avaliacao-container select,
+  .avaliacao-container textarea {
     width: 100%;
     padding: 12px; /* Aumenta o padding para dar mais espaço nas caixas de texto */
     margin-top: 10px;
@@ -28,24 +27,24 @@
     color: white;
   }
   
-  textarea {
+  .avaliacao-container textarea {
     resize: none;
   }
   
-  .avaliacoes, .opcoes {
+  .avaliacao-container .avaliacoes, .opcoes {
     margin-top: 10px;
     display: flex;
     gap: 45px; /* Aumenta o espaçamento entre as bolas */
     flex-wrap: wrap;
   }
   
-  .bola-container {
+  .avaliacao-container .bola-container {
     display: flex;
     align-items: center;
     gap: 15px; /* Espaçamento entre a bola e o número/texto */
   }
   
-  .bola {
+  .avaliacao-container .bola {
     width: 20px; /* Ajusta o tamanho das bolas */
     height: 20px; /* Ajusta o tamanho das bolas */
     border-radius: 50%;
@@ -53,15 +52,15 @@
     cursor: pointer;
   }
   
-  .bola.selecionada {
+  .avaliacao-container .bola.selecionada {
     background-color: white;
   }
   
-  .numero, .texto {
+  .avaliacao-container .numero, .texto {
     font-size: 14px; /* Ajusta o tamanho do texto */
   }
   
-  h1 {
+  .avaliacao-container h1 {
     text-align: center;
     margin-bottom: 30px; /* Aumenta o espaçamento inferior do título */
   }
