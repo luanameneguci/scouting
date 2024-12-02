@@ -1,13 +1,25 @@
 /* Geral */
-.TituloEquipas {
-  padding-bottom: 1rem;
+.atletas-page {
+  padding: 6rem 2rem 2rem;
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
+
+.TituloEquipas {
+  text-align: left; /* Align title to the left */
+  margin-bottom: 1rem; /* Add spacing below the title */
+  padding-bottom: 1rem; /* Adjust padding for consistency */
+}
+
 
 /* Wrapper for search bar and button */
 .searchbar-wrapper {
   display: flex;
   align-items: center;
-  gap: 1rem; 
+  gap: 1rem; /* Space between search bar and button */
   margin-bottom: 1.5rem;
 }
 
@@ -18,9 +30,10 @@
   gap: 0.5rem;
   background-color: var(--gray-800-color);
   padding: 0.75rem 1rem;
-  border-radius: 1.5rem;
-  width: 300px; 
-  height: 3rem; 
+  border-radius: 1.5rem; /* Ensure rounded edges */
+  width: 300px; /* Fixed width for the search bar */
+  height: 3rem; /* Consistent height */
+  box-sizing: border-box; /* Ensure padding is included in the total size */
 }
 
 .searchbar-input {
@@ -42,11 +55,11 @@
   background-color: #ffcc00;
   border: none;
   color: #000;
-  padding: 0 1rem; 
+  padding: 0 1rem; /* Padding to define button width */
   border-radius: 1.5rem;
   font-weight: bold;
   cursor: pointer;
-  height: 3rem; 
+  height: 3rem; /* Matches the height of the search bar */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,65 +74,65 @@
 /* Tabela */
 .custom-table {
   width: 100%;
-  border-collapse: separate; 
-  border-spacing: 0; 
+  border-collapse: separate; /* Allows border-radius to take effect */
+  border-spacing: 0; /* Keeps internal borders aligned properly */
   background-color: var(--gray-800-color);
-  border-radius: 8px; 
+  border-radius: 8px; /* Rounds the edges of the entire table */
   overflow: hidden;
-  position: relative; 
+  position: relative; /* Ensure proper alignment for rounded corners */
 }
 
 /* Table Headers */
 .custom-table th {
   background-color: var(--gray-800-color);
   font-weight: bold;
-  border-right: none; 
-  border-left: none; 
-  padding: 0.5rem; 
-  text-align: left; 
+  border-right: none; /* Remove vertical borders */
+  border-left: none; /* Remove vertical borders */
+  padding: 1rem; /* Added padding to increase height */
+  text-align: left; /* Ensure headers are aligned to the left */
 }
 
 /* Round corners for top-left and top-right */
 .custom-table th:first-child {
-  border-top-left-radius: 8px; 
+  border-top-left-radius: 8px; /* Top-left corner rounded */
 }
 
 .custom-table th:last-child {
-  border-top-right-radius: 8px; 
+  border-top-right-radius: 8px; /* Top-right corner rounded */
 }
 
 /* Round corners for bottom-left and bottom-right */
 .custom-table tr:last-child td:first-child {
-  border-bottom-left-radius: 8px; 
+  border-bottom-left-radius: 8px; /* Bottom-left corner rounded */
 }
 
 .custom-table tr:last-child td:last-child {
-  border-bottom-right-radius: 8px; 
+  border-bottom-right-radius: 8px; /* Bottom-right corner rounded */
 }
 
 /* Remove borders on the external edges */
 .custom-table th:first-child,
 .custom-table td:first-child {
-  border-left: none; 
+  border-left: none; /* No left border for the first column */
 }
 
 .custom-table th:last-child,
 .custom-table td:last-child {
-  border-right: none; 
+  border-right: none; /* No right border for the last column */
 }
 
 .custom-table tr:first-child th {
-  border-top: none; 
+  border-top: none; /* No top border for the first row */
 }
 
 .custom-table tr:last-child td {
-  border-bottom: none; 
+  border-bottom: none; /* No bottom border for the last row */
 }
 
 /* Align table rows (data cells) to the left */
 .custom-table td {
-  text-align: left; 
-  padding: 0.5rem; 
+  text-align: left; /* Align all data cells to the left */
+  padding: 0.5rem; /* Ensure consistent padding */
   border: 1px solid #444;
   color: #fff;
   font-size: 0.9rem;
@@ -128,8 +141,8 @@
 /* Action Column */
 .action-column {
   display: flex;
-  flex-direction: row; 
-  gap: 0.5rem; 
+  flex-direction: row; /* Display buttons side by side */
+  gap: 0.5rem; /* Space between buttons */
 }
 
 /* Remover Button */
@@ -156,9 +169,9 @@
 
 /* Even and Odd Row Colors */
 .custom-table tr:nth-child(even) {
-  background-color: var(--gray-700-color); 
+  background-color: var(--gray-700-color); /* Lighter gray for even rows */
 }
 
 .custom-table tr:nth-child(odd) {
-  background-color: var(--gray-800-color); 
+  background-color: var(--gray-800-color); /* Darker gray for odd rows */
 }
