@@ -53,7 +53,76 @@ controllers.criar = async (req, res) => {
   }
 };
 
-controllers.listarPorAtleta = async (req, res) => {
+
+controllers.editar = async (req, res) => {
+  // parameter get id
+  const { id_jogo } = req.params;
+  // parameter POST
+  const { id_escalao, dataJogo } = req.body;
+  // Update data
+  const data = await Jogo.update(
+    {
+      id_escalao: id_escalao,
+      dataJogo: dataJogo,
+    },
+    {
+      where: { id_jogo: id_jogo },
+    }
+  )
+    .then(function (data) {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+  res.json({ success: true, data: data, message: "Updated successful" });
+};
+
+const addAtletaToJogo = async (req, res) => {
+  const { id_jogo, id_atleta } = req.body;
+
+  try {
+    // Step 1: Check if the jogo exists
+    const jogo = await Jogo.findByPk(id_jogo);
+    if (!jogo) {
+      return res.status(404).json({
+        success: false,
+        message: "Jogo not found",
+      });
+    }
+
+    // Step 2: Check if the atleta is already linked to this jogo
+    const existingLink = await JogoAtleta.findOne({
+      where: { id_jogo, id_atleta },
+    });
+
+    if (existingLink) {
+      return res.status(400).json({
+        success: false,
+        message: "Atleta is already linked to this jogo.",
+      });
+    }
+
+    // Step 3: Create the new relationship
+    await JogoAtleta.create({ id_jogo, id_atleta });
+
+    // Step 4: Return success response
+    res.status(200).json({
+      success: true,
+      message: "Atleta successfully added to the jogo.",
+    });
+  } catch (error) {
+    console.error("Error adding atleta to jogo:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to add atleta to jogo.",
+      error: error.message,
+    });
+  }
+};
+
+
+/* controllers.listarPorAtleta = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -91,7 +160,7 @@ controllers.listarPorAtleta = async (req, res) => {
       error: error.message,
     });
   }
-};
+}; */
 
 controllers.listar = async (req, res) => {
   const data = await Jogo.findAll({})
