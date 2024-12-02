@@ -1,13 +1,4 @@
 /* Geral */
-.atletas-page {
-  padding: 6rem 2rem 2rem;
-  color: #fff;
-  font-family: "Lato", sans-serif;
-  width: 100%;
-  min-height: 100vh;
-  box-sizing: border-box;
-}
-
 .TituloEquipas {
   padding-bottom: 1rem;
 }

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, NavLink, Routes, useLocation } from "re
 import './App.css';
 import Equipas from './views/equipas';
 import Atletas from './views/atletas';
+import AtletasAdicionar from './views/atletasAdicionar';
 import RelatorioValidar from './views/relatorioValidar';
 import RelatorioConfirmar from './views/relatorioConfirmar';
 import Adicionarjogo from './views/adicionarjogo';
@@ -33,7 +34,8 @@ function AppContent() {
         <Route path="/" element={<LandingPage />} />
         {/* Routes para o backoffice*/}
         <Route path="/equipa/:idEquipa" element={<Equipas />} />
-        <Route path="/atletas" element={<Atletas />} /> {/* Adicionada a rota para a página de Atletas */}
+        <Route path="/atletas" element={<Atletas />} /> 
+        <Route path="/atletasAdicionar" element={<AtletasAdicionar />} /> 
         <Route path="/relatorio/validar" element={<RelatorioValidar />} />
         <Route path="/relatorio/confirmar" element={<RelatorioConfirmar />} />
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
