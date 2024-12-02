@@ -3,7 +3,7 @@ import './relatorioValidar.css';
 
 const RelatorioValidar = () => {
   return (
-    <div className="container content">
+    <div className="container validar-relatorio-content">
       {/* Seção Atleta Existente */}
       <div className="form-section">
         <h2>Atleta Existente</h2>
