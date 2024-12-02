@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./atletasAdicionar.css";
+import "./atletas.css";
 
 export default function AtletaAdicionar() {
   const [formData, setFormData] = useState({
@@ -23,14 +23,14 @@ export default function AtletaAdicionar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Dados do Atleta:", formData);
-    // Adicione aqui a lógica para enviar os dados para um backend.
+    // Aqui você pode adicionar a lógica para enviar os dados para um backend.
   };
 
   return (
-    <div className="AtletaAdicionar-page">
-      <h1 className="AtletaAdicionar-Titulo">Adicionar Atleta</h1>
-      <form className="AtletaAdicionar-form" onSubmit={handleSubmit}>
-        <div className="AtletaAdicionar-form-group">
+    <div className="atletas-page">
+      <h1 className="TituloEquipas">Adicionar Atleta</h1>
+      <form className="adicionar-form" onSubmit={handleSubmit}>
+        <div className="form-group">
           <label>Nome do Atleta</label>
           <input
             type="text"
@@ -42,7 +42,7 @@ export default function AtletaAdicionar() {
           />
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Data de Nascimento</label>
           <input
             type="date"
@@ -53,7 +53,7 @@ export default function AtletaAdicionar() {
           />
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Escalão</label>
           <select
             name="escalao"
@@ -68,7 +68,7 @@ export default function AtletaAdicionar() {
           </select>
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Clube</label>
           <select
             name="clube"
@@ -82,7 +82,7 @@ export default function AtletaAdicionar() {
           </select>
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Posição</label>
           <select
             name="posicao"
@@ -97,7 +97,7 @@ export default function AtletaAdicionar() {
           </select>
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Nacionalidade</label>
           <select
             name="nacionalidade"
@@ -112,7 +112,7 @@ export default function AtletaAdicionar() {
           </select>
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Link</label>
           <input
             type="url"
@@ -123,7 +123,7 @@ export default function AtletaAdicionar() {
           />
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Rating Final</label>
           <input
             type="number"
@@ -136,7 +136,7 @@ export default function AtletaAdicionar() {
           />
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Nome do Contacto</label>
           <input
             type="text"
@@ -148,7 +148,7 @@ export default function AtletaAdicionar() {
           />
         </div>
 
-        <div className="AtletaAdicionar-form-group">
+        <div className="form-group">
           <label>Contato Telefónico</label>
           <input
             type="tel"
@@ -160,7 +160,7 @@ export default function AtletaAdicionar() {
           />
         </div>
 
-        <button type="submit" className="AtletaAdicionar-add-button">
+        <button type="submit" className="add-button">
           Criar
         </button>
       </form>

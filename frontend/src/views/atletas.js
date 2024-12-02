@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Import do React Router
 import './atletas.css';
 
 export default function Atletas() {
@@ -17,9 +16,7 @@ export default function Atletas() {
           <span className="searchbar-icon material-symbols-outlined">search</span>
         </div>
         {/* Botão Adicionar */}
-        <Link to="/atletasAdicionar"> {/* Link atualizado para /atletasAdicionar */}
-          <button className="add-button">Adicionar</button>
-        </Link>
+        <button className="add-button">Adicionar</button>
       </div>
       {/* Tabela */}
       <table className="custom-table">
