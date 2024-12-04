@@ -11,6 +11,7 @@ import Relatorios from './views/relatorios';
 import NavBackoffice from './components/navBackoffice';
 import NavLanding from './components/navLanding';
 import LandingPage from './views/landing/landingPage';
+import Dashboard from "./views/dashboard";
 
 
 function App() {
@@ -40,6 +41,7 @@ function AppContent() {
         <Route path="/relatorio/confirmar" element={<RelatorioConfirmar />} />
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );
