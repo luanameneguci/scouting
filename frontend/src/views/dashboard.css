@@ -1,0 +1,103 @@
+/* Dashboard Container */
+.dashboard {
+    display: flex; /* Flex layout for sidebar and content */
+    min-height: 100vh; /* Full viewport height */
+    padding: 6rem 2rem 2rem;
+    box-sizing: border-box;
+  }
+  
+  /* Sidebar Styling */
+  .sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the top */
+    background-color: #222; /* Dark background */
+    border-radius: 8px;
+    color: #fff;
+  }
+  
+  /* Quick Actions Styling */
+  .quick-actions h2 {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar button {
+    background-color: #ffcc00;
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: left;
+  }
+  
+  .sidebar button:hover {
+    background-color: #e6b800;
+  }
+  
+  /* Main Content Styling */
+  .main-content {
+    flex: 1; /* Take up remaining space next to the sidebar */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Games Section */
+  .games {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+  }
+  
+  .games h2 {
+    margin-bottom: 15px;
+  }
+  
+  .game-card {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .game-card.pending {
+    border: 2px solid #ffcc00;
+  }
+  
+  .game-card.result {
+    border: 2px solid #28a745;
+  }
+  
+  /* Stats Section */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .stat {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 8px;
+    color: #fff;
+  }
+  
+  .stat h3 {
+    margin-bottom: 10px;
+  }
+  
+  .stat ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .stat ul li {
+    margin-bottom: 5px;
+  }
+  

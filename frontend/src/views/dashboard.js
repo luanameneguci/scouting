@@ -1,18 +1,12 @@
 import './dashboard.css';
-
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 export default function Dashboard(){
+  return(
     <div>
     <title>Dashboard</title>
-<body>
   <div class="dashboard">
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <button class="menu-button">☰</button>
-      </div>
-      <div class="quick-actions">
+    <div class="sidebar">
         <h2>Ações rápidas</h2>
         <button>Criar relatório</button>
         <button>Adicionar jogo</button>
@@ -23,10 +17,8 @@ export default function Dashboard(){
         <button>Ver equipas sombra</button>
         <button>Ver equipas próprias</button>
         <button>Enviar notificação a todos os utilizadores</button>
-      </div>
-    </aside>
+    </div>
 
-    <main class="main-content">
       <section class="games">
         <h2>Jogos desta semana</h2>
         <div class="game-card pending">
@@ -68,9 +60,8 @@ export default function Dashboard(){
           <p>999 atletas no total</p>
         </div>
       </section>
-    </main>
-  </div>
-</body>
-</div>
 
+  </div>
+</div>
+)
 }
