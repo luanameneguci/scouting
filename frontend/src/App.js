@@ -1,4 +1,4 @@
-import { useState } from "react";
+  import { useState } from "react";
 import { BrowserRouter as Router, Route, NavLink, Routes, useLocation } from "react-router-dom";
 import './App.css';
 import Equipas from './views/equipas';
@@ -12,6 +12,7 @@ import NavBackoffice from './components/navBackoffice';
 import NavLanding from './components/navLanding';
 import LandingPage from './views/landing/landingPage';
 import Credenciais from './views/credenciais';
+import Dashboard from "./views/dashboard";
 
 
 function App() {
@@ -42,6 +43,7 @@ function AppContent() {
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
         <Route path="/credenciais" element={<Credenciais />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );

@@ -1,13 +1,12 @@
 /* Estilos gerais */
 .reports-container {
-  padding: 20px;
-  padding-top: 80px; /* Adjust if needed */
+  padding: 6rem 2rem 2rem;
+  padding-top: 100px; /* Adjust if needed */
   width: 100%;
 }
 
 /* Title */
 .reports-title {
-  font-size: 32px;
   color: var(--white-color);
   margin-bottom: 20px;
 }
@@ -15,57 +14,75 @@
 /* Toolbar */
 .reports-toolbar {
   display: flex;
+  justify-content: flex-start; /* Align items to the left */
   align-items: center;
-  margin-bottom: 20px;
+  gap: 1rem; /* Space between the search bar and the button */
+  margin-bottom: 1.5rem;
 }
 
 /* Search Container */
 .reports-search-container {
-  position: relative;
-  width: 100%;
-  max-width: 400px; /* Optional max width */
+  display: flex;
+  padding: 0 1rem;
+  width: clamp(10rem, 80%, 22rem); /* Dynamically responsive width */
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--gray-800-color);
+  border-radius: 9999px; /* Fully rounded edges */
+}
+
+.reports-search-container:focus-within {
+  outline: 0.08rem solid var(--gray-600-color); /* Outline on focus */
 }
 
 /* Search Input */
 .reports-search-input {
-  width: 100%;
-  padding: 15px 40px 15px 15px; /* Increased vertical padding */
-  border: 1px solid var(--gray-700-color);
-  background-color: var(--gray-800-color);
-  color: var(--white-color);
-  border-radius: 9999px;
-  box-sizing: border-box;
+  border: 0;
+  background-color: transparent;
+  padding: 1rem;
+  flex: 1;
+  color: #fff; /* Ensure input text color matches the theme */
+}
+
+.reports-search-input:focus {
+  outline: 0; /* Remove default input outline */
 }
 
 /* Search Button (Icon) */
 .reports-search-button {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--white-color);
+  color: var(--gray-500-color); /* Adjust icon color */
   font-size: 24px;
   padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.reports-search-button .material-symbols-outlined {
+  color: var(--gray-500-color);
 }
 
 /* "Adicionar" Button */
 .reports-add-button {
-  margin-left: 20px;
-  padding: 15px 30px; /* Increased vertical padding */
-  background-color: var(--accent-color);
+  background-color: #ffcc00;
   border: none;
-  cursor: pointer;
-  border-radius: 9999px;
+  color: #000;
+  padding: 0 1rem; /* Padding to define button width */
+  border-radius: 1.5rem;
   font-weight: bold;
-  color: var(--black-color);
-  transition: 0.3s;
+  cursor: pointer;
+  height: 3rem; /* Matches the height of the search bar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  width: 10rem;
 }
 
 .reports-add-button:hover {
-  background-color: var(--light-accent-color);
+  background-color: #ffdb4d;
 }
 
 /* Tabela */
