@@ -1,7 +1,16 @@
 import React, { useState } from "react";
-import "./atletas.css";
+import "./atletasAdicionar.css";
+import {
+  Person as PersonIcon,
+  CalendarToday as CalendarTodayIcon,
+  SportsSoccer as SportsSoccerIcon,
+  Public as PublicIcon,
+  Star as StarIcon,
+  Link as LinkIcon,
+  Phone as PhoneIcon,
+} from "@mui/icons-material";
 
-export default function AtletaAdicionar() {
+export default function AtletasAdicionar() {
   const [formData, setFormData] = useState({
     nome: "",
     dataNascimento: "",
@@ -16,151 +25,132 @@ export default function AtletaAdicionar() {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Dados do Atleta:", formData);
-    // Aqui você pode adicionar a lógica para enviar os dados para um backend.
+    console.log("Dados enviados:", formData);
   };
 
   return (
-    <div className="atletas-page">
-      <h1 className="TituloEquipas">Adicionar Atleta</h1>
-      <form className="adicionar-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Nome do Atleta</label>
+    <div className="atletasadicionar-container">
+      <form className="atletasadicionar-form" onSubmit={handleSubmit}>
+        <div className="atletasadicionar-input-group">
+          <PersonIcon />
           <input
             type="text"
             name="nome"
-            placeholder="Digite o nome do atleta"
+            placeholder="Nome do atleta"
             value={formData.nome}
             onChange={handleChange}
-            required
           />
         </div>
-
-        <div className="form-group">
-          <label>Data de Nascimento</label>
+        <div className="atletasadicionar-input-group">
+          <CalendarTodayIcon />
           <input
             type="date"
             name="dataNascimento"
+            placeholder="Data de Nascimento"
             value={formData.dataNascimento}
             onChange={handleChange}
-            required
           />
-        </div>
-
-        <div className="form-group">
-          <label>Escalão</label>
           <select
             name="escalao"
             value={formData.escalao}
             onChange={handleChange}
-            required
           >
-            <option value="">Selecione</option>
-            <option value="Sub-16">Sub-16</option>
-            <option value="Sub-17">Sub-17</option>
-            <option value="Sub-18">Sub-18</option>
+            <option value="" disabled>
+              Escalão
+            </option>
+            <option value="SUB-16">SUB-16</option>
+            <option value="SUB-17">SUB-17</option>
+            <option value="SUB-18">SUB-18</option>
           </select>
         </div>
-
-        <div className="form-group">
-          <label>Clube</label>
+        <div className="atletasadicionar-input-group">
+          <PersonIcon />
           <select
             name="clube"
             value={formData.clube}
             onChange={handleChange}
-            required
           >
-            <option value="">Selecione</option>
+            <option value="" disabled>
+              Clube
+            </option>
             <option value="SL Benfica">SL Benfica</option>
             <option value="FC Porto">FC Porto</option>
           </select>
-        </div>
-
-        <div className="form-group">
-          <label>Posição</label>
+          <SportsSoccerIcon />
           <select
             name="posicao"
             value={formData.posicao}
             onChange={handleChange}
-            required
           >
-            <option value="">Selecione</option>
+            <option value="" disabled>
+              Posição
+            </option>
             <option value="PL">PL</option>
-            <option value="DEF">DEF</option>
             <option value="MC">MC</option>
           </select>
         </div>
-
-        <div className="form-group">
-          <label>Nacionalidade</label>
+        <div className="atletasadicionar-input-group">
+          <PublicIcon />
           <select
             name="nacionalidade"
             value={formData.nacionalidade}
             onChange={handleChange}
-            required
           >
-            <option value="">Selecione</option>
+            <option value="" disabled>
+              Nacionalidade
+            </option>
             <option value="Portugal">Portugal</option>
             <option value="Brasil">Brasil</option>
-            <option value="Espanha">Espanha</option>
           </select>
         </div>
-
-        <div className="form-group">
-          <label>Link</label>
+        <div className="atletasadicionar-input-group">
+          <LinkIcon />
           <input
             type="url"
             name="link"
-            placeholder="https://example.com"
+            placeholder="Link"
             value={formData.link}
             onChange={handleChange}
           />
         </div>
-
-        <div className="form-group">
-          <label>Rating Final</label>
+        <div className="atletasadicionar-input-group">
+          <StarIcon />
           <input
             type="number"
             name="rating"
-            placeholder="1-5"
+            placeholder="Rating Final"
             value={formData.rating}
             onChange={handleChange}
             min="1"
             max="5"
           />
         </div>
-
-        <div className="form-group">
-          <label>Nome do Contacto</label>
+        <div className="atletasadicionar-input-group">
+          <PersonIcon />
           <input
             type="text"
             name="contatoNome"
-            placeholder="Digite o nome do contato"
+            placeholder="Nome do Contato"
             value={formData.contatoNome}
             onChange={handleChange}
-            required
           />
         </div>
-
-        <div className="form-group">
-          <label>Contato Telefónico</label>
+        <div className="atletasadicionar-input-group">
+          <PhoneIcon />
           <input
             type="tel"
             name="contatoTelefone"
-            placeholder="912345678"
+            placeholder="Contato telefônico"
             value={formData.contatoTelefone}
             onChange={handleChange}
-            required
           />
         </div>
-
-        <button type="submit" className="add-button">
+        <button type="submit" className="atletasadicionar-submit-button">
           Criar
         </button>
       </form>

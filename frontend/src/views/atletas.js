@@ -1,5 +1,6 @@
 import React from "react";
 import './atletas.css';
+import { Link } from "react-router-dom";
 
 export default function Atletas() {
   return (
@@ -16,7 +17,9 @@ export default function Atletas() {
           <span className="material-symbols-outlined icon">search</span>
         </div>
         {/* Add Button */}
-        <button className="add-button">Adicionar</button>
+        <Link to="/atletasAdicionar">
+  <button className="add-button">Adicionar</button>
+</Link>
       </div>
       {/* Tabela */}
       <table className="custom-table">
