@@ -4,7 +4,7 @@ import './App.css';
 import Equipas from './views/equipas';
 import Atletas from './views/atletas';
 import AtletasAdicionar from './views/atletasAdicionar';
-import RelatorioValidar from './views/relatorioValidar';
+import RelatorioValidar from './views/relatorio/validar';
 import RelatorioConfirmar from './views/relatorioConfirmar';
 import Adicionarjogo from './views/adicionarjogo';
 import Relatorios from './views/relatorios';
@@ -38,8 +38,8 @@ function AppContent() {
         <Route path="/equipa/:idEquipa" element={<Equipas />} />
         <Route path="/atletas" element={<Atletas />} /> 
         <Route path="/atletasAdicionar" element={<AtletasAdicionar />} /> 
-        <Route path="/relatorio/validar" element={<RelatorioValidar />} />
         <Route path="/relatorio/confirmar" element={<RelatorioConfirmar />} />
+        <Route path="/relatorio/validar" element={<RelatorioValidar />} />
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
         <Route path="/credenciais" element={<Credenciais />} />
