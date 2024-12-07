@@ -4,7 +4,7 @@ import './App.css';
 import Equipas from './views/equipas';
 import Atletas from './views/atletas';
 import AtletasAdicionar from './views/atletasAdicionar';
-import RelatorioValidar from './views/relatorio/validar';
+import RelatorioValidar from './views/relatorioValidar';
 import RelatorioConfirmar from './views/relatorioConfirmar';
 import Adicionarjogo from './views/adicionarjogo';
 import Relatorios from './views/relatorios';
