@@ -18,8 +18,8 @@ export default function Atletas() {
         </div>
         {/* Add Button */}
         <Link to="/atletas/adicionar">
-  <button className="add-button">Adicionar</button>
-</Link>
+          <button className="add-button">Adicionar</button>
+        </Link>
       </div>
       {/* Tabela */}
       <table className="custom-table">
@@ -48,7 +48,9 @@ export default function Atletas() {
             </td>
             <td className="text-left action-column">
               <button className="action-button remove">Remover</button>
-              <button className="action-button profile">Perfil</button>
+              <Link to="/atletas/pagina">
+                <button className="action-button profile">Perfil</button>
+              </Link>
             </td>
           </tr>
           <tr>
@@ -63,22 +65,9 @@ export default function Atletas() {
             </td>
             <td className="text-left action-column">
               <button className="action-button remove">Remover</button>
-              <button className="action-button profile">Perfil</button>
-            </td>
-          </tr>
-          <tr>
-            <td className="text-left">Ativo</td>
-            <td className="text-left">John Doe</td>
-            <td className="text-left">4 ★★★★</td>
-            <td className="text-left">PL <span className="text-secondary">ATA</span></td>
-            <td className="text-left">2008</td>
-            <td className="text-left">Sub-17</td>
-            <td className="text-left">
-              <span role="img" aria-label="Portugal">🇵🇹</span> Portugal
-            </td>
-            <td className="text-left action-column">
-              <button className="action-button remove">Remover</button>
-              <button className="action-button profile">Perfil</button>
+              <Link to="/atletas/pagina">
+                <button className="action-button profile">Perfil</button>
+              </Link>
             </td>
           </tr>
         </tbody>

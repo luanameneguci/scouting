@@ -200,7 +200,7 @@ export default function AtletasAdicionar() {
         </div>
 
         <button type="submit" className="atletasadicionar-submit-button">
-          Criar
+          Adicionar
         </button>
       </form>
     </div>
