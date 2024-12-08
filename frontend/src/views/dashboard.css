@@ -1,14 +1,17 @@
 /* Dashboard Container */
 .dashboard {
     display: flex; /* Flex layout for sidebar and content */
-    min-height: 100vh; /* Full viewport height */
-    padding: 6rem 2rem 2rem;
+    min-height: 100%;
+    min-width: 100%; /* Full viewport height */
+    padding: 0.5%;
+    padding-top: 5%;
     box-sizing: border-box;
+    gap: 0.5%;
   }
   
   /* Sidebar Styling */
   .sidebar {
-    width: 250px; /* Fixed width for the sidebar */
+    min-width: 30%; /* Fixed width for the sidebar */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -27,24 +30,17 @@
     background-color: #ffcc00;
     color: #000;
     border: none;
-    padding: 10px 15px;
+    padding-left: 10px;
+    padding: 5%;
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 4px;
     text-align: left;
+    min-width: 90%;
   }
   
   .sidebar button:hover {
     background-color: #e6b800;
-  }
-  
-  /* Main Content Styling */
-  .main-content {
-    flex: 1; /* Take up remaining space next to the sidebar */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
   }
   
   /* Games Section */
@@ -53,6 +49,7 @@
     padding: 20px;
     border-radius: 10px;
     color: #fff;
+    min-width: 30%;
   }
   
   .games h2 {
@@ -76,9 +73,10 @@
   
   /* Stats Section */
   .stats {
+    min-width: 30%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    gap: 1.5%;
   }
   
   .stat {

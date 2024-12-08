@@ -3,9 +3,9 @@ import React from 'react';
 
 export default function Dashboard(){
   return(
-    <div>
-    <title>Dashboard</title>
+ 
   <div class="dashboard">
+       <title>Dashboard</title>
     <div class="sidebar">
         <h2>Ações rápidas</h2>
         <button>Criar relatório</button>
@@ -14,9 +14,7 @@ export default function Dashboard(){
         <button>Adicionar atleta</button>
         <button>Atletas com maior rating</button>
         <button>Adicionar utilizador</button>
-        <button>Ver equipas sombra</button>
-        <button>Ver equipas próprias</button>
-        <button>Enviar notificação a todos os utilizadores</button>
+
     </div>
 
       <section class="games">
@@ -62,6 +60,5 @@ export default function Dashboard(){
       </section>
 
   </div>
-</div>
 )
 }
