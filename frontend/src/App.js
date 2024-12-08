@@ -4,6 +4,7 @@ import './App.css';
 import Equipas from './views/equipas';
 import Atletas from './views/atletas';
 import AtletasAdicionar from './views/atletasAdicionar';
+import Atletaspersonalpage from './views/atletapersonalpage';
 import RelatorioValidar from './views/relatorioValidar';
 import RelatorioConfirmar from './views/relatorioConfirmar';
 import Adicionarjogo from './views/adicionarjogo';
@@ -37,7 +38,8 @@ function AppContent() {
         {/* Routes para o backoffice*/}
         <Route path="/equipa/:idEquipa" element={<Equipas />} />
         <Route path="/atletas" element={<Atletas />} /> 
-        <Route path="/atletasAdicionar" element={<AtletasAdicionar />} /> 
+        <Route path="/atletas/adicionar" element={<AtletasAdicionar />} /> 
+        <Route path="/atletas/pagina" element={<Atletaspersonalpage />} /> 
         <Route path="/relatorio/confirmar" element={<RelatorioConfirmar />} />
         <Route path="/relatorio/validar" element={<RelatorioValidar />} />
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />

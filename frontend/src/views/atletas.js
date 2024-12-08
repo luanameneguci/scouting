@@ -17,7 +17,7 @@ export default function Atletas() {
           <span className="material-symbols-outlined icon">search</span>
         </div>
         {/* Add Button */}
-        <Link to="/atletasAdicionar">
+        <Link to="/atletas/adicionar">
   <button className="add-button">Adicionar</button>
 </Link>
       </div>
