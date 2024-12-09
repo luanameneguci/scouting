@@ -98,7 +98,7 @@ const RelatorioValidar = () => {
             <label>Nome do atleta</label>
             <div className="input-icon">
               <PersonIcon className="icon" />
-              <input type="text" placeholder="John Doe" />
+              <input type="text" placeholder="Nome do atleta" />
             </div>
           </div>
 
@@ -154,7 +154,7 @@ const RelatorioValidar = () => {
               <label>Rating Final</label>
               <div className="input-icon">
                 <StarIcon className="icon" />
-                <input type="number" placeholder="5" />
+                <input type="number" placeholder="1" />
               </div>
             </div>
           </div>
@@ -171,7 +171,7 @@ const RelatorioValidar = () => {
             <label>Nome do Encarregado de Educação</label>
             <div className="input-icon">
               <SupervisorAccountIcon className="icon" />
-              <input type="text" placeholder="John Doe" />
+              <input type="text" placeholder="Nome Encarregado de Educação" />
             </div>
           </div>
           
@@ -179,7 +179,7 @@ const RelatorioValidar = () => {
             <label>Contacto do Encarregado de Educação</label>
             <div className="input-icon">
               <PhoneIcon className="icon" />
-              <input type="text" placeholder="912345678" />
+              <input type="text" placeholder="Contacto do Encarregado de Educação" />
             </div>
           </div>
 
