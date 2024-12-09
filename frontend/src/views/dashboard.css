@@ -37,6 +37,8 @@
     border-radius: 4px;
     text-align: left;
     min-width: 90%;
+    font-weight: bold;
+    font-size:small;
   }
   
   .sidebar button:hover {
@@ -55,8 +57,18 @@
   .games h2 {
     margin-bottom: 15px;
   }
+
+  .game-clubs{
+    font-weight: bold;
+  }
+
+  .game-details{
+    font-size: small;
+    
+  }
   
   .game-card {
+    display: flex;
     background-color: #333;
     padding: 15px;
     border-radius: 8px;
@@ -85,18 +97,17 @@
 
     min-height: 50%;
   }
-  
+
+.teams-content{
+    display: flex;
+    justify-content: space-between; 
+  }
+
+  .stat p{
+    margin-bottom: 3%;
+  }
   .stat h3 {
     margin-bottom: 10px;
-  }
-  
-  .stat ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .stat ul li {
-    margin-bottom: 5px;
   }
   
   .athletes-card {
@@ -151,3 +162,7 @@
     font-weight: bold;
   }
   
+  .numeroReports{
+    font-size:x-large;
+    font-weight: bold;
+  }
