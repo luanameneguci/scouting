@@ -13,6 +13,24 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import PhoneIcon from '@mui/icons-material/Phone';
 
 const RelatorioValidar = () => {
+  const clubes = [
+    "SL Benfica", "FC Porto", "Sporting CP", "SC Braga", 
+    "Vitória SC", "Marítimo", "CD Nacional", "Belenenses SAD", 
+    "Paços de Ferreira", "Académico de Viseu"
+  ];
+
+  const escaloes = [
+    "Profissional", "Sub 23", "Sub 19", "Sub 16", 
+    "Sub 14", "Sub 12", "Sub 11", "Sub 10"
+  ];
+
+  const posicoes = [
+    "Ponta de Lança", "Ala Direita", "Ala Esquerda", "Defesa Central", 
+    "Defesa Direita", "Defesa Esquerda", "Guarda-Redes", 
+    "Médio Centro Ofensivo", "Médio Centro Defensivo", 
+    "Médio Central", "Médio Direito", "Médio Esquerdo"
+  ];
+
   return (
     <div className="container content">
       {/* Seção Atleta Existente */}
@@ -115,7 +133,9 @@ const RelatorioValidar = () => {
               <div className="input-icon">
                 <GroupIcon className="icon" />
                 <select>
-                  <option>SUB-16</option>
+                  {escaloes.map((escalao, index) => (
+                    <option key={index}>{escalao}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -127,7 +147,9 @@ const RelatorioValidar = () => {
               <div className="input-icon">
                 <SportsSoccerIcon className="icon" />
                 <select>
-                  <option>SL Benfica</option>
+                  {clubes.map((clube, index) => (
+                    <option key={index}>{clube}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -136,7 +158,9 @@ const RelatorioValidar = () => {
               <div className="input-icon">
                 <SportsSoccerIcon className="icon" />
                 <select>
-                  <option>PL</option>
+                  {posicoes.map((posicao, index) => (
+                    <option key={index}>{posicao}</option>
+                  ))}
                 </select>
               </div>
             </div>
