@@ -50,38 +50,41 @@ const CredentialsPage = () => {
 
   return (
     <div className="credentials-container">
-      <h1 className="credentials-title">Credentials Management</h1>
+      <h1 className="credentials-title">Credenciais</h1>
       
       <div className="credentials-toolbar">
         <div className="credentials-search-container">
           <input 
             type="text" 
-            placeholder="Search..." 
+            placeholder="Pesquisar por nome de atleta" 
             className="credentials-search-input" 
           />
-          <button className="credentials-add-button">
-            Add
+          {/* Ícone de Pesquisa como Botão */}
+          <button className="credentials-search-button">
+            <span className="material-symbols-outlined">search</span>
           </button>
         </div>
-        <div className="credentials-filter">
-          <div className="credentials-radio-container">
-            <input type="radio" name="filter" id="treinador" />
-            <label htmlFor="treinador" className="credentials-radio-label">
+        <button className="credentials-add-button">Adicionar</button>
+      </div>
+
+      <div className="credentials-filter">
+        <div className="credentials-radio-container">
+          <input type="radio" name="filter" id="treinador" />
+          <label htmlFor="treinador" className="credentials-radio-label">
             Treinador
-            </label>
-          </div>
-          <div className="credentials-radio-container">
-            <input type="radio" name="filter" id="convidado" />
-            <label htmlFor="convidado" className="credentials-radio-label">
-           Convidado
-            </label>
-          </div>
-          <div className="credentials-radio-container">
-            <input type="radio" name="filter" id="administrador" />
-            <label htmlFor="administrador" className="credentials-radio-label">
+          </label>
+        </div>
+        <div className="credentials-radio-container">
+          <input type="radio" name="filter" id="convidado" />
+          <label htmlFor="convidado" className="credentials-radio-label">
+            Convidado
+          </label>
+        </div>
+        <div className="credentials-radio-container">
+          <input type="radio" name="filter" id="administrador" />
+          <label htmlFor="administrador" className="credentials-radio-label">
             Administrador
-            </label>
-          </div>
+          </label>
         </div>
       </div>
 
