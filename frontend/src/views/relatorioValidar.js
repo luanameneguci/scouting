@@ -13,6 +13,24 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import PhoneIcon from '@mui/icons-material/Phone';
 
 const RelatorioValidar = () => {
+  const clubes = [
+    "SL Benfica", "FC Porto", "Sporting CP", "SC Braga", 
+    "Vitória SC", "Marítimo", "CD Nacional", "Belenenses SAD", 
+    "Paços de Ferreira", "Académico de Viseu"
+  ];
+
+  const escaloes = [
+    "Profissional", "Sub 23", "Sub 19", "Sub 16", 
+    "Sub 14", "Sub 12", "Sub 11", "Sub 10"
+  ];
+
+  const posicoes = [
+    "Ponta de Lança", "Ala Direita", "Ala Esquerda", "Defesa Central", 
+    "Defesa Direita", "Defesa Esquerda", "Guarda-Redes", 
+    "Médio Centro Ofensivo", "Médio Centro Defensivo", 
+    "Médio Central", "Médio Direito", "Médio Esquerdo"
+  ];
+
   return (
     <div className="container content">
       {/* Seção Atleta Existente */}
@@ -98,7 +116,7 @@ const RelatorioValidar = () => {
             <label>Nome do atleta</label>
             <div className="input-icon">
               <PersonIcon className="icon" />
-              <input type="text" placeholder="John Doe" />
+              <input type="text" placeholder="Nome do atleta" />
             </div>
           </div>
 
@@ -115,7 +133,9 @@ const RelatorioValidar = () => {
               <div className="input-icon">
                 <GroupIcon className="icon" />
                 <select>
-                  <option>SUB-16</option>
+                  {escaloes.map((escalao, index) => (
+                    <option key={index}>{escalao}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -127,7 +147,9 @@ const RelatorioValidar = () => {
               <div className="input-icon">
                 <SportsSoccerIcon className="icon" />
                 <select>
-                  <option>SL Benfica</option>
+                  {clubes.map((clube, index) => (
+                    <option key={index}>{clube}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -136,7 +158,9 @@ const RelatorioValidar = () => {
               <div className="input-icon">
                 <SportsSoccerIcon className="icon" />
                 <select>
-                  <option>PL</option>
+                  {posicoes.map((posicao, index) => (
+                    <option key={index}>{posicao}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -154,7 +178,7 @@ const RelatorioValidar = () => {
               <label>Rating Final</label>
               <div className="input-icon">
                 <StarIcon className="icon" />
-                <input type="number" placeholder="5" />
+                <input type="number" placeholder="1" />
               </div>
             </div>
           </div>
@@ -171,7 +195,7 @@ const RelatorioValidar = () => {
             <label>Nome do Encarregado de Educação</label>
             <div className="input-icon">
               <SupervisorAccountIcon className="icon" />
-              <input type="text" placeholder="John Doe" />
+              <input type="text" placeholder="Nome Encarregado de Educação" />
             </div>
           </div>
           
@@ -179,7 +203,7 @@ const RelatorioValidar = () => {
             <label>Contacto do Encarregado de Educação</label>
             <div className="input-icon">
               <PhoneIcon className="icon" />
-              <input type="text" placeholder="912345678" />
+              <input type="text" placeholder="Contacto do Encarregado de Educação" />
             </div>
           </div>
 

@@ -21,7 +21,7 @@
     width: 100%;
     padding: 12px; /* Aumenta o padding para dar mais espaço nas caixas de texto */
     margin-top: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     background-color: #3c3c3c;
     color: white;
   }
