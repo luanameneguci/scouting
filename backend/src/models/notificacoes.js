@@ -8,11 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     id_utilizador: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'utilizador',
-        key: 'id_utilizador'
-      }
+      allowNull: false
     },
     data: {
       type: DataTypes.DATE,
@@ -27,27 +23,6 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'notificacoes',
     schema: 'public',
     timestamps: false,
-    indexes: [
-      {
-        name: "notificacoes_pk",
-        unique: true,
-        fields: [
-          { name: "id_notificacao" },
-        ]
-      },
-      {
-        name: "pk_notificacoes",
-        unique: true,
-        fields: [
-          { name: "id_notificacao" },
-        ]
-      },
-      {
-        name: "recebe_fk",
-        fields: [
-          { name: "id_utilizador" },
-        ]
-      },
-    ]
+    indexes: []
   });
 };

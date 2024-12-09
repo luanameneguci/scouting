@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  const EquipaAtleta = sequelize.define('EquipaAtleta', {
+  return sequelize.define('EquipaAtleta', {
     id_equipa: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -29,34 +29,6 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "pertence2_fk",
-        fields: [
-          { name: "id_equipa" },
-        ]
-      },
-      {
-        name: "pertence2_pk",
-        unique: true,
-        fields: [
-          { name: "id_equipa" },
-          { name: "id_atleta" },
-        ]
-      },
-      {
-        name: "pertence4_fk",
-        fields: [
-          { name: "id_atleta" },
-        ]
-      },
-      {
-        name: "pk_pertence2",
-        unique: true,
-        fields: [
-          { name: "id_equipa" },
-          { name: "id_atleta" },
-        ]
-      },
     ]
   });
 };

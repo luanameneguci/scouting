@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  const escalao = sequelize.define('escalao', {
+  return sequelize.define('escalao', {
     id_escalao: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -16,20 +16,6 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "escalao_pk",
-        unique: true,
-        fields: [
-          { name: "id_escalao" },
-        ]
-      },
-      {
-        name: "pk_escalao",
-        unique: true,
-        fields: [
-          { name: "id_escalao" },
-        ]
-      },
     ]
   });
 };

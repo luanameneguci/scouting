@@ -9,26 +9,14 @@ module.exports = function(sequelize, DataTypes) {
     id_utilizador: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'utilizador',
-        key: 'id_utilizador'
-      }
     },
     id_jogo: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'jogo',
-        key: 'id_jogo'
-      }
     },
     id_atleta: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'atleta',
-        key: 'id_atleta'
-      }
     },
     tecnica: {
       type: DataTypes.INTEGER,
@@ -64,38 +52,6 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "escreve_fk",
-        fields: [
-          { name: "id_utilizador" },
-        ]
-      },
-      {
-        name: "pertence5_fk",
-        fields: [
-          { name: "id_jogo" },
-        ]
-      },
-      {
-        name: "pertence8_fk",
-        fields: [
-          { name: "id_atleta" },
-        ]
-      },
-      {
-        name: "pk_relatorio",
-        unique: true,
-        fields: [
-          { name: "id_relatorio" },
-        ]
-      },
-      {
-        name: "relatorio_pk",
-        unique: true,
-        fields: [
-          { name: "id_relatorio" },
-        ]
-      },
     ]
   });
 };

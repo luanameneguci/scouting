@@ -8,11 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     id_escalao: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'escalao',
-        key: 'id_escalao'
-      }
+      allowNull: false
     },
     data: {
       type: DataTypes.DATE,
@@ -24,26 +20,6 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "jogo_pk",
-        unique: true,
-        fields: [
-          { name: "id_jogo" },
-        ]
-      },
-      {
-        name: "pertence11_fk",
-        fields: [
-          { name: "id_escalao" },
-        ]
-      },
-      {
-        name: "pk_jogo",
-        unique: true,
-        fields: [
-          { name: "id_jogo" },
-        ]
-      },
     ]
   });
 };

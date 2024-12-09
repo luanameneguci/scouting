@@ -16,20 +16,6 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "pk_tipoequipa",
-        unique: true,
-        fields: [
-          { name: "id_tipoequipa" },
-        ]
-      },
-      {
-        name: "tipoequipa_pk",
-        unique: true,
-        fields: [
-          { name: "id_tipoequipa" },
-        ]
-      },
     ]
   });
 };

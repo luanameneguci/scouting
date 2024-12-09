@@ -23,21 +23,6 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'nacionalidade',
     schema: 'public',
     timestamps: false,
-    indexes: [
-      {
-        name: "nacionalidade_pk",
-        unique: true,
-        fields: [
-          { name: "id_nacionalidade" },
-        ]
-      },
-      {
-        name: "pk_nacionalidade",
-        unique: true,
-        fields: [
-          { name: "id_nacionalidade" },
-        ]
-      },
-    ]
+    indexes: []
   });
 };

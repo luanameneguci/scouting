@@ -5,13 +5,16 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/App.js",
+    "start": "nodemon src/App.js"
+
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
+    "nodemon": "^3.1.7",
     "pg": "^8.13.1",
     "postgres": "^3.4.5",
     "sequelize": "^6.37.5",

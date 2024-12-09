@@ -9,10 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     id_tipoutilizador: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'tipoutilizador',
-        key: 'id_tipoutilizador'
-      }
+
     },
     nome: {
       type: DataTypes.STRING(1024),
@@ -36,26 +33,6 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "pk_utilizador",
-        unique: true,
-        fields: [
-          { name: "id_utilizador" },
-        ]
-      },
-      {
-        name: "tem2_fk",
-        fields: [
-          { name: "id_tipoutilizador" },
-        ]
-      },
-      {
-        name: "utilizador_pk",
-        unique: true,
-        fields: [
-          { name: "id_utilizador" },
-        ]
-      },
     ]
   });
 };

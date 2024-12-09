@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  const atleta = sequelize.define('atleta', {
+  return sequelize.define('atleta', {
     id_atleta: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -8,27 +8,15 @@ module.exports = function(sequelize, DataTypes) {
     },
     id_clube: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'clube',
-        key: 'id_clube'
-      }
+      allowNull: false
     },
     id_escalao: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'escalao',
-        key: 'id_escalao'
-      }
+      allowNull: false
     },
     id_statusatleta: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'statusatleta',
-        key: 'id_statusatleta'
-      }
+      allowNull: true
     },
     nome: {
       type: DataTypes.STRING(1024),
@@ -64,38 +52,6 @@ module.exports = function(sequelize, DataTypes) {
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "atleta_pk",
-        unique: true,
-        fields: [
-          { name: "id_atleta" },
-        ]
-      },
-      {
-        name: "pertence7_fk",
-        fields: [
-          { name: "id_escalao" },
-        ]
-      },
-      {
-        name: "pertence9_fk",
-        fields: [
-          { name: "id_statusatleta" },
-        ]
-      },
-      {
-        name: "pertence_fk",
-        fields: [
-          { name: "id_clube" },
-        ]
-      },
-      {
-        name: "pk_atleta",
-        unique: true,
-        fields: [
-          { name: "id_atleta" },
-        ]
-      },
     ]
   });
 };
