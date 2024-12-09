@@ -7,19 +7,18 @@ export default function LandingPage() {
         <>
             <div className="landing-page">
 
-                <div className='hero-section'>
+                <div className='landing-content hero-section'>
                     <img src={HeroImage} alt="Hero Image" />
-                </div>
-                {/* Página principal */}
-                <div className="landing-content">
-                    <h1>DESCUBRE ESTRELAS, AVALIA TALENTOS E CONSTRÓI O AMANHÃ</h1>
-                    <p>
-                        Com análises preditivas, ferramentas avançadas e uma rede de scouts como nenhum outro,
-                        junta-te à plataforma que vai mudar o futuro do Académico de Viseu.
-                    </p>
-                    <button className="landing-button">DESCARREGA AGORA</button>
-                </div>
+                    <div className="hero-content">
+                        <h1>DESCOBRE ESTRELAS, AVALIA TALENTOS E CONSTRÓI O AMANHÃ</h1>
+                        <p>
+                        Cria relatórios pormenorizados, monitoriza o desempenho e avalia cada partida com precisão. Regista a evolução dos jogadores e garante que o talento do Académico de Viseu seja potenciado ao máximo, jogo após jogo, temporada após temporada.
+                        </p>
+                        <button className="landing-button">DESCARREGA AGORA</button>
+                    </div>
 
+
+                </div>
                 <div className="landing-features">
                     <div className="feature-item">
                         <span className="material-symbols-outlined">add</span>
@@ -37,10 +36,7 @@ export default function LandingPage() {
                         <p>Ajudamos a moldar o futuro dos próximos jogadores e do clube.</p>
                     </div>
                 </div>
-
-
             </div>
-
         </>
     );
 };
