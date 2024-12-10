@@ -63,6 +63,12 @@ function initModels(sequelize) {
   equipa.belongsTo(tipoequipa, { foreignKey: "id_tipoequipa" });
   tipoequipa.hasMany(equipa, { foreignKey: "id_tipoequipa" });
 
+  equipa.belongsTo(escalao, { foreignKey: "id_escalao" });
+  escalao.hasMany(equipa, { foreignKey: "id_escalao" });
+
+  equipa.belongsTo(divisao, { foreignKey: "id_divisao" });
+  divisao.hasMany(equipa, { foreignKey: "id_divisao" });
+
   utilizador.belongsTo(tipoutilizador, { foreignKey: "id_tipoutilizador" });
   tipoutilizador.hasMany(utilizador, { foreignKey: "id_tipoutilizador" });
 
@@ -94,8 +100,8 @@ function initModels(sequelize) {
 
   relatorio.belongsTo(utilizador, { foreignKey: "id_utilizador" });
   utilizador.hasMany(relatorio, { foreignKey: "id_utilizador" });
+
   // Many-to-Many relationships with junction tables
-  // package.belongsToMany(product, { as: 'productid_products', through: produtos_do_pacote, foreignKey: "packageid", otherKey: "productid" });
 
   atleta.belongsToMany(equipa, { through: EquipaAtleta, foreignKey: "id_atleta", otherKey: "id_equipa" });
   equipa.belongsToMany(atleta, { through: EquipaAtleta, foreignKey: "id_equipa", otherKey: "id_atleta" });
@@ -111,9 +117,8 @@ function initModels(sequelize) {
 
   atleta.belongsToMany(posicao, { through: PosicaoAtleta, foreignKey: "id_atleta", otherKey: "id_posicao" });
   posicao.belongsToMany(atleta, { through: PosicaoAtleta, foreignKey: "id_posicao", otherKey: "id_atleta" });
-
-  divisao.belongsToMany(escalao, { through: EscalaoDivisao, foreignKey: "id_divisao", otherKey: "id_escalao" });
-  escalao.belongsToMany(divisao, { through: EscalaoDivisao, foreignKey: "id_escalao", otherKey: "id_divisao" });
+  
+// removi a ligacao escalao divisao, e foi inserido na equipa
 
   jogo.belongsToMany(utilizador, { through: UtilizadorJogo, foreignKey: "id_jogo", otherKey: "id_utilizador" });
   utilizador.belongsToMany(jogo, { through: UtilizadorJogo, foreignKey: "id_utilizador", otherKey: "id_jogo" });

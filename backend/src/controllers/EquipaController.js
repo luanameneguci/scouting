@@ -17,24 +17,44 @@ const controllers = {};
 // Criar a equipa -- Falta escalão
 controllers.createEquipa = async (req, res) => {
 
-  const { id_tipoequipa } = req.body;
+  const { id_tipoequipa, id_escalao, id_divisao } = req.body;
 
-  const data = await Equipa.create({
-    id_tipoequipa: id_tipoequipa
-  })
-    .then(function (data) {
-      return data;
-    })
-    .catch(error => {
-      console.log("Erro: " + error)
-      return error;
-    })
-  // return res
-  res.status(200).json({
-    success: true,
-    message: "Equipa criada com sucesso!",
-    data: data
-  });
+  try {
+    // Check if there is already an equipa with the same id_escalao and id_divisao
+    const existingEquipa = await Equipa.findOne({
+      where: {
+        id_escalao: id_escalao,
+        id_divisao: id_divisao
+      }
+    });
+
+    if (existingEquipa) {
+      return res.status(400).json({
+        success: false,
+        message: "Equipa com o mesmo escalão já existe."
+      });
+    }
+
+    // Create the new equipa
+    const newEquipa = await Equipa.create({
+      id_tipoequipa: id_tipoequipa,
+      id_escalao: id_escalao,
+      id_divisao: id_divisao
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Equipa criada com sucesso!",
+      data: newEquipa
+    });
+  } catch (error) {
+    console.log("Erro: " + error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro no servidor",
+      error: error.message
+    });
+  }
 }
 
 // Get uma equipa e atletas. por idEquipa
@@ -52,13 +72,19 @@ controllers.single_equipa = async (req, res) => {
     }
 
     const atletas = await EquipaAtleta.findAll({ // Atletas da equipa
-      where: { id_equipa: idEquipa },
-      include: [{ // falta verificar o estado do atleta
-        model: atleta,
-        as: 'atleta'
-      }]
+      where: {
+        id_equipa: idEquipa,
+        include: [{
+          model: atleta,
+          as: 'atleta',
+          where: {
+            id_statusatleta: {
+              [Op.or]: [null, 1]
+            }
+          }
+        }]
+      }
     });
-
     res.status(200).json({ success: true, data: { equipa, atletas } }); // Responde a equipa e os atletas
   } catch (error) {
     return res.status(500).json({ success: false, message: "Erro no servidor", error: error.message });
@@ -66,11 +92,34 @@ controllers.single_equipa = async (req, res) => {
 }
 
 
-// Escalões de cada equipa (própria ou sombra)
-// -- falta esta ligacao na bd
+// Escalões de cada tipo de equipa (própria ou sombra)
 controllers.escaloes_equipa = async (req, res) => {
   const { tipoEquipa } = req.params;
 
+  try {
+    // Encontra todas as equipas do respetivo tipo (com o escalao e divisao)
+    const equipas = await Equipa.findAll({
+      where: { id_tipoequipa: tipoEquipa },
+      include: [
+        {
+          model: escalao,
+        },
+        {
+          model: divisao,
+        }
+      ]
+    });
+
+    // Extrai os escaloes e divisoes de cada equipa
+    const escaloesDivisoes = equipas.map(e => ({
+      escalao: e.escalao,
+      divisao: e.divisao
+    }));
+
+    res.status(200).json({ success: true, data: escaloesDivisoes });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Erro no servidor", error: error.message });
+  }
 }
 
 controllers.alterar_posicao_atleta = async (req, res) => {
@@ -81,7 +130,7 @@ controllers.alterar_posicao_atleta = async (req, res) => {
   }
 
   try {
-    const equipaAtleta = await EquipaAtleta.findOne({
+    const equipaAtleta = await EquipaAtleta.findOne({ // Busca o atleta na equipa
       where: { id_equipa: idEquipa, id_atleta: idAtleta }
     });
 
@@ -94,11 +143,11 @@ controllers.alterar_posicao_atleta = async (req, res) => {
       return res.status(200).json({ success: true, message: "Atleta removido da equipa" });
     }
 
-    const existingAtleta = await EquipaAtleta.findOne({ // Se existir, e não for para remover... 
+    const existingAtleta = await EquipaAtleta.findOne({ // Se existir, e não for para remover, procura se já existe atleta naquela posicao...
       where: { id_equipa: idEquipa, posicaoformacao: novaPosicao }
     });
 
-    if (existingAtleta) { // ... verifica se a posição já está ocupada
+    if (existingAtleta) { // ... e responde
       return res.status(400).json({ success: false, message: "Posição já ocupada por outro atleta" });
     }
 
@@ -114,13 +163,13 @@ controllers.alterar_posicao_atleta = async (req, res) => {
 
 /*
 Precisa de:
- - GET /:tipoEquipa/escaloes - Todos os escalões das equipas (prop e sombra dep)
+ - X -  GET /:tipoEquipa/escaloes - Todos os escalões das equipas (prop e sombra dep)
     - Params: tipo de equipa
     - Res: lista de escalões
  - X - GET /:idEquipa - Informação da equipa + atletas
     - Params: idEquipa
     - Res: info da equipa + atletas
- - PUT/PATCH /:idAtleta- Editar atletas da equipa (add/remove, mudar posição)
+ - X - PUT/PATCH /:idAtleta- Editar atletas da equipa (add/remove, mudar posição)
     - Params: idAtleta, atleta
     - Res: atleta?
 ---> não sei se isto é melhor nos atletas mas //

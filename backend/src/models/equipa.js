@@ -9,6 +9,14 @@ module.exports = function(sequelize, DataTypes) {
     id_tipoequipa: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    id_escalao: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    id_divisao: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
