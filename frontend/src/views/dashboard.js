@@ -119,17 +119,16 @@ export default function Dashboard() {
                 {game.team1} vs {game.team2}
               </p>
               <p className="game-details">
-                {new Date(game.date).toLocaleDateString()}{" "}
-                |{" "}
+                {new Date(game.date).toLocaleDateString()} |{" "}
                 {new Date(game.date).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}{" "}
-                 {game.category}
+                {game.category}
               </p>
               <p>
                 {game.coach ? (
-               <strong>Treinador: {game.coach}</strong>   
+                  <strong>Treinador: {game.coach}</strong>
                 ) : (
                   <em>Sem treinador atribuído</em>
                 )}
@@ -179,35 +178,53 @@ export default function Dashboard() {
           {relatorios.map((relatorio, index) => (
             <div key={index}>
               <p>
-                Foram criados <span className="numeroReports">{relatorio.quantidadeRelatorios}</span> relatórios nos últimos 7 dias
+                Foram criados{" "}
+                <span className="numeroReports">
+                  {relatorio.quantidadeRelatorios}
+                </span>{" "}
+                relatórios nos últimos 7 dias
               </p>
-              <p>O rating médio é de <span className="numeroReports">{relatorio.ratingMedio}</span></p>
               <p>
-                Foram avaliados <span className="numeroReports">{relatorio.quantidadeAtletasAvaliados}</span> atletas
-                nos últimos 7 dias
+                O rating médio é de{" "}
+                <span className="numeroReports">{relatorio.ratingMedio}</span>
+              </p>
+              <p>
+                Foram avaliados{" "}
+                <span className="numeroReports">
+                  {relatorio.quantidadeAtletasAvaliados}
+                </span>{" "}
+                atletas nos últimos 7 dias
               </p>
             </div>
           ))}
         </div>
         <div className="stat teams">
           <h3>Equipas Próprias</h3>
+          <div className="teams-content">
           {equipasProprias.map((equipa, index) => (
             <div key={index}>
-              <p>{equipa.escalao} {equipa.quantidadeAtletasEscalao}</p>
+             <span>{equipa.escalao}</span>
+             <span>{equipa.quantidadeAtletasEscalao}</span>
             </div>
           ))}
-          <p className="total-athletes">{totalAtletasPropria} atletas no total</p>
+          </div>
+          <p className="total-athletes">
+            {totalAtletasPropria} atletas no total
+          </p>
         </div>
         <div className="stat teams">
           <h3>Equipas Sombra</h3>
           <div className="teams-content">
-          {equipasSombra.map((equipa, index) => (
-            <div key={index}>
-              <span>{equipa.escalao} {equipa.quantidadeAtletasEscalao}</span>
-            </div>
-          ))}
+            {equipasSombra.map((equipa, index) => (
+              <div key={index}>
+                <span>{equipa.escalao}</span>
+                <span>{equipa.quantidadeAtletasEscalao}</span>
+              </div>
+            ))}
           </div>
-             <p className="total-athletes">{totalAtletasSombra} atletas no total</p>
+          <p className="total-athletes">
+            {totalAtletasSombra} atletas no total
+          </p>
         </div>
       </section>
     </div>
