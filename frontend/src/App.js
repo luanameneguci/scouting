@@ -13,6 +13,7 @@ import NavBackoffice from './components/navBackoffice';
 import NavLanding from './components/navLanding';
 import LandingPage from './views/landing/landingPage';
 import Credenciais from './views/credenciais';
+import Jogos from "./views/jogos";
 import Dashboard from "./views/dashboard";
 
 
@@ -45,6 +46,7 @@ function AppContent() {
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
         <Route path="/credenciais" element={<Credenciais />} />
+        <Route path="/jogos" element={<Jogos />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>

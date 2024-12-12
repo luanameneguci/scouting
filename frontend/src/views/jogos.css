@@ -1,0 +1,150 @@
+.jogos-container { 
+  padding: 6rem 2rem 2rem; 
+  padding-top: 100px; /* Adjust if needed */
+  width: 100%; 
+}
+
+.jogos-title { 
+  color: var(--white-color); 
+  margin-bottom: 20px; 
+} 
+
+
+.jogos-toolbar { 
+  display: flex; 
+  justify-content: flex-start; /* Align items to the left */
+  align-items: center; 
+  gap: 1rem; /* Space between the search bar and the button */
+  margin-bottom: 1.5rem; 
+} 
+
+.jogos-search-container { 
+  display: flex; 
+  padding: 0 1rem; 
+  width: clamp(10rem, 80%, 22rem); /* Dynamically responsive width */
+  justify-content: space-between; 
+  align-items: center; 
+  background-color: var(--gray-800-color); 
+  border-radius: 9999px; /* Fully rounded edges */ 
+} 
+
+.jogos-search-container:focus-within { 
+  outline: 0.08rem solid var(--gray-600-color); /* Outline on focus */ 
+}
+
+.jogos-search-input { 
+  border: 0; 
+  background-color: transparent; 
+  padding: 1rem; 
+  flex: 1; 
+  color: #fff; /* Ensure input text color matches the theme */ 
+} 
+
+.jogos-search-input:focus { 
+  outline: 0; /* Remove default input outline */ 
+} 
+
+.jogos-add-button { 
+  background-color: #ffcc00; 
+  border: none; 
+  color: #000; 
+  padding: 0 1rem; /* Padding to define button width */ 
+  border-radius: 1.5rem; 
+  font-weight: bold; 
+  cursor: pointer; 
+  height: 3rem; /* Matches the height of the search bar */ 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  transition: background-color 0.3s ease; 
+  width: 10rem; 
+}
+
+.jogos-add-button:hover { 
+  background-color: #ffdb4d; 
+}
+
+.jogos-table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  background-color: var(--gray-800-color); 
+  border-radius: 8px; 
+} 
+
+.jogos-table thead th { 
+  padding: 12px; 
+  text-align: left; 
+  border-bottom: 2px solid var(--gray-700-color); 
+  color: var(--white-color); 
+  background-color: var(--gray-900-color); 
+} 
+
+.jogos-table tbody td { 
+  padding: 10px; 
+  border-bottom: 1px solid var(--gray-700-color); 
+  color: var(--white-color); 
+  max-width: 200px; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+} 
+
+.jogos-table-col-atribuido,
+.jogos-table-col-realizado,
+.jogos-table-col-acoes {
+  width: 80px; /* Adjust the width as needed */
+}
+
+.jogos-status-active {
+  color: var(--green-color);
+}
+
+.jogos-status-inactive {
+  color: var(--gray-500-color);
+}
+
+.jogos-actions { 
+  display: flex; 
+  gap: 10px; 
+  justify-content: center; 
+} 
+
+.jogos-actions-button { 
+  color: var(--white-color); 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+  padding: 5px 10px; 
+  border-radius: 5px; 
+} 
+
+.jogos-actions-button:hover { 
+  text-decoration: underline; 
+} 
+
+.jogos-actions-editar { 
+  color: var(--blue-color); 
+} 
+
+.jogos-actions-remover { 
+  color: var(--red-color); 
+} 
+
+.jogos-table tbody tr:hover { 
+  background-color: var(--gray-700-color); 
+}
+
+.jogos-search-button { 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+  color: var(--gray-500-color); /* Adjust icon color */ 
+  font-size: 24px; 
+  padding: 0; 
+  display: flex; 
+  align-items: center; 
+} 
+
+.jogos-search-button .material-symbols-outlined { 
+  color: var(--gray-500-color); 
+}
