@@ -6,12 +6,12 @@
 }
 
 .avaliacao-container .campo {
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 .avaliacao-container label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   font-weight: bold;
 }
 
@@ -24,7 +24,6 @@
 .avaliacao-container .input-icon input[type="text"],
 .avaliacao-container .input-icon select {
   background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
-  border: none; /* Remove a borda branca */
   outline: none; /* Remove o contorno ao focar */
   color: white;
   width: calc(100% - 40px); /* Subtrair a largura do ícone */
@@ -44,21 +43,19 @@
   border-radius: 4px;
   background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
   color: white;
-  resize: none;
-  border: none; /* Remove a borda */
 }
 
 .avaliacao-container .avaliacoes, .opcoes {
   margin-top: 10px;
   display: flex;
-  gap: 45px; /* Aumenta o espaço entre as bolas */
+  gap: 40px; /* Aumenta o espaço entre as bolas */
   flex-wrap: wrap;
 }
 
 .avaliacao-container .bola-container {
   display: flex;
   align-items: center;
-  gap: 15px; /* Espaçamento entre a bola e o número/texto */
+  gap: 10px; /* Espaçamento entre a bola e o número/texto */
 }
 
 .avaliacao-container .bola {
