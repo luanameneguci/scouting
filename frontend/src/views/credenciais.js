@@ -56,7 +56,7 @@ const CredentialsPage = () => {
         <div className="credentials-search-container">
           <input 
             type="text" 
-            placeholder="Pesquisar por nome de atleta" 
+            placeholder="Pesquisar por nome do utilizador" 
             className="credentials-search-input" 
           />
           {/* Ícone de Pesquisa como Botão */}
@@ -91,13 +91,13 @@ const CredentialsPage = () => {
       <table className="credentials-table">
         <thead>
           <tr>
-            <th>Active</th>
-            <th>Name</th>
+            <th>Ativo</th>
+            <th>Nome</th>
             <th>Email</th>
             <th>Password</th>
-            <th>Phone</th>
-            <th>Profile</th>
-            <th>Actions</th>
+            <th>Telemóvel</th>
+            <th>Cargo</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
