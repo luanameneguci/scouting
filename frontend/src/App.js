@@ -36,6 +36,7 @@ function AppContent() {
         {/* Routes para a landing*/}
         <Route path="/" element={<LandingPage />} />
         {/* Routes para o backoffice*/}
+        <Route path="/home" element={<Dashboard />} />
         <Route path="/equipa/:idEquipa" element={<Equipas />} />
         <Route path="/atletas" element={<Atletas />} /> 
         <Route path="/atletas/adicionar" element={<AtletasAdicionar />} /> 
@@ -45,7 +46,6 @@ function AppContent() {
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
         <Route path="/credenciais" element={<Credenciais />} />
-        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );
