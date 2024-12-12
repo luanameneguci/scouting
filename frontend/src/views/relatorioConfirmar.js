@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PersonIcon from '@mui/icons-material/Person';
+import EventIcon from '@mui/icons-material/Event';
 import './relatorioConfirmar.css';
 
 const RelatorioConfirmar = () => {
@@ -9,7 +11,7 @@ const RelatorioConfirmar = () => {
   const [altura, setAltura] = useState(null);
   const [morfologia, setMorfologia] = useState(null);
   const [apontamentos, setApontamentos] = useState("");
-  const [atleta, setAtleta] = useState(""); // Estado inicial do nome do atleta vazio
+  const [atleta, setAtleta] = useState(""); // Initial state for athlete's name
 
   return (
     <div className="avaliacao-container">
@@ -17,26 +19,35 @@ const RelatorioConfirmar = () => {
       
       <div className="campo">
         <label>Atleta</label>
-        <input 
-          type="text" 
-          value={atleta} 
-          onChange={(e) => setAtleta(e.target.value)} // Permite editar o nome do atleta
-          placeholder="Digite o nome do atleta" // Placeholder para o campo de texto
-        />
+        <div className="input-icon">
+          <PersonIcon className="icon" />
+          <input 
+            type="text" 
+            value={atleta} 
+            onChange={(e) => setAtleta(e.target.value)} 
+            placeholder="Digite o nome do atleta" 
+          />
+        </div>
       </div>
 
       <div className="campo">
         <label>Jogo</label>
-        <select>
-          <option>SL Benfica v FC Porto (01/01/2001)</option>
-        </select>
+        <div className="input-icon">
+          <EventIcon className="icon" />
+          <select>
+            <option>SL Benfica v FC Porto (01/01/2001)</option>
+          </select>
+        </div>
       </div>
 
       <div className="campo">
         <label>Treinador</label>
-        <select>
-          <option>Nome</option>
-        </select>
+        <div className="input-icon">
+          <PersonIcon className="icon" />
+          <select>
+            <option>Nome</option>
+          </select>
+        </div>
       </div>
 
       <div className="campo">
