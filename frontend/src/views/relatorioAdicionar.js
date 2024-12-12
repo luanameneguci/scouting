@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
-import './relatorioConfirmar.css';
+import './relatorioAdicionar.css';
 
-const RelatorioConfirmar = () => {
+const RelatorioAdicionar = () => {
   const [tecnica, setTecnica] = useState(null);
   const [velocidade, setVelocidade] = useState(null);
   const [atitude, setAtitude] = useState(null);
@@ -152,4 +152,4 @@ const RelatorioConfirmar = () => {
   );
 };
 
-export default RelatorioConfirmar;
+export default RelatorioAdicionar;
