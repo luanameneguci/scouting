@@ -1,0 +1,81 @@
+.avaliacao-container {
+    color: white;
+    padding: 20px;
+    max-width: 900px; /* Aumenta a largura máxima do contêiner */
+    margin: auto;
+  }
+  
+  .avaliacao-container .campo {
+    margin-bottom: 30px;
+  }
+  
+  .avaliacao-container label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  .avaliacao-container .input-icon {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .avaliacao-container .input-icon input[type="text"],
+  .avaliacao-container .input-icon select {
+    background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
+    outline: none; /* Remove o contorno ao focar */
+    color: white;
+    width: calc(100% - 40px); /* Subtrair a largura do ícone */
+    padding-left: 10px;
+    padding-right: 10px; /* Ajuste no preenchimento para consistência */
+  }
+  
+  .avaliacao-container .input-icon .icon {
+    color: white;
+    margin-right: 10px; /* Espaçamento entre o ícone e o campo */
+  }
+  
+  .avaliacao-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 4px;
+    background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
+    color: white;
+  }
+  
+  .avaliacao-container .avaliacoes, .opcoes {
+    margin-top: 10px;
+    display: flex;
+    gap: 40px; /* Aumenta o espaço entre as bolas */
+    flex-wrap: wrap;
+  }
+  
+  .avaliacao-container .bola-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaçamento entre a bola e o número/texto */
+  }
+  
+  .avaliacao-container .bola {
+    width: 20px; /* Ajusta o tamanho da bola */
+    height: 20px; /* Ajusta o tamanho da bola */
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+  }
+  
+  .avaliacao-container .bola.selecionada {
+    background-color: white;
+  }
+  
+  .avaliacao-container .numero, .texto {
+    font-size: 14px; /* Ajusta o tamanho do texto */
+  }
+  
+  .avaliacao-container h1 {
+    text-align: center;
+    margin-bottom: 30px; /* Aumenta o espaçamento inferior do título */
+  }
+  

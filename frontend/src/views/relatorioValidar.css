@@ -1,5 +1,4 @@
-
-
+/* Container styles */
 .container {
   max-width: 800px;
   margin: 20px auto;
@@ -8,23 +7,27 @@
   border-radius: 8px;
 }
 
+/* Form section spacing */
 .form-section {
   margin-bottom: 20px;
 }
 
+/* Heading styles */
 h2 {
   color: #fff;
-  margin-bottom: 15px; /* Adicionar mais espaço abaixo do título */
+  margin-bottom: 15px; /* Increased space below the title */
 }
 
+/* Form group spacing */
 .form-group {
-  margin-bottom: 15px; /* Espaçamento uniforme entre os grupos de formulários */
+  margin-bottom: 15px; /* Uniform spacing between form groups */
 }
 
+/* Form row styles for alignment */
 .form-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px; /* Espaçamento uniforme entre as linhas de formulário */
+  margin-bottom: 15px; /* Uniform spacing between form rows */
 }
 
 .form-row .form-group {
@@ -36,12 +39,14 @@ h2 {
   margin-right: 0;
 }
 
+/* Label styling */
 label {
   display: block;
   margin-bottom: 5px;
   font-size: 14px;
 }
 
+/* Input with icon styling */
 .input-icon {
   display: flex;
   align-items: center;
@@ -52,42 +57,60 @@ label {
   color: #fff;
 }
 
+/* Input and select field styles */
 input,
 select {
   width: 100%;
-  padding: 12px; /* Aumentar a altura das caixas de texto */
+  padding: 12px; /* Increased text box height */
   border: none;
   border-radius: 4px;
   font-size: 14px;
 }
 
+/* Disabled input and select field styles */
 input:disabled,
 select:disabled {
   background-color: #555;
   color: #aaa;
 }
 
+/* Button styles */
 .btn {
   display: block;
   width: 100%;
   padding: 10px;
   background-color: #ffc107;
   border: none;
-  border-radius: 20px; /* Deixar os cantos dos botões mais redondos */
+  border-radius: 20px; /* Rounded button corners */
   font-size: 16px;
   color: #000;
   cursor: pointer;
 }
 
+/* Button hover effect */
 .btn:hover {
   background-color: #e0a800;
 }
 
+/* Line separator */
 .line {
-  border-top: 1px solid #fff; /* Mudar a cor da linha para branco */
+  border-top: 1px solid #fff; /* White line color */
   margin: 30px 0;
 }
 
+/* Content padding */
 .content {
-  padding-top: 80px; /* Ajustar conforme necessário */
+  padding-top: 80px; /* Adjust as needed */
+}
+
+/* Additional media queries for responsiveness */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .form-row .form-group {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
 }

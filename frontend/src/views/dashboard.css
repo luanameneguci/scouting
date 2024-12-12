@@ -1,168 +1,183 @@
 /* Dashboard Container */
 .dashboard {
-    display: flex; /* Flex layout for sidebar and content */
-    min-height: 100%;
-    min-width: 100%; /* Full viewport height */
-    padding: 0.5%;
-    padding-top: 5%;
-    box-sizing: border-box;
-    gap: 0.5%;
-  }
-  
-  /* Sidebar Styling */
-  .sidebar {
-    min-width: 30%; /* Fixed width for the sidebar */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align items to the top */
-    background-color: #222; /* Dark background */
-    border-radius: 8px;
-    color: #fff;
-  }
-  
-  /* Quick Actions Styling */
-  .quick-actions h2 {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar button {
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    padding-left: 10px;
-    padding: 5%;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    text-align: left;
-    min-width: 90%;
-    font-weight: bold;
-    font-size:small;
-  }
-  
-  .sidebar button:hover {
-    background-color: #e6b800;
-  }
-  
-  /* Games Section */
-  .games {
-    background-color: #222;
-    padding: 20px;
-    border-radius: 10px;
-    color: #fff;
-    min-width: 30%;
-  }
-  
-  .games h2 {
-    margin-bottom: 15px;
-  }
+  display: flex; /* Flex layout for sidebar and content */
+  min-height: 100%;
+  min-width: 100%; /* Full viewport height */
+  padding: 0.5%;
+  padding-top: 5%;
+  box-sizing: border-box;
+  gap: 0.5%;
+}
 
-  .game-clubs{
-    font-weight: bold;
-  }
+/* Sidebar Styling */
+.sidebar {
+  min-width: 30%; /* Fixed width for the sidebar */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+  background-color: #222; /* Dark background */
+  border-radius: 8px;
+  color: #fff;
+}
 
-  .game-details{
-    font-size: small;
-    
-  }
-  
-  .game-card {
-    display: flex;
-    background-color: #333;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-  
-  .game-card.pending {
-    border: 2px solid #ffcc00;
-  }
+/* Quick Actions Styling */
+.quick-actions h2 {
+  margin-bottom: 10px;
+}
 
-  
-  /* Stats Section */
-  .stats {
-    min-width: 30%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5%;
-    grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
-  }
-  
-  .stat {
-    background-color: #222;
-    padding: 15px;
-    border-radius: 8px;
-    color: #fff;
+.sidebar button {
+  background-color: #ffcc00;
+  color: #000;
+  border: none;
+  padding-left: 10px;
+  padding: 5%;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: left;
+  min-width: 90%;
+  font-weight: bold;
+  font-size: small;
+}
 
-    min-height: 50%;
-  }
+.sidebar button:hover {
+  background-color: #e6b800;
+}
 
-.teams-content{
-    display: flex;
-    justify-content: space-between; 
-  }
+/* Games Section */
+.games {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  min-width: 30%;
+}
 
-  .stat p{
-    margin-bottom: 3%;
-  }
-  .stat h3 {
-    margin-bottom: 10px;
-  }
-  
-  .athletes-card {
-    background-color: #222; /* Dark background */
-    color: #fff; /* White text */
-    padding: 20px;
-    border-radius: 10px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .athletes-card h3 {
-    margin: 0;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  .athletes-content {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .ratings, .ages {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .ratings div, .ages div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .ratings span:first-child, .ages span:first-child {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  
-  .ages p {
-    font-size: 0.9em;
-    font-weight: bold;
-    text-align: right;
-    margin: 0;
-    margin-bottom: 10px;
-  }
-  
-  .total-athletes {
-    margin-top: 20px;
-    font-size: 1em;
-    text-align: right;
-    font-weight: bold;
-  }
-  
-  .numeroReports{
-    font-size:x-large;
-    font-weight: bold;
-  }
+.games h2 {
+  margin-bottom: 15px;
+}
+
+.game-clubs {
+  font-weight: bold;
+}
+
+.game-details {
+  font-size: small;
+}
+
+.game-card {
+  display: flex;
+  background-color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.game-card.pending {
+  border: 2px solid #ffcc00;
+}
+
+/* Stats Section */
+.stats {
+  min-width: 30%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5%;
+  grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.stat {
+  background-color: #222;
+  padding: 15px;
+  border-radius: 8px;
+  color: #fff;
+
+  min-height: 50%;
+}
+
+.teams-content {
+  display: flex;
+  flex-direction: column; /* Stack rows vertically */
+  gap: 10px;
+}
+
+.teams-content div {
+  display: flex; /* Flex layout for each row */
+  justify-content: space-between; /* Push items to the left and right */
+}
+
+.teams-content div span:first-child {
+  text-align: left; /* Align the escalao (left by default) */
+}
+
+.teams-content div span:last-child {
+  text-align: right; /* Align the number of players */
+}
+
+.stat p {
+  margin-bottom: 3%;
+}
+.stat h3 {
+  margin-bottom: 10px;
+}
+
+.athletes-card {
+  background-color: #222; /* Dark background */
+  color: #fff; /* White text */
+  padding: 20px;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.athletes-card h3 {
+  margin: 0;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.athletes-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ratings,
+.ages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ratings div,
+.ages div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ratings span:first-child,
+.ages span:first-child {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.ages p {
+  font-size: 0.9em;
+  font-weight: bold;
+  text-align: right;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.total-athletes {
+  margin-top: 20px;
+  font-size: 1em;
+  text-align: right;
+  font-weight: bold;
+}
+
+.numeroReports {
+  font-size: x-large;
+  font-weight: bold;
+}
