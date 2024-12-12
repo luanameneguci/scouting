@@ -7,6 +7,7 @@ import AtletasAdicionar from './views/atletasAdicionar';
 import Atletaspersonalpage from './views/atletapersonalpage';
 import RelatorioValidar from './views/relatorioValidar';
 import RelatorioConfirmar from './views/relatorioConfirmar';
+import RelatorioAdicionar from './views/relatorioAdicionar';
 import Adicionarjogo from './views/adicionarjogo';
 import Relatorios from './views/relatorios';
 import NavBackoffice from './components/navBackoffice';
@@ -43,6 +44,7 @@ function AppContent() {
         <Route path="/atletas/pagina" element={<Atletaspersonalpage />} /> 
         <Route path="/relatorio/confirmar" element={<RelatorioConfirmar />} />
         <Route path="/relatorio/validar" element={<RelatorioValidar />} />
+        <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
         <Route path="/credenciais" element={<Credenciais />} />
