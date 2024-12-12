@@ -72,22 +72,26 @@ function initModels(sequelize) {
   utilizador.belongsTo(tipoutilizador, { foreignKey: "id_tipoutilizador" });
   tipoutilizador.hasMany(utilizador, { foreignKey: "id_tipoutilizador" });
 
-
   jogo.belongsTo(escalao, { foreignKey: "id_escalao" });
   escalao.hasMany(jogo, { foreignKey: "id_escalao" });
 
   // Foreign keys for many-to-many junction tables
   EquipaAtleta.belongsTo(atleta, { foreignKey: "id_atleta" });
   EquipaAtleta.belongsTo(equipa, { foreignKey: "id_equipa" });
-
-  JogoAtleta.belongsTo(atleta, { foreignKey: "id_atleta" });
-  JogoAtleta.belongsTo(jogo, { foreignKey: "id_jogo" });
+  
+  JogoAtleta.belongsTo(jogo, { foreignKey: "id_jogo", as: "RelatedJogo" });
+  jogo.hasMany(JogoAtleta, { foreignKey: "id_jogo", as: "JogoAtletas" });
+  
+  JogoAtleta.belongsTo(atleta, { foreignKey: "id_atleta", as: "RelatedAtleta" });
+  atleta.hasMany(JogoAtleta, { foreignKey: "id_atleta", as: "AtletaJogos" });
 
   JogoClube.belongsTo(clube, { foreignKey: "id_clube" });
   JogoClube.belongsTo(jogo, { foreignKey: "id_jogo" });
 
   nacionalidadeatleta.belongsTo(atleta, { foreignKey: "id_atleta" });
-  nacionalidadeatleta.belongsTo(nacionalidade, { foreignKey: "id_nacionalidade" });
+  nacionalidadeatleta.belongsTo(nacionalidade, {
+    foreignKey: "id_nacionalidade",
+  });
 
   PosicaoAtleta.belongsTo(atleta, { foreignKey: "id_atleta" });
   PosicaoAtleta.belongsTo(posicao, { foreignKey: "id_posicao" });
@@ -103,26 +107,73 @@ function initModels(sequelize) {
 
   // Many-to-Many relationships with junction tables
 
-  atleta.belongsToMany(equipa, { through: EquipaAtleta, foreignKey: "id_atleta", otherKey: "id_equipa" });
-  equipa.belongsToMany(atleta, { through: EquipaAtleta, foreignKey: "id_equipa", otherKey: "id_atleta" });
+  atleta.belongsToMany(equipa, {
+    through: EquipaAtleta,
+    foreignKey: "id_atleta",
+    otherKey: "id_equipa",
+  });
+  equipa.belongsToMany(atleta, {
+    through: EquipaAtleta,
+    foreignKey: "id_equipa",
+    otherKey: "id_atleta",
+  });
 
-  atleta.belongsToMany(jogo, { through: JogoAtleta, foreignKey: "id_atleta", otherKey: "id_jogo" });
-  jogo.belongsToMany(atleta, { through: JogoAtleta, foreignKey: "id_jogo", otherKey: "id_atleta" });
+  atleta.belongsToMany(jogo, {
+    through: JogoAtleta,
+    foreignKey: "id_atleta",
+    otherKey: "id_jogo",
+  });
+  jogo.belongsToMany(atleta, {
+    through: JogoAtleta,
+    foreignKey: "id_jogo",
+    otherKey: "id_atleta",
+  });
 
-  clube.belongsToMany(jogo, { through: JogoClube, foreignKey: "id_clube", otherKey: "id_jogo" });
-  jogo.belongsToMany(clube, { through: JogoClube, foreignKey: "id_jogo", otherKey: "id_clube" });
+  clube.belongsToMany(jogo, {
+    through: JogoClube,
+    foreignKey: "id_clube",
+    otherKey: "id_jogo",
+  });
+  jogo.belongsToMany(clube, {
+    through: JogoClube,
+    foreignKey: "id_jogo",
+    otherKey: "id_clube",
+  });
 
-  atleta.belongsToMany(nacionalidade, { through: nacionalidadeatleta, foreignKey: "id_atleta", otherKey: "id_nacionalidade" });
-  nacionalidade.belongsToMany(atleta, { through: nacionalidadeatleta, foreignKey: "id_nacionalidade", otherKey: "id_atleta" });
+  atleta.belongsToMany(nacionalidade, {
+    through: nacionalidadeatleta,
+    foreignKey: "id_atleta",
+    otherKey: "id_nacionalidade",
+  });
+  nacionalidade.belongsToMany(atleta, {
+    through: nacionalidadeatleta,
+    foreignKey: "id_nacionalidade",
+    otherKey: "id_atleta",
+  });
 
-  atleta.belongsToMany(posicao, { through: PosicaoAtleta, foreignKey: "id_atleta", otherKey: "id_posicao" });
-  posicao.belongsToMany(atleta, { through: PosicaoAtleta, foreignKey: "id_posicao", otherKey: "id_atleta" });
-  
-// removi a ligacao escalao divisao, e foi inserido na equipa
+  atleta.belongsToMany(posicao, {
+    through: PosicaoAtleta,
+    foreignKey: "id_atleta",
+    otherKey: "id_posicao",
+  });
+  posicao.belongsToMany(atleta, {
+    through: PosicaoAtleta,
+    foreignKey: "id_posicao",
+    otherKey: "id_atleta",
+  });
 
-  jogo.belongsToMany(utilizador, { through: UtilizadorJogo, foreignKey: "id_jogo", otherKey: "id_utilizador" });
-  utilizador.belongsToMany(jogo, { through: UtilizadorJogo, foreignKey: "id_utilizador", otherKey: "id_jogo" });
+  // removi a ligacao escalao divisao, e foi inserido na equipa
 
+  jogo.belongsToMany(utilizador, {
+    through: UtilizadorJogo,
+    foreignKey: "id_jogo",
+    otherKey: "id_utilizador",
+  });
+  utilizador.belongsToMany(jogo, {
+    through: UtilizadorJogo,
+    foreignKey: "id_utilizador",
+    otherKey: "id_jogo",
+  });
 
   return {
     atleta,
@@ -147,7 +198,7 @@ function initModels(sequelize) {
     PosicaoAtleta,
     UtilizadorJogo,
     nacionalidadeatleta,
-    sequelize
+    sequelize,
   };
 }
 

@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     link: {
       type: DataTypes.STRING(1024),
-      allowNull: false
+      allowNull: true
     },
     ratingfinal: {
       type: DataTypes.REAL,
@@ -40,11 +40,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     nomeencarregado: {
       type: DataTypes.STRING(1024),
-      allowNull: false
+      allowNull: true
     },
     contactoencarregado: {
       type: DataTypes.STRING(1024),
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

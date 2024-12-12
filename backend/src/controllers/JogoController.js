@@ -1,12 +1,11 @@
 const express = require("express");
 const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
-var initModels = require("../models/init-models");
-var models = initModels(sequelize);
-var Jogo = require("../models/jogo");
-var JogoAtleta = require("../models/JogoAtleta");
-var JogoClube = require("../models/JogoClube");
-const clube = require("../models/clube");
+var Jogo = require("../models/jogo")(sequelize, DataTypes);
+var JogoAtleta = require("../models/JogoAtleta")(sequelize, DataTypes);
+var JogoClube = require("../models/JogoClube")(sequelize, DataTypes);
+const clube = require("../models/clube")(sequelize, DataTypes);
+const atleta = require("../models/atleta")(sequelize, DataTypes);
 
 const controllers = {};
 
@@ -163,15 +162,49 @@ const addAtletaToJogo = async (req, res) => {
 }; */
 
 controllers.listar = async (req, res) => {
-  const data = await Jogo.findAll({})
-    .then(function (data) {
-      return data;
-    })
-    .catch((error) => {
-      return error;
+  try {
+    console.log(Jogo.associations);
+console.log(JogoAtleta.associations);
+console.log(JogoClube.associations);
+    // Fetch all games along with associated athletes and clubs
+    const data = await Jogo.findAll({
+      include: [
+        {
+          model: JogoAtleta,
+          as: "JogoAtletas",
+          include: [
+            {
+              model: atleta,
+              as: "RelatedAtleta",
+            },
+          ],
+        },
+        {
+          model: JogoClube,
+          as: "jogoClubes",
+          include: [
+            {
+              model: clube,
+              as: "clube",
+            },
+          ],
+        },
+      ],
     });
-  res.json({ success: true, data: data });
+    
+
+    // Respond with fetched data
+    res.status(200).json({ success: true, data });
+  } catch (error) {
+    // Handle errors
+    res.status(500).json({
+      success: false,
+      message: "Erro no servidor",
+      error: error.message,
+    });
+  }
 };
+
 
 controllers.listarByPk = async (req, res) => {
   const { id_jogo } = req.params;

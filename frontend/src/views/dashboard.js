@@ -1,5 +1,6 @@
 import "./dashboard.css";
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 export default function Dashboard() {
   // State for storing game data
@@ -13,6 +14,22 @@ export default function Dashboard() {
   const [equipasProprias, setEquipasProprias] = useState([]);
   const [equipasSombra, setEquipasSombra] = useState([]);
   // Simulating fetching data on component mount
+
+useEffect(() => {
+const url = "http://localhost:8080/jogo/";
+axios.get(url)
+.then(res => {
+if(res.data.success){
+const data = res.data.data;
+setGames(data);
+}else{
+alert("Error Web Service!");
+}
+})
+.catch(error => {
+alert(error)
+});
+},[]);
   useEffect(() => {
     const equipasPropriasData = [
       {
