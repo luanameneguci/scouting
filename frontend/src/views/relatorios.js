@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importando o Link do react-router-dom
 import './relatorios.css'; // Importando os estilos fornecidos
 
 const Relatorios = () => {
   const handleAction = (action, id) => {
-    alert(`Ação: ${action}, ID: ${id}`); // Corrected syntax error
+    alert(`Ação: ${action}, ID: ${id}`);
   };
 
   const handleSearch = () => {
@@ -19,7 +20,6 @@ const Relatorios = () => {
   return (
     <div className="reports-container">
       <main>
-        {/* Added h1 title */}
         <h1 className="reports-title">Relatórios</h1>
         <div className="reports-toolbar">
           <div className="reports-search-container">
@@ -28,12 +28,16 @@ const Relatorios = () => {
               placeholder="Pesquisar por nome de atleta"
               className="reports-search-input"
             />
-            {/* Ícone de Pesquisa como Botão */}
             <button className="reports-search-button" onClick={handleSearch}>
               <span className="material-symbols-outlined">search</span>
             </button>
           </div>
-          <button className="reports-add-button">Adicionar</button>
+
+          {/* botão adicionar */}
+          <Link to="/relatorio/validar">
+            <button className="reports-add-button">Adicionar</button>
+          </Link>
+
         </div>
         <table className="reports-table">
           <thead>
