@@ -49,11 +49,8 @@ function AppContent() {
         <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
         <Route path="/relatorios" element={<Relatorios />} />
         <Route path="/credenciais" element={<Credenciais />} />
-<<<<<<< HEAD
         <Route path="/jogos" element={<Jogos />} />
         <Route path="/dashboard" element={<Dashboard />} />
-=======
->>>>>>> 1bfeb4e96939bfaa6a176e0ebc6c393004928b9d
       </Routes>
     </div>
   );
