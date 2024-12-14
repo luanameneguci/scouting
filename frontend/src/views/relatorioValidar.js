@@ -15,6 +15,8 @@ import PhoneIcon from '@mui/icons-material/Phone';
 const RelatorioValidar = () => {
   return (
     <div className="container content">
+
+
       {/* Seção Atleta Existente */}
       <div className="form-section">
         <h2>Atleta Existente</h2>
@@ -27,6 +29,7 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Data de Nascimento */}
           <div className="form-row">
             <div className="form-group">
               <label>Data de Nascimento</label>
@@ -35,6 +38,8 @@ const RelatorioValidar = () => {
                 <input type="date" disabled value="2001-01-01" />
               </div>
             </div>
+
+            {/* Escalão */}
             <div className="form-group">
               <label>Escalão</label>
               <div className="atletasadicionar-input-group">
@@ -46,6 +51,7 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Clube */}
           <div className="form-row">
             <div className="form-group">
               <label>Clube</label>
@@ -56,6 +62,8 @@ const RelatorioValidar = () => {
                 </select>
               </div>
             </div>
+
+            {/* Posição */}
             <div className="form-group">
               <label>Posição</label>
               <div className="atletasadicionar-input-group">
@@ -67,6 +75,7 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Nacionalidade */}
           <div className="form-row">
             <div className="form-group">
               <label>Nacionalidade</label>
@@ -75,6 +84,8 @@ const RelatorioValidar = () => {
                 <input type="text" placeholder="Portugal" disabled />
               </div>
             </div>
+
+            {/* Rating Final*/}
             <div className="form-group">
               <label>Rating Final</label>
               <div className="atletasadicionar-input-group">
@@ -87,13 +98,17 @@ const RelatorioValidar = () => {
         </form>
       </div>
 
+
       {/* Linha de separação */}
       <div className="line"></div>
+
 
       {/* Seção Novo Atleta */}
       <div className="form-section">
         <h2>Novo atleta</h2>
         <form>
+
+          {/* Nome do atleta */}
           <div className="form-group">
             <label>Nome do atleta</label>
             <div className="atletasadicionar-input-group">
@@ -102,6 +117,7 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Data de nascimento */}
           <div className="form-row">
             <div className="form-group">
               <label>Data de Nascimento</label>
@@ -110,6 +126,8 @@ const RelatorioValidar = () => {
                 <input type="date" />
               </div>
             </div>
+
+            {/* Escalão */}
             <div className="form-group">
               <label>Escalão</label>
               <div className="atletasadicionar-input-group">
@@ -127,7 +145,8 @@ const RelatorioValidar = () => {
               </div>
             </div>
           </div>
-
+          
+          {/* Clube */}
           <div className="form-row">
             <div className="form-group">
               <label>Clube</label>
@@ -147,6 +166,8 @@ const RelatorioValidar = () => {
                 </select>
               </div>
             </div>
+
+            {/* Posição */}
             <div className="form-group">
               <label>Posição</label>
               <div className="atletasadicionar-input-group">
@@ -169,14 +190,26 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Nacionalide */}
           <div className="form-row">
             <div className="form-group">
               <label>Nacionalidade</label>
               <div className="atletasadicionar-input-group">
-                <FlagIcon />
-                <input type="text" placeholder="Portugal" />
+                <SportsSoccerIcon />
+                <select>
+                  <option>Portugal</option>
+                  <option>Brasil</option>
+                  <option>Inglaterra</option>
+                  <option>Espanha</option>
+                  <option>França</option>
+                  <option>Alemanha</option>
+                  <option>Bélgica</option>
+                  <option>Itália</option>
+                </select>
               </div>
             </div>
+
+            {/* Rating Final */}
             <div className="form-group">
               <label>Rating Final</label>
               <div className="atletasadicionar-input-group">
@@ -186,6 +219,7 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Link */}
           <div className="form-group">
             <label>Link</label>
             <div className="atletasadicionar-input-group">
@@ -194,6 +228,7 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Nome do Encarregado de Educação */}
           <div className="form-group">
             <label>Nome do Encarregado de Educação</label>
             <div className="atletasadicionar-input-group">
@@ -202,6 +237,7 @@ const RelatorioValidar = () => {
             </div>
           </div>
 
+          {/* Conatcto do Encarregado de Educação */}
           <div className="form-group">
             <label>Contacto do Encarregado de Educação</label>
             <div className="atletasadicionar-input-group">
