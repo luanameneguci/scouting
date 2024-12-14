@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './relatorioAdicionar.css';
+import './relatorioConfirmar.css';
 
 // Importando ícones do Material Design
 import PersonIcon from '@mui/icons-material/Person';
@@ -16,10 +16,16 @@ const RelatorioAdicionar = () => {
   const [atleta, setAtleta] = useState("");
 
   return (
-    <div className="container content">
+    <div className="containerRelConfir contentRelConfir">
       <div className="form-group">
-        <label>Atleta</label>
-        <div className="atletasadicionar-input-group">
+        {/* Atleta + Validar botão */}
+        <div className="atleta-containerRelConfir">
+          <label>Atleta</label>
+          <a href="/relatorio/validar" className="validar-buttonRelConfir">
+            Validar &gt;
+          </a>
+        </div>
+        <div className="atletasadicionar-input-groupRelConfir">
           <PersonIcon className="icon" />
           <input
             type="text"
@@ -32,7 +38,7 @@ const RelatorioAdicionar = () => {
 
       <div className="form-group">
         <label>Jogo</label>
-        <div className="atletasadicionar-input-group">
+        <div className="atletasadicionar-input-groupRelConfir">
           <EventIcon className="icon" />
           <select>
             <option>SL Benfica v FC Porto (01/01/2001)</option>
@@ -42,7 +48,7 @@ const RelatorioAdicionar = () => {
 
       <div className="form-group">
         <label>Treinador</label>
-        <div className="atletasadicionar-input-group">
+        <div className="atletasadicionar-input-groupRelConfir">
           <PersonIcon className="icon" />
           <select>
             <option>Nome</option>
@@ -51,100 +57,100 @@ const RelatorioAdicionar = () => {
       </div>
 
       {/* Campos de Avaliação */}
-      <div className="avaliacao-container">
-        <div className="campo">
+      <div className="avaliacao-containerRelConfir">
+        <div className="campoRelConfir">
           <label>Técnica</label>
-          <div className="opcoes">
+          <div className="opcoesRelConfir">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containerRelConfir">
                 <span
-                  className={`bola ${tecnica === num ? 'selecionada' : ''}`}
+                  className={`bolaRelConfir ${tecnica === num ? 'selecionada' : ''}`}
                   onClick={() => setTecnica(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroRelConfir">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoRelConfir">
           <label>Velocidade</label>
-          <div className="opcoes">
+          <div className="opcoesRelConfir">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containerRelConfir">
                 <span
-                  className={`bola ${velocidade === num ? 'selecionada' : ''}`}
+                  className={`bolaRelConfir ${velocidade === num ? 'selecionada' : ''}`}
                   onClick={() => setVelocidade(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroRelConfir">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoRelConfir">
           <label>Atitude Competitiva</label>
-          <div className="opcoes">
+          <div className="opcoesRelConfir">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containerRelConfir">
                 <span
-                  className={`bola ${atitude === num ? 'selecionada' : ''}`}
+                  className={`bolaRelConfir ${atitude === num ? 'selecionada' : ''}`}
                   onClick={() => setAtitude(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroRelConfir">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoRelConfir">
           <label>Inteligência</label>
-          <div className="opcoes">
+          <div className="opcoesRelConfir">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containerRelConfir">
                 <span
-                  className={`bola ${inteligencia === num ? 'selecionada' : ''}`}
+                  className={`bolaRelConfir ${inteligencia === num ? 'selecionada' : ''}`}
                   onClick={() => setInteligencia(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroRelConfir">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoRelConfir">
           <label>Altura</label>
-          <div className="opcoes">
+          <div className="opcoesRelConfir">
             {['Baixo', 'Médio', 'Alto'].map((opcao) => (
-              <div key={opcao} className="bola-container">
+              <div key={opcao} className="bola-containerRelConfir">
                 <span
-                  className={`bola ${altura === opcao ? 'selecionada' : ''}`}
+                  className={`bolaRelConfir ${altura === opcao ? 'selecionada' : ''}`}
                   onClick={() => setAltura(opcao)}
                 ></span>
-                <span className="texto">{opcao}</span>
+                <span className="textoRelConfir">{opcao}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoRelConfir">
           <label>Morfologia</label>
-          <div className="opcoes">
+          <div className="opcoesRelConfir">
             {['Ectomorfo', 'Mesomorfo', 'Endomorfo'].map((opcao) => (
-              <div key={opcao} className="bola-container">
+              <div key={opcao} className="bola-containerRelConfir">
                 <span
-                  className={`bola ${morfologia === opcao ? 'selecionada' : ''}`}
+                  className={`bolaRelConfir ${morfologia === opcao ? 'selecionada' : ''}`}
                   onClick={() => setMorfologia(opcao)}
                 ></span>
-                <span className="texto">{opcao}</span>
+                <span className="textoRelConfir">{opcao}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoRelConfir">
           <label>Apontamentos</label>
-          <textarea 
+          <textarea
             placeholder="Apontamentos"
             value={apontamentos}
             onChange={(e) => setApontamentos(e.target.value)}

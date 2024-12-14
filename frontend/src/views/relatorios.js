@@ -30,10 +30,11 @@ const Relatorios = () => {
           </div>
 
           {/* botão adicionar */}
-          <Link to="/relatorio/validar">
+          <Link to="/relatorio/confirmar">
             <button className="reports-add-button">Adicionar</button>
           </Link>
         </div>
+
         <table className="reports-table">
           <thead>
             <tr>
@@ -64,7 +65,7 @@ const Relatorios = () => {
                 <td className="text-left action-column">
 
                   {/* ligação das páginas' */}
-                  <Link to={`/relatorio/confirmar`}>
+                  <Link to={`/relatorio/adicionar`}>
                     <button className="action-button view">Ver</button>
                   </Link>
                   <button

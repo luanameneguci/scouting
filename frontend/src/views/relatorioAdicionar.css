@@ -1,81 +1,113 @@
-.avaliacao-container {
-    color: white;
-    padding: 20px;
-    max-width: 900px; /* Aumenta a largura máxima do contêiner */
-    margin: auto;
-  }
-  
-  .avaliacao-container .campo {
-    margin-bottom: 30px;
-  }
-  
-  .avaliacao-container label {
-    display: block;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-  
-  .avaliacao-container .input-icon {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .avaliacao-container .input-icon input[type="text"],
-  .avaliacao-container .input-icon select {
-    background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
-    outline: none; /* Remove o contorno ao focar */
-    color: white;
-    width: calc(100% - 40px); /* Subtrair a largura do ícone */
-    padding-left: 10px;
-    padding-right: 10px; /* Ajuste no preenchimento para consistência */
-  }
-  
-  .avaliacao-container .input-icon .icon {
-    color: white;
-    margin-right: 10px; /* Espaçamento entre o ícone e o campo */
-  }
-  
-  .avaliacao-container textarea {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 4px;
-    background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
-    color: white;
-  }
-  
-  .avaliacao-container .avaliacoes, .opcoes {
-    margin-top: 10px;
-    display: flex;
-    gap: 40px; /* Aumenta o espaço entre as bolas */
-    flex-wrap: wrap;
-  }
-  
-  .avaliacao-container .bola-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espaçamento entre a bola e o número/texto */
-  }
-  
-  .avaliacao-container .bola {
-    width: 20px; /* Ajusta o tamanho da bola */
-    height: 20px; /* Ajusta o tamanho da bola */
-    border-radius: 50%;
-    border: 2px solid white;
-    cursor: pointer;
-  }
-  
-  .avaliacao-container .bola.selecionada {
-    background-color: white;
-  }
-  
-  .avaliacao-container .numero, .texto {
-    font-size: 14px; /* Ajusta o tamanho do texto */
-  }
-  
-  .avaliacao-container h1 {
-    text-align: center;
-    margin-bottom: 30px; /* Aumenta o espaçamento inferior do título */
-  }
-  
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1c1c1c;
+  color: #fff;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: transparent;
+  border-radius: 8px;
+}
+
+.input-icon {
+  display: flex;
+  align-items: center;
+}
+
+.input-icon .icon {
+  margin-right: 8px;
+  color: #fff;
+}
+
+.atletasadicionar-input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.atletasadicionar-input-group svg {
+  background-color: #000;
+  padding: 10px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  width: 39px;
+  height: 39px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid var(--gray-500-color);
+}
+
+.atletasadicionar-input-group input,
+.atletasadicionar-input-group select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: var(--gray-800-color, #333);
+  box-sizing: border-box;
+}
+
+.atletasadicionar-input-group input::placeholder {
+  color: #ffffff;
+}
+
+.content {
+  padding-top: 80px;  
+}
+
+.campo {
+  margin-bottom: 30px; /*espaco entre as opções*/
+}
+
+.opcoes {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.avaliacao-container .opcoes {
+  margin-top: 12px;   /* Aumenta o espaço subitulo e bolas */
+  display: flex;
+  gap: 35px; /* Aumenta o espaço entre as bolas */
+  flex-wrap: wrap;
+}
+
+.bola-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bola {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.bola.selecionada {
+  background-color: white;
+}
+
+.numero, .texto {
+  font-size: 14px;
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #1c1c1c;
+  color: white;
+  margin-top: 10px;
+}
+
+textarea::placeholder {
+  color: white;
+}

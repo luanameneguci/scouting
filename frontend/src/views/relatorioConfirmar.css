@@ -1,81 +1,133 @@
-.avaliacao-container {
-  color: white;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1c1c1c;
+  color: #fff;
+}
+
+.containerRelConfir {
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
-  max-width: 900px; /* Ajusta a largura máxima do contêiner */
-  margin: auto;
+  background-color: transparent;
+  border-radius: 8px;
 }
 
-.avaliacao-container .campo {
-  margin-bottom: 30px;
-}
-
-.avaliacao-container label {
-  display: block;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
-
-.avaliacao-container .input-icon {
+.input-iconRelConfir {
   display: flex;
   align-items: center;
-  margin-top: 10px;
 }
 
-.avaliacao-container .input-icon input[type="text"],
-.avaliacao-container .input-icon select {
-  background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
-  outline: none; /* Remove o contorno ao focar */
-  color: white;
-  width: 100%; /* Tira o cálculo para garantir que as caixas de texto fiquem com o mesmo tamanho */
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 4px;
+.input-iconRelConfir .icon {
+  margin-right: 8px;
+  color: #fff;
 }
 
-.avaliacao-container .input-icon .icon {
-  color: white;
-  margin-right: 10px; /* Espaçamento entre o ícone e o campo */
+.atletasadicionar-input-groupRelConfir {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
 }
 
-.avaliacao-container textarea {
+.atletasadicionar-input-groupRelConfir svg {
+  background-color: #000;
+  padding: 10px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  width: 39px;
+  height: 39px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid var(--gray-500-color);
+}
+
+.atletasadicionar-input-groupRelConfir input,
+.atletasadicionar-input-groupRelConfir select {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
+  border: none;
   border-radius: 4px;
-  background-color: #1c1c1c; /* Fundo preto para a caixa de texto */
-  color: white;
+  font-size: 14px;
+  background-color: var(--gray-800-color, #333);
+  box-sizing: border-box;
 }
 
-.avaliacao-container .opcoes {
-  margin-top: 10px;
+.atletasadicionar-input-groupRelConfir input::placeholder {
+  color: #ffffff;
+}
+
+.contentRelConfir {
+  padding-top: 80px;  
+}
+
+.campoRelConfir {
+  margin-bottom: 30px; /* espaço entre as opções */
+}
+
+.opcoesRelConfir {
   display: flex;
-  gap: 20px; /* Diminui o espaço entre as bolas */
-  flex-wrap: wrap; /* Permite que as opções se ajustem responsivamente */
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.avaliacao-container .bola-container {
+.avaliacao-containerRelConfir .opcoesRelConfir {
+  margin-top: 12px; /* Aumenta o espaço entre subtítulo e bolas */
+  display: flex;
+  gap: 35px; /* Aumenta o espaço entre as bolas */
+  flex-wrap: wrap;
+}
+
+.bola-containerRelConfir {
   display: flex;
   align-items: center;
-  gap: 10px; /* Espaçamento entre a bola e o número/texto */
+  gap: 10px;
 }
 
-.avaliacao-container .bola {
-  width: 20px; /* Ajusta o tamanho da bola */
-  height: 20px; /* Ajusta o tamanho da bola */
+.bolaRelConfir {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: 2px solid white;
   cursor: pointer;
 }
 
-.avaliacao-container .bola.selecionada {
+.bolaRelConfir.selecionada {
   background-color: white;
 }
 
-.avaliacao-container .numero, .texto {
-  font-size: 14px; /* Ajusta o tamanho do texto */
+.numeroRelConfir, .textoRelConfir {
+  font-size: 14px;
 }
 
-.avaliacao-container h1 {
-  text-align: center;
-  margin-bottom: 30px; /* Aumenta o espaçamento inferior do título */
+textareaRelConfir {
+  width: 100%;
+  padding: 12px;
+  border-radius: 4px;
+  background-color: #1c1c1c;
+  color: white;
+  margin-top: 10px;
+}
+
+textareaRelConfir::placeholder {
+  color: white;
+}
+
+/* Estilo do contêiner "Atleta" + "Validar >" lado a lado */
+.atleta-containerRelConfir {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Garante que o "Atleta" e o botão fiquem nas extremidades */
+}
+
+/* Estilo do botão "Validar >" ao lado do subtítulo "Atleta" */
+.validar-buttonRelConfir {
+  font-size: 14px;
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 15px; /* Espaçamento entre o subtítulo e o botão */
+  cursor: pointer;
+}
+
+.validar-buttonRelConfir:hover {
+  text-decoration: underline;
 }
