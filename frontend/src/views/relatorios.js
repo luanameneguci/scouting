@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom'; // Importando o Link do react-router-do
 import './relatorios.css'; // Importando os estilos fornecidos
 
 const Relatorios = () => {
-  const handleAction = (action, id) => {
-    alert(`Ação: ${action}, ID: ${id}`);
-  };
-
   const handleSearch = () => {
     alert('Pesquisar clicado!');
   };
@@ -37,7 +33,6 @@ const Relatorios = () => {
           <Link to="/relatorio/validar">
             <button className="reports-add-button">Adicionar</button>
           </Link>
-
         </div>
         <table className="reports-table">
           <thead>
@@ -66,22 +61,19 @@ const Relatorios = () => {
                 <td>{report.coach}</td>
                 <td>{report.homeClub}</td>
                 <td>{report.awayClub}</td>
-                <td>
-                  <button
-                    className="reports-actions-button reports-actions-view"
-                    onClick={() => handleAction("Ver", report.id)}
-                  >
-                    Ver
-                  </button>
+                <td className="text-left action-column">
+
+                  {/* ligação das páginas' */}
+                  <Link to={`/relatorio/confirmar`}>
+                    <button className="action-button view">Ver</button>
+                  </Link>
                   <button
                     className="reports-actions-button reports-actions-transfer"
-                    onClick={() => handleAction("Transferir", report.id)}
                   >
                     Transferir
                   </button>
                   <button
                     className="reports-actions-button reports-actions-remove"
-                    onClick={() => handleAction("Remover", report.id)}
                   >
                     Remover
                   </button>
