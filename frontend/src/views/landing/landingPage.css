@@ -1,9 +1,12 @@
-/* Estilos para o carrossel */
+/* Estilos da Seção de Carrossel */
 .carousel-section {
     margin-top: 3rem;
+    padding: 0 2rem;
+}
+
+.carousel-item {
     position: relative;
-    width: 80%;
-    margin: auto;
+    text-align: center;
 }
 
 .carousel-item img {
@@ -14,18 +17,15 @@
 
 .carousel-caption {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
 }
 
-.slick-prev:before, .slick-next:before {
-    color: black;
-}
-
-.slick-dots li button:before {
-    color: black;
+.slick-prev, .slick-next {
+    z-index: 1;
 }

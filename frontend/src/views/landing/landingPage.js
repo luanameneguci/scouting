@@ -2,11 +2,13 @@ import React from 'react';
 import Slider from "react-slick";
 import HeroImage from '../../assets/heroImage.png';
 import './landingPage.css';
-import Image1 from '../../assets/image1.png';
-import Image2 from '../../assets/image2.png';
-import Image3 from '../../assets/image3.png';
-import Image4 from '../../assets/image4.png';
-import Image5 from '../../assets/image5.png';
+import Image1 from '../../assets/Mockup_cons_jogador.png';
+import Image2 from '../../assets/Mockup_inicio.png';
+import Image3 from '../../assets/Mockup_inicio2.png';
+import Image4 from '../../assets/Mockup_my_task.png';
+import Image5 from '../../assets/Mockup_notificações.png';
+import Image6 from '../../assets/Mockup_pag_jogador.png';
+import Image7 from '../../assets/Mockup_relatorios.png';
 
 export default function LandingPage() {
     const settings = {
@@ -50,6 +52,7 @@ export default function LandingPage() {
                     </div>
                 </div>
 
+                {/* Nova Seção de Carrossel */}
                 <div className="carousel-section">
                     <Slider {...settings}>
                         <div className="carousel-item">
@@ -89,6 +92,7 @@ export default function LandingPage() {
                         </div>
                     </Slider>
                 </div>
+                {/* Fim da Nova Seção de Carrossel */}
             </div>
         </>
     );
