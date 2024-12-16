@@ -1,90 +1,95 @@
 /* Container for the entire form */
-.adicionar-jogo-wrapper {
-  background-color: var(--gray-800-color);
-  color: #fff;
+.atletasadicionar-container {
+  width: 30%; 
+  max-width: 500px; 
+  margin: 20px auto;
   padding: 20px;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-/* Form container */
-.form {
-  display: grid;
-  gap: 20px;
-  width: 100%;
-  max-width: 500px;
-  padding: 40px;
   background-color: transparent;
   border-radius: 8px;
+  padding-top: 80px; 
 }
 
-/* Grouped inputs */
-.form-group {
+/* Each label + input set */
+.atletasadicionar-form-group {
+  margin-bottom: 0; 
+  flex: 1; /* Make form groups share available space equally in a row */
+}
+
+/* Labels */
+.atletasadicionar-label {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  display: block;
+  font-size: 12px;
+  color: #fff;
+  margin-top: 20px;
+  margin-bottom:8px;
+}
+
+/* Rows for fields. Use this even for single fields for consistency */
+.atletasadicionar-form-row {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: relative;
+  align-items: flex-start; /* Aligns the top of the fields */
+  gap: 20px; /* Control vertical spacing here */
 }
 
-/* Styling for input and select elements */
-.form-group input,
-.form-group select {
+/* Input groups */
+.atletasadicionar-input-group {
+  display: flex;
+  align-items: center;
+  /* Remove margin-bottom here as well so the spacing is consistent and controlled by .atletasadicionar-form-row */
+  margin-bottom: 0; 
+}
+
+/* Icons */
+.atletasadicionar-input-group svg {
+  background-color: #000; /* Black background */
+  padding-top: 10px; 
+  padding-bottom: 10px;         /* Add more padding to make the box larger */
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  width: 39px;            /* Set a fixed width for the box */
+  height: 39px;           /* Set a fixed height for the box */
+  display: flex;          /* Ensures the SVG is centered inside the box */
+  justify-content: center;
+  align-items: center;
+  padding-left: 0px;
+  border-right: 1px solid var(--gray-500-color);
+}
+
+/* Inputs and selects */
+.atletasadicionar-input-group input,
+.atletasadicionar-input-group select {
   width: 100%;
   padding: 12px;
-  font-size: 14px;
-  background-color: var(--gray-800-color); /* Dark background */
-  color: #fff;
+  border: none;
   border-radius: 4px;
-  border: 1px solid var(--gray-500-color); /* Light border */
+  font-size: 14px;
+  background-color: var(--gray-800-color, #333);
+  color: #fff;
   box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
 }
 
-/* Placeholder text style */
-.form-group input::placeholder {
+/* Placeholder styling */
+.atletasadicionar-input-group input::placeholder {
   color: #aaa;
 }
 
-/* Group for input icons */
-.form-group .input-group {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-/* Input icon styles */
-.form-group .input-group svg {
-  position: absolute;
-  left: 10px;
-  color: #aaa; /* Icon color */
-  font-size: 18px;
-}
-
-/* Input field adjustment to make room for the icon */
-.form-group .input-group input,
-.form-group .input-group select {
-  padding-left: 35px; /* Adjust for the icon */
-}
-
-/* Styling for the submit button */
-.submit-button {
+/* Submit button */
+.atletasadicionar-submit-button {
+  display: block;
   width: 100%;
-  padding: 12px 20px;
+  padding: 10px;
   background-color: #ffc107;
   border: none;
   border-radius: 20px;
   font-size: 16px;
-  font-weight: bold;
   color: #000;
   cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s ease;
+  margin-top: 30px; /* Space above the button */
 }
 
-.submit-button:hover {
-  background-color: #e0a800; /* Darker yellow on hover */
+.atletasadicionar-submit-button:hover {
+  background-color: #e0a800;
 }

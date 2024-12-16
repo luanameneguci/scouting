@@ -1,121 +1,208 @@
-import React, { useState } from 'react';
-import './adicionarjogo.css'; 
-import { Person, CalendarToday, SportsSoccer, Group } from '@mui/icons-material'; // Importação dos ícones
+import React, { useState } from "react";
+import "./atletasAdicionar.css";
+import {
+  Person as PersonIcon,
+  CalendarToday as CalendarTodayIcon,
+  SportsSoccer as SportsSoccerIcon,
+  Public as PublicIcon,
+  Star as StarIcon,
+  Link as LinkIcon,
+  Phone as PhoneIcon,
+  Group as GroupIcon,
+} from "@mui/icons-material";
 
-export default function AdicionarJogo() {
-    const [formData, setFormData] = useState({
-        clube1: '',
-        clube2: '',
-        data: '',
-        hora: '',
-        treinador: '',
-        escalão: ''
-    });
+export default function AtletasAdicionar() {
+  const [formData, setFormData] = useState({
+    nome: "",
+    dataNascimento: "",
+    escalao: "",
+    clube: "",
+    posicao: "",
+    nacionalidade: "",
+    link: "",
+    rating: "",
+    contatoNome: "",
+    contatoTelefone: "",
+  });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Dados do Formulário:", formData);
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Dados enviados:", formData);
+  };
 
-    return (
-        <div className="adicionar-jogo-wrapper">
-            <h1 className="page-title">Jogos / Adicionar Jogo</h1>
+  return (
+    <div className="atletasadicionar-container">
+      <form className="atletasadicionar-form" onSubmit={handleSubmit}>
 
-            <form className="form" onSubmit={handleSubmit}>
-                {/* Atleta */}
-                <div className="form-group">
-                    <label htmlFor="atleta">Atleta</label>
-                    <div className="input-group">
-                        <Person />
-                        <select
-                            name="atleta"
-                            id="atleta"
-                            value={formData.clube1}
-                            onChange={handleChange}
-                        >
-                            <option value="">Selecione</option>
-                            <option value="Clube A">Atleta A</option>
-                            <option value="Clube B">Atleta B</option>
-                        </select>
-                    </div>
-                </div>
-
-                {/* Clube 1 */}
-                <div className="form-group">
-                    <label htmlFor="clube1">Clube 1</label>
-                    <div className="input-group">
-                        <SportsSoccer />
-                        <select
-                            name="clube1"
-                            id="clube1"
-                            value={formData.clube1}
-                            onChange={handleChange}
-                        >
-                            <option value="">Selecione</option>
-                            <option value="Clube A">Clube A</option>
-                            <option value="Clube B">Clube B</option>
-                        </select>
-                    </div>
-                </div>
-
-                {/* Data */}
-                <div className="form-group">
-                    <label htmlFor="data">Data</label>
-                    <div className="input-group">
-                        <CalendarToday />
-                        <input
-                            type="date"
-                            name="data"
-                            id="data"
-                            value={formData.data}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-
-                {/* Hora */}
-                <div className="form-group">
-                    <label htmlFor="hora">Hora</label>
-                    <div className="input-group">
-                        <Group />
-                        <input
-                            type="time"
-                            name="hora"
-                            id="hora"
-                            value={formData.hora}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-
-                {/* Escalão */}
-                <div className="form-group">
-                    <label htmlFor="escalao">Escalão</label>
-                    <div className="input-group">
-                        <Group />
-                        <select
-                            name="escalao"
-                            id="escalao"
-                            value={formData.escalão}
-                            onChange={handleChange}
-                        >
-                            <option value="">Selecione</option>
-                            <option value="Escalão A">Sub-10</option>
-                            <option value="Escalão B">Sub-11</option>
-                        </select>
-                    </div>
-                </div>
-
-                {/* Submit Button */}
-                <button type="submit" className="submit-button">
-                    Adicionar
-                </button>
-            </form>
+        {/* Nome do atleta */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Nome do atleta</label>
+          <div className="atletasadicionar-input-group">
+            <PersonIcon />
+            <input
+              type="text"
+              name="nome"
+              placeholder="Nome do atleta"
+              value={formData.nome}
+              onChange={handleChange}
+            />
+          </div>
         </div>
-    );
+
+        {/* Row for Data de Nascimento and Escalão side by side */}
+        <div className="atletasadicionar-form-row">
+          <div className="atletasadicionar-form-group">
+            <label className="atletasadicionar-label">Data de Nascimento</label>
+            <div className="atletasadicionar-input-group">
+              <CalendarTodayIcon />
+              <input
+                type="date"
+                name="dataNascimento"
+                placeholder="Data de Nascimento"
+                value={formData.dataNascimento}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="atletasadicionar-form-group">
+            <label className="atletasadicionar-label">Escalão</label>
+            <div className="atletasadicionar-input-group">
+              <GroupIcon />
+              <select
+                name="escalao"
+                value={formData.escalao}
+                onChange={handleChange}
+              >
+                <option value="" disabled>Escalão</option>
+                <option value="SUB-16">SUB-16</option>
+                <option value="SUB-17">SUB-17</option>
+                <option value="SUB-18">SUB-18</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Clube & Posição */}
+        <div className="atletasadicionar-form-row">
+          <div className="atletasadicionar-form-group">
+            <label className="atletasadicionar-label">Clube</label>
+            <div className="atletasadicionar-input-group">
+              <PersonIcon />
+              <select
+                name="clube"
+                value={formData.clube}
+                onChange={handleChange}
+              >
+                <option value="" disabled>Clube</option>
+                <option value="SL Benfica">SL Benfica</option>
+                <option value="FC Porto">FC Porto</option>
+              </select>
+            </div>
+          </div>
+          <div className="atletasadicionar-form-group">
+            <label className="atletasadicionar-label">Posição</label>
+            <div className="atletasadicionar-input-group">
+              <SportsSoccerIcon />
+              <select
+                name="posicao"
+                value={formData.posicao}
+                onChange={handleChange}
+              >
+                <option value="" disabled>Posição</option>
+                <option value="PL">PL</option>
+                <option value="MC">MC</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Nacionalidade */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Nacionalidade</label>
+          <div className="atletasadicionar-input-group">
+            <PublicIcon />
+            <select
+              name="nacionalidade"
+              value={formData.nacionalidade}
+              onChange={handleChange}
+            >
+              <option value="" disabled>Nacionalidade</option>
+              <option value="Portugal">Portugal</option>
+              <option value="Brasil">Brasil</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Link */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Link</label>
+          <div className="atletasadicionar-input-group">
+            <LinkIcon />
+            <input
+              type="url"
+              name="link"
+              placeholder="Link"
+              value={formData.link}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* Rating Final */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Rating Final</label>
+          <div className="atletasadicionar-input-group">
+            <StarIcon />
+            <input
+              type="number"
+              name="rating"
+              placeholder="Rating Final"
+              value={formData.rating}
+              onChange={handleChange}
+              min="1"
+              max="5"
+            />
+          </div>
+        </div>
+
+        {/* Nome do Contato */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Nome do Contato</label>
+          <div className="atletasadicionar-input-group">
+            <PersonIcon />
+            <input
+              type="text"
+              name="contatoNome"
+              placeholder="Nome do Contato"
+              value={formData.contatoNome}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* Contato telefônico */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Contato telefônico</label>
+          <div className="atletasadicionar-input-group">
+            <PhoneIcon />
+            <input
+              type="tel"
+              name="contatoTelefone"
+              placeholder="Contato telefônico"
+              value={formData.contatoTelefone}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <button type="submit" className="atletasadicionar-submit-button">
+          Adicionar
+        </button>
+      </form>
+    </div>
+  );
 }
