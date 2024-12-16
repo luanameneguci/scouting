@@ -10,14 +10,11 @@
 }
 
 .adicionar-jogo-wrapper .form {
-    background-color: var(--gray-700-color);
     padding: 40px;
     border-radius: 8px;
     display: grid;
     gap: 30px;
     width: 200%; /* Faz com que o formulário ocupe 100% do contêiner */
-    box-shadow: 0 4px 10px  var(--black-color);
-    ; /* Adiciona sombra */
 }
 
 /* Título */
@@ -36,8 +33,6 @@
     display: grid;
     gap: 30px;
     width: 500px; /* Define uma largura fixa */
-    box-shadow: 0 4px 10px var(--black-color);
-    ; /* Adiciona sombra */
 }
 
 .adicionar-jogo-wrapper .form-group {

@@ -4,8 +4,8 @@ import { setupContentNavbarMargin } from './utils';
 
 export default function AdicionarJogo() {
     const [formData, setFormData] = useState({
-        clube1: '',
-        clube2: '',
+        clube1: 'clube dentro',
+        clube2: 'clube fora',
         data: '',
         hora: '',
         treinador: '',
