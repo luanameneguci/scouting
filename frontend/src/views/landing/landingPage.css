@@ -126,3 +126,7 @@
     height: auto;
     border-radius: 10px; /* Opcional: para bordas arredondadas */
 }
+
+.landing-segundocontainer {
+    margin-bottom: 1rem;
+}

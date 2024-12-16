@@ -44,7 +44,11 @@ export default function LandingPage() {
                         <p>Ajudamos a moldar o futuro dos próximos jogadores e do clube.</p>
                     </div>
                 </div>
-                <h1>Descarrega já e contribui para o sucesso do Académico</h1>
+                <div className='segundocontainer'>
+                    <h1>Descarrega já e contribui para o sucesso do Académico</h1>
+                    
+                    </div>
+                
             </div>
         </>
     );
