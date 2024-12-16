@@ -6,12 +6,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
 
 const RelatorioAdicionar = () => {
-  const [tecnica, setTecnica] = useState(null);
-  const [velocidade, setVelocidade] = useState(null);
-  const [atitude, setAtitude] = useState(null);
-  const [inteligencia, setInteligencia] = useState(null);
-  const [altura, setAltura] = useState(null);
-  const [morfologia, setMorfologia] = useState(null);
+  // Inicializando estados com a última opção selecionada
+  const [tecnica, setTecnica] = useState(4);
+  const [velocidade, setVelocidade] = useState(4);
+  const [atitude, setAtitude] = useState(4);
+  const [inteligencia, setInteligencia] = useState(4);
+  const [altura, setAltura] = useState('Alto');
+  const [morfologia, setMorfologia] = useState('Endomorfo');
   const [apontamentos, setApontamentos] = useState("");
   const [atleta, setAtleta] = useState("");
 
