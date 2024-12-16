@@ -1,14 +1,14 @@
 
 const express = require('express');
 const router = express.Router();
-/*
+
 const EquipaController = require("../controllers/EquipaController.js");
 
 router.get("/:idEquipa", EquipaController.single_equipa); 
 router.get("/:tipoEquipa/escaloes", EquipaController.escaloes_equipa); 
 router.put("/:idEquipa/:idAtleta/:novaPosicao", EquipaController.alterar_posicao_atleta); 
 
-
+/*
 Precisa de:
  - GET /:tipoEquipa/escaloes - Todos os escalões das equipas (prop e sombra dep)
     - Params: tipo de equipa
