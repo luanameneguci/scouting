@@ -75,8 +75,8 @@ function initModels(sequelize) {
   jogo.belongsTo(escalao, { foreignKey: "id_escalao" });
   escalao.hasMany(jogo, { foreignKey: "id_escalao" });
 
-  funcao.belongsTo(posicao, { foreignKey: "id_posicao" });
-  posicao.hasMany(funcao, { foreignKey: "id_posicao" });
+  posicao.belongsTo(funcao, { foreignKey: "id_funcao" });
+  funcao.hasMany(posicao, { foreignKey: "id_funcao" });
 
   relatorio.belongsTo(atleta, { foreignKey: "id_atleta" });
   atleta.hasMany(relatorio, { foreignKey: "id_atleta" });
