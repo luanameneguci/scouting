@@ -15,16 +15,7 @@ export default function LandingPage() {
                         <p>
                         Cria relatórios pormenorizados, monitoriza o desempenho e avalia cada partida com precisão. Regista a evolução dos jogadores e garante que o talento do Académico de Viseu seja potenciado ao máximo, jogo após jogo, temporada após temporada.
                         </p>
-                        <div className="download-buttons">
-                            <a href="https://play.google.com/store" className="download-button">
-                                <img src={GooglePlayIcon} alt="google" />
-                                Google Play
-                            </a>
-                            <a href="https://www.apple.com/app-store/" className="download-button">
-                                <img src={AppStoreIcon} alt="App Store" />
-                                App Store
-                            </a>
-                        </div>
+                        <button className="landing-button">DESCARREGA AGORA</button>
                     </div>
                 </div>
                 <div className="landing-features">
@@ -44,11 +35,19 @@ export default function LandingPage() {
                         <p>Ajudamos a moldar o futuro dos próximos jogadores e do clube.</p>
                     </div>
                 </div>
-                <div className='segundocontainer'>
+                <div className='landing-segundocontainer'>
                     <h1>Descarrega já e contribui para o sucesso do Académico</h1>
-                    
+                    <div className="download-buttons">
+                        <a href="https://play.google.com/store" className="download-button">
+                            <img src={GooglePlayIcon} alt="google" />
+                            Google Play
+                        </a>
+                        <a href="https://www.apple.com/app-store/" className="download-button">
+                            <img src={AppStoreIcon} alt="App Store" />
+                            App Store
+                        </a>
                     </div>
-                
+                </div>
             </div>
         </>
     );
