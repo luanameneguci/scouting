@@ -1,19 +1,11 @@
-const express = require("express");
-const sequelize = require("../models/database");
 
-sequelize.sync({ alter: true });
-const { Sequelize, Op, Model, DataTypes } = require('sequelize');
-var initModels = require("../models/init-models");
-var models = initModels(sequelize);
-var Equipa = require("../models/equipa");
-var EquipaAtleta = require("../models/EquipaAtleta");
-var atleta = require("../models/atleta");
-var escalao = require("../models/escalao");
-var EscalaoDivisao = require("../models/EscalaoDivisao");
-var divisao = require("../models/divisao");
+const { Op } = require('sequelize');
+const sequelize = require("../models/database");
+const initModels = require('../models/init-models');
+const models = initModels(sequelize);
 
 const controllers = {};
-/*
+
 // Criar a equipa -- Falta escalão
 controllers.createEquipa = async (req, res) => {
 
@@ -21,7 +13,7 @@ controllers.createEquipa = async (req, res) => {
 
   try {
     // Check if there is already an equipa with the same id_escalao and id_divisao
-    const existingEquipa = await Equipa.findOne({
+    const existingEquipa = await models.equipa.findOne({
       where: {
         id_escalao: id_escalao,
         id_divisao: id_divisao
@@ -36,7 +28,7 @@ controllers.createEquipa = async (req, res) => {
     }
 
     // Create the new equipa
-    const newEquipa = await Equipa.create({
+    const newEquipa = await models.equipa.create({
       id_tipoequipa: id_tipoequipa,
       id_escalao: id_escalao,
       id_divisao: id_divisao
@@ -63,7 +55,7 @@ controllers.single_equipa = async (req, res) => {
   const { idEquipa } = req.params;
 
   try {
-    const equipa = await Equipa.findOne({
+    const equipa = await models.equipa.findOne({
       where: { id_equipa: idEquipa }
     });
 
@@ -71,12 +63,11 @@ controllers.single_equipa = async (req, res) => {
       return res.status(404).json({ success: false, message: "Equipa não encontrada" });
     }
 
-    const atletas = await EquipaAtleta.findAll({ // Atletas da equipa
+    const atletas = await models.EquipaAtleta.findAll({ // Atletas da equipa
       where: {
         id_equipa: idEquipa,
         include: [{
-          model: atleta,
-          as: 'atleta',
+          model: models.atleta,
           where: {
             id_statusatleta: {
               [Op.or]: [null, 1]
@@ -98,14 +89,14 @@ controllers.escaloes_equipa = async (req, res) => {
 
   try {
     // Encontra todas as equipas do respetivo tipo (com o escalao e divisao)
-    const equipas = await Equipa.findAll({
+    const equipas = await models.equipa.findAll({
       where: { id_tipoequipa: tipoEquipa },
       include: [
         {
-          model: escalao,
+          model: models.escalao,
         },
         {
-          model: divisao,
+          model: models.divisao,
         }
       ]
     });
@@ -130,7 +121,7 @@ controllers.alterar_posicao_atleta = async (req, res) => {
   }
 
   try {
-    const equipaAtleta = await EquipaAtleta.findOne({ // Busca o atleta na equipa
+    const equipaAtleta = await models.EquipaAtleta.findOne({ // Busca o atleta na equipa
       where: { id_equipa: idEquipa, id_atleta: idAtleta }
     });
 
@@ -143,7 +134,7 @@ controllers.alterar_posicao_atleta = async (req, res) => {
       return res.status(200).json({ success: true, message: "Atleta removido da equipa" });
     }
 
-    const existingAtleta = await EquipaAtleta.findOne({ // Se existir, e não for para remover, procura se já existe atleta naquela posicao...
+    const existingAtleta = await models.EquipaAtleta.findOne({ // Se existir, e não for para remover, procura se já existe atleta naquela posicao...
       where: { id_equipa: idEquipa, posicaoformacao: novaPosicao }
     });
 
@@ -160,7 +151,6 @@ controllers.alterar_posicao_atleta = async (req, res) => {
     return res.status(500).json({ success: false, message: "Erro no servidor", error: error.message });
   }
 }
-*/
 /*
 Precisa de:
  - X -  GET /:tipoEquipa/escaloes - Todos os escalões das equipas (prop e sombra dep)

@@ -1,13 +1,7 @@
-const express = require("express");
 const sequelize = require("../models/database");
-const { Sequelize, Op, Model, DataTypes } = require("sequelize");
-var Jogo = require("../models/jogo")(sequelize, DataTypes);
-var JogoAtleta = require("../models/JogoAtleta")(sequelize, DataTypes);
-var JogoClube = require("../models/JogoClube")(sequelize, DataTypes);
 const initModels = require('../models/init-models');
 const models = initModels(sequelize);
-const clube = require("../models/clube")(sequelize, DataTypes);
-const atleta = require("../models/atleta")(sequelize, DataTypes);
+
 
 const controllers = {};
 /*
