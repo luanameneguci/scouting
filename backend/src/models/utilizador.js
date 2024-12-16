@@ -3,13 +3,12 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('utilizador', {
     id_utilizador: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     id_tipoutilizador: {
       type: DataTypes.INTEGER,
       allowNull: false,
-
     },
     nome: {
       type: DataTypes.STRING(1024),

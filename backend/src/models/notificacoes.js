@@ -3,8 +3,8 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('notificacoes', {
     id_notificacao: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     id_utilizador: {
       type: DataTypes.INTEGER,
@@ -17,6 +17,10 @@ module.exports = function(sequelize, DataTypes) {
     texto: {
       type: DataTypes.STRING(1024),
       allowNull: false
+    },
+    vista: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     }
   }, {
     sequelize,

@@ -5,23 +5,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'equipa',
-        key: 'id_equipa'
-      }
+
     },
     id_atleta: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'atleta',
-        key: 'id_atleta'
-      }
     },
     posicaoformacao: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false
     }
   }, {
     sequelize,

@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     id_posicao: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     designacao: {
       type: DataTypes.STRING(1024),
