@@ -5,7 +5,7 @@ const JogoController = require("../controllers/JogoController.js");
 
 router.get("/", JogoController.listar);  
 
-router.post("/criar", JogoController.criar);
+//router.post("/criar", JogoController.criar);
 
 /* router.delete("/apagar/:id_jogo", JogoController.apagar); */
 /* 

@@ -4,11 +4,13 @@ const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var Jogo = require("../models/jogo")(sequelize, DataTypes);
 var JogoAtleta = require("../models/JogoAtleta")(sequelize, DataTypes);
 var JogoClube = require("../models/JogoClube")(sequelize, DataTypes);
+const initModels = require('../models/init-models');
+const models = initModels(sequelize);
 const clube = require("../models/clube")(sequelize, DataTypes);
 const atleta = require("../models/atleta")(sequelize, DataTypes);
 
 const controllers = {};
-
+/*
 controllers.criar = async (req, res) => {
   const { id_escalao, dataJogo, atletas, clubes } = req.body; // `atletas` is an array of athlete IDs
 
@@ -120,7 +122,7 @@ const addAtletaToJogo = async (req, res) => {
   }
 };
 
-
+*/
 /* controllers.listarPorAtleta = async (req, res) => {
   const { id } = req.params;
 
@@ -163,35 +165,21 @@ const addAtletaToJogo = async (req, res) => {
 
 controllers.listar = async (req, res) => {
   try {
-    console.log(Jogo.associations);
-console.log(JogoAtleta.associations);
-console.log(JogoClube.associations);
+
     // Fetch all games along with associated athletes and clubs
-    const data = await Jogo.findAll({
+    const data = await models.jogo.findAll({
       include: [
         {
-          model: JogoAtleta,
-          as: "JogoAtletas",
-          include: [
-            {
-              model: atleta,
-              as: "RelatedAtleta",
-            },
-          ],
+          model: models.atleta,
+
         },
         {
-          model: JogoClube,
-          as: "jogoClubes",
-          include: [
-            {
-              model: clube,
-              as: "clube",
-            },
-          ],
+          model: models.clube,
+
         },
       ],
     });
-    
+
 
     // Respond with fetched data
     res.status(200).json({ success: true, data });
@@ -205,7 +193,7 @@ console.log(JogoClube.associations);
   }
 };
 
-
+/*
 controllers.listarByPk = async (req, res) => {
   const { id_jogo } = req.params;
 
@@ -251,7 +239,7 @@ controllers.listarByPk = async (req, res) => {
       });
   }
 };
-
+*/
 module.exports = controllers;
 /*encontrar jogo
 /*encontrar jogador
