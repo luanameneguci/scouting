@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './adicionarjogo.css'; // Supondo que você tenha esse arquivo de estilo
 import { setupContentNavbarMargin } from './utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar, faClock, faUser, faShieldAlt, faFutbol } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function AdicionarJogo() {
     const [formData, setFormData] = useState({
         clube1: 'clube dentro',
-        clube2: 'clube fora',
+        clube2: 'clube',
         data: '',
         hora: '',
         treinador: '',
