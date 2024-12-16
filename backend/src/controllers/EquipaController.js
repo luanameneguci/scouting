@@ -6,6 +6,9 @@ const models = initModels(sequelize);
 
 const controllers = {};
 
+
+sequelize.sync({alter: true});
+
 // Criar a equipa -- Falta escalão
 controllers.createEquipa = async (req, res) => {
 

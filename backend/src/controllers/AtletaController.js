@@ -6,6 +6,7 @@ var models = initModels(sequelize);
 
 const controllers = {};
 
+
 controllers.criar = async (req, res) => {
   const {
     id_clube,
