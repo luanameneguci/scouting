@@ -1,23 +1,36 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // useNavigate para navegação
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import './login.css';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const navigate = useNavigate(); // Hook para navegação
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica de login aqui
+
+    navigate('/home'); 
   };
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+  const handleForgotPassword = () => {
+
+    navigate('/forgot-password'); 
+  };
+
 
   return (
     <div className="login-container">
@@ -40,7 +53,7 @@ const Login = () => {
             />
           </div>
         </div>
-        
+
         {/* Password */}
         <div className="login-form-group">
           <label className="login-label">Password</label>
@@ -55,13 +68,24 @@ const Login = () => {
             />
           </div>
         </div>
+
         {/* Forgot Password */}
         <div className="forgot-password">
-          <button className="text-button">Forgot Password?</button>
+          <button
+            type="button"
+            className="text-button"
+            onClick={handleForgotPassword} // Redireciona para a página de recuperação de senha
+          >
+            Forgot Password?
+          </button>
         </div>
-        
-        {/* Submit Button */}
-        <button type="submit" className="login-submit-button">LOGIN</button>
+
+        {/* Botão de Login */}
+        <div>
+          <button type="submit" className="login-submit-button">
+            Login
+          </button>
+        </div>
       </form>
     </div>
   );
