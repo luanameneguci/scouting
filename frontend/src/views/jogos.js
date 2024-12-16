@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Importa o Link para navegação
 import './jogos.css';
 
 
@@ -60,7 +61,11 @@ const Jogos = () => {
             <span className="material-symbols-outlined">search</span>
           </button>
         </div>
-        <button className="jogos-add-button">Adicionar</button>
+
+        {/* Link para a página de Adicionar Jogo */}
+        <Link to={'/jogos/adicionarjogo'}>
+          <button className="jogos-add-button">Adicionar</button>
+        </Link>
       </div>
 
       <table className="jogos-table">

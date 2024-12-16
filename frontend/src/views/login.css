@@ -1,5 +1,5 @@
 /* Container for the entire form */
-.atletasadicionar-container {
+.login-container {
   width: 30%; 
   max-width: 500px; 
   margin: 20px auto;
@@ -9,49 +9,51 @@
   padding-top: 80px; 
 }
 
+/* Sign Up and Forgot Password buttons */
+.text-button {
+  background: none;
+  border: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
 /* Each label + input set */
-.atletasadicionar-form-group {
+.login-form-group {
   margin-bottom: 0; 
   flex: 1; /* Make form groups share available space equally in a row */
 }
 
 /* Labels */
-.atletasadicionar-label {
+.login-label {
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
   display: block;
   font-size: 12px;
-  color: #fff;
+  color: #ffffff;
   margin-top: 20px;
-  margin-bottom:8px;
-}
-
-/* Rows for fields. Use this even for single fields for consistency */
-.atletasadicionar-form-row {
-  display: flex;
-  align-items: flex-start; /* Aligns the top of the fields */
-  gap: 20px; /* Control vertical spacing here */
+  margin-bottom: 8px;
 }
 
 /* Input groups */
-.atletasadicionar-input-group {
+.login-input-group {
   display: flex;
   align-items: center;
-  /* Remove margin-bottom here as well so the spacing is consistent and controlled by .atletasadicionar-form-row */
   margin-bottom: 0; 
 }
 
 /* Icons */
-.atletasadicionar-input-group svg {
+.login-input-group svg {
   background-color: #000; /* Black background */
   padding-top: 10px; 
-  padding-bottom: 10px;         /* Add more padding to make the box larger */
+  padding-bottom: 10px; /* Add more padding to make the box larger */
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  width: 39px;            /* Set a fixed width for the box */
-  height: 39px;           /* Set a fixed height for the box */
-  display: flex;          /* Ensures the SVG is centered inside the box */
+  width: 39px; /* Set a fixed width for the box */
+  height: 39px; /* Set a fixed height for the box */
+  display: flex; /* Ensures the SVG is centered inside the box */
   justify-content: center;
   align-items: center;
   padding-left: 0px;
@@ -59,25 +61,25 @@
 }
 
 /* Inputs and selects */
-.atletasadicionar-input-group input,
-.atletasadicionar-input-group select {
+.login-input-group input,
+.login-input-group select {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 4px;
   font-size: 14px;
-  background-color: var(--gray-800-color, #333);
+  background-color: var(--gray-800-color, #ffffff);
   color: #fff;
   box-sizing: border-box;
 }
 
 /* Placeholder styling */
-.atletasadicionar-input-group input::placeholder {
+.login-input-group input::placeholder {
   color: #aaa;
 }
 
 /* Submit button */
-.atletasadicionar-submit-button {
+.login-submit-button {
   display: block;
   width: 100%;
   padding: 10px;
@@ -90,6 +92,6 @@
   margin-top: 30px; /* Space above the button */
 }
 
-.atletasadicionar-submit-button:hover {
+.login-submit-button:hover {
   background-color: #e0a800;
 }

@@ -1,12 +1,12 @@
 .adicionar-jogo-wrapper {
     background-color: var(--gray-800-color);
     color: var(--white-color);
-    display: flex; /* Ativa Flexbox */
-    flex-direction: column; /* Mantém o layout em coluna */
-    justify-content: center; /* Centraliza verticalmente */
-    align-items: center; /* Centraliza horizontalmente */
-    width:100%;
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
 }
 
 .adicionar-jogo-wrapper .form {
@@ -14,66 +14,55 @@
     padding: 40px;
     border-radius: 8px;
     display: grid;
-    gap: 30px;
-    width: 200%; /* Faz com que o formulário ocupe 100% do contêiner */
-    box-shadow: 0 4px 10px  var(--black-color);
-    ; /* Adiciona sombra */
-}
-
-/* Título */
-.adicionar-jogo-wrapper .page-title {
-    font-size: 20px;
-    margin: 20px 0  ;
-    text-align: center;
-    width: 100%; /* Alinha o texto na largura total */
-}
-
-/* Formulário */
-.adicionar-jogo-wrapper .form {
-    background-color: var(--gray-700-color);
-    padding: 30px;
-    border-radius: 8px;
-    display: grid;
-    gap: 30px;
-    width: 500px; /* Define uma largura fixa */
-    box-shadow: 0 4px 10px var(--black-color);
-    ; /* Adiciona sombra */
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .adicionar-jogo-wrapper .form-group {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    
-}
-
-.adicionar-jogo-wrapper .form-group label {
-    font-weight: bold;
+    position: relative;
 }
 
 .adicionar-jogo-wrapper .form-group input,
 .adicionar-jogo-wrapper .form-group select {
-    padding: 10px;
+    padding: 10px 40px;
     border: none;
     border-radius: 4px;
     background-color: var(--gray-800-color);
     color: var(--white-color);
+    font-size: 16px;
+    outline: none;
+}
+
+.adicionar-jogo-wrapper .form-group label {
     font-size: 14px;
+    margin-bottom: 5px;
+    color: var(--gray-400-color);
+}
+
+.adicionar-jogo-wrapper .form-group svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-500-color);
 }
 
 .adicionar-jogo-wrapper .submit-button {
-    background-color: var(--accent-color);
+    background-color: #ffc800;
     color: var(--black-color);
-    padding: 10px 15px;
-    font-size: 16px;
     font-weight: bold;
+    padding: 15px 0;
     border: none;
     border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s ease;
 }
 
 .adicionar-jogo-wrapper .submit-button:hover {
-    background-color: var(--accent-color);
+    background-color: #e6b500;
 }
