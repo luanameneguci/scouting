@@ -13,15 +13,38 @@ export default function Dashboard() {
   const [relatorios, setRelatorios] = useState([]);
   const [equipasProprias, setEquipasProprias] = useState([]);
   const [equipasSombra, setEquipasSombra] = useState([]);
-  // Simulating fetching data on component mount
 
+  //-------------------------Umas funçoes
+  const formatDate = (date) => {
+    console.log(date); // Log the raw date value to check
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate)) {
+      return "Invalid Date"; // Return a fallback string if the date is invalid
+    }
+    return parsedDate.toLocaleDateString();
+  };
+  
+  const formatTime = (date) => {
+    console.log(date); // Log the raw date value to check
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate)) {
+      return "Invalid Time"; // Return a fallback string if the time is invalid
+    }
+    return parsedDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };  
+  //-------------------------Umas funçoes
+
+  //-------------------------Fetching data from jogos
 useEffect(() => {
 const url = "http://localhost:8080/jogo/";
 axios.get(url)
 .then(res => {
 if(res.data.success){
-const data = res.data.data;
-setGames(data);
+const games = res.data.data;
+setGames(games);
 }else{
 alert("Error Web Service!");
 }
@@ -30,6 +53,7 @@ alert("Error Web Service!");
 alert(error)
 });
 },[]);
+
   useEffect(() => {
     const equipasPropriasData = [
       {
@@ -55,7 +79,7 @@ alert(error)
     ];
     setEquipasSombra(equipasSombraData);
 
-    const gameData = [
+ /*    const gameData = [
       {
         team1: "Sporting",
         team2: "FC Porto",
@@ -72,6 +96,7 @@ alert(error)
       },
     ];
     setGames(gameData);
+ */
 
     const ratingsData = [
       { stars: 1, count: 33, percentage: 5 },
@@ -125,35 +150,43 @@ alert(error)
       </div>
 
       <section className="games">
-        <h2>Próximos jogos</h2>
-        <div id="game-container">
-          {games.map((game, index) => (
-            <div
-              key={index}
-              className={`game-card ${!game.coach ? "pending" : ""}`}
-            >
-              <p className="game-clubs">
-                {game.team1} vs {game.team2}
-              </p>
-              <p className="game-details">
-                {new Date(game.date).toLocaleDateString()} |{" "}
-                {new Date(game.date).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}{" "}
-                {game.category}
-              </p>
-              <p>
-                {game.coach ? (
-                  <strong>Treinador: {game.coach}</strong>
-                ) : (
-                  <em>Sem treinador atribuído</em>
-                )}
-              </p>
-            </div>
-          ))}
+  <h2>Próximos jogos</h2>
+  <div id="game-container">
+    {games.map((game, index) => {
+      // Extract the club names from the "clubes" array
+      const club1 = game.clubes?.[0]?.nome || "Clube 1 Indisponível";
+      const club2 = game.clubes?.[1]?.nome || "Clube 2 Indisponível";
+      const escalao = game.escalao?.designacao || "Nenhum escalão associado";
+      const utilizadores = game.utilizadors?.[0].nome || "Nenhum escalão associado";
+
+      return (
+        <div
+          key={index}
+          className={`game-card ${!utilizadores ? "pending" : ""}`}
+        >
+          <p className="game-clubs">
+            {club1} vs {club2}
+          </p>
+          <p className="game-details">
+            {new Date(game.data).toLocaleDateString()} |{" "}
+            {new Date(game.data).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+           <p>Escalão: {escalao}</p> 
+          </p>
+          <p className="game-coaches">
+            {utilizadores ? (
+              <strong>Treinador: {utilizadores}</strong>
+            ) : (
+              <em>Sem treinador atribuído</em>
+            )}
+          </p>
         </div>
-      </section>
+      );
+    })}
+  </div>
+</section>
 
       <section className="stats">
         <div className="stat athletes">

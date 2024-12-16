@@ -2,6 +2,7 @@ const express = require('express');
 const homeRouter = require('./routes/home.js');
 const equipasRouter = require('./routes/equipas.js');
 const jogoRouter = require('./routes/jogoRoute.js');
+const cors = require('cors');
 /* const  tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 const app = express();
 
@@ -11,6 +12,9 @@ const port = 8080;
 app.set('port', process.env.PORT || 8080);
 //Middlewares
 app.use(express.json());
+
+// Enable CORS for all origins
+app.use(cors());
 
 
 //Routers
