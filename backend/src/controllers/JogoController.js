@@ -4,13 +4,13 @@ const models = initModels(sequelize);
 
 
 const controllers = {};
-/*
+
 controllers.criar = async (req, res) => {
   const { id_escalao, dataJogo, atletas, clubes } = req.body; // `atletas` is an array of athlete IDs
 
   try {
     // Step 1: Create the game
-    const jogo = await Jogo.create({
+    const jogo = await models.jogo.create({
       id_escalao: id_escalao,
       data: dataJogo,
     });
@@ -116,7 +116,6 @@ const addAtletaToJogo = async (req, res) => {
   }
 };
 
-*/
 /* controllers.listarPorAtleta = async (req, res) => {
   const { id } = req.params;
 
@@ -171,6 +170,15 @@ controllers.listar = async (req, res) => {
           model: models.clube,
 
         },
+        {
+          model: models.utilizador,
+
+        },
+        {
+          model: models.escalao,
+
+        },
+         
       ],
     });
 
@@ -187,7 +195,6 @@ controllers.listar = async (req, res) => {
   }
 };
 
-/*
 controllers.listarByPk = async (req, res) => {
   const { id_jogo } = req.params;
 
@@ -233,7 +240,7 @@ controllers.listarByPk = async (req, res) => {
       });
   }
 };
-*/
+
 module.exports = controllers;
 /*encontrar jogo
 /*encontrar jogador
