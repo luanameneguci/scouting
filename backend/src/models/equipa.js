@@ -3,8 +3,8 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('equipa', {
     id_equipa: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     id_tipoequipa: {
       type: DataTypes.INTEGER,

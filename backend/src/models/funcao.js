@@ -1,14 +1,10 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('funcao', {
-    id_funcao: {
+    id_funcao: { // Função é se é posica
       type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    id_posicao: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+      primaryKey: true,
+      autoIncrement: true
     },
     designacao: {
       type: DataTypes.STRING(1024),
