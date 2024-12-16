@@ -6,6 +6,7 @@ export default function Atletas() {
   const [atletas, setAtletas] = useState([]); // Estado para armazenar os atletas
   const [loading, setLoading] = useState(true); // Estado para o carregamento
   const [error, setError] = useState(null); // Estado para erros
+  const [search, setSearch] = useState(""); // Estado para a pesquisa
 
   // Função para buscar atletas da API
   const fetchAtletas = async () => {
@@ -27,6 +28,11 @@ export default function Atletas() {
     fetchAtletas();
   }, []);
 
+  // Filtra os atletas conforme a pesquisa
+  const filteredAtletas = atletas.filter((atleta) =>
+    atleta.nome.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="atletas-page">
       <h1 className="TituloEquipas">Atletas</h1>
@@ -36,6 +42,8 @@ export default function Atletas() {
             type="text"
             className="form-control"
             placeholder="Procurar por nome de atleta"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)} // Atualiza o estado da pesquisa
           />
           <span className="material-symbols-outlined icon">search</span>
         </div>
@@ -68,15 +76,15 @@ export default function Atletas() {
               <td colSpan="8">Erro: {error}</td>
             </tr>
           ) : (
-            atletas.map((atleta) => (
+            filteredAtletas.map((atleta) => (
               <tr key={atleta.id_atleta}>
-                <td>Ativo</td> {/* Substitua com estado real se houver */}
+                <td>Ativo</td>
                 <td>{atleta.nome}</td>
                 <td>{atleta.ratinggeral} ★</td>
-                <td>PL ATA</td> {/* Adicione posição real se houver */}
+                <td>PL ATA</td>
                 <td>{atleta.datanascimento.split("-")[0]}</td>
-                <td>Sub-17</td> {/* Substitua com escalao real */}
-                <td>🇵🇹 Portugal</td> {/* Nacionalidade fixa por enquanto */}
+                <td>Sub-17</td>
+                <td>🇵🇹 Portugal</td>
                 <td>
                   <button className="action-button remove">Remover</button>
                   <Link to="/atletas/pagina">

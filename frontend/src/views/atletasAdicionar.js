@@ -25,19 +25,50 @@ export default function AtletasAdicionar() {
     contatoTelefone: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Dados enviados:", formData);
+    try {
+      const response = await fetch("http://localhost:8080/atleta/criar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_clube: formData.clube, // Mapeia os campos corretos
+          id_escalao: formData.escalao,
+          id_statusatleta: 1, // Supondo ativo por padrão
+          nome: formData.nome,
+          datanascimento: formData.dataNascimento,
+          link: formData.link,
+          ratingfinal: formData.rating,
+          ratinggeral: formData.rating, // Pode ser o mesmo valor
+          nomeencarregado: formData.contatoNome,
+          contactoencarregado: formData.contatoTelefone,
+        }),
+      });
+  
+      if (!response.ok) throw new Error("Erro ao criar atleta");
+      const result = await response.json();
+      console.log("Atleta criado com sucesso:", result);
+  
+      // Redirecionar ou mostrar mensagem de sucesso
+      alert("Atleta criado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao criar atleta:", error);
+      alert("Erro ao criar atleta");
+    }
   };
 
   return (
     <div className="atletasadicionar-container">
       <form className="atletasadicionar-form" onSubmit={handleSubmit}>
-
         {/* Nome do atleta */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Nome do atleta</label>
@@ -49,11 +80,12 @@ export default function AtletasAdicionar() {
               placeholder="Nome do atleta"
               value={formData.nome}
               onChange={handleChange}
+              required
             />
           </div>
         </div>
 
-        {/* Row for Data de Nascimento and Escalão side by side */}
+        {/* Row for Data de Nascimento and Escalão */}
         <div className="atletasadicionar-form-row">
           <div className="atletasadicionar-form-group">
             <label className="atletasadicionar-label">Data de Nascimento</label>
@@ -62,9 +94,9 @@ export default function AtletasAdicionar() {
               <input
                 type="date"
                 name="dataNascimento"
-                placeholder="Data de Nascimento"
                 value={formData.dataNascimento}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -76,6 +108,7 @@ export default function AtletasAdicionar() {
                 name="escalao"
                 value={formData.escalao}
                 onChange={handleChange}
+                required
               >
                 <option value="" disabled>Escalão</option>
                 <option value="SUB-16">SUB-16</option>
@@ -96,6 +129,7 @@ export default function AtletasAdicionar() {
                 name="clube"
                 value={formData.clube}
                 onChange={handleChange}
+                required
               >
                 <option value="" disabled>Clube</option>
                 <option value="SL Benfica">SL Benfica</option>
@@ -111,6 +145,7 @@ export default function AtletasAdicionar() {
                 name="posicao"
                 value={formData.posicao}
                 onChange={handleChange}
+                required
               >
                 <option value="" disabled>Posição</option>
                 <option value="PL">PL</option>
@@ -129,6 +164,7 @@ export default function AtletasAdicionar() {
               name="nacionalidade"
               value={formData.nacionalidade}
               onChange={handleChange}
+              required
             >
               <option value="" disabled>Nacionalidade</option>
               <option value="Portugal">Portugal</option>
@@ -165,11 +201,12 @@ export default function AtletasAdicionar() {
               onChange={handleChange}
               min="1"
               max="5"
+              required
             />
           </div>
         </div>
 
-        {/* Nome do Contato */}
+        {/* Nome e Telefone do Contato */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Nome do Contato</label>
           <div className="atletasadicionar-input-group">
@@ -183,25 +220,31 @@ export default function AtletasAdicionar() {
             />
           </div>
         </div>
-
-        {/* Contato telefônico */}
         <div className="atletasadicionar-form-group">
-          <label className="atletasadicionar-label">Contato telefônico</label>
+          <label className="atletasadicionar-label">Contato Telefônico</label>
           <div className="atletasadicionar-input-group">
             <PhoneIcon />
             <input
               type="tel"
               name="contatoTelefone"
-              placeholder="Contato telefônico"
+              placeholder="Contato Telefônico"
               value={formData.contatoTelefone}
               onChange={handleChange}
             />
           </div>
         </div>
 
-        <button type="submit" className="atletasadicionar-submit-button">
-          Adicionar
+        {/* Botão de Enviar */}
+        <button
+          type="submit"
+          className="atletasadicionar-submit-button"
+          disabled={loading}
+        >
+          {loading ? "Enviando..." : "Adicionar"}
         </button>
+
+        {/* Erro */}
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
   );
