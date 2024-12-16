@@ -3,6 +3,8 @@ const homeRouter = require('./routes/home.js');
 const equipasRouter = require('./routes/equipas.js');
 const jogoRouter = require('./routes/jogoRoute.js');
 /* const  tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
+
+const infoInicial = require('./controllers/infoInicial');
 const app = express();
 
 const port = 8080;
@@ -18,7 +20,7 @@ app.use('/', homeRouter);
 app.use('/equipa', equipasRouter);
 app.use('/jogo', jogoRouter);
 /* app.use('/tipoEquipa', tipoEquipasRouter); */
-
+app.get('/inicial', infoInicial.InsertsIniciais)
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
