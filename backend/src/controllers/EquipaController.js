@@ -13,7 +13,7 @@ var EscalaoDivisao = require("../models/EscalaoDivisao");
 var divisao = require("../models/divisao");
 
 const controllers = {};
-
+/*
 // Criar a equipa -- Falta escalão
 controllers.createEquipa = async (req, res) => {
 
@@ -160,7 +160,7 @@ controllers.alterar_posicao_atleta = async (req, res) => {
     return res.status(500).json({ success: false, message: "Erro no servidor", error: error.message });
   }
 }
-
+*/
 /*
 Precisa de:
  - X -  GET /:tipoEquipa/escaloes - Todos os escalões das equipas (prop e sombra dep)

@@ -79,15 +79,7 @@ function initModels(sequelize) {
   EquipaAtleta.belongsTo(atleta, { foreignKey: "id_atleta" });
   EquipaAtleta.belongsTo(equipa, { foreignKey: "id_equipa" });
   
-  JogoAtleta.belongsTo(jogo, { foreignKey: "id_jogo", as: "RelatedJogo" });
-  jogo.hasMany(JogoAtleta, { foreignKey: "id_jogo", as: "JogoAtletas" });
   
-  JogoAtleta.belongsTo(atleta, { foreignKey: "id_atleta", as: "RelatedAtleta" });
-  atleta.hasMany(JogoAtleta, { foreignKey: "id_atleta", as: "AtletaJogos" });
-
-  JogoClube.belongsTo(clube, { foreignKey: "id_clube" });
-  JogoClube.belongsTo(jogo, { foreignKey: "id_jogo" });
-
   nacionalidadeatleta.belongsTo(atleta, { foreignKey: "id_atleta" });
   nacionalidadeatleta.belongsTo(nacionalidade, {
     foreignKey: "id_nacionalidade",
