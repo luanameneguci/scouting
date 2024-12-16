@@ -1,12 +1,13 @@
 import React from 'react';
 import HeroImage from '../../assets/heroImage.png';
+import GooglePlayIcon from '../../assets/google_play.png'; // Adicione o ícone do Google Play
+import AppStoreIcon from '../../assets/apple.png'; // Adicione o ícone da App Store
 import './landingPage.css';
 
 export default function LandingPage() {
     return (
         <>
             <div className="landing-page">
-
                 <div className='landing-content hero-section'>
                     <img src={HeroImage} alt="Hero Image" />
                     <div className="hero-content">
@@ -14,10 +15,17 @@ export default function LandingPage() {
                         <p>
                         Cria relatórios pormenorizados, monitoriza o desempenho e avalia cada partida com precisão. Regista a evolução dos jogadores e garante que o talento do Académico de Viseu seja potenciado ao máximo, jogo após jogo, temporada após temporada.
                         </p>
-                        <button className="landing-button">DESCARREGA AGORA</button>
+                        <div className="download-buttons">
+                            <a href="https://play.google.com/store" className="download-button">
+                                <img src={GooglePlayIcon} alt="google" />
+                                Google Play
+                            </a>
+                            <a href="https://www.apple.com/app-store/" className="download-button">
+                                <img src={AppStoreIcon} alt="App Store" />
+                                App Store
+                            </a>
+                        </div>
                     </div>
-
-
                 </div>
                 <div className="landing-features">
                     <div className="feature-item">
@@ -36,8 +44,8 @@ export default function LandingPage() {
                         <p>Ajudamos a moldar o futuro dos próximos jogadores e do clube.</p>
                     </div>
                 </div>
+                <h1>Descarrega já e contribui para o sucesso do Académico</h1>
             </div>
         </>
     );
-};
-
+}
