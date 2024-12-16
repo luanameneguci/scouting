@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './jogos.css';
 
+
 const Jogos = () => {
   const [visiblePasswords, setVisiblePasswords] = useState({});
 
@@ -52,7 +53,7 @@ const Jogos = () => {
         <div className="jogos-search-container">
           <input 
             type="text" 
-            placeholder="Pesquisar por nome de atleta" 
+            placeholder="Pesquisar por nome do treinador" 
             className="jogos-search-input" 
           />
           <button className="jogos-search-button">
