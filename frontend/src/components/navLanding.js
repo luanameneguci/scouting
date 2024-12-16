@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import './navLanding.css'; // Estilos da navbar
 import logoSVG from '../assets/whiteLogo.svg';
 
-
 export default function NavLanding() {
     return (
             <div className='navbar-landing'>

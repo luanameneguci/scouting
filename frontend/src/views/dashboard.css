@@ -60,10 +60,17 @@
 
 .game-clubs {
   font-weight: bold;
+  max-width: 30%;
 }
 
 .game-details {
   font-size: small;
+  min-width: 30%;
+}
+
+.game-coaches {
+  margin-left: 15px;
+  min-width: 30%;
 }
 
 .game-card {
@@ -72,6 +79,7 @@
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 10px;
+  border: 2px solid #5ada1f;
 }
 
 .game-card.pending {

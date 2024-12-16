@@ -61,14 +61,17 @@
 /* Botões de download */
 .download-buttons {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
 }
 
 .download-button {
     display: flex;
     align-items: center;
     background-color: var(--accent-color);
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 3rem;
     border: none;
     border-radius: 0.8rem;
     color: var(--gray-800-color);
@@ -77,6 +80,9 @@
     cursor: pointer;
     transition: 0.3s;
     text-decoration: none;
+    width: 100%;
+    max-width: 300px; /* Ajuste o valor conforme necessário */
+    justify-content: center;
 }
 
 .download-button img {
@@ -124,5 +130,11 @@
 .landing-image {
     max-width: 100%;
     height: auto;
-    border-radius: 10px; /* Opcional: para bordas arredondadas */
+    border-radius: 10px; 
+}
+
+.landing-segundocontainer {
+    text-align: center;
+    margin-top: 5rem; /* Espaço adicional acima do título */
+    margin-bottom: 5rem; /* Espaço adicional abaixo do título */
 }

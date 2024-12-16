@@ -3,10 +3,6 @@ const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
-var Atleta = require("../models/atleta");
-const clube = require("../models/clube");
-const escalao = require("../models/escalao");
-const statusatleta = require("../models/statusatleta");
 
 const controllers = {};
 
@@ -24,7 +20,7 @@ controllers.criar = async (req, res) => {
     contactoencarregado,
   } = req.body;
 
-  const data = await Atleta.create({
+  const data = await models.atleta.create({
     id_clube: id_clube,
     id_escalao: id_escalao,
     id_statusatleta: id_statusatleta,
@@ -65,7 +61,7 @@ controllers.editar = async (req, res) => {
     contactoencarregado,
   } = req.body;
 
-  const data = await Atleta.create(
+  const data = await models.atleta.update(
     {
       id_clube: id_clube,
       id_escalao: id_escalao,
@@ -97,7 +93,7 @@ controllers.editar = async (req, res) => {
 };
 
 controllers.listar = async (req, res) => {
-  const data = await Atleta.findAll({
+  const data = await models.atleta.findAll({
     include: [
       {
         model: clube,
@@ -126,7 +122,7 @@ controllers.listar = async (req, res) => {
 };
 
 controllers.listarByPk = async (req, res) => {
-  const data = await Atleta.findByPK({})
+  const data = await models.atleta.findByPK({})
     .then(function (data) {
       return data;
     })
@@ -138,10 +134,10 @@ controllers.listarByPk = async (req, res) => {
 
 controllers.apagar = async (req, res) => {
   // parâmetros por post
-  const { id_relatorio } = req.body;
+  const { id_atleta } = req.body;
   // delete por sequelize
-  const del = await Relatorio.destroy({
-    where: { id_relatorio: id_relatorio },
+  const del = await models.atleta.destroy({
+    where: { id_atela: id_atleta },
   });
   res.json({ success: true, deleted: del });
 };
