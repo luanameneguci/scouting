@@ -35,6 +35,11 @@ export default function LandingPage() {
                         <p>Ajudamos a moldar o futuro dos próximos jogadores e do clube.</p>
                     </div>
                 </div>
+
+                <div className='landing-segundocontainer'>
+                    <h1>Descobre uma nova forma de interagir</h1>
+                </div>
+
                 <div className='landing-segundocontainer'>
                     <h1>Descarrega já e contribui para o sucesso do Académico</h1>
                     <div className="download-buttons">
