@@ -13,6 +13,7 @@ import Relatorios from './views/relatorios';
 import NavBackoffice from './components/navBackoffice';
 import NavLanding from './components/navLanding';
 import LandingPage from './views/landing/landingPage';
+import Login from './views/login';
 import Credenciais from './views/credenciais';
 import Jogos from "./views/jogos";
 import Dashboard from "./views/dashboard";
@@ -37,6 +38,7 @@ function AppContent() {
       <Routes>
         {/* Routes para a landing*/}
         <Route path="/" element={<LandingPage />} />
+
         {/* Routes para o backoffice*/}
         <Route path="/home" element={<Dashboard />} />
         <Route path="/equipa/:idEquipa" element={<Equipas />} />
@@ -50,7 +52,9 @@ function AppContent() {
         <Route path="/relatorios" element={<Relatorios />} />
         <Route path="/credenciais" element={<Credenciais />} />
         <Route path="/jogos" element={<Jogos />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/Login" element={<Dashboard />} />
       </Routes>
     </div>
   );

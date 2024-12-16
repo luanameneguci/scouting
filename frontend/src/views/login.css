@@ -1,0 +1,97 @@
+/* Container for the entire form */
+.login-container {
+  width: 30%; 
+  max-width: 500px; 
+  margin: 20px auto;
+  padding: 20px;
+  background-color: transparent;
+  border-radius: 8px;
+  padding-top: 80px; 
+}
+
+/* Sign Up and Forgot Password buttons */
+.text-button {
+  background: none;
+  border: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+/* Each label + input set */
+.login-form-group {
+  margin-bottom: 0; 
+  flex: 1; /* Make form groups share available space equally in a row */
+}
+
+/* Labels */
+.login-label {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  display: block;
+  font-size: 12px;
+  color: #ffffff;
+  margin-top: 20px;
+  margin-bottom: 8px;
+}
+
+/* Input groups */
+.login-input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0; 
+}
+
+/* Icons */
+.login-input-group svg {
+  background-color: #000; /* Black background */
+  padding-top: 10px; 
+  padding-bottom: 10px; /* Add more padding to make the box larger */
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  width: 39px; /* Set a fixed width for the box */
+  height: 39px; /* Set a fixed height for the box */
+  display: flex; /* Ensures the SVG is centered inside the box */
+  justify-content: center;
+  align-items: center;
+  padding-left: 0px;
+  border-right: 1px solid var(--gray-500-color);
+}
+
+/* Inputs and selects */
+.login-input-group input,
+.login-input-group select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: var(--gray-800-color, #ffffff);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+/* Placeholder styling */
+.login-input-group input::placeholder {
+  color: #aaa;
+}
+
+/* Submit button */
+.login-submit-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #ffc107;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+  margin-top: 30px; /* Space above the button */
+}
+
+.login-submit-button:hover {
+  background-color: #e0a800;
+}
