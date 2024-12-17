@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Redirecionamento
 import "./atletasAdicionar.css";
 import {
   Person as PersonIcon,
@@ -27,6 +28,7 @@ export default function AtletasAdicionar() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,6 +36,9 @@ export default function AtletasAdicionar() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await fetch("http://localhost:8080/atleta/criar", {
         method: "POST",
@@ -41,28 +46,28 @@ export default function AtletasAdicionar() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id_clube: formData.clube, // Mapeia os campos corretos
+          id_clube: formData.clube,
           id_escalao: formData.escalao,
-          id_statusatleta: 1, // Supondo ativo por padrão
+          id_statusatleta: 1,
           nome: formData.nome,
           datanascimento: formData.dataNascimento,
           link: formData.link,
           ratingfinal: formData.rating,
-          ratinggeral: formData.rating, // Pode ser o mesmo valor
+          ratinggeral: formData.rating,
           nomeencarregado: formData.contatoNome,
           contactoencarregado: formData.contatoTelefone,
+          nacionalidade: formData.nacionalidade, // Adicionando nacionalidade
         }),
       });
-  
+
       if (!response.ok) throw new Error("Erro ao criar atleta");
-      const result = await response.json();
-      console.log("Atleta criado com sucesso:", result);
-  
-      // Redirecionar ou mostrar mensagem de sucesso
       alert("Atleta criado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao criar atleta:", error);
-      alert("Erro ao criar atleta");
+      navigate("/atletas"); // Redireciona para a página atletas
+    } catch (err) {
+      console.error("Erro ao criar atleta:", err);
+      setError("Erro ao criar atleta. Verifique os dados e tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,7 +90,7 @@ export default function AtletasAdicionar() {
           </div>
         </div>
 
-        {/* Row for Data de Nascimento and Escalão */}
+        {/* Data de Nascimento e Escalão */}
         <div className="atletasadicionar-form-row">
           <div className="atletasadicionar-form-group">
             <label className="atletasadicionar-label">Data de Nascimento</label>
@@ -111,47 +116,29 @@ export default function AtletasAdicionar() {
                 required
               >
                 <option value="" disabled>Escalão</option>
-                <option value="SUB-16">SUB-16</option>
-                <option value="SUB-17">SUB-17</option>
-                <option value="SUB-18">SUB-18</option>
+                <option value="1">SUB-16</option>
+                <option value="2">SUB-17</option>
+                <option value="3">SUB-18</option>
               </select>
             </div>
           </div>
         </div>
 
-        {/* Clube & Posição */}
-        <div className="atletasadicionar-form-row">
-          <div className="atletasadicionar-form-group">
-            <label className="atletasadicionar-label">Clube</label>
-            <div className="atletasadicionar-input-group">
-              <PersonIcon />
-              <select
-                name="clube"
-                value={formData.clube}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>Clube</option>
-                <option value="SL Benfica">SL Benfica</option>
-                <option value="FC Porto">FC Porto</option>
-              </select>
-            </div>
-          </div>
-          <div className="atletasadicionar-form-group">
-            <label className="atletasadicionar-label">Posição</label>
-            <div className="atletasadicionar-input-group">
-              <SportsSoccerIcon />
-              <select
-                name="posicao"
-                value={formData.posicao}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>Posição</option>
-                <option value="PL">PL</option>
-                <option value="MC">MC</option>
-              </select>
-            </div>
+        {/* Clube */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Clube</label>
+          <div className="atletasadicionar-input-group">
+            <SportsSoccerIcon />
+            <select
+              name="clube"
+              value={formData.clube}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>Clube</option>
+              <option value="1">SL Benfica</option>
+              <option value="2">FC Porto</option>
+            </select>
           </div>
         </div>
 
@@ -188,7 +175,7 @@ export default function AtletasAdicionar() {
           </div>
         </div>
 
-        {/* Rating Final */}
+        {/* Rating */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Rating Final</label>
           <div className="atletasadicionar-input-group">
@@ -206,7 +193,7 @@ export default function AtletasAdicionar() {
           </div>
         </div>
 
-        {/* Nome e Telefone do Contato */}
+        {/* Nome do Contato */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Nome do Contato</label>
           <div className="atletasadicionar-input-group">
@@ -220,6 +207,8 @@ export default function AtletasAdicionar() {
             />
           </div>
         </div>
+
+        {/* Contato Telefônico */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Contato Telefônico</label>
           <div className="atletasadicionar-input-group">
@@ -243,7 +232,6 @@ export default function AtletasAdicionar() {
           {loading ? "Enviando..." : "Adicionar"}
         </button>
 
-        {/* Erro */}
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
