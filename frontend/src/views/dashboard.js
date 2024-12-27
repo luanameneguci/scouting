@@ -157,7 +157,7 @@ alert(error)
       const club1 = game.clubes?.[0]?.nome || "Clube 1 Indisponível";
       const club2 = game.clubes?.[1]?.nome || "Clube 2 Indisponível";
       const escalao = game.escalao?.designacao || "Nenhum escalão associado";
-      const utilizadores = game.utilizadors?.[0].nome || "Nenhum escalão associado";
+      const utilizadores = game.utilizadors?.[0].nome || "Nenhum treinador associado";
 
       return (
         <div
