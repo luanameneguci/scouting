@@ -1,5 +1,5 @@
 import React from 'react';
-import AcademicoViseuImage from '../../assets/academico_viseu.png'; 
+import AcademicoViseuImage from '../assets/academico_viseu.png';
 import './Privacidade.css';
 
 export default function Privacidade() {
