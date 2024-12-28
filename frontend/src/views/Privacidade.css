@@ -1,0 +1,47 @@
+.hero-section {
+    height: 80vh;
+    position: relative;
+}
+
+.hero-section>img {
+    height: 80vh;
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0.8;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.hero-section > *:not(img) {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    display: flex;
+    padding-top: 5.4rem;
+    justify-content: center;
+    padding: 5vw;
+    width: 64%;
+    flex-direction: column;
+    height: 100%;
+}
+
+.landing-content h1 {
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+}
+
+.academico-viseu-section {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.academico-viseu-section img {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+}
