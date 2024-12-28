@@ -1,5 +1,11 @@
 import React from 'react'; 
-import AcademicoViseuImage from '../assets/academico_viseu.png'; // Importação da nova imagem
+import AcademicoViseuImage from '../assets/academico_viseu.png';
+import PCIcon from '../assets/icone_pc.png';
+import DadosIcon from '../assets/icone_dados.png';
+import Dados2Icon from '../assets/icone_dados_2.png';
+import SegurancaIcon from '../assets/icone_seguranca.png';
+import ConservacaoIcon from '../assets/icone_conservacao.png';
+import AutoridadeIcon from '../assets/icone_autoridade.png';
 import './Privacidade.css';
 
 export default function Privacidade() {
@@ -16,8 +22,8 @@ export default function Privacidade() {
             <div className="content">
                 <div className="section">
                     <div className="section-header">
-                        <div className="section-icon">
-                            {/* Espaço para o ícone */}
+                    <div className="section-title">
+                        <img className="icon" src={PCIcon} alt="icone_pc" />
                         </div>
                         <h2>1. IDENTIFICAÇÃO DO RESPONSÁVEL PELO TRATAMENTO</h2>
                     </div>
@@ -32,8 +38,8 @@ export default function Privacidade() {
 
                 <div className="section">
                     <div className="section-header">
-                        <div className="section-icon">
-                            {/* Espaço para o ícone */}
+                    <div className="section-title">
+                        <img className="icon" src={DadosIcon} alt="icone_dados" />
                         </div>
                         <h2>2. INFORMAÇÃO, CONSENTIMENTO E FINALIDADE DO TRATAMENTO</h2>
                     </div>
@@ -54,8 +60,8 @@ export default function Privacidade() {
 
                 <div className="section">
                     <div className="section-header">
-                        <div className="section-icon">
-                            {/* Espaço para o ícone */}
+                    <div className="section-title">
+                        <img className="icon" src={SegurancaIcon} alt="icone_seguranca" />
                         </div>
                         <h2>3. MEDIDAS DE SEGURANÇA </h2>
                     </div>
@@ -68,8 +74,8 @@ export default function Privacidade() {
 
                 <div className="section">
                     <div className="section-header">
-                        <div className="section-icon">
-                            {/* Espaço para o ícone */}
+                    <div className="section-title">
+                        <img className="icon" src={Dados2Icon} alt="icone_dados_2" />
                         </div>
                         <h2>4. EXERCÍCIO DOS DIREITOS</h2>
                     </div>
@@ -81,8 +87,8 @@ export default function Privacidade() {
 
                 <div className="section">
                     <div className="section-header">
-                        <div className="section-icon">
-                            {/* Espaço para o ícone */}
+                        <div className="section-title">
+                        <img className="icon" src={ConservacaoIcon} alt="icone_conservacao" />
                         </div>
                         <h2>5. PRAZO DE CONSERVAÇÃO</h2>
                     </div>
@@ -94,8 +100,8 @@ export default function Privacidade() {
 
                 <div className="section">
                     <div className="section-header">
-                        <div className="section-icon">
-                            {/* Espaço para o ícone */}
+                    <div className="section-title">
+                        <img className="icon" src={AutoridadeIcon} alt="icone_autoridade" />
                         </div>
                         <h2>6. AUTORIDADE DE CONTROLO</h2>
                     </div>

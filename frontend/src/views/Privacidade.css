@@ -45,12 +45,10 @@
     align-items: center;
 }
 
-.section-icon {
-    display: inline-block;
-    width: 50px; /* Aumentei o tamanho dos ícones */
-    height: 50px; /* Aumentei o tamanho dos ícones */
-    background-color: #ccc; /* Placeholder para o ícone */
-    margin-right: 10px;
+.section-title img.icon {
+    width: 70px; /* Ajuste o tamanho conforme necessário */
+    height: 60px; /* Ajuste o tamanho conforme necessário */
+    margin-right: 25px;
 }
 
 .section h1, .section h2 {
