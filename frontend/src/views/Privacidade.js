@@ -51,6 +51,60 @@ export default function Privacidade() {
                         Em caso algum será solicitada informação sobre convicções filosóficas ou políticas, filiação partidária ou sindical, fé religiosa, vida privada e origem racial ou étnica bem como os dados relativos à saúde e à vida sexual, incluindo os dados genéticos. Os dados recolhidos não serão cedidos a outras pessoas ou outras entidades, sem o consentimento prévio do titular dos dados.
                     </p>
                 </div>
+
+                <div className="section">
+                    <div className="section-header">
+                        <div className="section-icon">
+                            {/* Espaço para o ícone */}
+                        </div>
+                        <h2>3. MEDIDAS DE SEGURANÇA </h2>
+                    </div>
+                    <hr className="yellow-line" />
+                    <p>
+                    O Académico de Viseu Futebol Clube declara que implementou e continuará a implementar as medidas de segurança de natureza técnica e organizativa necessárias para garantir a segurança dos dados de carácter pessoal que lhe sejam fornecidos visando evitar a sua alteração, perda, tratamento e/ou acesso não autorizado, tendo em conta o estado atual da tecnologia,
+                     a natureza dos dados armazenados e os riscos a que estão expostos bem como garante a confidencialidade dos mesmos. 
+                    </p>
+                </div>
+
+                <div className="section">
+                    <div className="section-header">
+                        <div className="section-icon">
+                            {/* Espaço para o ícone */}
+                        </div>
+                        <h2>4. EXERCÍCIO DOS DIREITOS</h2>
+                    </div>
+                    <hr className="yellow-line" />
+                    <p>
+                    O titular dos dados pessoais/encarregados de educação podem, exercer a todo o tempo, os seus direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade. 
+                    </p>
+                </div>
+
+                <div className="section">
+                    <div className="section-header">
+                        <div className="section-icon">
+                            {/* Espaço para o ícone */}
+                        </div>
+                        <h2>5. PRAZO DE CONSERVAÇÃO</h2>
+                    </div>
+                    <hr className="yellow-line" />
+                    <p>
+                    O Académico de Viseu Futebol Clube apenas trata os dados pessaois durante o período que se revele necessário ao cumprimento da sua finalidade (criação de histórico do atleta desde a formação à profissionalização), sem prejuízo dos dados serem conservados por um período superior, por exigências legais. 
+                    </p>
+                </div>
+
+                <div className="section">
+                    <div className="section-header">
+                        <div className="section-icon">
+                            {/* Espaço para o ícone */}
+                        </div>
+                        <h2>6. AUTORIDADE DE CONTROLO</h2>
+                    </div>
+                    <hr className="yellow-line" />
+                    <p>
+                    Nos termos legais, o titular dos dados tem o direito de apresentar uma reclamação em matéria de proteção de dados pessoais à autoridade de controlo competente, a Comissão Nacional de Proteção de Dados (CNPD). 
+                    </p>
+                </div>
+
             </div>
         </div>
     );
