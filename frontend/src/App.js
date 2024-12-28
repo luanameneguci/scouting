@@ -14,6 +14,8 @@ import NavBackoffice from './components/navBackoffice';
 import NavLanding from './components/navLanding';
 import LandingPage from './views/landing/landingPage';
 import Login from './views/login';
+import Privacidade from './views/Privacidade';
+import Contactos from './views/contactos';
 import Credenciais from './views/credenciais';
 import AdicionarUtilizador from './views/adicionarutilizador';
 import Jogos from "./views/jogos";
@@ -55,6 +57,8 @@ function AppContent() {
         <Route path="/credenciais/+" element={<AdicionarUtilizador />} />
         <Route path="/jogos" element={<Jogos />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/Privacidade" element={<Privacidade/>} />
+        <Route path="/contactos" element={<Contactos/>} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/Login" element={<Dashboard />} />
       </Routes>
