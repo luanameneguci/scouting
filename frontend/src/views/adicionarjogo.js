@@ -1,143 +1,172 @@
-import React, { useState, useEffect } from 'react';
-import './adicionarjogo.css'; // Supondo que você tenha esse arquivo de estilo
-import { setupContentNavbarMargin } from './utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faClock, faUser, faShieldAlt, faFutbol } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Redirecionamento
+import "./atletasAdicionar.css";
+import {
+  Person as PersonIcon,
+  CalendarToday as CalendarTodayIcon,
+  SportsSoccer as SportsSoccerIcon,
+  Public as PublicIcon,
+  Star as StarIcon,
+  Link as LinkIcon,
+  Phone as PhoneIcon,
+  Group as GroupIcon,
+} from "@mui/icons-material";
 
+export default function AtletasAdicionar() {
+  const [formData, setFormData] = useState({
+    nome: "",
+    dataNascimento: "",
+    escalao: "",
+    clube: "",
+    contatoNome: "",
+  });
 
-export default function AdicionarJogo() {
-    const [formData, setFormData] = useState({
-        clube1: 'clube dentro',
-        clube2: 'clube',
-        data: '',
-        hora: '',
-        treinador: '',
-        escalão: ''  // Adicionando estado para o escalão
-    });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Dados do Formulário:", formData);
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-    useEffect(() => { // Margem top dependendo da altura da navbar
-        setupContentNavbarMargin('adicionar-jogo-wrapper');
-    }, []);
+    try {
+      const response = await fetch("http://localhost:8080/atleta/criar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_clube: formData.clube,
+          id_escalao: formData.escalao,
+          id_statusatleta: 1,
+          nome: formData.nome,
+          datanascimento: formData.dataNascimento,
+          nomeencarregado: formData.contatoNome,
+          contactoencarregado: formData.contatoTelefone,
+        }),
+      });
 
-    return (
-        <div className="adicionar-jogo-wrapper">
-            <h1 className="page-title">Jogos / Adicionar Jogo</h1>
+      if (!response.ok) throw new Error("Erro ao criar atleta");
+      alert("Atleta criado com sucesso!");
+      navigate("/atletas"); // Redireciona para a página atletas
+    } catch (err) {
+      console.error("Erro ao criar atleta:", err);
+      setError("Erro ao criar atleta. Verifique os dados e tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            <form className="form" onSubmit={handleSubmit}>
-            <div className="form-group">
-                    <label htmlFor="clube1">Atleta</label>
-                    <select
-                        name="Atleta 1"
-                        id="1"
-                        value={formData.clube1}
-                        onChange={handleChange}
-                    >
-                        <option value="">Selecione</option>
-                        <option value="Clube A">Atleta A</option>
-                        <option value="Clube B">Atleta B</option>
-                    </select>
-                </div>
-        
-                <div className="form-group">
-                    <label htmlFor="clube1">Clube 1</label>
-                    <select
-                        name="clube1"
-                        id="clube1"
-                        value={formData.clube1}
-                        onChange={handleChange}
-                    >
-                        <option value="">Selecione</option>
-                        <option value="Clube A">Clube A</option>
-                        <option value="Clube B">Clube B</option>
-                    </select>
-                </div>
+  return (
+    <div className="atletasadicionar-container">
+      <form className="atletasadicionar-form" onSubmit={handleSubmit}>
 
-                <div className="form-group">
-                    <label htmlFor="clube2">Clube 2</label>
-                    <select
-                        name="clube2"
-                        id="clube2"
-                        value={formData.clube2}
-                        onChange={handleChange} >
-                        <option value="">Selecione</option>
-                        <option value="Clube A">Clube A</option>
-                        <option value="Clube B">Clube B</option>
-                    </select>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="data">Data</label>
-                    <input
-                        type="date"
-                        id="data"
-                        name="data"
-                        value={formData.data}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="hora">Hora</label>
-                    <input
-                        type="time"
-                        id="hora"
-                        name="hora"
-                        value={formData.hora}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                {/* Campo de Escalão */}
-                <div className="form-group">
-                    <label htmlFor="escalao">Escalão</label>
-                    <select
-                        name="escalao"
-                        id="escalao"
-                        value={formData.escalão}
-                        onChange={handleChange}
-                    >
-                        <option value="">Selecione</option>
-                        <option value="Escalão A"> Sub-10</option>
-                        <option value="Escalão B"> Sub-11</option>
-                        <option value="Escalão C"> Sub-12 A</option>
-                        <option value="Escalão D"> Sub-12 B</option>
-                        <option value="Escalão E"> Sub-13</option>
-                        <option value="Escalão F"> Sub-14</option>
-                        <option value="Escalão G"> Sub-16 A</option>
-                        <option value="Escalão H"> Sub-16 B</option>
-                        <option value="Escalão I"> Sub-19</option>
-                        <option value="Escalão J"> Sub-23</option>
-                    </select>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="treinador">Treinador</label>
-                    <select
-                        name="treinador"
-                        id="treinador"
-                        value={formData.treinador}
-                        onChange={handleChange}
-                    >
-                        <option value="">Selecione</option>
-                        <option value="Treinador A">Treinador A</option>
-                        <option value="Treinador B">Treinador B</option>
-                    </select>
-                </div>
-
-                <button type="submit" className="submit-button">
-                    Adicionar
-                </button>
-            </form>
+        {/* Clube */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Clube</label>
+          <div className="atletasadicionar-input-group">
+            <SportsSoccerIcon />
+            <select
+              name="clube"
+              value={formData.clube}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>Clube</option>
+              <option value="1">SL Benfica</option>
+              <option value="2">FC Porto</option>
+            </select>
+          </div>
         </div>
-    );
+
+        {/* Clube */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Clube</label>
+          <div className="atletasadicionar-input-group">
+            <SportsSoccerIcon />
+            <select
+              name="clube"
+              value={formData.clube}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>Clube</option>
+              <option value="1">SL Benfica</option>
+              <option value="2">FC Porto</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Data*/}
+        <div className="atletasadicionar-form-row">
+          <div className="atletasadicionar-form-group">
+            <label className="atletasadicionar-label">Data</label>
+            <div className="atletasadicionar-input-group">
+              <CalendarTodayIcon />
+              <input
+                type="date"
+                name="dataNascimento"
+                value={formData.dataNascimento}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Escalão*/}
+        <div className="atletasadicionar-form-row">
+          <div className="atletasadicionar-form-group">
+            <label className="atletasadicionar-label">Escalão</label>
+            <div className="atletasadicionar-input-group">
+              <GroupIcon />
+              <select
+                name="escalao"
+                value={formData.escalao}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>Escalão</option>
+                <option value="1">SUB-16</option>
+                <option value="2">SUB-17</option>
+                <option value="3">SUB-18</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Treinador */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Treinador</label>
+          <div className="atletasadicionar-input-group">
+            <PersonIcon />
+            <input
+              type="text"
+              name="contatoNome"
+              placeholder="Nome"
+              value={formData.contatoNome}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+     
+
+        {/* Botão de Enviar */}
+        <button
+          type="submit"
+          className="atletasadicionar-submit-button"
+          disabled={loading}
+        >
+          {loading ? "Enviando..." : "Adicionar"}
+        </button>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </form>
+    </div>
+  );
 }
