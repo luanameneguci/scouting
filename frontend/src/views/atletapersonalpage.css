@@ -94,7 +94,7 @@
   .atletaspersonalpage-imagem {
     width: 100px;
     height: 100px;
-    background: var(--gray-700);
+    background-image: url('../assets/Atleta_frame.png');
     border-radius: 8px;
   }
   
