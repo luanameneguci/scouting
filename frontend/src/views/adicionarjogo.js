@@ -10,6 +10,7 @@ import {
   Link as LinkIcon,
   Phone as PhoneIcon,
   Group as GroupIcon,
+  AccessTime as AccessTimeIcon,
 } from "@mui/icons-material";
 
 export default function AtletasAdicionar() {
@@ -19,6 +20,8 @@ export default function AtletasAdicionar() {
     escalao: "",
     clube: "",
     contatoNome: "",
+    hora: "",
+    atleta: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -48,6 +51,8 @@ export default function AtletasAdicionar() {
           datanascimento: formData.dataNascimento,
           nomeencarregado: formData.contatoNome,
           contactoencarregado: formData.contatoTelefone,
+          hora: formData.hora,
+          atleta: formData.atleta,
         }),
       });
 
@@ -65,7 +70,6 @@ export default function AtletasAdicionar() {
   return (
     <div className="atletasadicionar-container">
       <form className="atletasadicionar-form" onSubmit={handleSubmit}>
-
         {/* Clube */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Clube</label>
@@ -80,29 +84,17 @@ export default function AtletasAdicionar() {
               <option value="" disabled>Clube</option>
               <option value="1">SL Benfica</option>
               <option value="2">FC Porto</option>
+              <option value="3">Sporting CP</option>
+              <option value="4">SC Braga</option>
+              <option value="5">Vitória SC</option>
+              <option value="6">Académico de Viseu</option>
+              <option value="7">Boavista</option>
+
             </select>
           </div>
         </div>
 
-        {/* Clube */}
-        <div className="atletasadicionar-form-group">
-          <label className="atletasadicionar-label">Clube</label>
-          <div className="atletasadicionar-input-group">
-            <SportsSoccerIcon />
-            <select
-              name="clube"
-              value={formData.clube}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>Clube</option>
-              <option value="1">SL Benfica</option>
-              <option value="2">FC Porto</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Data*/}
+        {/* Data */}
         <div className="atletasadicionar-form-row">
           <div className="atletasadicionar-form-group">
             <label className="atletasadicionar-label">Data</label>
@@ -119,7 +111,7 @@ export default function AtletasAdicionar() {
           </div>
         </div>
 
-        {/* Escalão*/}
+        {/* Escalão */}
         <div className="atletasadicionar-form-row">
           <div className="atletasadicionar-form-group">
             <label className="atletasadicionar-label">Escalão</label>
@@ -132,9 +124,14 @@ export default function AtletasAdicionar() {
                 required
               >
                 <option value="" disabled>Escalão</option>
-                <option value="1">SUB-16</option>
-                <option value="2">SUB-17</option>
-                <option value="3">SUB-18</option>
+                <option value="1">SUB-23</option>
+                <option value="2">SUB-19</option>
+                <option value="3">SUB-16</option>
+                <option value="4">SUB-14</option>
+                <option value="5">SUB-13</option>
+                <option value="6">SUB-12</option>
+                <option value="7">SUB-11</option>
+                <option value="8">SUB-10</option>
               </select>
             </div>
           </div>
@@ -154,7 +151,37 @@ export default function AtletasAdicionar() {
             />
           </div>
         </div>
-     
+
+        {/* Hora */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Hora</label>
+          <div className="atletasadicionar-input-group">
+            <AccessTimeIcon />
+            <input
+              type="time"
+              name="hora"
+              value={formData.hora}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Atleta */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Atleta</label>
+          <div className="atletasadicionar-input-group">
+            <PersonIcon />
+            <input
+              type="text"
+              name="atleta"
+              placeholder="Atleta"
+              value={formData.atleta}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
 
         {/* Botão de Enviar */}
         <button
