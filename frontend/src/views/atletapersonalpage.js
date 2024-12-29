@@ -156,7 +156,7 @@ export default function Atletaspersonalpage() {
       </div>
 
       {/* Graph Section */}
-      <div className="atletaspersonalpage-graphs-container">
+      <div className="atletaspersonalpage-graphs">
         {/* Line Graph */}
         <div className="atletaspersonalpage-graph">
           <Line data={chartData} options={chartOptions} />
