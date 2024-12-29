@@ -51,19 +51,32 @@
   
   .atletaspersonalpage-card {
     width: 100%; /* Matches the width of the parent container */
-    background-color: var(--gray-800);
+    background-color: var(--gray-900);
     border-radius: 8px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 20px;
+    justify-content: space-between; /* Space between info and image */
+    align-items: stretch; /* Makes both sections equal height */
+    padding: 0; /* Removes padding from the card */
     margin-bottom: 20px;
   }
   
   .atletaspersonalpage-info {
-    max-width: 60%;
+    flex: 1; /* Take up remaining space */
+    padding: 20px; /* Adds padding inside the info section */
+    background-color: var(--gray-900); /* Adds a background with borders */
+    border-radius: 8px; /* Rounded corners for the info section */
   }
   
+  .atletaspersonalpage-imagem {
+    width: 140px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    background-image: url('../assets/Atleta_frame.png');
+    background-size: cover; /* Ensures the image covers the div */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    border-radius: 8px; /* Removes any borders or rounding */
+    margin: 0; /* Aligns with the edge */
+  }
   .atletaspersonalpage-section-title {
     font-size: 14px;
     font-weight: 700;
@@ -91,12 +104,6 @@
     color: #aaa;
   }
   
-  .atletaspersonalpage-imagem {
-    width: 100px;
-    height: 100px;
-    background: var(--gray-700);
-    border-radius: 8px;
-  }
   
   .atletaspersonalpage-detalhes {
     display: flex;
@@ -107,7 +114,7 @@
 /* Set equal widths for all detail containers */
 .atletaspersonalpage-detail-container {
     flex: 1; /* Make all containers take an equal amount of space */
-    background-color: var(--gray-800);
+    background-color: var(--gray-900);
     border-radius: 8px;
     padding: 10px 20px;
     display: flex;
@@ -198,11 +205,22 @@
 
 
   /* Container for the graphs */
-.atletaspersonalpage-graphs {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-}
+  .atletaspersonalpage-graphs {
+    display: flex; /* Align child elements side by side */
+    gap: 20px; /* Space between the graph and star chart */
+    margin-top: 20px;
+    align-items: stretch; /* Ensures both child elements have the same height */
+  }
+
+  .atletaspersonalpage-graph,
+  .atletaspersonalpage-star-chart {
+    flex: 1; /* Both take up equal width */
+    height: 300px; /* Set a consistent height for both */
+    background-color: var(--gray-900); /* Keep the same background */
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
 
 /* Line Chart */
 .atletaspersonalpage-line-chart {
@@ -214,10 +232,9 @@
 /* Star Rating Chart */
 
 .atletaspersonalpage-graph {
-  background-color: var(--gray-800);
+  background-color: var(--gray-900);
   border-radius: 8px;
   padding: 20px;
-  margin: 20px 0;
   width: 100%; /* Matches container width */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -226,19 +243,15 @@ canvas {
   max-height: 400px; /* Ensure a consistent height */
 }
 .atletaspersonalpage-star-chart {
-  background-color: var(--gray-800);
-  padding: 20px;
-  border-radius: 8px;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  flex: 1;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: space-between; /* Distribute rows evenly */
 }
-
 .atletaspersonalpage-star-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space title and stars */
   align-items: center;
+  padding: 5px 0; /* Optional: add some vertical spacing */
 }
 
 .atletaspersonalpage-star-title {

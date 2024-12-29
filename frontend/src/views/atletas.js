@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './atletas.css';
+import "./atletas.css";
 import { Link } from "react-router-dom";
 
 export default function Atletas() {
@@ -7,14 +7,20 @@ export default function Atletas() {
   const [loading, setLoading] = useState(true); // Estado para o carregamento
   const [error, setError] = useState(null); // Estado para erros
   const [search, setSearch] = useState(""); // Estado para a pesquisa
+  const [page, setPage] = useState(1); // Página atual
+  const [totalPages, setTotalPages] = useState(0); // Total de páginas
 
   // Função para buscar atletas da API
-  const fetchAtletas = async () => {
+  const fetchAtletas = async (page = 1) => {
     try {
-      const response = await fetch("http://localhost:8080/atleta/listar");
+      setLoading(true); // Inicia o estado de carregamento
+      const response = await fetch(
+        `http://localhost:8080/atleta/listar?page=${page}&size=10`
+      ); // Ajusta o endpoint para passar a página e o tamanho
       if (!response.ok) throw new Error("Erro ao buscar atletas");
       const data = await response.json();
       setAtletas(data.data); // Salva os atletas no estado
+      setTotalPages(data.totalPages); // Atualiza o total de páginas
     } catch (err) {
       console.error("Erro ao buscar atletas:", err);
       setError(err.message);
@@ -25,13 +31,22 @@ export default function Atletas() {
 
   // useEffect para carregar os dados quando a página carregar
   useEffect(() => {
-    fetchAtletas();
-  }, []);
+    fetchAtletas(page); // Busca os atletas para a página atual
+  }, [page]);
 
   // Filtra os atletas conforme a pesquisa
   const filteredAtletas = atletas.filter((atleta) =>
     atleta.nome.toLowerCase().includes(search.toLowerCase())
   );
+
+  // Funções de navegação
+  const handlePreviousPage = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) setPage(page + 1);
+  };
 
   return (
     <div className="atletas-page">
@@ -96,6 +111,25 @@ export default function Atletas() {
           )}
         </tbody>
       </table>
+
+      {/* Botões de Paginação */}
+      <div className="pagination">
+        <button
+          onClick={handlePreviousPage}
+          disabled={page === 1} // Desativa o botão se for a primeira página
+        >
+          Anterior
+        </button>
+        <span>
+          Página {page} de {totalPages}
+        </span>
+        <button
+          onClick={handleNextPage}
+          disabled={page === totalPages} // Desativa o botão se for a última página
+        >
+          Próxima
+        </button>
+      </div>
     </div>
   );
 }

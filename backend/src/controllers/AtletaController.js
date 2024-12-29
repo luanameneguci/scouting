@@ -97,7 +97,13 @@ controllers.editar = async (req, res) => {
 // Listar todos os atletas
 controllers.listar = async (req, res) => {
   try {
-    const atletas = await models.atleta.findAll({
+    const { page = 1, size = 10 } = req.query; // Obtem página e tamanho por query string
+    const limit = parseInt(size); // Número de registros por página
+    const offset = (page - 1) * limit; // Registros a pular
+
+    const atletas = await models.atleta.findAndCountAll({
+      limit,
+      offset,
       attributes: [
         "id_atleta",
         "nome",
@@ -108,23 +114,29 @@ controllers.listar = async (req, res) => {
       include: [
         {
           model: models.clube,
-          as: "clube", // Alias correto para clube
+          as: "clube",
           attributes: ["nome"],
         },
         {
           model: models.escalao,
-          as: "escalao", // Alias correto para escalao
+          as: "escalao",
           attributes: ["designacao"],
         },
         {
           model: models.statusatleta,
-          as: "statusatletum", // Alias correto para statusatleta
+          as: "statusatletum",
           attributes: ["designacao"],
         },
       ],
     });
 
-    res.status(200).json({ success: true, data: atletas });
+    res.status(200).json({
+      success: true,
+      data: atletas.rows, // Dados da página atual
+      totalItems: atletas.count, // Total de registros na tabela
+      totalPages: Math.ceil(atletas.count / limit), // Total de páginas
+      currentPage: parseInt(page), // Página atual
+    });
   } catch (error) {
     console.error("Erro ao listar atletas: ", error.message);
     res
@@ -132,6 +144,7 @@ controllers.listar = async (req, res) => {
       .json({ success: false, message: "Erro ao listar atletas.", error });
   }
 };
+
 
 // Apagar atleta corrigido
 controllers.apagar = async (req, res) => {
