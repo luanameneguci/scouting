@@ -51,19 +51,32 @@
   
   .atletaspersonalpage-card {
     width: 100%; /* Matches the width of the parent container */
-    background-color: var(--gray-800);
+    background-color: var(--gray-900);
     border-radius: 8px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 20px;
+    justify-content: space-between; /* Space between info and image */
+    align-items: stretch; /* Makes both sections equal height */
+    padding: 0; /* Removes padding from the card */
     margin-bottom: 20px;
   }
   
   .atletaspersonalpage-info {
-    max-width: 60%;
+    flex: 1; /* Take up remaining space */
+    padding: 20px; /* Adds padding inside the info section */
+    background-color: var(--gray-900); /* Adds a background with borders */
+    border-radius: 8px; /* Rounded corners for the info section */
   }
   
+  .atletaspersonalpage-imagem {
+    width: 140px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    background-image: url('../assets/Atleta_frame.png');
+    background-size: cover; /* Ensures the image covers the div */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    border-radius: 8px; /* Removes any borders or rounding */
+    margin: 0; /* Aligns with the edge */
+  }
   .atletaspersonalpage-section-title {
     font-size: 14px;
     font-weight: 700;
@@ -91,12 +104,6 @@
     color: #aaa;
   }
   
-  .atletaspersonalpage-imagem {
-    width: 100px;
-    height: 100px;
-    background-image: url('../assets/Atleta_frame.png');
-    border-radius: 8px;
-  }
   
   .atletaspersonalpage-detalhes {
     display: flex;
@@ -107,7 +114,7 @@
 /* Set equal widths for all detail containers */
 .atletaspersonalpage-detail-container {
     flex: 1; /* Make all containers take an equal amount of space */
-    background-color: var(--gray-800);
+    background-color: var(--gray-900);
     border-radius: 8px;
     padding: 10px 20px;
     display: flex;
@@ -214,7 +221,7 @@
 /* Star Rating Chart */
 
 .atletaspersonalpage-graph {
-  background-color: var(--gray-800);
+  background-color: var(--gray-900);
   border-radius: 8px;
   padding: 20px;
   margin: 20px 0;
