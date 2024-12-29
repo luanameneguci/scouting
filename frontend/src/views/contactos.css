@@ -1,6 +1,11 @@
+/* Estilos para a página de contactos */
+
 .contactos-page {
     font-family: Arial, sans-serif;
     color: #333;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
 }
 
 .academico-viseu-section {
@@ -16,21 +21,69 @@
 
 .header-overlay {
     position: absolute;
-    bottom: 50px; /* conteúdo dentro da imagem */
-    left: 60px;
-    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.header-overlay .vertical-line {
+    width: 4px;
+    height: 50px;
+    background-color: var(border-top-left-radius);
+    margin: 0 auto 10px;
+}
+
+.header-overlay h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.content {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section-header {
     display: flex;
     align-items: center;
 }
 
-.vertical-line {
-    width: 4px;
-    height: 60px; /* Altura da linha vertical */
-    background-color: #fbbd08;
+.section-header h2 {
+    font-size: 1.8rem;
+    margin-left: 10px;
+}
+
+.yellow-line {
+    height: 4px;
+    width: 100%;
+    background-color: var(border-top-left-radius);
+    border: none;
+    margin: 10px 0;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+}
+
+.contact-item .icon {
+    font-size: 1.5rem;
     margin-right: 10px;
 }
 
-.content {
-    margin-right: 60px;
-    margin-left: 60px
+.contact-item p {
+    margin: 0;
 }
