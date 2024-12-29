@@ -14,28 +14,6 @@ export default function Dashboard() {
   const [equipasProprias, setEquipasProprias] = useState([]);
   const [equipasSombra, setEquipasSombra] = useState([]);
 
-  //-------------------------Umas funçoes
-  const formatDate = (date) => {
-    console.log(date); // Log the raw date value to check
-    const parsedDate = new Date(date);
-    if (isNaN(parsedDate)) {
-      return "Invalid Date"; // Return a fallback string if the date is invalid
-    }
-    return parsedDate.toLocaleDateString();
-  };
-  
-  const formatTime = (date) => {
-    console.log(date); // Log the raw date value to check
-    const parsedDate = new Date(date);
-    if (isNaN(parsedDate)) {
-      return "Invalid Time"; // Return a fallback string if the time is invalid
-    }
-    return parsedDate.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };  
-  //-------------------------Umas funçoes
 
   //-------------------------Fetching data from jogos
 useEffect(() => {

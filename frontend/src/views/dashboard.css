@@ -59,12 +59,23 @@
 }
 
 .game-clubs {
-  font-weight: bold;
+  font-weight: bold;  
+  max-width: 33%;
+  padding: 1%;
 }
 
 .game-details {
   font-size: small;
+  padding:1%;
+  text-align: center;
+  max-width: 33%;
 }
+
+.game-coaches {
+  padding:1%;
+  text-align: center;
+  max-width: 33%;
+} 
 
 .game-card {
   display: flex;

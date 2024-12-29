@@ -177,6 +177,14 @@ controllers.listar = async (req, res) => {
           model: models.clube,
 
         },
+        {
+          model: models.escalao,
+
+        },
+        {
+          model: models.utilizador,
+
+        },
       ],
     });
 
