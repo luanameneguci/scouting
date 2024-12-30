@@ -1,5 +1,6 @@
 import React from 'react';
 import AcademicoViseuImage from '../assets/academico_viseu.png';
+import AcademicoViseuImage from '../assets/academico_viseu.png'; 
 import './contactos.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -66,5 +67,5 @@ export default function contactos() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
