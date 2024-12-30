@@ -1,12 +1,11 @@
 import React from 'react';
 import AcademicoViseuImage from '../assets/academico_viseu.png';
-import AcademicoViseuImage from '../assets/academico_viseu.png'; 
 import './contactos.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 
-export default function contactos() {
+export default function Contactos() {
     return (
         <div className="privacidade-pagepriv">
             <div className="academico-viseu-sectionpriv">
@@ -17,7 +16,6 @@ export default function contactos() {
                 </div>
             </div>
 
-            {/* Seção Morada */}
             <div className="content">
                 <div className="section">
                     <div className="vertical-line"></div>
@@ -29,8 +27,7 @@ export default function contactos() {
                         <p>Rua serrado, Bloco 58A R/C ESQ, E DIR.; Bloco 58B r/c dir. <br /> 3510-005 - Viseu</p>
                     </div>
                 </div>
-
-                {/* Seção Telefone */}
+                
                 <div className="section">
                     <div className="vertical-line"></div>
                     <div className="section-content">
@@ -42,7 +39,6 @@ export default function contactos() {
                     </div>
                 </div>
 
-                {/* Seção Email */}
                 <div className="section">
                     <div className="vertical-line"></div>
                     <div className="section-content">
@@ -54,7 +50,6 @@ export default function contactos() {
                     </div>
                 </div>
 
-                {/* Seção Email Responsável */}
                 <div className="section">
                     <div className="vertical-line"></div>
                     <div className="section-content">
@@ -67,5 +62,5 @@ export default function contactos() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
