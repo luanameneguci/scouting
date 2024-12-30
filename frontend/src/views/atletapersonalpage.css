@@ -218,8 +218,6 @@
     height: 300px; /* Set a consistent height for both */
     background-color: var(--gray-900); /* Keep the same background */
     border-radius: 8px;
-    padding-left: 20px;
-    padding-right: 20px; /* Adds padding inside the info section */
     padding-top: 0px;
     padding-bottom: 0px;
   }
@@ -266,9 +264,15 @@ canvas {
   border-bottom: none;
 }
 
+.atletaspersonalpage-star:last-child {
+  
+    padding-right: 20px; /* Adds padding inside the info section */
+}
+
 .atletaspersonalpage-star-title {
   font-size: 14px;
   font-weight: bold;
+  padding-left: 20px;
   color: var(--text-color);
   text-transform: capitalize;
   margin-top: 5px; /* Add some margin to slightly elevate the title */
