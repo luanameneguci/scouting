@@ -40,7 +40,7 @@ export default function Atletaspersonalpage() {
     datasets: [
       {
         label: "Performance",
-        data: [3, 2, 4, 5, 4, 5, 3, 4, 5, 6, 7, 8], // Replace with dynamic backend data if needed
+        data: [3, 2, 2, 3, 4, 4, 3, 4, 4, 3, 3, 2], // Replace with dynamic backend data if needed
         fill: true,
         backgroundColor: "rgba(255, 193, 7, 0.2)",
         borderColor: "#FFC107",
@@ -52,14 +52,14 @@ export default function Atletaspersonalpage() {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false, // Hide the legend
+        display: false, // Hides the legend
       },
     },
     scales: {
       x: {
-        type: "category",
         ticks: {
           color: "#FFF",
         },
@@ -68,8 +68,14 @@ export default function Atletaspersonalpage() {
         },
       },
       y: {
+        min: 1, // Start at 1
+        max: 5, // End at 5
         ticks: {
+          stepSize: 1, // Increment by 1
           color: "#FFF",
+          callback: function (value) {
+            return value; // Display only integer values on the Y-axis
+          },
         },
         grid: {
           color: "rgba(255, 255, 255, 0.1)",
@@ -77,6 +83,7 @@ export default function Atletaspersonalpage() {
       },
     },
   };
+  
 
   return (
     <div className="atletaspersonalpage-container">
