@@ -8,7 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 export default function Contactos() {
     return (
         <div className="privacidade-pagepriv">
-            <div className="academico-viseu-sectionpriv">
+            <div className="academico-viseu-sectioncontact">
                 <img src={AcademicoViseuImage} alt="Académico de Viseu" />
                 <div className="header-overlaypriv">
                     <div className="vertical-linepriv"></div>
