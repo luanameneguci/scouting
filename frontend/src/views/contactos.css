@@ -1,21 +1,21 @@
-.privacidade-page {
+.privacidade-pagecontact {
     font-family: Arial, sans-serif;
     color: #333;
     background-color: #333; /* Fundo escuro para contraste */
 }
 
-.academico-viseu-section {
+.academico-viseu-sectioncontact {
     position: relative;
     overflow: hidden;
 }
 
-.academico-viseu-section img {
+.academico-viseu-sectioncontact img {
     width: 100%;
     height: 400px; 
     object-fit: cover;
 }
 
-.header-overlay {
+.header-overlaycontact {
     position: absolute;
     bottom: 50px; 
     left: 60px;
@@ -24,17 +24,17 @@
     align-items: center;
 }
 
-.vertical-line {
+.vertical-linecontact {
     width: 4px;
     background-color: #fbbd08;
     position: relative;
 }
 
-.content {
+.contentcontact {
     padding: 60px;
 }
 
-.section {
+.sectioncontact {
     display: flex;
     align-items: flex-start;
     margin-bottom: 60px;
@@ -42,7 +42,7 @@
     position: relative;
 }
 
-.section-content {
+.section-contentcontact {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -50,19 +50,19 @@
     padding-left: 20px; 
 }
 
-.section-header {
+.section-headercontact {
     display: flex;
     align-items: center;
     margin-bottom: 15px; 
 }
 
-.section-header .icon {
+.section-headercontact .iconcontact {
     font-size: 28px;
     color: white;
     margin-right: 15px;
 }
 
-.section::before {
+.sectioncontact::before {
     content: "";
     width: 4px;
     background-color: #fbbd08;

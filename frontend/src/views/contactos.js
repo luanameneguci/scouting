@@ -16,45 +16,45 @@ export default function Contactos() {
                 </div>
             </div>
 
-            <div className="content">
-                <div className="section">
-                    <div className="vertical-line"></div>
-                    <div className="section-content">
-                        <div className="section-header">
-                            <LocationOnIcon className="icon" />
+            <div className="contentcontact">
+                <div className="sectioncontact">
+                    <div className="vertical-linecontact"></div>
+                    <div className="section-contentcontact">
+                        <div className="section-headercontact">
+                            <LocationOnIcon className="iconcontact" />
                             <h3>MORADA</h3>
                         </div>
                         <p>Rua serrado, Bloco 58A R/C ESQ, E DIR.; Bloco 58B r/c dir. <br /> 3510-005 - Viseu</p>
                     </div>
                 </div>
                 
-                <div className="section">
-                    <div className="vertical-line"></div>
-                    <div className="section-content">
-                        <div className="section-header">
-                            <PhoneIcon className="icon" />
+                <div className="sectioncontact">
+                    <div className="vertical-linecontact"></div>
+                    <div className="section-contentcontact">
+                        <div className="section-headercontact">
+                            <PhoneIcon className="iconcontact" />
                             <h3>TELEFONE</h3>
                         </div>
                         <p>232 423 268 <br /> (chamada para rede fixa nacional)</p>
                     </div>
                 </div>
 
-                <div className="section">
-                    <div className="vertical-line"></div>
-                    <div className="section-content">
-                        <div className="section-header">
-                            <EmailIcon className="icon" />
+                <div className="sectioncontact">
+                    <div className="vertical-linecontact"></div>
+                    <div className="section-contentcontact">
+                        <div className="section-headercontact">
+                            <EmailIcon className="iconcontact" />
                             <h3>EMAIL</h3>
                         </div>
                         <p>clube@academicodeviseu.pt</p>
                     </div>
                 </div>
 
-                <div className="section">
-                    <div className="vertical-line"></div>
-                    <div className="section-content">
-                        <div className="section-header">
-                            <EmailIcon className="icon" />
+                <div className="sectioncontact">
+                    <div className="vertical-linecontact"></div>
+                    <div className="section-contentcontact">
+                        <div className="section-headercontact">
+                            <EmailIcon className="iconcontact" />
                             <h3>EMAIL DO RESPONSÁVEL DA PLATAFORMA</h3>
                         </div>
                         <p>administracao@cafscouting.pt</p>
