@@ -32,6 +32,22 @@ alert(error)
 });
 },[]);
 
+useEffect(() => {
+  const url = "http://localhost:8080/atleta/getRatingsData";
+  axios.get(url)
+  .then(res => {
+  if(res.data.success){
+  const ratingsData = res.data.data;
+  setRatings(ratingsData);
+  }else{
+  alert("Error Web Service!");
+  }
+  })
+  .catch(error => {
+  alert(error)
+  });
+  },[]);
+
   useEffect(() => {
     const equipasPropriasData = [
       {
@@ -57,25 +73,7 @@ alert(error)
     ];
     setEquipasSombra(equipasSombraData);
 
- /*    const gameData = [
-      {
-        team1: "Sporting",
-        team2: "FC Porto",
-        date: "2024-01-01T18:00:00Z",
-        category: "Sub-15",
-        coach: null,
-      },
-      {
-        team1: "Sporting",
-        team2: "FC Porto",
-        date: "2024-01-01T18:00:00Z",
-        category: "Sub-15",
-        coach: "Jorge Fonseca",
-      },
-    ];
-    setGames(gameData);
- */
-
+/* 
     const ratingsData = [
       { stars: 1, count: 33, percentage: 5 },
       { stars: 2, count: 33, percentage: 5 },
@@ -83,7 +81,7 @@ alert(error)
       { stars: 4, count: 33, percentage: 5 },
       { stars: 5, count: 33, percentage: 5 },
     ];
-    setRatings(ratingsData);
+    setRatings(ratingsData); */
 
     const agesData = [
       { range: "<14", count: 33, percentage: 5 },
@@ -172,19 +170,30 @@ alert(error)
           <div className="athletes-content">
             {/* Ratings Section */}
             <div className="ratings">
-              <p>por ratings</p>
+        <p>por ratings</p>
+        {[1, 2, 3, 4, 5].map((stars, index) => (
+          <div key={index} className="rating-row">
+            <span className="stars">
+              {"★".repeat(stars)}{""}
+              {"☆".repeat(5 - stars)} {/* Visual representation of stars */}
+            </span>
+            <span>
+              {ratings[index]?.count || 0} (
+              {ratings[index]?.percentage || 0}%)
+            </span>
+          </div>
+        ))}
+      </div>
+{/* 
+            <p>por ratings</p>
               {ratings.map((rating) => (
-                <div key={rating.stars}>
+                <div key={rating.stars} >
                   <span>
-                    {rating.stars} {"★".repeat(rating.stars)}
+                  { {rating.stars} {"★".repeat(rating.stars)} 
                   </span>
                   <span>
                     {rating.count} ({rating.percentage}%)
-                  </span>
-                </div>
-              ))}
-            </div>
-
+                  </span> */}
             {/* Ages Section */}
             <div className="ages">
               <p>por idades</p>

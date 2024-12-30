@@ -5,6 +5,8 @@ const atletaController = require("../controllers/AtletaController");
 // Rota para listar todos os atletas
 router.get("/listar", atletaController.listar);
 
+router.get("/getRatingsData", atletaController.getRatingsData);
+
 // Rota para criar um novo atleta
 router.post("/criar", atletaController.criar);
 

@@ -151,9 +151,10 @@ controllers.getRatingsData = async (req, res) => {
     const totalAthletes = await Atleta.count();
 
     // Initialize an array to store results
-    const ratingsData = [];
+    const data = [];
+    let rating;
 
-    for (let rating = 1; rating <= 5; rating++) {
+    for (rating = 1; rating <= 5; rating++) {
       // Count the number of athletes for the current rating
       const count = await Atleta.count({
         where: {
@@ -165,14 +166,14 @@ controllers.getRatingsData = async (req, res) => {
       const percentage = totalAthletes > 0 ? ((count / totalAthletes) * 100).toFixed(2) : 0;
 
       // Add the result to the array
-      ratingsData.push({
+      data.push({
         count,
-        percentage: parseFloat(percentage) // Parse percentage to a float
+        percentage: parseFloat(percentage), // Parse percentage to a float
       });
     }
 
     // Return the results
-    res.status(200).json(ratingsData);
+    res.status(200).json({ success: true, data });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching ratings data.' });
