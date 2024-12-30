@@ -17,11 +17,19 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, T
 export default function Atletaspersonalpage() {
   const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
   const [ratings, setRatings] = useState({
-    tecnica: 2,
-    velocidade: 3,
-    atitudeCompetitiva: 1,
-    inteligencia: 0,
+    Tecnica: 2,
+    Velocidade: 3,
+    AtitudeCompetitiva: 1,
+    Inteligencia: 0,
   });
+
+  // Friendly names mapping
+  const friendlyNames = {
+    Tecnica: "Técnica",
+    Velocidade: "Velocidade",
+    AtitudeCompetitiva: "Atitude Competitiva",
+    Inteligencia: "Inteligência",
+  };
 
   const handleToggleConfirmado = () => {
     setJogadorConfirmado(!jogadorConfirmado);
@@ -83,7 +91,6 @@ export default function Atletaspersonalpage() {
       },
     },
   };
-  
 
   return (
     <div className="atletaspersonalpage-container">
@@ -174,7 +181,7 @@ export default function Atletaspersonalpage() {
           {Object.keys(ratings).map((category) => (
             <div className="atletaspersonalpage-star-row" key={category}>
               <span className="atletaspersonalpage-star-title">
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+                {friendlyNames[category] || category}
               </span>
               <div className="atletaspersonalpage-stars">
                 {[...Array(5)].map((_, index) => (
