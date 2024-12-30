@@ -17,11 +17,6 @@ body {
   align-items: center;
 }
 
-.input-iconRelConfir .icon {
-  margin-right: 8px;
-  color: #898989;
-}
-
 .atletasadicionar-input-groupRelConfir {
   display: flex;
   align-items: center;
@@ -87,12 +82,12 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid #898989;
+  border: 2px solid #5F5F5F;
   cursor: pointer;
 }
 
 .bolaRelConfir.selecionada {
-  background-color: #898989;
+  background-color: #5F5F5F;
 }
 
 .numeroRelConfir, .textoRelConfir {
@@ -103,7 +98,7 @@ textareaRelConfir {
   width: 100%;
   padding: 12px;
   border-radius: 4px;
-  background-color: #898989;
+  background-color: #5F5F5F;
   color: white;
   margin-top: 10px;
 }
@@ -131,3 +126,17 @@ textareaRelConfir::placeholder {
 .validar-buttonRelConfir:hover {
   text-decoration: underline;
 }
+
+/* Bloquear os campos de input, textarea e selects */
+input[disabled], textarea[disabled], select[disabled] {
+  background-color: #5F5F5F; /* Altere a cor para um tom mais claro, indicando que está desabilitado */
+  cursor: not-allowed; /* Muda o cursor para indicar que o campo está bloqueado */
+}
+
+/* Bloquear os botões */
+button[disabled], .validar-buttonRelConfir[disabled] {
+  background-color: #5F5F5F; /* Altere a cor para um tom mais claro */
+  cursor: not-allowed;
+  pointer-events: none; /* Impede a interação com o botão */
+}
+

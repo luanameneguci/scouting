@@ -6,15 +6,15 @@ import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
 
 const RelatorioAdicionar = () => {
-  // Inicializando estados com a última opção selecionada
   const [tecnica, setTecnica] = useState(4);
   const [velocidade, setVelocidade] = useState(4);
   const [atitude, setAtitude] = useState(4);
   const [inteligencia, setInteligencia] = useState(4);
   const [altura, setAltura] = useState('Alto');
   const [morfologia, setMorfologia] = useState('Endomorfo');
-  const [apontamentos, setApontamentos] = useState("");
-  const [atleta, setAtleta] = useState("");
+  const [apontamentos, setApontamentos] = useState('');
+  const [atleta, setAtleta] = useState('');
+  const [isBlocked, setIsBlocked] = useState(true); // Estado para bloquear/desbloquear os campos
 
   return (
     <div className="containerRelConfir contentRelConfir">
@@ -33,6 +33,7 @@ const RelatorioAdicionar = () => {
             value={atleta}
             onChange={(e) => setAtleta(e.target.value)}
             placeholder="Digite o nome do atleta"
+            disabled={isBlocked} // Desativa o campo input
           />
         </div>
       </div>
@@ -41,7 +42,7 @@ const RelatorioAdicionar = () => {
         <label>Jogo</label>
         <div className="atletasadicionar-input-groupRelConfir">
           <EventIcon className="icon" />
-          <select>
+          <select disabled={isBlocked}> {/* Desativa o select */}
             <option>SL Benfica v FC Porto (01/01/2001)</option>
           </select>
         </div>
@@ -51,7 +52,7 @@ const RelatorioAdicionar = () => {
         <label>Treinador</label>
         <div className="atletasadicionar-input-groupRelConfir">
           <PersonIcon className="icon" />
-          <select>
+          <select disabled={isBlocked}> {/* Desativa o select */}
             <option>Nome</option>
           </select>
         </div>
@@ -67,6 +68,7 @@ const RelatorioAdicionar = () => {
                 <span
                   className={`bolaRelConfir ${tecnica === num ? 'selecionada' : ''}`}
                   onClick={() => setTecnica(num)}
+                  style={{ pointerEvents: isBlocked ? 'none' : 'auto' }} // Desativa o clique nas bolas
                 ></span>
                 <span className="numeroRelConfir">{num}</span>
               </div>
@@ -82,6 +84,7 @@ const RelatorioAdicionar = () => {
                 <span
                   className={`bolaRelConfir ${velocidade === num ? 'selecionada' : ''}`}
                   onClick={() => setVelocidade(num)}
+                  style={{ pointerEvents: isBlocked ? 'none' : 'auto' }} // Desativa o clique nas bolas
                 ></span>
                 <span className="numeroRelConfir">{num}</span>
               </div>
@@ -97,6 +100,7 @@ const RelatorioAdicionar = () => {
                 <span
                   className={`bolaRelConfir ${atitude === num ? 'selecionada' : ''}`}
                   onClick={() => setAtitude(num)}
+                  style={{ pointerEvents: isBlocked ? 'none' : 'auto' }} // Desativa o clique nas bolas
                 ></span>
                 <span className="numeroRelConfir">{num}</span>
               </div>
@@ -112,6 +116,7 @@ const RelatorioAdicionar = () => {
                 <span
                   className={`bolaRelConfir ${inteligencia === num ? 'selecionada' : ''}`}
                   onClick={() => setInteligencia(num)}
+                  style={{ pointerEvents: isBlocked ? 'none' : 'auto' }} // Desativa o clique nas bolas
                 ></span>
                 <span className="numeroRelConfir">{num}</span>
               </div>
@@ -127,6 +132,7 @@ const RelatorioAdicionar = () => {
                 <span
                   className={`bolaRelConfir ${altura === opcao ? 'selecionada' : ''}`}
                   onClick={() => setAltura(opcao)}
+                  style={{ pointerEvents: isBlocked ? 'none' : 'auto' }} // Desativa o clique nas bolas
                 ></span>
                 <span className="textoRelConfir">{opcao}</span>
               </div>
@@ -142,6 +148,7 @@ const RelatorioAdicionar = () => {
                 <span
                   className={`bolaRelConfir ${morfologia === opcao ? 'selecionada' : ''}`}
                   onClick={() => setMorfologia(opcao)}
+                  style={{ pointerEvents: isBlocked ? 'none' : 'auto' }} // Desativa o clique nas bolas
                 ></span>
                 <span className="textoRelConfir">{opcao}</span>
               </div>
@@ -155,6 +162,7 @@ const RelatorioAdicionar = () => {
             placeholder="Apontamentos"
             value={apontamentos}
             onChange={(e) => setApontamentos(e.target.value)}
+            disabled={isBlocked} // Desativa o textarea
           ></textarea>
         </div>
       </div>
