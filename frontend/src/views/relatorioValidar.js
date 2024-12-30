@@ -14,35 +14,35 @@ import PhoneIcon from '@mui/icons-material/Phone';
 
 const RelatorioValidar = () => {
   return (
-    <div className="container content">
+    <div className="containerval contentval">
 
 
       {/* Seção Atleta Existente */}
-      <div className="form-section">
+      <div className="form-sectionval">
         <h2>Atleta Existente</h2>
         <form>
-          <div className="form-group">
+          <div className="form-groupval">
             <label>Atleta</label>
-            <div className="atletasadicionar-input-group">
+            <div className="atletasadicionar-input-groupval">
               <PersonIcon />
               <input type="text" placeholder="John Doe" disabled />
             </div>
           </div>
 
           {/* Data de Nascimento */}
-          <div className="form-row">
-            <div className="form-group">
+          <div className="form-rowval">
+            <div className="form-groupval">
               <label>Data de Nascimento</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <CalendarTodayIcon />
                 <input type="date" disabled value="2001-01-01" />
               </div>
             </div>
 
             {/* Escalão */}
-            <div className="form-group">
+            <div className="form-groupval">
               <label>Escalão</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <GroupIcon />
                 <select disabled>
                   <option>SUB-16</option>
@@ -52,10 +52,10 @@ const RelatorioValidar = () => {
           </div>
 
           {/* Clube */}
-          <div className="form-row">
-            <div className="form-group">
+          <div className="form-rowval">
+            <div className="form-groupval">
               <label>Clube</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <SportsSoccerIcon />
                 <select disabled>
                   <option>SL Benfica</option>
@@ -64,9 +64,9 @@ const RelatorioValidar = () => {
             </div>
 
             {/* Posição */}
-            <div className="form-group">
+            <div className="form-groupval">
               <label>Posição</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <SportsSoccerIcon />
                 <select disabled>
                   <option>PL</option>
@@ -76,61 +76,61 @@ const RelatorioValidar = () => {
           </div>
 
           {/* Nacionalidade */}
-          <div className="form-row">
-            <div className="form-group">
+          <div className="form-rowval">
+            <div className="form-groupval">
               <label>Nacionalidade</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <FlagIcon />
                 <input type="text" placeholder="Portugal" disabled />
               </div>
             </div>
 
             {/* Rating Final*/}
-            <div className="form-group">
+            <div className="form-groupval">
               <label>Rating Final</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <StarIcon />
                 <input type="number" disabled value="5" />
               </div>
             </div>
           </div>
-          <button className="btn">Selecionar atleta existente</button>
+          <button className="btnval">Selecionar atleta existente</button>
         </form>
       </div>
 
 
       {/* Linha de separação */}
-      <div className="line"></div>
+      <div className="lineval"></div>
 
 
       {/* Seção Novo Atleta */}
-      <div className="form-section">
+      <div className="form-sectionval">
         <h2>Novo atleta</h2>
         <form>
 
           {/* Nome do atleta */}
-          <div className="form-group">
+          <div className="form-groupval">
             <label>Nome do atleta</label>
-            <div className="atletasadicionar-input-group">
+            <div className="atletasadicionar-input-groupval">
               <PersonIcon />
               <input type="text" placeholder="Nome do atleta" />
             </div>
           </div>
 
           {/* Data de nascimento */}
-          <div className="form-row">
-            <div className="form-group">
+          <div className="form-rowval">
+            <div className="form-groupval">
               <label>Data de Nascimento</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <CalendarTodayIcon />
                 <input type="date" />
               </div>
             </div>
 
             {/* Escalão */}
-            <div className="form-group">
+            <div className="form-groupval">
               <label>Escalão</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <GroupIcon />
                 <select>
                   <option>Profissional</option>
@@ -147,10 +147,10 @@ const RelatorioValidar = () => {
           </div>
           
           {/* Clube */}
-          <div className="form-row">
-            <div className="form-group">
+          <div className="form-rowval">
+            <div className="form-groupval">
               <label>Clube</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <SportsSoccerIcon />
                 <select>
                   <option>SL Benfica</option>
@@ -168,9 +168,9 @@ const RelatorioValidar = () => {
             </div>
 
             {/* Posição */}
-            <div className="form-group">
+            <div className="form-groupval">
               <label>Posição</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <SportsSoccerIcon />
                 <select>
                   <option>Ponta de Lança</option>
@@ -191,10 +191,10 @@ const RelatorioValidar = () => {
           </div>
 
           {/* Nacionalide */}
-          <div className="form-row">
-            <div className="form-group">
+          <div className="form-rowval">
+            <div className="form-groupval">
               <label>Nacionalidade</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <SportsSoccerIcon />
                 <select>
                   <option>Portugal</option>
@@ -210,9 +210,9 @@ const RelatorioValidar = () => {
             </div>
 
             {/* Rating Final */}
-            <div className="form-group">
+            <div className="form-groupval">
               <label>Rating Final</label>
-              <div className="atletasadicionar-input-group">
+              <div className="atletasadicionar-input-groupval">
                 <StarIcon />
                 <input type="number" />
               </div>
@@ -220,33 +220,33 @@ const RelatorioValidar = () => {
           </div>
 
           {/* Link */}
-          <div className="form-group">
+          <div className="form-groupval">
             <label>Link</label>
-            <div className="atletasadicionar-input-group">
+            <div className="atletasadicionar-input-groupval">
               <LinkIcon />
               <input type="url" placeholder="https://www.google.pt" />
             </div>
           </div>
 
           {/* Nome do Encarregado de Educação */}
-          <div className="form-group">
+          <div className="form-groupval">
             <label>Nome do Encarregado de Educação</label>
-            <div className="atletasadicionar-input-group">
+            <div className="atletasadicionar-input-groupval">
               <SupervisorAccountIcon />
               <input type="text" placeholder="Nome do Encarregado de Educação" />
             </div>
           </div>
 
           {/* Conatcto do Encarregado de Educação */}
-          <div className="form-group">
+          <div className="form-groupval">
             <label>Contacto do Encarregado de Educação</label>
-            <div className="atletasadicionar-input-group">
+            <div className="atletasadicionar-input-groupval">
               <PhoneIcon />
               <input type="text" placeholder="Contacto do Encarregado de Educação" />
             </div>
           </div>
 
-          <button className="btn">Adicionar</button>
+          <button className="btnval">Adicionar</button>
         </form>
       </div>
     </div>

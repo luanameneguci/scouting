@@ -1,20 +1,20 @@
-.privacidade-page {
+.privacidade-pagepriv {
     font-family: Arial, sans-serif;
     color: #333;
 }
 
-.academico-viseu-section {
+.academico-viseu-sectionpriv {
     position: relative;
     overflow: hidden;
 }
 
-.academico-viseu-section img {
+.academico-viseu-sectionpriv img {
     width: 100%;
-    height: 500px; /* Altura da imagem */
+    height: 400px; /* Altura da imagem */
     object-fit: cover;
 }
 
-.header-overlay {
+.header-overlaypriv {
     position: absolute;
     bottom: 50px; /* conteúdo dentro da imagem */
     left: 60px;
@@ -23,62 +23,62 @@
     align-items: center;
 }
 
-.vertical-line {
+.vertical-linepriv {
     width: 4px;
     height: 60px; /* Altura da linha vertical */
     background-color: #fbbd08;
     margin-right: 10px;
 }
 
-.content {
+.contentpriv {
     margin-right: 60px;
-    margin-left: 60px
+    margin-left: 60px;
 }
 
-.section {
+.sectionpriv {
     margin-bottom: 60px;
     color: white; /* Cor do texto branco para contraste */
 }
 
-.section-header {
+.section-headerpriv {
     display: flex;
     align-items: center;
 }
 
-.section-title img.icon {
-    width: 70px; /* Ajuste o tamanho conforme necessário */
-    height: 60px; /* Ajuste o tamanho conforme necessário */
+.section-titlepriv img.iconpriv {
+    width: 40px; /* Ajuste o tamanho conforme necessário */
+    height: 40px; /* Ajuste o tamanho conforme necessário */
     margin-right: 25px;
 }
 
-.section h1, .section h2 {
+.sectionpriv h1, .sectionpriv h2 {
     color: white;
     margin-bottom: 10px;
 }
 
-.section h2 {
+.sectionpriv h2 {
     font-size: 1.5rem;
     margin: 0;
     display: inline-block;
 }
 
-.yellow-line {
+.yellow-linepriv {
     border: none;
     height: 4px;
     background-color: #fbbd08;
     margin-top: 10px;
 }
 
-.section ul {
+.sectionpriv ul {
     list-style: none;
     padding: 0;
     margin-top: 10px;
 }
 
-.section ul li {
+.sectionpriv ul li {
     margin-bottom: 5px;
 }
 
-.section p {
+.sectionpriv p {
     margin: 10px 0;
 }

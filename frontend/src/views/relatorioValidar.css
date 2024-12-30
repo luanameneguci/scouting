@@ -4,7 +4,7 @@ body {
   color: #fff;
 }
 
-.container {
+.containerval {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
@@ -12,27 +12,26 @@ body {
   border-radius: 8px;
 }
 
-
 h2 {
   color: #fff;
   margin-bottom: 20px;
 }
 
-.form-group {     /*espaço entre as caixas de texto*/
+.form-groupval {     /*espaço entre as caixas de texto*/
   margin-bottom: 20px;
 }
 
-.form-row {
+.form-rowval {
   display: flex;
   justify-content: space-between;
 }
 
-.form-row .form-group {
+.form-rowval .form-groupval {
   flex: 1;
   margin-right: 15px;
 }
 
-.form-row .form-group:last-child {
+.form-rowval .form-groupval:last-child {
   margin-right: 0;
 }
 
@@ -42,23 +41,23 @@ label {
   font-size: 14px;
 }
 
-.input-icon {
+.input-iconval {
   display: flex;
   align-items: center;
 }
 
-.input-icon .icon {
+.input-iconval .icon {
   margin-right: 8px;
   color: #fff;
 }
 
-.atletasadicionar-input-group {
+.atletasadicionar-input-groupval {
   display: flex;
   align-items: center;
   margin-bottom: 0;
 }
 
-.atletasadicionar-input-group svg {
+.atletasadicionar-input-groupval svg {
   background-color: #000;
   padding: 10px;
   border-top-left-radius: 4px;
@@ -71,8 +70,8 @@ label {
   border-right: 1px solid var(--gray-500-color);
 }
 
-.atletasadicionar-input-group input,
-.atletasadicionar-input-group select {
+.atletasadicionar-input-groupval input,
+.atletasadicionar-input-groupval select {
   width: 100%;
   padding: 12px;
   border: none;
@@ -82,11 +81,11 @@ label {
   box-sizing: border-box;
 }
 
-.atletasadicionar-input-group input::placeholder {
+.atletasadicionar-input-groupval input::placeholder {
   color: #ffffff;
 }
 
-.btn {
+.btnval {
   display: block;
   width: 100%;
   padding: 10px;
@@ -96,18 +95,17 @@ label {
   font-size: 16px;
   color: #000;
   cursor: pointer;
-
 }
 
-.btn:hover {
+.btnval:hover {
   background-color: #e0a800;
 }
 
-.line {
+.lineval {
   border-top: 1px solid #fff;
   margin: 20px 0;
 }
 
-.content {
+.contentval {
   padding-top: 80px;
 }

@@ -1,102 +1,73 @@
-/* Estilos para a página de contactos */
-body {
-    margin: 0;
-    padding: 0;
-}
-
-.contactos-page {
+.privacidade-pagecontact {
     font-family: Arial, sans-serif;
     color: #333;
-    line-height: 1.4;
-    padding: 20;
-    margin: 0;
+    background-color: #333; /* Fundo escuro para contraste */
 }
 
-.academico-viseu-section img {
-    width: 100vw; /* Largura da imagem será igual à largura da janela */
-    height: 70%; /* Altura ajustada automaticamente */
-    object-fit: cover; /* Garante que a imagem seja cortada proporcionalmente */
+.academico-viseu-sectioncontact {
+    position: relative;
+    overflow: hidden;
 }
 
-
-.academico-viseu-section {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    overflow: hidden; /* Evita rolagem horizontal indesejada */
-}
-
-
-.header-overlay {
-    position: absolute;
-    bottom: 20px; /* Alinha próximo à parte inferior */
-    left: 30px; /* Alinha à esquerda */
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espaço entre a linha vertical e o texto */
-}
-
-.header-overlay .vertical-line {
-    width: 4px;
-    height: 30px;
-    background-color: var(--accent-color); /* Cor amarela */
-}
-
-.header-overlay h1 {
-    font-size: 1.5rem; /* Tamanho do texto ajustado */
-    font-weight: bold;
-    color: var(--white-color);
-    margin: 0;
-    text-transform: uppercase; /* Texto em maiúsculas */
-    font-family: Arial, sans-serif;
-}
-
-
-
-.content {
-    margin: 20px;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.section {
-    margin-bottom: 30px;
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-}
-
-.section-header h2 {
-    font-size: 1.8rem;
-    margin-left: 10px;
-}
-
-.yellow-line {
-    height: 4px;
+.academico-viseu-sectioncontact img {
     width: 100%;
-    background-color: var(border-top-left-radius);
-    border: none;
+    height: 400px; 
+    object-fit: cover;
 }
 
-.contact-info {
+.header-overlaycontact {
+    position: absolute;
+    bottom: 50px; 
+    left: 60px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.vertical-linecontact {
+    width: 4px;
+    background-color: #fbbd08;
+    position: relative;
+}
+
+.contentcontact {
+    padding: 60px;
+}
+
+.sectioncontact {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    color: white; 
+    position: relative;
+}
+
+.section-contentcontact {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    justify-content: flex-start;
+    flex-grow: 1;
+    padding-left: 20px; 
 }
 
-.contact-item {
+.section-headercontact {
     display: flex;
     align-items: center;
+    margin-bottom: 15px; 
 }
 
-.contact-item .icon {
-    font-size: 1.5rem;
-    margin-right: 10px;
+.section-headercontact .iconcontact {
+    font-size: 28px;
+    color: white;
+    margin-right: 15px;
 }
 
-.contact-item p {
-    margin: 0;
+.sectioncontact::before {
+    content: "";
+    width: 4px;
+    background-color: #fbbd08;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }

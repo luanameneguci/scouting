@@ -16,10 +16,10 @@ const RelatorioAdicionar = () => {
   const [atleta, setAtleta] = useState("");
 
   return (
-    <div className="container content">
+    <div className="containeradic contentadic">
       <div className="form-group">
         <label>Atleta</label>
-        <div className="atletasadicionar-input-group">
+        <div className="atletasadicionar-input-groupadic">
           <PersonIcon className="icon" />
           <input
             type="text"
@@ -32,7 +32,7 @@ const RelatorioAdicionar = () => {
 
       <div className="form-group">
         <label>Jogo</label>
-        <div className="atletasadicionar-input-group">
+        <div className="atletasadicionar-input-groupadic">
           <EventIcon className="icon" />
           <select>
             <option>SL Benfica v FC Porto (01/01/2001)</option>
@@ -42,7 +42,7 @@ const RelatorioAdicionar = () => {
 
       <div className="form-group">
         <label>Treinador</label>
-        <div className="atletasadicionar-input-group">
+        <div className="atletasadicionar-input-groupadic">
           <PersonIcon className="icon" />
           <select>
             <option>Nome</option>
@@ -51,98 +51,98 @@ const RelatorioAdicionar = () => {
       </div>
 
       {/* Campos de Avaliação */}
-      <div className="avaliacao-container">
-        <div className="campo">
+      <div className="avaliacao-containeradic">
+        <div className="campoadic">
           <label>Técnica</label>
-          <div className="opcoes">
+          <div className="opcoesadic">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containeradic">
                 <span
-                  className={`bola ${tecnica === num ? 'selecionada' : ''}`}
+                  className={`bolaadic ${tecnica === num ? 'selecionada' : ''}`}
                   onClick={() => setTecnica(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroadic">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoadic">
           <label>Velocidade</label>
-          <div className="opcoes">
+          <div className="opcoesadic">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containeradic">
                 <span
-                  className={`bola ${velocidade === num ? 'selecionada' : ''}`}
+                  className={`bolaadic ${velocidade === num ? 'selecionada' : ''}`}
                   onClick={() => setVelocidade(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroadic">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoadic">
           <label>Atitude Competitiva</label>
-          <div className="opcoes">
+          <div className="opcoesadic">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containeradic">
                 <span
-                  className={`bola ${atitude === num ? 'selecionada' : ''}`}
+                  className={`bolaadic ${atitude === num ? 'selecionada' : ''}`}
                   onClick={() => setAtitude(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroadic">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoadic">
           <label>Inteligência</label>
-          <div className="opcoes">
+          <div className="opcoesadic">
             {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-container">
+              <div key={num} className="bola-containeradic">
                 <span
-                  className={`bola ${inteligencia === num ? 'selecionada' : ''}`}
+                  className={`bolaadic ${inteligencia === num ? 'selecionada' : ''}`}
                   onClick={() => setInteligencia(num)}
                 ></span>
-                <span className="numero">{num}</span>
+                <span className="numeroadic">{num}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoadic">
           <label>Altura</label>
-          <div className="opcoes">
+          <div className="opcoesadic">
             {['Baixo', 'Médio', 'Alto'].map((opcao) => (
-              <div key={opcao} className="bola-container">
+              <div key={opcao} className="bola-containeradic">
                 <span
-                  className={`bola ${altura === opcao ? 'selecionada' : ''}`}
+                  className={`bolaadic ${altura === opcao ? 'selecionada' : ''}`}
                   onClick={() => setAltura(opcao)}
                 ></span>
-                <span className="texto">{opcao}</span>
+                <span className="textoadic">{opcao}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoadic">
           <label>Morfologia</label>
-          <div className="opcoes">
+          <div className="opcoesadic">
             {['Ectomorfo', 'Mesomorfo', 'Endomorfo'].map((opcao) => (
-              <div key={opcao} className="bola-container">
+              <div key={opcao} className="bola-containeradic">
                 <span
-                  className={`bola ${morfologia === opcao ? 'selecionada' : ''}`}
+                  className={`bolaadic ${morfologia === opcao ? 'selecionada' : ''}`}
                   onClick={() => setMorfologia(opcao)}
                 ></span>
-                <span className="texto">{opcao}</span>
+                <span className="textoadic">{opcao}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="campo">
+        <div className="campoadic">
           <label>Apontamentos</label>
           <textarea
             placeholder="Apontamentos"

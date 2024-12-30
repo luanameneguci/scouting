@@ -10,24 +10,26 @@ import './Privacidade.css';
 
 export default function Privacidade() {
     return (
-        <div className="privacidade-page">
-            <div className="academico-viseu-section">
+        <div className="privacidade-pagepriv">
+            <div className="academico-viseu-sectionpriv">
                 <img src={AcademicoViseuImage} alt="Académico de Viseu" />
-                <div className="header-overlay">
-                    <div className="vertical-line"></div>
+                <div className="header-overlaypriv">
+                    <div className="vertical-linepriv"></div>
                     <h1>POLÍTICA DE PRIVACIDADE</h1>
                 </div>
             </div>
 
-            <div className="content">
-                <div className="section">
-                    <div className="section-header">
-                    <div className="section-title">
-                        <img className="icon" src={PCIcon} alt="icone_pc" />
+            <br></br>
+            <br></br>
+            <div className="contentpriv">
+                <div className="sectionpriv">
+                    <div className="section-headerpriv">
+                    <div className="section-titlepriv">
+                        <img className="iconpriv" src={PCIcon} alt="icone_pc" />
                         </div>
                         <h2>1. IDENTIFICAÇÃO DO RESPONSÁVEL PELO TRATAMENTO</h2>
                     </div>
-                    <hr className="yellow-line" />
+                    <hr className="yellow-linepriv" />
                     <ul>
                         <li>Académico de Viseu Futebol Clube</li>
                         <li>NIPC 503954306</li>
@@ -36,14 +38,14 @@ export default function Privacidade() {
                     </ul>
                 </div>
 
-                <div className="section">
-                    <div className="section-header">
-                    <div className="section-title">
-                        <img className="icon" src={DadosIcon} alt="icone_dados" />
+                <div className="sectionpriv">
+                    <div className="section-headerpriv">
+                    <div className="section-titlepriv">
+                        <img className="iconpriv" src={DadosIcon} alt="icone_dados" />
                         </div>
                         <h2>2. INFORMAÇÃO, CONSENTIMENTO E FINALIDADE DO TRATAMENTO</h2>
                     </div>
-                    <hr className="yellow-line" />
+                    <hr className="yellow-linepriv" />
                     <p>
                         A Lei da Proteção de Dados Pessoais (em diante "LPD") e o Regulamento Geral de Proteção de Dados (Regulamento (UE) 2016/679 do Parlamento Europeu e do Conselho de 27 de abril de 2016, em diante "RGPD") e a Lei 58/2019, de 8 de agosto, asseguram a proteção das pessoas singulares no que diz respeito ao tratamento de dados pessoais e à livre circulação desses dados.
                     </p>
@@ -58,54 +60,54 @@ export default function Privacidade() {
                     </p>
                 </div>
 
-                <div className="section">
-                    <div className="section-header">
-                    <div className="section-title">
-                        <img className="icon" src={SegurancaIcon} alt="icone_seguranca" />
+                <div className="sectionpriv">
+                    <div className="section-headerpriv">
+                    <div className="section-titlepriv">
+                        <img className="iconpriv" src={SegurancaIcon} alt="icone_seguranca" />
                         </div>
                         <h2>3. MEDIDAS DE SEGURANÇA </h2>
                     </div>
-                    <hr className="yellow-line" />
+                    <hr className="yellow-linepriv" />
                     <p>
                     O Académico de Viseu Futebol Clube declara que implementou e continuará a implementar as medidas de segurança de natureza técnica e organizativa necessárias para garantir a segurança dos dados de carácter pessoal que lhe sejam fornecidos visando evitar a sua alteração, perda, tratamento e/ou acesso não autorizado, tendo em conta o estado atual da tecnologia,
                      a natureza dos dados armazenados e os riscos a que estão expostos bem como garante a confidencialidade dos mesmos. 
                     </p>
                 </div>
 
-                <div className="section">
-                    <div className="section-header">
-                    <div className="section-title">
-                        <img className="icon" src={Dados2Icon} alt="icone_dados_2" />
+                <div className="sectionpriv">
+                    <div className="section-headerpriv">
+                    <div className="section-titlepriv">
+                        <img className="iconpriv" src={Dados2Icon} alt="icone_dados_2" />
                         </div>
                         <h2>4. EXERCÍCIO DOS DIREITOS</h2>
                     </div>
-                    <hr className="yellow-line" />
+                    <hr className="yellow-linepriv" />
                     <p>
                     O titular dos dados pessoais/encarregados de educação podem, exercer a todo o tempo, os seus direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade. 
                     </p>
                 </div>
 
-                <div className="section">
-                    <div className="section-header">
-                        <div className="section-title">
-                        <img className="icon" src={ConservacaoIcon} alt="icone_conservacao" />
+                <div className="sectionpriv">
+                    <div className="section-headerpriv">
+                        <div className="section-titlepriv">
+                        <img className="iconpriv" src={ConservacaoIcon} alt="icone_conservacao" />
                         </div>
                         <h2>5. PRAZO DE CONSERVAÇÃO</h2>
                     </div>
-                    <hr className="yellow-line" />
+                    <hr className="yellow-linepriv" />
                     <p>
                     O Académico de Viseu Futebol Clube apenas trata os dados pessaois durante o período que se revele necessário ao cumprimento da sua finalidade (criação de histórico do atleta desde a formação à profissionalização), sem prejuízo dos dados serem conservados por um período superior, por exigências legais. 
                     </p>
                 </div>
 
-                <div className="section">
-                    <div className="section-header">
-                    <div className="section-title">
-                        <img className="icon" src={AutoridadeIcon} alt="icone_autoridade" />
+                <div className="sectionpriv">
+                    <div className="section-headerpriv">
+                    <div className="section-titlepriv">
+                        <img className="iconpriv" src={AutoridadeIcon} alt="icone_autoridade" />
                         </div>
                         <h2>6. AUTORIDADE DE CONTROLO</h2>
                     </div>
-                    <hr className="yellow-line" />
+                    <hr className="yellow-linepriv" />
                     <p>
                     Nos termos legais, o titular dos dados tem o direito de apresentar uma reclamação em matéria de proteção de dados pessoais à autoridade de controlo competente, a Comissão Nacional de Proteção de Dados (CNPD). 
                     </p>
