@@ -4,7 +4,7 @@ body {
   color: #fff;
 }
 
-.container {
+.containeradic {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
@@ -12,23 +12,23 @@ body {
   border-radius: 8px;
 }
 
-.input-icon {
+.input-iconadic {
   display: flex;
   align-items: center;
 }
 
-.input-icon .icon {
+.input-iconadic .icon {
   margin-right: 8px;
   color: #fff;
 }
 
-.atletasadicionar-input-group {
+.atletasadicionar-input-groupadic {
   display: flex;
   align-items: center;
   margin-bottom: 0;
 }
 
-.atletasadicionar-input-group svg {
+.atletasadicionar-input-groupadic svg {
   background-color: #000;
   padding: 10px;
   border-top-left-radius: 4px;
@@ -41,8 +41,8 @@ body {
   border-right: 1px solid var(--gray-500-color);
 }
 
-.atletasadicionar-input-group input,
-.atletasadicionar-input-group select {
+.atletasadicionar-input-groupadic input,
+.atletasadicionar-input-groupadic select {
   width: 100%;
   padding: 12px;
   border: none;
@@ -52,38 +52,38 @@ body {
   box-sizing: border-box;
 }
 
-.atletasadicionar-input-group input::placeholder {
+.atletasadicionar-input-groupadic input::placeholder {
   color: #ffffff;
 }
 
-.content {
+.contentadic {
   padding-top: 80px;  
 }
 
-.campo {
-  margin-bottom: 30px; /*espaco entre as opções*/
+.campoadic {
+  margin-bottom: 30px; /* espaço entre as opções */
 }
 
-.opcoes {
+.opcoesadic {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-.avaliacao-container .opcoes {
-  margin-top: 12px;   /* Aumenta o espaço subitulo e bolas */
+.avaliacao-containeradic .opcoesadic {
+  margin-top: 12px; /* Aumenta o espaço entre subtítulo e bolas */
   display: flex;
   gap: 35px; /* Aumenta o espaço entre as bolas */
   flex-wrap: wrap;
 }
 
-.bola-container {
+.bola-containeradic {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.bola {
+.bolaadic {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -91,15 +91,15 @@ body {
   cursor: pointer;
 }
 
-.bola.selecionada {
+.bolaadic.selecionada {
   background-color: white;
 }
 
-.numero, .texto {
+.numeroadic, .textoadic {
   font-size: 14px;
 }
 
-textarea {
+textareaadic {
   width: 100%;
   padding: 12px;
   border-radius: 4px;
@@ -108,6 +108,6 @@ textarea {
   margin-top: 10px;
 }
 
-textarea::placeholder {
+textareaadic::placeholder {
   color: white;
 }
