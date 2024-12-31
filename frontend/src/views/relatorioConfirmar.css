@@ -1,9 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #898989;
-  color: #fff;
-}
-
 .containerRelConfir {
   max-width: 800px;
   margin: 20px auto;
@@ -12,18 +6,18 @@ body {
   border-radius: 8px;
 }
 
-.input-iconRelConfir {
+.containerRelConfir .input-iconRelConfir {
   display: flex;
   align-items: center;
 }
 
-.atletasadicionar-input-groupRelConfir {
+.containerRelConfir .atletasadicionar-input-groupRelConfir {
   display: flex;
   align-items: center;
   margin-bottom: 0;
 }
 
-.atletasadicionar-input-groupRelConfir svg {
+.containerRelConfir .atletasadicionar-input-groupRelConfir svg {
   background-color: #000;
   padding: 10px;
   border-top-left-radius: 4px;
@@ -36,8 +30,8 @@ body {
   border-right: 1px solid var(--gray-500-color);
 }
 
-.atletasadicionar-input-groupRelConfir input,
-.atletasadicionar-input-groupRelConfir select {
+.containerRelConfir .atletasadicionar-input-groupRelConfir input,
+.containerRelConfir .atletasadicionar-input-groupRelConfir select {
   width: 100%;
   padding: 12px;
   border: none;
@@ -47,38 +41,38 @@ body {
   box-sizing: border-box;
 }
 
-.atletasadicionar-input-groupRelConfir input::placeholder {
+.containerRelConfir .atletasadicionar-input-groupRelConfir input::placeholder {
   color: #ffffff;
 }
 
-.contentRelConfir {
+.containerRelConfir .contentRelConfir {
   padding-top: 80px;  
 }
 
-.campoRelConfir {
+.containerRelConfir .campoRelConfir {
   margin-bottom: 30px; /* espaço entre as opções */
 }
 
-.opcoesRelConfir {
+.containerRelConfir .opcoesRelConfir {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-.avaliacao-containerRelConfir .opcoesRelConfir {
+.containerRelConfir .avaliacao-containerRelConfir .opcoesRelConfir {
   margin-top: 12px; /* Aumenta o espaço entre subtítulo e bolas */
   display: flex;
   gap: 35px; /* Aumenta o espaço entre as bolas */
   flex-wrap: wrap;
 }
 
-.bola-containerRelConfir {
+.containerRelConfir .bola-containerRelConfir {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.bolaRelConfir {
+.containerRelConfir .bolaRelConfir {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -86,15 +80,15 @@ body {
   cursor: pointer;
 }
 
-.bolaRelConfir.selecionada {
+.containerRelConfir .bolaRelConfir.selecionada {
   background-color: #5F5F5F;
 }
 
-.numeroRelConfir, .textoRelConfir {
+.containerRelConfir .numeroRelConfir, .textoRelConfir {
   font-size: 14px;
 }
 
-textareaRelConfir {
+.containerRelConfir .textareaRelConfir {
   width: 100%;
   padding: 12px;
   border-radius: 4px;
@@ -103,7 +97,7 @@ textareaRelConfir {
   margin-top: 10px;
 }
 
-textareaRelConfir::placeholder {
+.containerRelConfir .textareaRelConfir::placeholder {
   color: white;
 }
 
@@ -128,13 +122,13 @@ textareaRelConfir::placeholder {
 }
 
 /* Bloquear os campos de input, textarea e selects */
-input[disabled], textarea[disabled], select[disabled] {
+.containerRelConfir input[disabled],.containerRelConfir  textarea[disabled],.containerRelConfir  select[disabled] {
   background-color: #5F5F5F; /* Altere a cor para um tom mais claro, indicando que está desabilitado */
   cursor: not-allowed; /* Muda o cursor para indicar que o campo está bloqueado */
 }
 
 /* Bloquear os botões */
-button[disabled], .validar-buttonRelConfir[disabled] {
+.containerRelConfir button[disabled],.containerRelConfir .validar-buttonRelConfir[disabled] {
   background-color: #5F5F5F; /* Altere a cor para um tom mais claro */
   cursor: not-allowed;
   pointer-events: none; /* Impede a interação com o botão */

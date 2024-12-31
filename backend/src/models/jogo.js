@@ -4,7 +4,9 @@ module.exports = function(sequelize, DataTypes) {
     id_jogo: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
+
     },
     id_escalao: {
       type: DataTypes.INTEGER,

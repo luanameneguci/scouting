@@ -1,8 +1,4 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #1c1c1c;
-  color: #fff;
-}
+
 
 .containerval {
   max-width: 800px;
@@ -12,52 +8,52 @@ body {
   border-radius: 8px;
 }
 
-h2 {
+.containerval h2 {
   color: #fff;
   margin-bottom: 20px;
 }
 
-.form-groupval {     /*espaço entre as caixas de texto*/
+.containerval .form-groupval {     /*espaço entre as caixas de texto*/
   margin-bottom: 20px;
 }
 
-.form-rowval {
+.containerval .form-rowval {
   display: flex;
   justify-content: space-between;
 }
 
-.form-rowval .form-groupval {
+.containerval .form-rowval .form-groupval {
   flex: 1;
   margin-right: 15px;
 }
 
-.form-rowval .form-groupval:last-child {
+.containerval .form-rowval .form-groupval:last-child {
   margin-right: 0;
 }
 
-label {
+.containerval label {
   display: block;
   margin-bottom: 5px;
   font-size: 14px;
 }
 
-.input-iconval {
+.containerval .input-iconval {
   display: flex;
   align-items: center;
 }
 
-.input-iconval .icon {
+.containerval .input-iconval .icon {
   margin-right: 8px;
   color: #fff;
 }
 
-.atletasadicionar-input-groupval {
+.containerval .atletasadicionar-input-groupval {
   display: flex;
   align-items: center;
   margin-bottom: 0;
 }
 
-.atletasadicionar-input-groupval svg {
+.containerval .atletasadicionar-input-groupval svg {
   background-color: #000;
   padding: 10px;
   border-top-left-radius: 4px;
@@ -70,8 +66,8 @@ label {
   border-right: 1px solid var(--gray-500-color);
 }
 
-.atletasadicionar-input-groupval input,
-.atletasadicionar-input-groupval select {
+.containerval .atletasadicionar-input-groupval input,
+.containerval .atletasadicionar-input-groupval select {
   width: 100%;
   padding: 12px;
   border: none;
@@ -81,11 +77,11 @@ label {
   box-sizing: border-box;
 }
 
-.atletasadicionar-input-groupval input::placeholder {
+.containerval .atletasadicionar-input-groupval input::placeholder {
   color: #ffffff;
 }
 
-.btnval {
+.containerval .btnval {
   display: block;
   width: 100%;
   padding: 10px;
@@ -97,11 +93,11 @@ label {
   cursor: pointer;
 }
 
-.btnval:hover {
+.containerval .btnval:hover {
   background-color: #e0a800;
 }
 
-.lineval {
+.containerval .lineval {
   border-top: 1px solid #fff;
   margin: 20px 0;
 }

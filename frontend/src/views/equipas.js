@@ -48,7 +48,8 @@ export default function Equipas() {
     const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
     const [isSombra, setIsSombra] = useState(false); // New state for "Própria" or "Sombra"
     const [escalao, setEscalao] = useState(0); // New state for "escalão"
-
+    const [page, setPage] = useState(1); // Página atual
+    const [totalPages, setTotalPages] = useState(0); // Total de páginas
     useEffect(() => { // Margem top depenendo da altura da navbar
         setupContentNavbarMargin('equipas-wrapper');
     }, []);
@@ -56,6 +57,15 @@ export default function Equipas() {
     useEffect(() => { // Quando, nos filtros, o rating é alterado
         console.log(`Current rating: ${rating}`);
     }, [rating]);
+    
+    // Funções de navegação
+    const handlePreviousPage = () => {
+        if (page > 1) setPage(page - 1);
+    };
+
+    const handleNextPage = () => {
+        if (page < totalPages) setPage(page + 1);
+    };
 
     useEffect(() => { // Quando o isSombra ou o escalao é alterado
         // Falta a função para que quando o utilize altere o escalao ou o isSombra, encontrar o id da equipa e atualizar a página com a info da mesma
@@ -230,7 +240,24 @@ export default function Equipas() {
                             </tbody>
                         </table>
                     </div>
-                    <p>Paginação</p>
+                    {/* Botões de Paginação */}
+                    <div className="pagination">
+                        <button
+                            onClick={handlePreviousPage}
+                            disabled={page === 1} // Desativa o botão se for a primeira página
+                        >
+                            Anterior
+                        </button>
+                        <span>
+                            Página {page} de {totalPages}
+                        </span>
+                        <button
+                            onClick={handleNextPage}
+                            disabled={page === totalPages} // Desativa o botão se for a última página
+                        >
+                            Próxima
+                        </button>
+                    </div>
                     <div className={`filters-container height-100 width-100 ${isFilterModalVisible ? '' : 'hidden'}`}>
                         <form className='filters'>
                             <div className='filters-head'>

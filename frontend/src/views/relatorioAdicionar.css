@@ -1,8 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #1c1c1c;
-  color: #fff;
-}
 
 .containeradic {
   max-width: 800px;
@@ -12,23 +7,23 @@ body {
   border-radius: 8px;
 }
 
-.input-iconadic {
+.containeradic .input-iconadic {
   display: flex;
   align-items: center;
 }
 
-.input-iconadic .icon {
+.containeradic .input-iconadic .icon {
   margin-right: 8px;
   color: #fff;
 }
 
-.atletasadicionar-input-groupadic {
+.containeradic .atletasadicionar-input-groupadic {
   display: flex;
   align-items: center;
   margin-bottom: 0;
 }
 
-.atletasadicionar-input-groupadic svg {
+.containeradic .atletasadicionar-input-groupadic svg {
   background-color: #000;
   padding: 10px;
   border-top-left-radius: 4px;
@@ -41,8 +36,8 @@ body {
   border-right: 1px solid var(--gray-500-color);
 }
 
-.atletasadicionar-input-groupadic input,
-.atletasadicionar-input-groupadic select {
+.containeradic .atletasadicionar-input-groupadic input,
+.containeradic .atletasadicionar-input-groupadic select {
   width: 100%;
   padding: 12px;
   border: none;
@@ -52,7 +47,7 @@ body {
   box-sizing: border-box;
 }
 
-.atletasadicionar-input-groupadic input::placeholder {
+.containeradic .atletasadicionar-input-groupadic input::placeholder {
   color: #ffffff;
 }
 
@@ -60,30 +55,30 @@ body {
   padding-top: 80px;  
 }
 
-.campoadic {
+.containeradic .campoadic {
   margin-bottom: 30px; /* espaço entre as opções */
 }
 
-.opcoesadic {
+.containeradic .opcoesadic {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-.avaliacao-containeradic .opcoesadic {
+.containeradic .avaliacao-containeradic .opcoesadic {
   margin-top: 12px; /* Aumenta o espaço entre subtítulo e bolas */
   display: flex;
   gap: 35px; /* Aumenta o espaço entre as bolas */
   flex-wrap: wrap;
 }
 
-.bola-containeradic {
+.containeradic .bola-containeradic {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.bolaadic {
+.containeradic .bolaadic {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -91,15 +86,15 @@ body {
   cursor: pointer;
 }
 
-.bolaadic.selecionada {
+.containeradic .bolaadic.selecionada {
   background-color: white;
 }
 
-.numeroadic, .textoadic {
+.containeradic .numeroadic, .textoadic {
   font-size: 14px;
 }
 
-textareaadic {
+.containeradic .textareaadic {
   width: 100%;
   padding: 12px;
   border-radius: 4px;
@@ -108,6 +103,6 @@ textareaadic {
   margin-top: 10px;
 }
 
-textareaadic::placeholder {
+.containeradic .textareaadic::placeholder {
   color: white;
 }

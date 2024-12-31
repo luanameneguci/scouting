@@ -146,14 +146,14 @@
 /* Os coisos pra paginação */
 
 
-.pagination {
+.atletas-page .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
 
-.pagination button {
+.atletas-page .pagination button {
   background-color: #000; /* Black background */
   color: #fff; /* White text */
   border: none;
@@ -165,18 +165,18 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.pagination button:hover {
+.atletas-page .pagination button:hover {
   background-color: #333; /* Darker black on hover */
   transform: scale(1.05); /* Slight zoom effect */
 }
 
-.pagination button:disabled {
+.atletas-page .pagination button:disabled {
   background-color: #666; /* Gray for disabled buttons */
   color: #ccc; /* Light gray text */
   cursor: not-allowed;
 }
 
-.pagination span {
+.atletas-page .pagination span {
   color: #fff; /* White text */
   font-size: 16px;
   margin: 0 10px;

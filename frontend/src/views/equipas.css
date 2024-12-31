@@ -505,3 +505,39 @@
 .hidden {
     display: none;
 }
+
+
+
+.equipas-wrapper .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.equipas-wrapper .pagination button {
+    background-color: var(--gray-800-color);
+    color: var(--white-color);
+    border: none;
+    padding: .8rem 1.6rem;
+    margin: 0 .8rem;
+    cursor: pointer;
+    border-radius: .16rem;
+    transition: 0.3s ease;
+}
+
+.equipas-wrapper .pagination button:hover {
+    background-color: var(--gray-600-color);
+
+}
+
+.equipas-wrapper .pagination button:disabled {
+    background-color: var(--gray-600-color);
+    cursor: not-allowed;
+
+}
+
+.equipas-wrapper .pagination span {
+    color: var(--white-color);
+    margin: 0 10px;
+}

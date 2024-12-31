@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     id_nacionalidade: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      
     },
     id_atleta: {
       type: DataTypes.INTEGER,
