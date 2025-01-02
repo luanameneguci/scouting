@@ -7,6 +7,8 @@ router.get("/listar", atletaController.listar);
 
 router.get("/getRatingsData", atletaController.getRatingsData);
 
+router.get("/getAgesData", atletaController.getAgesData);
+
 // Rota para criar um novo atleta
 router.post("/criar", atletaController.criar);
 

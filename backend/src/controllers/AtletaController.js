@@ -145,6 +145,69 @@ controllers.listar = async (req, res) => {
   }
 };
 
+controllers.getAgesData = async (req, res) => {
+  try {
+    const ageRanges = [
+      { range: "0-13", min: 0, max: 13 },
+      { range: "14-16", min: 14, max: 16 },
+      { range: "17-19", min: 17, max: 19 },
+      { range: "20-22", min: 20, max: 22 },
+      { range: "23+", min: 23, max: Infinity },
+    ];
+
+
+    // Query the database to get athlete birthdays
+    const result = await sequelize.query("SELECT datanascimento FROM atleta", {
+      type: sequelize.QueryTypes.SELECT, // To return raw data
+    });
+
+    // Function to calculate age from birthday
+    const calculateAge = (birthday) => {
+      const today = new Date();
+      const birthDate = new Date(birthday);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    };
+
+    // Check if there are any results
+    if (!result || result.length === 0) {
+      console.error("No athlete data found in the database.");
+      return res.status(404).json({ success: false, message: "No athlete data found." });
+    }
+
+    // Total number of athletes
+    const totalAthletes = result.length;
+    console.log("Total athletes:", totalAthletes);
+
+    // Calculate age distribution
+    const ageData = ageRanges.map((range) => {
+      const count = result.filter((athlete) => {
+        const age = calculateAge(athlete.datanascimento); // Use correct column name
+        console.log(`Athlete's age: ${age}, Range: ${range.range}`);
+        return age >= range.min && age <= range.max;
+      }).length;
+
+      const percentage = ((count / totalAthletes) * 100).toFixed(2); // Calculate percentage
+      console.log(`Range: ${range.range}, Count: ${count}, Percentage: ${percentage}`);
+      return { range: range.range, count, percentage };
+    });
+
+    // Log final age distribution data
+    console.log("Age distribution data:", ageData);
+
+    // Respond with age distribution data
+    res.json({ success: true, data: ageData });
+  } catch (err) {
+    console.error("Error in getAgesData:", err.message, err.stack);
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+};
+
+
 controllers.getRatingsData = async (req, res) => {
   try {
     // Fetch the total number of athletes
