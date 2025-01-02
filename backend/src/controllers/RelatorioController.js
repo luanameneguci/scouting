@@ -3,8 +3,7 @@ const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
-var Relatorio = require("../models/relatorio");
-
+var Relatorio = models.relatorio;
 const controllers = {};
 
 controllers.criar = async (req, res) => {
