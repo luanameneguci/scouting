@@ -6,6 +6,8 @@ const RelatorioController = require("../controllers/RelatorioController.js");
 
 router.get("/", RelatorioController.listar); 
 
+router.get("/relatoriosData", RelatorioController.relatoriosData);
+
 router.post("/criar", RelatorioController.criar);
 
 router.delete("/apagar/:id_relatorio", RelatorioController.apagar);

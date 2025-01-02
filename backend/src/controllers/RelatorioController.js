@@ -50,27 +50,6 @@ controllers.criar = async (req, res) => {
   });
 };
 
-controllers.getRelatoriosData = async (req,res) =>{
-  try {
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); // Subtract 7 days from today
-
-    // Get the count of relatorios created in the last 7 days
-    const count = await Relatorio.count({
-      where: {
-        data_criacao: {
-          [Op.between]: [sevenDaysAgo, new Date()], // Between 7 days ago and now
-        },
-      },
-    });
-
-    res.json({ success: true, count: count });
-  } catch (error) {
-    console.error("Error fetching relatorio count:", error);
-    res.status(500).json({ success: false, message: "Erro ao contar relatórios." });
-  }
-};
-
 controllers.listarPorAtleta = async (req, res) => {
   const { id_atleta } = req.params;
   const data = await Relatorio.findAll({
@@ -98,34 +77,43 @@ controllers.listar = async (req, res) => {
 
 controllers.relatoriosData = async (req, res) => {
   try {
+    // Calculate the date 7 days ago
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    
-    const count = await Relatorio.count({
-      where: {
-        data_criacao: {
-          [Op.between]: [sevenDaysAgo, new Date()], // Between 7 days ago and now
-        },
-      },
-    });
+    const now = new Date();
 
-    // Count distinct id_atleta in the last 7 days
-    const uniqueAthletesCount = await Relatorio.count({
-      distinct: true,
-      col: "id_atleta", // Specify the column for distinct count
-      where: {
-        data_criacao: {
-          [Op.between]: [sevenDaysAgo, new Date()], // Only consider records from the last 7 days
+    // Fetch report count and unique athlete count in parallel
+    const [totalReports, uniqueAthletes] = await Promise.all([
+      Relatorio.count({
+        where: {
+          data: {
+            [Op.between]: [sevenDaysAgo, now],
+          },
         },
-      },
-    });
+      }),
+      Relatorio.count({
+        distinct: true,
+        col: "id_atleta",
+        where: {
+          data: {
+            [Op.between]: [sevenDaysAgo, now],
+          },
+        },
+      }),
+    ]);
 
-    res.json({ success: true, uniqueAthletesCount: uniqueAthletesCount, count: count });
+    // Send the response with the fetched data
+    res.json({
+      success: true,
+      quantidadeRelatorios: totalReports,
+      quantidadeAtletasAvaliados: uniqueAthletes,
+    });
   } catch (error) {
-    console.error("Error fetching unique athletes count:", error);
+    console.error("Error fetching relatorios data:", error);
     res.status(500).json({ success: false, message: "Erro ao listar relatórios." });
   }
 };
+
 
 controllers.apagar = async (req, res) => {
     // parâmetros por post

@@ -4,6 +4,7 @@ const homeRouter = require('./routes/home.js');
 const equipasRouter = require('./routes/equipas.js');
 const jogoRouter = require('./routes/jogoRoute.js');
 const atletaRouter = require('./routes/atletaRoute.js'); 
+const relatorioRouter = require('./routes/relatorioRoute.js'); 
 /* const tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 
 const app = express();
@@ -26,6 +27,7 @@ app.use('/', homeRouter);
 app.use('/equipa', equipasRouter);
 app.use('/jogo', jogoRouter);
 app.use('/atleta', atletaRouter); 
+app.use('/relatorio', relatorioRouter); 
 /* app.use('/tipoEquipa', tipoEquipasRouter); */
 
 // CORS headers for manual pre-flight requests (OPTIONS)

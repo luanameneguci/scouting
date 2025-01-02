@@ -81,13 +81,14 @@ export default function Dashboard() {
       });
   }, []);
 
+
   useEffect(() => {
-    const url = "http://localhost:8080/atleta/getTotalAthletes";
+    const url = "http://localhost:8080/relatorio/relatoriosData";
     axios.get(url)
       .then(res => {
         if (res.data.success) {
-          const totalAthletesData = res.data.data;
-          setTotalAthletes(totalAthletesData);
+          const relatoriosData = res.data.data;
+          setRelatorios(relatoriosData);
         } else {
           alert("Error Web Service!");
         }
@@ -96,7 +97,6 @@ export default function Dashboard() {
         alert(error)
       });
   }, []);
-
 
   useEffect(() => {
     const equipasPropriasData = [
@@ -123,14 +123,6 @@ export default function Dashboard() {
     ];
     setEquipasSombra(equipasSombraData);
 
-/*     const agesData = [
-      { range: "<14", count: 33, percentage: 5 },
-      { range: "14-16", count: 33, percentage: 5 },
-      { range: "17-19", count: 33, percentage: 5 },
-      { range: "20-22", count: 33, percentage: 5 },
-      { range: ">23", count: 33, percentage: 5 },
-    ];
-    setAges(agesData); */
 
     const totalAtletasPropriaData = [999];
     setTotalAtletasPropria(totalAtletasPropriaData);
@@ -141,13 +133,6 @@ export default function Dashboard() {
     const ratingMedioData = [3.6];
     setRatingMedio(ratingMedioData);
 
-    const relatoriosData = [
-      {
-        quantidadeRelatorios: 13,
-        quantidadeAtletasAvaliados: 7,
-      },
-    ];
-    setRelatorios(relatoriosData);
   }, []); // Empty dependency array ensures it runs only once
 
   // JSX rendering
