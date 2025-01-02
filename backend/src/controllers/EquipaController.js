@@ -1,7 +1,6 @@
 const express = require("express");
 const sequelize = require("../models/database");
 
-sequelize.sync({ alter: true });
 const { Sequelize, Op, Model, DataTypes } = require('sequelize');
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);

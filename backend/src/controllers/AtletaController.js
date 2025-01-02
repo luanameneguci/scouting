@@ -3,6 +3,7 @@ const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
+sequelize.sync({ alter: true });
 
 // Ajustando Atleta para o modelo inicializado corretamente
 var Atleta = models.atleta;
@@ -94,6 +95,26 @@ controllers.editar = async (req, res) => {
   });
 };
 
+controllers.averageRating = async (req,res) =>{
+  try{
+    const averageRating = await models.atleta.findOne({
+      attributes: [[fn("AVG", col("ratinggeral")), "average_ratinggeral"]],
+    });
+
+    const avgRating = parseFloat(averageRating.dataValues.average_ratinggeral);
+
+    res.json({
+      success: true,
+      data: avgRating,
+    });
+  }
+  catch(err){
+    res
+    .status(500)
+    .json({ success: false, message: "Erro.", err });
+}
+};
+
 // Listar todos os atletas
 controllers.listar = async (req, res) => {
   try {
@@ -144,6 +165,21 @@ controllers.listar = async (req, res) => {
       .json({ success: false, message: "Erro ao listar atletas.", error });
   }
 };
+
+controllers.getTotalAthletes = async (req,res)=>{
+  try{
+    const result = await sequelize.query("SELECT * FROM atleta", {
+      type: sequelize.QueryTypes.SELECT, // To return raw data
+    });
+
+    const totalAthletes = result.length;
+    res.json({ success: true, data: totalAthletes });
+  }
+  catch (err) {
+    console.error("Error in getTotalAthletes:", err.message, err.stack);
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+}
 
 controllers.getAgesData = async (req, res) => {
   try {

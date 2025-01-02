@@ -14,11 +14,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     urlbandeira: {
       type: DataTypes.STRING(1024),
-      allowNull: false
+      allowNull: true
     },
     abreviatura: {
       type: DataTypes.STRING(1024),
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

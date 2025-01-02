@@ -47,6 +47,10 @@ module.exports = function(sequelize, DataTypes) {
     apontamentos: {
       type: DataTypes.STRING(1024),
       allowNull: true
+    },
+    data: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
     }
   }, {
     sequelize,

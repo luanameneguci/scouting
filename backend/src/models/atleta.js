@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     datanascimento: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     },
     link: {
       type: DataTypes.STRING(1024),

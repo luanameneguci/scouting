@@ -7,12 +7,13 @@ export default function Dashboard() {
   const [games, setGames] = useState([]);
   const [ratings, setRatings] = useState([]);
   const [ages, setAges] = useState([]);
-  const [totalAthletes, setTotalAtheles] = useState([]);
+  const [totalAthletes, setTotalAthletes] = useState([]);
   const [totalAtletasSombra, setTotalAtletasSombra] = useState([]);
   const [totalAtletasPropria, setTotalAtletasPropria] = useState([]);
   const [relatorios, setRelatorios] = useState([]);
   const [equipasProprias, setEquipasProprias] = useState([]);
   const [equipasSombra, setEquipasSombra] = useState([]);
+  const [ratingMedio, setRatingMedio] = useState([]);
 
 
   //-------------------------Fetching data from jogos
@@ -49,6 +50,55 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    const url = "http://localhost:8080/atleta/getAgesData";
+    axios.get(url)
+      .then(res => {
+        if (res.data.success) {
+          const agesData = res.data.data;
+          setAges(agesData);
+        } else {
+          alert("Error Web Service!");
+        }
+      })
+      .catch(error => {
+        alert(error)
+      });
+  }, []);
+
+  useEffect(() => {
+    const url = "http://localhost:8080/atleta/getTotalAthletes";
+    axios.get(url)
+      .then(res => {
+        if (res.data.success) {
+          const totalAthletesData = res.data.data;
+          setTotalAthletes(totalAthletesData);
+        } else {
+          alert("Error Web Service!");
+        }
+      })
+      .catch(error => {
+        alert(error)
+      });
+  }, []);
+
+  useEffect(() => {
+    const url = "http://localhost:8080/atleta/getTotalAthletes";
+    axios.get(url)
+      .then(res => {
+        if (res.data.success) {
+          const totalAthletesData = res.data.data;
+          setTotalAthletes(totalAthletesData);
+        } else {
+          alert("Error Web Service!");
+        }
+      })
+      .catch(error => {
+        alert(error)
+      });
+  }, []);
+
+
+  useEffect(() => {
     const equipasPropriasData = [
       {
         escalao: "Sub-19",
@@ -73,27 +123,14 @@ export default function Dashboard() {
     ];
     setEquipasSombra(equipasSombraData);
 
-    /* 
-        const ratingsData = [
-          { stars: 1, count: 33, percentage: 5 },
-          { stars: 2, count: 33, percentage: 5 },
-          { stars: 3, count: 33, percentage: 5 },
-          { stars: 4, count: 33, percentage: 5 },
-          { stars: 5, count: 33, percentage: 5 },
-        ];
-        setRatings(ratingsData); */
-
-    const agesData = [
+/*     const agesData = [
       { range: "<14", count: 33, percentage: 5 },
       { range: "14-16", count: 33, percentage: 5 },
       { range: "17-19", count: 33, percentage: 5 },
       { range: "20-22", count: 33, percentage: 5 },
       { range: ">23", count: 33, percentage: 5 },
     ];
-    setAges(agesData);
-
-    const totalAthletesData = [999];
-    setTotalAtheles(totalAthletesData);
+    setAges(agesData); */
 
     const totalAtletasPropriaData = [999];
     setTotalAtletasPropria(totalAtletasPropriaData);
@@ -101,10 +138,12 @@ export default function Dashboard() {
     const totalAtletasSombraData = [999];
     setTotalAtletasSombra(totalAtletasSombraData);
 
+    const ratingMedioData = [3.6];
+    setRatingMedio(ratingMedioData);
+
     const relatoriosData = [
       {
         quantidadeRelatorios: 13,
-        ratingMedio: 3.6,
         quantidadeAtletasAvaliados: 7,
       },
     ];
