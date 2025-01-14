@@ -1,5 +1,5 @@
 import React from 'react';
-import './footer.css';
+import './footerWEB.css';
 import { NavLink } from "react-router-dom";
 import logoSVG from '../assets/whiteLogo.svg';
 
