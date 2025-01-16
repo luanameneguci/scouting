@@ -1,25 +1,82 @@
 /* Faz o footer fixar no final da página */
 html, body {
-  height: 100%; /* Garante que o conteúdo ocupe a altura total */
-  margin: 0; /* Remove margens padrão */
-  display: flex;
-  flex-direction: column; /* Alinha conteúdo verticalmente */
-}
-
-#root {
-  flex: 1; /* Garante que o conteúdo principal ocupe espaço */
+  height: 100%;
+  margin: 0;
   display: flex;
   flex-direction: column;
 }
 
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo do Footer */
 .footer {
   background-color: #000; /* Fundo preto */
   color: var(--white-color); /* Texto branco */
   text-align: center;
-  padding: 20px 0;
+  padding: 40px 0; /* Ajuste do espaçamento no topo e embaixo */
   font-family: Arial, sans-serif;
-  position: relative; /* Normal para layout fixo */
-  bottom: 0; /* Coloca no final */
-  width: 100%; /* Garante que ocupe toda a largura */
-  margin-top: auto; /* Empurra o footer para o final */
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center; /* Centraliza os links principais */
+  gap: 100px; /* Espaçamento horizontal entre os links */
+  margin-bottom: 20px; /* Espaçamento abaixo dos links */
+  font-size: 14px; /* Tamanho da fonte dos links */
+}
+
+.footer-link {
+  color: var(--white-color); /* Texto branco */
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase; /* Letras maiúsculas */
+}
+
+.footer-link:hover {
+  text-decoration: underline; /* Efeito ao passar o mouse */
+}
+
+.footer-logo {
+  text-align: center;
+  margin-bottom: 20px; /* Espaço abaixo do logo */
+  opacity: 0.1; /* Transparência do logo */
+}
+
+.footer-logo img {
+  width: 100px; /* Tamanho ajustável do logo */
+  height: auto;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between; /* Espaça o copyright e os ícones */
+  align-items: center;
+  padding: 0 20px; /* Espaçamento horizontal interno */
+  font-size: 12px;
+}
+
+.footer-bottom span {
+  color: var(--white-color); /* Texto branco */
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px; /* Espaçamento entre os ícones */
+}
+
+.social-icons a {
+  color: var(--white-color); /* Cor dos ícones */
+  font-size: 20px; /* Tamanho dos ícones */
+}
+
+.social-icons a:hover {
+  color: var(--highlight-color); /* Cor de destaque ao passar o mouse */
 }
