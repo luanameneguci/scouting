@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Redirecionamento
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./atletasAdicionar.css";
 import {
   Person as PersonIcon,
@@ -23,15 +23,34 @@ export default function AtletasAdicionar() {
     hora: "",
     atleta: "",
   });
-
+  const [clubes, setClubes] = useState([]); // << NOVO state para armazenar clubes
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const navigate = useNavigate();
 
+  // 1) useEffect para carregar os clubes ao montar
+  useEffect(() => {
+    fetch("http://localhost:8080/clube/listar") // a rota que você criou
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setClubes(data.data); // Preenche o array com os clubes do banco
+        } else {
+          console.error("Erro ao listar clubes:", data);
+        }
+      })
+      .catch((err) => {
+        console.error("Erro de rede ao listar clubes:", err);
+      });
+  }, []);
+
+  // Função de mudança dos campos
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 2) handleSubmit enviando o form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -58,7 +77,7 @@ export default function AtletasAdicionar() {
 
       if (!response.ok) throw new Error("Erro ao criar atleta");
       alert("Atleta criado com sucesso!");
-      navigate("/atletas"); // Redireciona para a página atletas
+      navigate("/atletas");
     } catch (err) {
       console.error("Erro ao criar atleta:", err);
       setError("Erro ao criar atleta. Verifique os dados e tente novamente.");
@@ -70,6 +89,7 @@ export default function AtletasAdicionar() {
   return (
     <div className="atletasadicionar-container">
       <form className="atletasadicionar-form" onSubmit={handleSubmit}>
+        
         {/* Clube */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Clube</label>
@@ -81,15 +101,12 @@ export default function AtletasAdicionar() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>Clube</option>
-              <option value="1">SL Benfica</option>
-              <option value="2">FC Porto</option>
-              <option value="3">Sporting CP</option>
-              <option value="4">SC Braga</option>
-              <option value="5">Vitória SC</option>
-              <option value="6">Académico de Viseu</option>
-              <option value="7">Boavista</option>
-
+              <option value="" disabled>Selecione o clube</option>
+              {clubes.map((c) => (
+                <option key={c.id_clube} value={c.id_clube}>
+                  {c.nome}
+                </option>
+              ))}
             </select>
           </div>
         </div>
