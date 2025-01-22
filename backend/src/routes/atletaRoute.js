@@ -20,4 +20,7 @@ router.put("/editar/:id_atleta", atletaController.editar);
 // Rota para apagar um atleta
 router.delete("/apagar", atletaController.apagar);
 
+// aAPPORRAAAAAAA
+router.get("/testarModelo", atletaController.testarModelo);
+
 module.exports = router;

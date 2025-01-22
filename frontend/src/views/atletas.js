@@ -39,6 +39,36 @@ export default function Atletas() {
     atleta.nome.toLowerCase().includes(search.toLowerCase())
   );
 
+
+
+  // Remover Atletas!!
+  const removerAtleta = async (id) => {
+    const confirmacao = window.confirm("Tem certeza que deseja remover este atleta?");
+    if (!confirmacao) return;
+  
+    try {
+      const response = await fetch(`http://localhost:8080/atleta/apagar`, { // Corrige o endpoint
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id_atleta: id }), // O nome do campo deve ser "id_atleta"
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        alert("Atleta removido com sucesso.");
+        fetchAtletas(page); // Atualiza a lista de atletas
+      } else {
+        alert("Erro ao remover atleta: " + data.message);
+      }
+    } catch (error) {
+      console.error("Erro ao remover atleta:", error);
+      alert("Erro ao se conectar ao servidor.");
+    }
+  };
+  
+
   // Funções de navegação
   const handlePreviousPage = () => {
     if (page > 1) setPage(page - 1);
@@ -101,11 +131,16 @@ export default function Atletas() {
                 <td>Sub-17</td>
                 <td>🇵🇹 Portugal</td>
                 <td>
-                  <button className="action-button remove">Remover</button>
-                  <Link to="/atletas/pagina">
-                    <button className="action-button profile">Perfil</button>
-                  </Link>
-                </td>
+  <button
+    className="action-button remove"
+    onClick={() => removerAtleta(atleta.id_atleta)} // Conecta a função ao botão
+  >
+    Remover
+  </button>
+  <Link to={`/atletas/perfil/${atleta.id_atleta}`}>
+    <button className="action-button profile">Perfil</button>
+  </Link>
+</td>
               </tr>
             ))
           )}

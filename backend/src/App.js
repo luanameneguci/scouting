@@ -16,11 +16,19 @@ app.set('port', process.env.PORT || 8080);
 
 // Middlewares
 app.use(cors()); // Apply CORS globally
+
+// Middleware para parsear JSON no corpo da requisição
+app.use(express.json());
+
+// Adicionar logs para depuração (ponto 1)
 app.use((req, res, next) => {
-    if (req.method === "GET") {
-        return next(); // Ignora express.json() em GET
-    }
-    express.json()(req, res, next); // Aplica express.json() para outros métodos
+    console.log("Requisição recebida:", {
+        method: req.method,
+        url: req.url,
+        body: req.body,
+        headers: req.headers,
+    });
+    next();
 });
 
 // Routers

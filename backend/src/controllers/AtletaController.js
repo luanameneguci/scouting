@@ -281,23 +281,49 @@ controllers.getRatingsData = async (req, res) => {
 
 // Apagar atleta corrigido
 controllers.apagar = async (req, res) => {
-  const { id_atleta } = req.body; // Corrigido para `id_atleta`
+  console.log("Dados recebidos no req.body:", req.body); // Log para depuração
+  const { id_atleta } = req.body; // Captura o id_atleta
 
-  const deleted = await Atleta.destroy({
-    where: { id_atleta: id_atleta },
-  }).catch((error) => {
-    console.log("Erro ao apagar atleta: " + error);
-    res
-      .status(500)
-      .json({ success: false, message: "Erro ao apagar atleta." });
-  });
+  if (!id_atleta) {
+      return res.status(400).json({
+          success: false,
+          message: "ID do atleta não fornecido.",
+      });
+  }
 
-  if (deleted) {
-    res.json({ success: true, message: "Atleta apagado com sucesso." });
-  } else {
-    res
-      .status(404)
-      .json({ success: false, message: "Atleta não encontrado." });
+  try {
+      const deleted = await Atleta.destroy({
+          where: { id_atleta },
+      });
+
+      if (deleted) {
+          return res.json({
+              success: true,
+              message: "Atleta apagado com sucesso.",
+          });
+      } else {
+          return res.status(404).json({
+              success: false,
+              message: "Atleta não encontrado.",
+          });
+      }
+  } catch (error) {
+      console.error("Erro ao apagar atleta:", error);
+      return res.status(500).json({
+          success: false,
+          message: "Erro ao apagar atleta.",
+      });
+  }
+};
+
+// APAGAR ISSO DEPOIS SO TO TESTANDO PORRA Q N VAI VOU EXPLODIR
+controllers.testarModelo = async (req, res) => {
+  try {
+      const atletas = await Atleta.findAll({ limit: 1 });
+      res.json({ success: true, data: atletas });
+  } catch (error) {
+      console.error("Erro ao acessar o modelo Atleta:", error);
+      res.status(500).json({ success: false, message: "Erro no modelo Atleta.", error });
   }
 };
 
