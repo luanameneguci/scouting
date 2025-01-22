@@ -75,6 +75,32 @@ function initModels(sequelize) {
   jogo.belongsTo(escalao, { foreignKey: "id_escalao" });
   escalao.hasMany(jogo, { foreignKey: "id_escalao" });
 
+  // Foreign keys for many-to-many junction tables NÃO MEXER AQUI --------------------------------------------------------------------
+  EquipaAtleta.belongsTo(atleta, { foreignKey: "id_atleta" });
+  EquipaAtleta.belongsTo(equipa, { foreignKey: "id_equipa" });
+  
+  JogoAtleta.belongsTo(jogo, { foreignKey: "id_jogo", as: "RelatedJogoAtleta" });
+  jogo.hasMany(JogoAtleta, { foreignKey: "id_jogo", as: "JogoAtletas" });
+  
+  JogoAtleta.belongsTo(atleta, { foreignKey: "id_atleta", as: "RelatedAtleta" });
+  atleta.hasMany(JogoAtleta, { foreignKey: "id_atleta", as: "AtletaJogos" });
+
+  JogoClube.belongsTo(jogo, { foreignKey: "id_jogo", as:"RelatedJogoClube" });
+  jogo.hasMany(JogoClube, { foreignKey: "id_jogo", as: "JogoClubes" });
+
+  JogoClube.belongsTo(clube, { foreignKey: "id_clube", as: "RelatedClube"});
+  clube.hasMany(JogoClube, { foreignKey: "id_clube", as: "ClubeJogos"});
+  //-------------------------------------------------------------------NÃO MEXER AQUI
+
+
+  nacionalidadeatleta.belongsTo(atleta, { foreignKey: "id_atleta" });
+  nacionalidadeatleta.belongsTo(nacionalidade, {
+    foreignKey: "id_nacionalidade",
+  });
+
+  PosicaoAtleta.belongsTo(atleta, { foreignKey: "id_atleta" });
+  PosicaoAtleta.belongsTo(posicao, { foreignKey: "id_posicao" });
+
   funcao.belongsTo(posicao, { foreignKey: "id_posicao" });
   posicao.hasMany(funcao, { foreignKey: "id_posicao" });
 
