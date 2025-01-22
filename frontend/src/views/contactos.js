@@ -4,6 +4,7 @@ import './contactos.css';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import Footer from '../components/footerWEB';
 
 export default function Contactos() {
     return (
@@ -61,6 +62,8 @@ export default function Contactos() {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
+        
     );
 }
