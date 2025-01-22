@@ -152,7 +152,7 @@ export default function Dashboard() {
       <section className="games">
         <h2>Próximos jogos</h2>
         <div id="game-container">
-          {(games || []).map((game, index) => {
+          {games.map((game, index) => {
             // Extract the club names from the "clubes" array
             const club1 = game.clubes?.[0]?.nome || "Clube 1 Indisponível";
             const club2 = game.clubes?.[1]?.nome || "Clube 2 Indisponível";
@@ -221,7 +221,7 @@ export default function Dashboard() {
             {/* Ages Section */}
             <div className="ages">
               <p>por idades</p>
-              {(ages || []).map((age, index) => (
+              {ages.map((age, index) => (
                 <div key={index}>
                   <span>{age.range}</span>{" "}
                   <span>
@@ -236,7 +236,7 @@ export default function Dashboard() {
 
         <div className="stat reports">
           <h3>Relatórios</h3>
-          {(relatorios || []).map((relatorio, index) => (
+          {relatorios.map((relatorio, index) => (
             <div key={index}>
               <p>
                 Foram criados{" "}
@@ -262,7 +262,7 @@ export default function Dashboard() {
         <div className="stat teams">
           <h3>Equipas Próprias</h3>
           <div className="teams-content">
-            {(equipasProprias || []).map((equipa, index) => (
+            {equipasProprias.map((equipa, index) => (
               <div key={index}>
                 <span>{equipa.escalao}</span>
                 <span>{equipa.quantidadeAtletasEscalao}</span>
@@ -276,7 +276,7 @@ export default function Dashboard() {
         <div className="stat teams">
           <h3>Equipas Sombra</h3>
           <div className="teams-content">
-            {(equipasSombra || []).map((equipa, index) => (
+            {equipasSombra.map((equipa, index) => (
               <div key={index}>
                 <span>{equipa.escalao}</span>
                 <span>{equipa.quantidadeAtletasEscalao}</span>
