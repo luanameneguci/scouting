@@ -1,5 +1,5 @@
 import React from 'react';
-import './footerWEB.css';
+import './footer.css';
 import { NavLink } from "react-router-dom";
 import logoSVG from '../assets/whiteLogo.svg';
 import '@fortawesome/fontawesome-free/css/all.min.css';

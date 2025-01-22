@@ -3,7 +3,6 @@ import HeroImage from '../../assets/heroImage.png';
 import GooglePlayIcon from '../../assets/google_play.png'; // Adicione o ícone do Google Play
 import AppStoreIcon from '../../assets/apple.png'; // Adicione o ícone da App Store
 import './landingPage.css';
-import Footer from '../../components/footerWEB';
 
 export default function LandingPage() {
     return (
@@ -53,10 +52,8 @@ export default function LandingPage() {
                             App Store
                         </a>
                     </div>
-                    <Footer />
                 </div>
             </div>
-            
         </>
     );
 }
