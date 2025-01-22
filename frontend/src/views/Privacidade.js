@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import AcademicoViseuImage from '../assets/academico_viseu.png';
 import PCIcon from '../assets/icone_pc.png';
 import DadosIcon from '../assets/icone_dados.png';
@@ -7,6 +7,7 @@ import SegurancaIcon from '../assets/icone_seguranca.png';
 import ConservacaoIcon from '../assets/icone_conservacao.png';
 import AutoridadeIcon from '../assets/icone_autoridade.png';
 import './Privacidade.css';
+import Footer from '../components/footerWEB';
 
 export default function Privacidade() {
     return (
@@ -24,8 +25,8 @@ export default function Privacidade() {
             <div className="contentpriv">
                 <div className="sectionpriv">
                     <div className="section-headerpriv">
-                    <div className="section-titlepriv">
-                        <img className="iconpriv" src={PCIcon} alt="icone_pc" />
+                        <div className="section-titlepriv">
+                            <img className="iconpriv" src={PCIcon} alt="icone_pc" />
                         </div>
                         <h2>1. IDENTIFICAÇÃO DO RESPONSÁVEL PELO TRATAMENTO</h2>
                     </div>
@@ -40,8 +41,8 @@ export default function Privacidade() {
 
                 <div className="sectionpriv">
                     <div className="section-headerpriv">
-                    <div className="section-titlepriv">
-                        <img className="iconpriv" src={DadosIcon} alt="icone_dados" />
+                        <div className="section-titlepriv">
+                            <img className="iconpriv" src={DadosIcon} alt="icone_dados" />
                         </div>
                         <h2>2. INFORMAÇÃO, CONSENTIMENTO E FINALIDADE DO TRATAMENTO</h2>
                     </div>
@@ -62,58 +63,59 @@ export default function Privacidade() {
 
                 <div className="sectionpriv">
                     <div className="section-headerpriv">
-                    <div className="section-titlepriv">
-                        <img className="iconpriv" src={SegurancaIcon} alt="icone_seguranca" />
+                        <div className="section-titlepriv">
+                            <img className="iconpriv" src={SegurancaIcon} alt="icone_seguranca" />
                         </div>
                         <h2>3. MEDIDAS DE SEGURANÇA </h2>
                     </div>
                     <hr className="yellow-linepriv" />
                     <p>
-                    O Académico de Viseu Futebol Clube declara que implementou e continuará a implementar as medidas de segurança de natureza técnica e organizativa necessárias para garantir a segurança dos dados de carácter pessoal que lhe sejam fornecidos visando evitar a sua alteração, perda, tratamento e/ou acesso não autorizado, tendo em conta o estado atual da tecnologia,
-                     a natureza dos dados armazenados e os riscos a que estão expostos bem como garante a confidencialidade dos mesmos. 
-                    </p>
-                </div>
-
-                <div className="sectionpriv">
-                    <div className="section-headerpriv">
-                    <div className="section-titlepriv">
-                        <img className="iconpriv" src={Dados2Icon} alt="icone_dados_2" />
-                        </div>
-                        <h2>4. EXERCÍCIO DOS DIREITOS</h2>
-                    </div>
-                    <hr className="yellow-linepriv" />
-                    <p>
-                    O titular dos dados pessoais/encarregados de educação podem, exercer a todo o tempo, os seus direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade. 
+                        O Académico de Viseu Futebol Clube declara que implementou e continuará a implementar as medidas de segurança de natureza técnica e organizativa necessárias para garantir a segurança dos dados de carácter pessoal que lhe sejam fornecidos visando evitar a sua alteração, perda, tratamento e/ou acesso não autorizado, tendo em conta o estado atual da tecnologia,
+                        a natureza dos dados armazenados e os riscos a que estão expostos bem como garante a confidencialidade dos mesmos.
                     </p>
                 </div>
 
                 <div className="sectionpriv">
                     <div className="section-headerpriv">
                         <div className="section-titlepriv">
-                        <img className="iconpriv" src={ConservacaoIcon} alt="icone_conservacao" />
+                            <img className="iconpriv" src={Dados2Icon} alt="icone_dados_2" />
                         </div>
-                        <h2>5. PRAZO DE CONSERVAÇÃO</h2>
+                        <h2>4. EXERCÍCIO DOS DIREITOS</h2>
                     </div>
                     <hr className="yellow-linepriv" />
                     <p>
-                    O Académico de Viseu Futebol Clube apenas trata os dados pessaois durante o período que se revele necessário ao cumprimento da sua finalidade (criação de histórico do atleta desde a formação à profissionalização), sem prejuízo dos dados serem conservados por um período superior, por exigências legais. 
+                        O titular dos dados pessoais/encarregados de educação podem, exercer a todo o tempo, os seus direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade.
                     </p>
                 </div>
 
                 <div className="sectionpriv">
                     <div className="section-headerpriv">
-                    <div className="section-titlepriv">
-                        <img className="iconpriv" src={AutoridadeIcon} alt="icone_autoridade" />
+                        <div className="section-titlepriv">
+                            <img className="iconpriv" src={ConservacaoIcon} alt="icone_conservacao" />
+                        </div>
+                        <h2>5. PRAZO DE CONSERVAÇÃO</h2>
+                    </div>
+                    <hr className="yellow-linepriv" />
+                    <p>
+                        O Académico de Viseu Futebol Clube apenas trata os dados pessaois durante o período que se revele necessário ao cumprimento da sua finalidade (criação de histórico do atleta desde a formação à profissionalização), sem prejuízo dos dados serem conservados por um período superior, por exigências legais.
+                    </p>
+                </div>
+
+                <div className="sectionpriv">
+                    <div className="section-headerpriv">
+                        <div className="section-titlepriv">
+                            <img className="iconpriv" src={AutoridadeIcon} alt="icone_autoridade" />
                         </div>
                         <h2>6. AUTORIDADE DE CONTROLO</h2>
                     </div>
                     <hr className="yellow-linepriv" />
                     <p>
-                    Nos termos legais, o titular dos dados tem o direito de apresentar uma reclamação em matéria de proteção de dados pessoais à autoridade de controlo competente, a Comissão Nacional de Proteção de Dados (CNPD). 
+                        Nos termos legais, o titular dos dados tem o direito de apresentar uma reclamação em matéria de proteção de dados pessoais à autoridade de controlo competente, a Comissão Nacional de Proteção de Dados (CNPD).
                     </p>
                 </div>
 
             </div>
+            <Footer />
         </div>
     );
 }

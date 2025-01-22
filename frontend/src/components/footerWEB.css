@@ -1,149 +1,91 @@
-<<<<<<< HEAD
-/* Faz o footer fixar no final da página */
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-#root {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
 /* Estilo do Footer */
 .footer {
-  background-color: #000; /* Fundo preto */
-  color: var(--white-color); /* Texto branco */
+  background-color: #000;
+  /* Fundo preto */
+  color: var(--white-color);
+  /* Texto branco */
   text-align: center;
-  padding: 40px 0; /* Ajuste do espaçamento no topo e embaixo */
-  font-family: Arial, sans-serif;
-  position: relative;
-  bottom: 0;
   width: 100%;
-  margin-top: auto;
+  position: relative;
+  /* Permite que o footer role com a página */
+  height: 38dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* Centralização do conteúdo do footer */
 .footer-content {
   display: flex;
-  justify-content: center; /* Centraliza os links principais */
-  gap: 100px; /* Espaçamento horizontal entre os links */
-  margin-bottom: 20px; /* Espaçamento abaixo dos links */
-  font-size: 14px; /* Tamanho da fonte dos links */
+  justify-content: space-between;
+  /* Centraliza os links principais */
+  gap: 100px;
+  /* Espaçamento horizontal entre os links */
+  padding: 20px 20%;
+  height: 80%;
+  align-items:center;
+  position: relative;
+  z-index: 2;
 }
 
 .footer-link {
-  color: var(--white-color); /* Texto branco */
+  color: var(--white-color);
+  /* Texto branco */
   text-decoration: none;
   font-weight: bold;
-  text-transform: uppercase; /* Letras maiúsculas */
+  text-transform: uppercase;
+  /* Letras maiúsculas */
+  width: 100%;
 }
 
 .footer-link:hover {
-  text-decoration: underline; /* Efeito ao passar o mouse */
+  text-decoration: underline;
+  /* Efeito ao passar o mouse */
 }
 
+/* Logo ao centro */
 .footer-logo {
-  text-align: center;
-  margin-bottom: 20px; /* Espaço abaixo do logo */
-  opacity: 0.1; /* Transparência do logo */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) ;
+  z-index: 0;
+  /* Coloca o logo abaixo do texto */
+  height: 80%;
+opacity: .4;
 }
 
 .footer-logo img {
-  width: 100px; /* Tamanho ajustável do logo */
-  height: auto;
+  height: 100%;
 }
 
 .footer-bottom {
   display: flex;
-  justify-content: space-between; /* Espaça o copyright e os ícones */
+  justify-content: space-between;
+  /* Espaça o copyright e os ícones */
   align-items: center;
-  padding: 0 20px; /* Espaçamento horizontal interno */
-  font-size: 12px;
+  padding: 20px 20%;
+  /* Espaçamento horizontal interno */
+  height: 20%;
+  width: 100%;
 }
 
 .footer-bottom span {
-  color: var(--white-color); /* Texto branco */
+  color: var(--white-color);
+  font-size: 12px;
 }
 
 .social-icons {
   display: flex;
-  gap: 10px; /* Espaçamento entre os ícones */
+  gap: 10px;
+  /* Espaçamento entre os ícones */
 }
 
 .social-icons a {
-  color: var(--white-color); /* Cor dos ícones */
-  font-size: 20px; /* Tamanho dos ícones */
+  color: var(--white-color);
+  /* Cor dos ícones */
+  font-size: 20px;
+  /* Tamanho dos ícones */
 }
-
-.social-icons a:hover {
-  color: var(--highlight-color); /* Cor de destaque ao passar o mouse */
-}
-=======
-/* Estilização do footer */
-.footer {
-    background-color: #000; /* Fundo preto */
-    color: var(--white-color); /* Texto branco */
-    text-align: center;
-    padding: 20px 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Links principais */
-  .footer-content {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Espaçamento entre links */
-    margin-bottom: 20px;
-  }
-  
-  .footer-link {
-    color: var(--white-color); /* Links brancos */
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-link:hover {
-    color: #888; /* Cinza ao passar o mouse */
-  }
-  
-  /* Logo ao centro */
-  .footer-logo .logo {
-    max-width: 80px;
-    opacity: 0.5; /* Logo branco sutil */
-    filter: brightness(0) invert(1); /* Deixa o logo branco */
-    margin-bottom: 20px;
-  }
-  
-  /* Copyright e ícones sociais */
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    font-size: 12px;
-  }
-  
-  .footer-bottom span {
-    flex: 1; /* Centraliza o texto */
-    text-align: center;
-  }
-  
-  .social-icons a {
-    color: var(--white-color); /* Ícones brancos */
-    font-size: 20px;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-  }
-  
-  .social-icons a:hover {
-    color: #888; /* Ícones cinza ao passar o mouse */
-  }
-  
   /* Responsividade para telas menores */
   @media (max-width: 768px) {
     .footer-content {
@@ -156,5 +98,3 @@ html, body {
       text-align: center;
     }
   }
-  
->>>>>>> parent of 50edfeb83 (:0)
