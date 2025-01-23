@@ -6,6 +6,7 @@ const jogoRouter = require('./routes/jogoRoute.js');
 const atletaRouter = require('./routes/atletaRoute.js'); 
 const relatorioRouter = require('./routes/relatorioRoute.js'); 
 const utilizadorRouter = require('./routes/utilizadorRoute'); // Corrigido o nome para "utilizadorRouter"
+const authRouter = require('./routes/authRoute.js');
 /* const tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 
 const app = express();
@@ -37,7 +38,8 @@ app.use('/equipa', equipasRouter);
 app.use('/jogo', jogoRouter);
 app.use('/atleta', atletaRouter); 
 app.use('/relatorio', relatorioRouter); 
-app.use('/utilizador', utilizadorRouter); // Corrigido para utilizar o nome correto da variável
+app.use('/utilizador', utilizadorRouter);
+app.use('/auth', authRouter); // Registrando authRouter
 /* app.use('/tipoEquipa', tipoEquipasRouter); */
 
 // CORS headers for manual pre-flight requests (OPTIONS)
