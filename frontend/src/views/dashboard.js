@@ -15,84 +15,35 @@ export default function Dashboard() {
   const [equipasSombra, setEquipasSombra] = useState([]);
   const [ratingMedio, setRatingMedio] = useState([]);
 
-  const url = process.env.REACT_APP_API_URL;
+  const url = "https://localhost:8080";
 
   //-------------------------Fetching data from jogos
   useEffect(() => {
-    axios.get(`${url}/jogo`)
-      .then(res => {
-        if (res.data.success) {
-          const games = res.data.data;
-          setGames(games);
-        } else {
-          alert("Error Web Service!");
-        }
-      })
-      .catch(error => {
-        alert(error)
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${url}/atleta/getRatingsData`)
-      .then(res => {
-        if (res.data.success) {
-          const ratingsData = res.data.data;
-          setRatings(ratingsData);
-        } else {
-          alert("Error Web Service!");
-        }
-      })
-      .catch(error => {
-        alert(error)
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${url}/atleta/getAgesData`)
-      .then(res => {
-        if (res.data.success) {
-          const agesData = res.data.data;
-          setAges(agesData);
-        } else {
-          alert("Error Web Service!");
-        }
-      })
-      .catch(error => {
-        alert(error)
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${url}/atleta/getTotalAthletes`)
-      .then(res => {
-        if (res.data.success) {
-          const totalAthletesData = res.data.data;
-          setTotalAthletes(totalAthletesData);
-        } else {
-          alert("Error Web Service!");
-        }
-      })
-      .catch(error => {
-        alert(error)
-      });
-  }, []);
-
-
-  useEffect(() => {
-    axios.get(`${url}/relatorio/relatoriosData`)
-      .then(res => {
-        if (res.data.success) {
-          const relatoriosData = res.data.data;
-          setRelatorios(relatoriosData);
-        } else {
-          alert("Error Web Service!");
-        }
-      })
-      .catch(error => {
-        alert(error)
-      });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const [gamesRes, ratingsRes, agesRes, totalAthletesRes, relatoriosRes] = await Promise.all([
+          axios.get(`${url}/jogo`),
+          axios.get(`${url}/atleta/getRatingsData`),
+          axios.get(`${url}/atleta/getAgesData`),
+          axios.get(`${url}/atleta/getTotalAthletes`),
+          axios.get(`${url}/relatorio/relatoriosData`),
+        ]);
+  
+        if (gamesRes.data.success) setGames(gamesRes.data.data);
+        if (ratingsRes.data.success) setRatings(ratingsRes.data.data);
+        if (agesRes.data.success) setAges(agesRes.data.data);
+        if (totalAthletesRes.data.success) setTotalAthletes(totalAthletesRes.data.data);
+        if (relatoriosRes.data.success) setRelatorios(relatoriosRes.data.data);
+      } catch (error) {
+        alert("Error fetching data:", console.error());
+        
+        
+      }
+    };
+  
+    fetchData();
+  }, [url]);
+  
 
   useEffect(() => {
     const equipasPropriasData = [
