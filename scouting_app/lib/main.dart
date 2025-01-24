@@ -8,8 +8,13 @@ import 'package:scouting_app/jogador.dart';
 import 'package:scouting_app/novorelatorio.dart'; // Importando a nova página de relatório
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scouting_app/login.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() => runApp(const HomePage());
+void main() async {
+  await dotenv.load(fileName: '.env'); // Load environment variables
+
+  runApp(const HomePage());
+}
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -24,7 +29,8 @@ class HomePage extends StatelessWidget {
         cardColor: const Color.fromARGB(255, 43, 43, 43),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromARGB(255, 30, 30, 30),
-          secondary: Color.fromARGB(255, 255, 208, 0), // Yellow accent color
+          secondary: Color.fromARGB(255, 255, 208, 0),
+          error:  Color.fromARGB(255, 220, 0, 0),
         ),
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme,

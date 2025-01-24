@@ -84,7 +84,7 @@ authController.login = async (req, res) => {
         // Verificar a senha
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: "Senha incorreta." });
+            return res.status(401).json({ message: "Palavra-passe incorreta." });
         }
 
         const token = createToken(user.id_utilizador, user.nome, user.email, user.telefone, user.id_tipoutilizador);
