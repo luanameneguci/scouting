@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [ratingMedio, setRatingMedio] = useState([]);
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   const url = process.env.REACT_APP_API_URL;
 
   //-------------------------Fetching data from jogos
@@ -27,10 +28,17 @@ export default function Dashboard() {
 =======
   //-------------------------Fetching data from jogos
   useEffect(() => {
+=======
+  //-------------------------Fetching data from jogos
+  useEffect(() => {
+>>>>>>> Stashed changes
     const url = "http://localhost:8080/jogo/";
     axios
       .get(url)
       .then((res) => {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         if (res.data.success) {
           const games = res.data.data;
@@ -46,13 +54,19 @@ export default function Dashboard() {
 
   useEffect(() => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     axios.get(`${url}/atleta/getRatingsData`)
       .then(res => {
 =======
+=======
+>>>>>>> Stashed changes
     const url = "http://localhost:8080/atleta/getRatingsData";
     axios
       .get(url)
       .then((res) => {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         if (res.data.success) {
           const ratingsData = res.data.data;
@@ -68,13 +82,19 @@ export default function Dashboard() {
 
   useEffect(() => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     axios.get(`${url}/atleta/getAgesData`)
       .then(res => {
 =======
+=======
+>>>>>>> Stashed changes
     const url = "http://localhost:8080/atleta/getAgesData";
     axios
       .get(url)
       .then((res) => {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         if (res.data.success) {
           const agesData = res.data.data;
@@ -90,13 +110,19 @@ export default function Dashboard() {
 
   useEffect(() => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     axios.get(`${url}/atleta/getTotalAthletes`)
       .then(res => {
 =======
+=======
+>>>>>>> Stashed changes
     const url = "http://localhost:8080/atleta/getTotalAthletes";
     axios
       .get(url)
       .then((res) => {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         if (res.data.success) {
           const totalAthletesData = res.data.data;
@@ -112,13 +138,19 @@ export default function Dashboard() {
 
   useEffect(() => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     axios.get(`${url}/relatorio/relatoriosData`)
       .then(res => {
 =======
+=======
+>>>>>>> Stashed changes
     const url = "http://localhost:8080/relatorio/relatoriosData";
     axios
       .get(url)
       .then((res) => {
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         if (res.data.success) {
           const relatoriosData = res.data.data;
