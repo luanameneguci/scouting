@@ -15,11 +15,11 @@ export default function Dashboard() {
   const [equipasSombra, setEquipasSombra] = useState([]);
   const [ratingMedio, setRatingMedio] = useState([]);
 
+  const url = process.env.REACT_APP_API_URL;
 
   //-------------------------Fetching data from jogos
   useEffect(() => {
-    const url = "http://localhost:8080/jogo/";
-    axios.get(url)
+    axios.get(`${url}/jogo`)
       .then(res => {
         if (res.data.success) {
           const games = res.data.data;
@@ -34,8 +34,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    const url = "http://localhost:8080/atleta/getRatingsData";
-    axios.get(url)
+    axios.get(`${url}/atleta/getRatingsData`)
       .then(res => {
         if (res.data.success) {
           const ratingsData = res.data.data;
@@ -50,8 +49,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    const url = "http://localhost:8080/atleta/getAgesData";
-    axios.get(url)
+    axios.get(`${url}/atleta/getAgesData`)
       .then(res => {
         if (res.data.success) {
           const agesData = res.data.data;
@@ -66,8 +64,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    const url = "http://localhost:8080/atleta/getTotalAthletes";
-    axios.get(url)
+    axios.get(`${url}/atleta/getTotalAthletes`)
       .then(res => {
         if (res.data.success) {
           const totalAthletesData = res.data.data;
@@ -83,8 +80,7 @@ export default function Dashboard() {
 
 
   useEffect(() => {
-    const url = "http://localhost:8080/relatorio/relatoriosData";
-    axios.get(url)
+    axios.get(`${url}/relatorio/relatoriosData`)
       .then(res => {
         if (res.data.success) {
           const relatoriosData = res.data.data;

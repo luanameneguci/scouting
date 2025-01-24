@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors'); // Import cors
 const homeRouter = require('./routes/home.js');
@@ -5,7 +7,7 @@ const equipasRouter = require('./routes/equipas.js');
 const jogoRouter = require('./routes/jogoRoute.js');
 const atletaRouter = require('./routes/atletaRoute.js'); 
 const relatorioRouter = require('./routes/relatorioRoute.js'); 
-const utilizadorRouter = require('./routes/utilizadorRoute'); // Corrigido o nome para "utilizadorRouter"
+const utilizadorRouter = require('./routes/utilizadorRoute'); 
 const authRouter = require('./routes/authRoute.js');
 /* const tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 
@@ -15,8 +17,10 @@ const port = 8080;
 // Configurações
 app.set('port', process.env.PORT || 8080);
 
+
 // Middlewares
-app.use(cors()); // Apply CORS globally
+app.use(cors({ origin: '*' })); // Apply CORS globally
+
 
 // Middleware para parsear JSON no corpo da requisição
 app.use(express.json());
@@ -42,14 +46,7 @@ app.use('/utilizador', utilizadorRouter);
 app.use('/auth', authRouter); // Registrando authRouter
 /* app.use('/tipoEquipa', tipoEquipasRouter); */
 
-// CORS headers for manual pre-flight requests (OPTIONS)
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
+
 
 // Start server
 app.listen(port, () => {
