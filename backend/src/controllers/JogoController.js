@@ -164,10 +164,7 @@ const addAtletaToJogo = async (req, res) => {
 
 controllers.listar = async (req, res) => {
   try {
-    // Debugging associations
-    console.log(Jogo.associations);
-    console.log(JogoAtleta.associations);
-    console.log(JogoClube.associations);
+
 
     // Fetch all games with associated data  //-------------------------------------------------------------------NÃO MEXER AQUI
     const data = await models.jogo.findAll({
