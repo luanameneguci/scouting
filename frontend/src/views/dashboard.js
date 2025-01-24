@@ -1,6 +1,8 @@
 import "./dashboard.css";
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
+
+//--------------------------------------------------------------NÃO MEXER NESTE CÓDIGO-----------------------------------
 
 export default function Dashboard() {
   // State for storing game data
@@ -15,12 +17,21 @@ export default function Dashboard() {
   const [equipasSombra, setEquipasSombra] = useState([]);
   const [ratingMedio, setRatingMedio] = useState([]);
 
+<<<<<<< Updated upstream
   const url = process.env.REACT_APP_API_URL;
 
   //-------------------------Fetching data from jogos
   useEffect(() => {
     axios.get(`${url}/jogo`)
       .then(res => {
+=======
+  //-------------------------Fetching data from jogos
+  useEffect(() => {
+    const url = "http://localhost:8080/jogo/";
+    axios
+      .get(url)
+      .then((res) => {
+>>>>>>> Stashed changes
         if (res.data.success) {
           const games = res.data.data;
           setGames(games);
@@ -28,14 +39,21 @@ export default function Dashboard() {
           alert("Error Web Service!");
         }
       })
-      .catch(error => {
-        alert(error)
+      .catch((error) => {
+        alert(error);
       });
   }, []);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     axios.get(`${url}/atleta/getRatingsData`)
       .then(res => {
+=======
+    const url = "http://localhost:8080/atleta/getRatingsData";
+    axios
+      .get(url)
+      .then((res) => {
+>>>>>>> Stashed changes
         if (res.data.success) {
           const ratingsData = res.data.data;
           setRatings(ratingsData);
@@ -43,14 +61,21 @@ export default function Dashboard() {
           alert("Error Web Service!");
         }
       })
-      .catch(error => {
-        alert(error)
+      .catch((error) => {
+        alert(error);
       });
   }, []);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     axios.get(`${url}/atleta/getAgesData`)
       .then(res => {
+=======
+    const url = "http://localhost:8080/atleta/getAgesData";
+    axios
+      .get(url)
+      .then((res) => {
+>>>>>>> Stashed changes
         if (res.data.success) {
           const agesData = res.data.data;
           setAges(agesData);
@@ -58,14 +83,21 @@ export default function Dashboard() {
           alert("Error Web Service!");
         }
       })
-      .catch(error => {
-        alert(error)
+      .catch((error) => {
+        alert(error);
       });
   }, []);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     axios.get(`${url}/atleta/getTotalAthletes`)
       .then(res => {
+=======
+    const url = "http://localhost:8080/atleta/getTotalAthletes";
+    axios
+      .get(url)
+      .then((res) => {
+>>>>>>> Stashed changes
         if (res.data.success) {
           const totalAthletesData = res.data.data;
           setTotalAthletes(totalAthletesData);
@@ -73,15 +105,21 @@ export default function Dashboard() {
           alert("Error Web Service!");
         }
       })
-      .catch(error => {
-        alert(error)
+      .catch((error) => {
+        alert(error);
       });
   }, []);
 
-
   useEffect(() => {
+<<<<<<< Updated upstream
     axios.get(`${url}/relatorio/relatoriosData`)
       .then(res => {
+=======
+    const url = "http://localhost:8080/relatorio/relatoriosData";
+    axios
+      .get(url)
+      .then((res) => {
+>>>>>>> Stashed changes
         if (res.data.success) {
           const relatoriosData = res.data.data;
           setRelatorios(relatoriosData);
@@ -89,8 +127,8 @@ export default function Dashboard() {
           alert("Error Web Service!");
         }
       })
-      .catch(error => {
-        alert(error)
+      .catch((error) => {
+        alert(error);
       });
   }, []);
 
@@ -119,7 +157,6 @@ export default function Dashboard() {
     ];
     setEquipasSombra(equipasSombraData);
 
-
     const totalAtletasPropriaData = [999];
     setTotalAtletasPropria(totalAtletasPropriaData);
 
@@ -128,7 +165,6 @@ export default function Dashboard() {
 
     const ratingMedioData = [3.6];
     setRatingMedio(ratingMedioData);
-
   }, []); // Empty dependency array ensures it runs only once
 
   // JSX rendering
@@ -148,12 +184,14 @@ export default function Dashboard() {
       <section className="games">
         <h2>Próximos jogos</h2>
         <div id="game-container">
-          {games.map((game, index) => {
-            // Extract the club names from the "clubes" array
+          {(games || []).map((game, index) => {
+            console.log("Mapping game at index:", index, "Game data:", game); // Debugging
             const club1 = game.clubes?.[0]?.nome || "Clube 1 Indisponível";
             const club2 = game.clubes?.[1]?.nome || "Clube 2 Indisponível";
-            const escalao = game.escalao?.designacao || "Nenhum escalão associado";
-            const utilizadores = game.utilizadors?.[0].nome || "Nenhum treinador associado";
+            const escalao =
+              game.escalao?.designacao || "Nenhum escalão associado";
+            const utilizadores =
+              game.utilizadors?.[0]?.nome || "Nenhum treinador associado";
 
             return (
               <div
@@ -189,82 +227,100 @@ export default function Dashboard() {
           <h3>Número de atletas</h3>
           <div className="athletes-content">
             {/* Ratings Section */}
-            <div className="ratings">
+             <div className="ratings">
               <p>por ratings</p>
-              {[1, 2, 3, 4, 5].map((stars, index) => (
-                <div key={index} className="rating-row">
-                  <span className="stars">
-                    {"★".repeat(stars)}{""}
-                    {"☆".repeat(5 - stars)} {/* Visual representation of stars */}
-                  </span>
-                  <span>
-                    {ratings[index]?.count || 0} (
-                    {ratings[index]?.percentage || 0}%)
-                  </span>
-                </div>
-              ))}
-            </div>
-            {/* 
-            <p>por ratings</p>
-              {ratings.map((rating) => (
-                <div key={rating.stars} >
-                  <span>
-                  { {rating.stars} {"★".repeat(rating.stars)} 
-                  </span>
-                  <span>
-                    {rating.count} ({rating.percentage}%)
-                  </span> */}
+              {(ratings || []).length === 0 ? (
+                <p>No ratings available.</p> // Fallback message
+              ) : (
+                (ratings || []).map((rating, index) => {
+                  console.log(
+                    "Mapping rating at index:",
+                    index,
+                    "Rating data:",
+                    rating
+                  ); // Debugging
+                  return (
+                    <div key={index} className="rating-row">
+                      <span className="stars">
+                        {"★".repeat(rating.stars || 0)}{" "}
+                        {"☆".repeat(5 - (rating.stars || 0))}
+                      </span>
+                      <span>
+                        {rating.count || 0} ({rating.percentage || 0}%)
+                      </span>
+                    </div>
+                  );
+                })
+              )}
+            </div> 
+
             {/* Ages Section */}
             <div className="ages">
               <p>por idades</p>
-              {ages.map((age, index) => (
-                <div key={index}>
-                  <span>{age.range}</span>{" "}
-                  <span>
-                    {age.count} ({age.percentage}%)
-                  </span>
-                </div>
-              ))}
+               {ages.map((age, index) => {
+                console.log("Mapping age at index:", index, "Age data:", age); // Debugging
+                return (
+                  <div key={index}>
+                    <span>{age.range}</span>{" "}
+                    <span>
+                      {age.count} ({age.percentage}%)
+                    </span>
+                  </div>
+                );
+              })} 
             </div>
           </div>
           <p className="total-athletes">{totalAthletes} atletas no total</p>
         </div>
 
         <div className="stat reports">
-          <h3>Relatórios</h3>
-          {relatorios.map((relatorio, index) => (
-            <div key={index}>
-              <p>
-                Foram criados{" "}
-                <span className="numeroReports">
-                  {relatorio.quantidadeRelatorios}
-                </span>{" "}
-                relatórios nos últimos 7 dias
-              </p>
-              <p>
-                O rating médio é de{" "}
-                <span className="numeroReports">{relatorio.ratingMedio}</span>
-              </p>
-              <p>
-                Foram avaliados{" "}
-                <span className="numeroReports">
-                  {relatorio.quantidadeAtletasAvaliados}
-                </span>{" "}
-                atletas nos últimos 7 dias
-              </p>
-            </div>
-          ))}
+         <h3>Relatórios</h3>
+         
+           
+            return (
+              <div>
+                <p>
+                  Foram criados{" "}
+                  <span className="numeroReports">
+                    {relatorios.quantidadeRelatorios}
+                  </span>{" "}
+                  relatórios nos últimos 7 dias
+                </p>
+                <p>
+                  O rating médio é de{" "}
+                  <span className="numeroReports">{relatorios.ratingMedio}</span>
+                </p>
+                <p>
+                  Foram avaliados{" "}
+                  <span className="numeroReports">
+                    {relatorios.quantidadeAtletasAvaliados}
+                  </span>{" "}
+                  atletas nos últimos 7 dias
+                </p>
+              </div>
+            );
+         
         </div>
+
         <div className="stat teams">
           <h3>Equipas Próprias</h3>
           <div className="teams-content">
-            {equipasProprias.map((equipa, index) => (
-              <div key={index}>
-                <span>{equipa.escalao}</span>
-                <span>{equipa.quantidadeAtletasEscalao}</span>
-              </div>
-            ))}
+            {equipasProprias.map((equipa, index) => {
+              console.log(
+                "Mapping equipaPropria at index:",
+                index,
+                "Equipa data:",
+                equipa
+              ); // Debugging
+              return (
+                <div key={index}>
+                  <span>{equipa.escalao}</span>
+                  <span>{equipa.quantidadeAtletasEscalao}</span>
+                </div>
+              );
+            })}
           </div>
+
           <p className="total-athletes">
             {totalAtletasPropria} atletas no total
           </p>
@@ -272,13 +328,22 @@ export default function Dashboard() {
         <div className="stat teams">
           <h3>Equipas Sombra</h3>
           <div className="teams-content">
-            {equipasSombra.map((equipa, index) => (
-              <div key={index}>
-                <span>{equipa.escalao}</span>
-                <span>{equipa.quantidadeAtletasEscalao}</span>
-              </div>
-            ))}
+            {equipasSombra.map((equipa, index) => {
+              console.log(
+                "Mapping equipaSombra at index:",
+                index,
+                "Equipa data:",
+                equipa
+              ); // Debugging
+              return (
+                <div key={index}>
+                  <span>{equipa.escalao}</span>
+                  <span>{equipa.quantidadeAtletasEscalao}</span>
+                </div>
+              );
+            })}
           </div>
+
           <p className="total-athletes">
             {totalAtletasSombra} atletas no total
           </p>
