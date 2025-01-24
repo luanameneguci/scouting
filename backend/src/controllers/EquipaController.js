@@ -12,6 +12,26 @@ var EscalaoDivisao = require("../models/EscalaoDivisao");
 var divisao = require("../models/divisao");
 
 const controllers = {};
+
+controllers.dashData = async (req, res) => {
+  try{
+    const [totalAtletasPropria, totalAtletasSombra] = await Promise.all([
+
+    ])
+
+    const data = await models.equipa.findAll({
+      include: [{
+        model: models.escalao,
+        include: [{
+          model: models.atleta.count({
+            
+          })
+        }]
+      }]
+    })
+  }
+  catch{}
+}
 /*
 // Criar a equipa -- Falta escalão
 controllers.createEquipa = async (req, res) => {
