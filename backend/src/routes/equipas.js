@@ -1,6 +1,10 @@
 
 const express = require('express');
 const router = express.Router();
+
+const EquipaController = require("../controllers/EquipaController.js");
+
+router.get("/dashInfo:id_tipoequipa", EquipaController.DashInfo);  
 /*
 const EquipaController = require("../controllers/EquipaController.js");
 

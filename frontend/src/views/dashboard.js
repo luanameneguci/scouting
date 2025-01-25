@@ -8,11 +8,9 @@ export default function Dashboard() {
   const [ratings, setRatings] = useState([]);
   const [ages, setAges] = useState([]);
   const [totalAthletes, setTotalAthletes] = useState([]);
-  const [totalAtletasSombra, setTotalAtletasSombra] = useState([]);
-  const [totalAtletasPropria, setTotalAtletasPropria] = useState([]);
   const [relatorios, setRelatorios] = useState({});
-  const [equipasProprias, setEquipasProprias] = useState([]);
-  const [equipasSombra, setEquipasSombra] = useState([]);
+  const [equipasProprias, setEquipasProprias] = useState({});
+  const [equipasSombra, setEquipasSombra] = useState({});
   const [ratingMedio, setRatingMedio] = useState([]);
 
    //-------------------------Fetching data from jogos
@@ -26,12 +24,16 @@ export default function Dashboard() {
           agesRes,
           totalAthletesRes,
           relatoriosRes,
+          equipasSombraRes,
+          equipasPropriasRes
         ] = await Promise.all([
           axios.get("http://localhost:8080/jogo"),
           axios.get("http://localhost:8080/atleta/getRatingsData"),
           axios.get("http://localhost:8080/atleta/getAgesData"),
           axios.get("http://localhost:8080/atleta/getTotalAthletes"),
           axios.get("http://localhost:8080/relatorio/relatoriosData"),
+          axios.get("http://localhost:8080/equipa/dashInfo"+1),
+          axios.get("http://localhost:8080/equipa/dashInfo"+2),
         ]);
   
         // Debugging: log each API response to check their data
@@ -61,6 +63,14 @@ export default function Dashboard() {
         if (relatoriosRes.data.success) {
           setRelatorios(relatoriosRes.data);
         } 
+
+        if (equipasSombraRes.data.success) {
+          setEquipasSombra(equipasPropriasRes.data);
+        }
+
+        if (equipasPropriasRes.data.success) {
+          setEquipasProprias(equipasPropriasRes.data);
+        }
       } catch (error) {
         console.error("Error fetching data: ", error); // Log the complete error object
         alert("Error fetching data");
@@ -72,36 +82,7 @@ export default function Dashboard() {
   
 
   useEffect(() => {
-    const equipasPropriasData = [
-      {
-        escalao: "Sub-19",
-        quantidadeAtletasEscalao: 9,
-      },
-      {
-        escalao: "Sub-16",
-        quantidadeAtletasEscalao: 7,
-      },
-    ];
-    setEquipasProprias(equipasPropriasData);
-
-    const equipasSombraData = [
-      {
-        escalao: "Sub-19",
-        quantidadeAtletasEscalao: 8,
-      },
-      {
-        escalao: "Sub-16",
-        quantidadeAtletasEscalao: 5,
-      },
-    ];
-    setEquipasSombra(equipasSombraData);
-
-
-    const totalAtletasPropriaData = [999];
-    setTotalAtletasPropria(totalAtletasPropriaData);
-
-    const totalAtletasSombraData = [999];
-    setTotalAtletasSombra(totalAtletasSombraData);
+  
 
     const ratingMedioData = [3.6];
     setRatingMedio(ratingMedioData);
@@ -225,30 +206,27 @@ export default function Dashboard() {
         </div>
         <div className="stat teams">
           <h3>Equipas Próprias</h3>
-          <div className="teams-content">
-            {equipasProprias.map((equipa, index) => (
-              <div key={index}>
-                <span>{equipa.escalao}</span>
-                <span>{equipa.quantidadeAtletasEscalao}</span>
+          <div className="teams-content">           
+              <div>
+                <span>{equipasProprias.escalao}</span>
+                <span>{equipasProprias.quantidadeAtletasEscalao}</span>
               </div>
-            ))}
+   
           </div>
           <p className="total-athletes">
-            {totalAtletasPropria} atletas no total
+          {/*   {totalAtletasPropria} atletas no total */}
           </p>
         </div>
         <div className="stat teams">
           <h3>Equipas Sombra</h3>
-          <div className="teams-content">
-            {equipasSombra.map((equipa, index) => (
-              <div key={index}>
-                <span>{equipa.escalao}</span>
-                <span>{equipa.quantidadeAtletasEscalao}</span>
-              </div>
-            ))}
+          <div className="teams-content">           
+              <div>
+                <span>{equipasSombra.escalao}</span>
+                <span>{equipasSombra.quantidadeAtletasEscalao}</span>
+              </div>        
           </div>
           <p className="total-athletes">
-            {totalAtletasSombra} atletas no total
+           {/*  {totalAtletasSombra} atletas no total */}
           </p>
         </div>
       </section>
