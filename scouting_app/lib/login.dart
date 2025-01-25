@@ -70,22 +70,14 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       setState(() {
-        /*_hasError = true;
-        _errorMessage = jsonDecode(response.body)['message'];*/
         switch (response.statusCode) {
           case 400:
-            _emailHasError = true;
             _passwordHasError = true;
-            _emailErrorMessage = 'Email precisa ser inserido.';
-            _passwordErrorMessage = 'Palavra-passe precisa ser inserida.';
+            _passwordErrorMessage = jsonDecode(response.body)['message'];
             break;
           case 404:
             _emailHasError = true;
             _emailErrorMessage = jsonDecode(response.body)['message'];
-            break;
-          case 401:
-            _passwordHasError = true;
-            _passwordErrorMessage = jsonDecode(response.body)['message'];
             break;
           default:
             _emailHasError = true;

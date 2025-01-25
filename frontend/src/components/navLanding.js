@@ -14,7 +14,7 @@ export default function NavLanding() {
                     <span className="material-symbols-outlined icon">
                         login
                     </span>
-                    Entrar
+                    Autenticar
                 </NavLink>
             </div>
     );

@@ -4,9 +4,17 @@ const router = express.Router();
 
 const EquipaController = require("../controllers/EquipaController.js");
 
+const authController = require("../controllers/AuthController");
+const authMiddleware = authController.verifyToken;
+router.get("/teste", authMiddleware, EquipaController.teste); 
+
 router.get("/dashInfo:id_tipoequipa", EquipaController.DashInfo);  
 /*
 const EquipaController = require("../controllers/EquipaController.js");
+
+
+/*
+
 
 router.get("/:idEquipa", EquipaController.single_equipa); 
 router.get("/:tipoEquipa/escaloes", EquipaController.escaloes_equipa); 

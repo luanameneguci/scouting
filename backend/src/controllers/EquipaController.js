@@ -8,6 +8,9 @@ var EquipaAtleta = require("../models/EquipaAtleta");
 
 const controllers = {};
 
+controllers.teste = async (req, res) => {
+  return res.status(200).json({ success: true, message: "Teste de Equipa" });
+}
 controllers.DashInfo = async (req, res) => {
   const { id_tipoequipa } = req.params;
   const equipes = await models.equipa.findAll({

@@ -1,4 +1,4 @@
-  import { useState } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, NavLink, Routes, useLocation } from "react-router-dom";
 import './App.css';
 import Equipas from './views/equipas';
@@ -20,7 +20,9 @@ import Credenciais from './views/credenciais';
 import AdicionarUtilizador from './views/adicionarutilizador';
 import Jogos from "./views/jogos";
 import Dashboard from "./views/dashboard";
-
+import NeedLogin from "./views/landing/needLogin";
+import Test from "./views/test";
+import ProtectedRoute from './components/protectedRoute';
 
 function App() {
   return (
@@ -39,28 +41,81 @@ function AppContent() {
       {isLandingRoute ? <NavLanding /> : <NavBackoffice />}
 
       <Routes>
+        <Route path="/test" element={<Test />} />
+
         {/* Routes para a landing*/}
         <Route path="/" element={<LandingPage />} />
-
-        {/* Routes para o backoffice*/}
-        <Route path="/home" element={<Dashboard />} />
-        <Route path="/equipa/:idEquipa" element={<Equipas />} />
-        <Route path="/atletas" element={<Atletas />} /> 
-        <Route path="/atletas/adicionar" element={<AtletasAdicionar />} /> 
-        <Route path="/atletas/pagina" element={<Atletaspersonalpage />} /> 
-        <Route path="/relatorio/confirmar" element={<RelatorioConfirmar />} />
-        <Route path="/relatorio/validar" element={<RelatorioValidar />} />
-        <Route path="/relatorio/adicionar" element={<RelatorioAdicionar />} />
-        <Route path="/jogos/adicionarjogo" element={<Adicionarjogo />} />
-        <Route path="/relatorios" element={<Relatorios />} />
-        <Route path="/credenciais" element={<Credenciais />} />
-        <Route path="/credenciais/+" element={<AdicionarUtilizador />} />
-        <Route path="/jogos" element={<Jogos />} />
+        <Route path="/privacidade" element={<Privacidade />} />
+        <Route path="/contactos" element={<Contactos />} />
+        <Route path="/erro" element={<NeedLogin />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/Privacidade" element={<Privacidade/>} />
-        <Route path="/contactos" element={<Contactos/>} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/Login" element={<Dashboard />} />
+
+        {/* Routes para o backoffice */}
+        <Route path="/home" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/equipa/:idEquipa" element={
+          <ProtectedRoute>
+            <Equipas />
+          </ProtectedRoute>
+        } />
+        <Route path="/atletas" element={
+          <ProtectedRoute>
+            <Atletas />
+          </ProtectedRoute>
+        } />
+        <Route path="/atletas/adicionar" element={
+          <ProtectedRoute>
+            <AtletasAdicionar />
+          </ProtectedRoute>
+        } />
+        <Route path="/atletas/pagina" element={
+          <ProtectedRoute>
+            <Atletaspersonalpage />
+          </ProtectedRoute>
+        } />
+        <Route path="/relatorio/confirmar" element={
+          <ProtectedRoute>
+            <RelatorioConfirmar />
+          </ProtectedRoute>
+        } />
+        <Route path="/relatorio/validar" element={
+          <ProtectedRoute>
+            <RelatorioValidar />
+          </ProtectedRoute>
+        } />
+        <Route path="/relatorio/adicionar" element={
+          <ProtectedRoute>
+            <RelatorioAdicionar />
+          </ProtectedRoute>
+        } />
+        <Route path="/jogos/adicionar" element={
+          <ProtectedRoute>
+            <Adicionarjogo />
+          </ProtectedRoute>
+        } />
+        <Route path="/relatorios" element={
+          <ProtectedRoute>
+            <Relatorios />
+          </ProtectedRoute>
+        } />
+        <Route path="/credenciais" element={
+          <ProtectedRoute>
+            <Credenciais />
+          </ProtectedRoute>
+        } />
+        <Route path="/credenciais/adicionar" element={
+          <ProtectedRoute>
+            <AdicionarUtilizador />
+          </ProtectedRoute>
+        } />
+        <Route path="/jogos" element={
+          <ProtectedRoute>
+            <Jogos />
+          </ProtectedRoute>
+        } />
       </Routes>
     </div>
   );

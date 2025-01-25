@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // useNavigate para navegação
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
+import Cookies from 'js-cookie';
 import './login.css';
 
 
@@ -12,26 +13,53 @@ const Login = () => {
     email: '',
     password: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
   const navigate = useNavigate(); // Hook para navegação
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    try {
-      await axios.post(`${url}/auth/login`, {email: formData.email , password: formData.password}).then((response) => {
-        if (response.status == 200) {
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('userData', response.data.user);
-          console.log('Login realizado com sucesso.');
-          navigate('/dashboard');
+    e.preventDefault();
+    setEmailError('');
+    setPasswordError('');
+
+    if (!formData.email) {
+      setEmailError('O email é obrigatório.');
+    }
+    if (!formData.password) {
+      setPasswordError('A palavra-passe é obrigatória.');
+    }
+    if (formData.password && formData.email) {
+      setLoading(true);
+      try {
+        await axios.post(`${url}/auth/login`, { email: formData.email, password: formData.password }).then((response) => {
+          if (response.status == 200) {
+            Cookies.set('token', response.data.token, { expires: 1 });
+            localStorage.setItem('userData', response.data.user);
+            console.log('Login realizado com sucesso.');
+            navigate('/home');
+          }
+        });
+      } catch (error) {
+        if (error.response) { // Se for erro de resposta (status 40X)
+          switch (error.response.status) {
+            case 400:
+              setPasswordError(error.response.data.message);
+              break;
+            case 404:
+              setEmailError(error.response.data.message);
+
+              break;
+            default:
+              setPasswordError('Erro desconhecido.');
+              setEmailError('Erro desconhecido.');
+              break;
+          }
+        } else {
+          console.error('Error', error.message);
         }
-      });
-    } catch (error) {
-      if (error.response) { // Se for erro de resposta (status 40X)
-        console.error(error.response.data.message);
-      } else if (error.request) { // Se não houver resposta (provavelmente erro de conexão)
-        console.error('No response received:', error.request);
-      } else {
-        console.error('Error', error.message);
+        setLoading(false);
       }
     }
   };
@@ -51,60 +79,62 @@ const Login = () => {
 
 
   return (
-    <div className="login-container">
-      <h1>LOGIN</h1>
-      <div className="login-signup">
-        New User? <button className="text-button">Sign Up</button>
-      </div>
-      <form onSubmit={handleSubmit}>
-        {/* Email */}
-        <div className="login-form-group">
-          <label className="login-label">Email</label>
-          <div className="login-input-group">
-            <EmailIcon />
-            <input
-              type="email"
-              name="email"
-              placeholder="Insira o seu email..."
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+    <div className="login-container ">
+      <div >
+        <h1>Autenticar</h1>
+        <form onSubmit={handleSubmit}>
+          {/* Email */}
+          <div className="login-form-group">
+            <label className="login-label font-bold">Email</label>
+            <div className={`login-input-group ${emailError && 'error'}`}>
+              <EmailIcon />
+              <input
+                type="email"
+                name="email"
+                placeholder="Insira o seu email..."
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            {emailError && <p className='error-message text-secondary'>{emailError}</p>}
 
-        {/* Password */}
-        <div className="login-form-group">
-          <label className="login-label">Palavra-passe</label>
-          <div className="login-input-group">
-            <PersonIcon />
-            <input
-              type="password"
-              name="password"
-              placeholder="Insira a sua palavra-passe..."
-              value={formData.password}
-              onChange={handleChange}
-            />
           </div>
-        </div>
 
-        {/* Forgot Password */}
-        <div className="forgot-password">
+          {/* Password */}
+          <div className="login-form-group">
+            <label className="login-label font-bold">Palavra-passe</label>
+            <div className={`login-input-group ${passwordError && 'error'}`}>
+              <PersonIcon />
+              <input
+                type="password"
+                name="password"
+                placeholder="Insira a sua palavra-passe..."
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
+            {passwordError && <p className='error-message text-secondary'>{passwordError}</p>}
+          </div>
+
+          {/* Forgot Password */}
           <button
             type="button"
-            className="text-button"
+            className="text-button forgot-password"
             onClick={handleForgotPassword} // Redireciona para a página de recuperação de senha
           >
-            Forgot Password?
+            Esqueci-me da palavra-passe
           </button>
-        </div>
 
-        {/* Botão de Login */}
-        <div>
-          <button type="submit" className="login-submit-button">
-            Login
-          </button>
-        </div>
-      </form>
+          {/* Botão de Login */}
+          <div>
+            <button type="submit" className="login-submit-button rounded-pill font-bold" disabled={loading}>
+              {!loading ? 'Continuar' : 'A carregar...'}
+
+            </button>
+          </div>
+        </form>
+      </div>
+
     </div>
   );
 };

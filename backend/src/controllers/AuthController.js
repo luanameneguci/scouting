@@ -19,7 +19,7 @@ const createToken = (id, nome, email, telefone, tipo) => {
             tipo
         },
         JWT_SECRET,
-        { expiresIn: "1h" } // O token expira em 1 hora
+        { expiresIn: "1d" } 
     );
 }
 
@@ -84,7 +84,7 @@ authController.login = async (req, res) => {
         // Verificar a senha
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: "Palavra-passe incorreta." });
+            return res.status(400).json({ message: "Palavra-passe incorreta." });
         }
 
         const token = createToken(user.id_utilizador, user.nome, user.email, user.telefone, user.id_tipoutilizador);
@@ -105,21 +105,27 @@ authController.login = async (req, res) => {
 };
 
 
-// Função para verificar um token (opcional, útil para testes)
-authController.verifyToken = (req, res) => {
+authController.verifyToken = (req, res, next) => {
     try {
-        const token = req.headers.authorization?.split(" ")[1];
+        const token = req.cookies.token;
         if (!token) {
             return res.status(401).json({ message: "Token não fornecido." });
         }
 
-        const decoded = jwt.verify(token, JWT_SECRET);
-        return res.status(200).json({ message: "Token válido.", decoded });
+        jwt.verify(token, JWT_SECRET, (err) => {
+            if (err) {
+                return res.status(401).json({ message: "Token inválido." });
+            }
+            console.log("Token verificado.");
+            next(); 
+        });
     } catch (error) {
         console.error("Erro ao verificar o token:", error.message, error.stack);
-        return res.status(401).json({ message: "Token inválido." });
+        return res.status(401).json({ message: error.message });
     }
 };
-
+authController.tokenValidation = (req, res) => {
+    return res.status(200).json({ message: "Token válido." });
+};
 
 module.exports = authController;

@@ -10,6 +10,7 @@ const relatorioRouter = require('./routes/relatorioRoute.js');
 const utilizadorRouter = require('./routes/utilizadorRoute'); 
 const authRouter = require('./routes/authRoute.js');
 /* const tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 8080;
@@ -17,9 +18,11 @@ const port = 8080;
 // Configurações
 app.set('port', process.env.PORT || 8080);
 
+app.use(cookieParser()); // Use cookie-parser middleware
+
 
 // Middlewares
-app.use(cors({ origin: '*' })); // Apply CORS globally
+app.use(cors({ origin: 'http://localhost:3000', credentials: true })); // Apply CORS globally
 
 
 // Middleware para parsear JSON no corpo da requisição

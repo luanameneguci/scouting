@@ -9,6 +9,6 @@ router.post("/login", authController.login);
 router.post("/register", authController.register);
 
 // (Opcional) Rota para verificar o token (para testar se um token JWT é válido)
-router.get("/verifyToken", authController.verifyToken);
+router.get("/verify", authController.verifyToken, authController.tokenValidation);
 
 module.exports = router;

@@ -1,0 +1,37 @@
+.login-validation {
+    padding: 1rem 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.login-validation>div {
+    padding: 1rem 2rem;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    width: clamp(20rem, 50%, 40rem);
+}
+@media (max-width: 768px) {
+    .login-validation>div {
+        width: 100%;
+    }
+}
+.login-validation>div> h1{
+    text-transform: uppercase;
+}
+.login-validation>div>a {
+    background-color: var(--accent-color);
+    color: var(--gray-800-color);
+    font-size: 1.2rem;
+    padding: .64rem 1rem;
+    text-decoration: none;
+    transition: .3s;
+    width: fit-content;
+    margin-left: auto;
+}
+.login-validation>div>a:hover {
+    background-color: var(--light-accent-color);
+}
