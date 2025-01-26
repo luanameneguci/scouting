@@ -6,13 +6,16 @@ const EquipaController = require("../controllers/EquipaController.js");
 
 const authController = require("../controllers/AuthController");
 const authMiddleware = authController.verifyToken;
-router.get("/teste", authMiddleware, EquipaController.teste); 
 
-router.get("/dashInfo:id_tipoequipa", EquipaController.DashInfo);  
-/*
-const EquipaController = require("../controllers/EquipaController.js");
+router.get("/equipa/dashInfo:id_tipoequipa", EquipaController.DashInfo);  
 
+router.get("/equipas", authMiddleware, EquipaController.allEquipas);
 
+router.get("/equipas/info", authMiddleware, EquipaController.getEscalaoTipo);
+
+router.post("/equipa", authMiddleware, EquipaController.createEquipa);
+
+router.delete("/equipa/:id", authMiddleware, EquipaController.deleteEquipa);
 /*
 
 

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { setupContentNavbarMargin } from '../views/utils';
-import './protectedRoute.css';
 const url = process.env.REACT_APP_API_URL;
 
 const ProtectedRoute = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
-
+    const navigate = useNavigate();
+    
     useEffect(() => {
         const checkAuth = async () => {
             const token = Cookies.get('token');
@@ -40,15 +40,7 @@ const ProtectedRoute = ({ children }) => {
     if (isAuthenticated) {
         return children;
     } else {
-        return (
-            <div className='login-validation'>
-                <div className='rounded bg-color-gray-800'>
-                    <h1>Falha na Autenticação</h1>
-                    <p>A sua sessão expirou ou é inválida. Por favor, autentique-se novamente para continuar. </p>
-                    <Link to="/login" className='round font-bold'>Autenticar</Link></div>
-
-            </div>
-        );
+        navigate("/erro");
     }
 };
 

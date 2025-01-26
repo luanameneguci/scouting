@@ -89,6 +89,7 @@ input::placeholder {
 .wrapper {
   width: 100vw;
   min-height: 100vh;
+  background-color:  var(--gray-700-color);
   display: flex;
 }
 
@@ -96,8 +97,4 @@ input::placeholder {
   color: var(--gray-500-color);
   font-size: var(--font-size-secondary);
 
-}
-
-.wrapper {
-  background-color:  var(--gray-700-color);
 }

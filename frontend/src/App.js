@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Route, NavLink, Routes, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, NavLink, useNavigate, Routes, useLocation } from "react-router-dom";
 import './App.css';
 import Equipas from './views/equipas';
 import Atletas from './views/atletas';
@@ -34,7 +34,9 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
-  const isLandingRoute = ["/", "/login", "/politicasprivacidade", "/contactos"].includes(location.pathname);
+  const navigate = useNavigate();
+
+  const isLandingRoute = ["/", "/privacidade", "/contactos", "/erro", "/login"].includes(location.pathname); // Verifica se é rota de landing
 
   return (
     <div className='wrapper'>

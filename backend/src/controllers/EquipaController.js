@@ -1,20 +1,17 @@
 const express = require("express");
 const sequelize = require("../models/database");
 
-const { Sequelize, Op, Model, DataTypes } = require('sequelize');
+const { Sequelize, Op, literal, Model, DataTypes } = require('sequelize');
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
-var EquipaAtleta = require("../models/EquipaAtleta");
 
 const controllers = {};
 
-controllers.teste = async (req, res) => {
-  return res.status(200).json({ success: true, message: "Teste de Equipa" });
-}
+
 controllers.DashInfo = async (req, res) => {
   const { id_tipoequipa } = req.params;
   const equipes = await models.equipa.findAll({
-    where: { id_escalao: 11, id_tipoequipa: id_tipoequipa}, // Filter for equipas próprias
+    where: { id_escalao: 11, id_tipoequipa: id_tipoequipa }, // Filter for equipas próprias
     include: [
       {
         model: models.EquipaAtleta,
@@ -28,9 +25,9 @@ controllers.DashInfo = async (req, res) => {
       },
     ],
   });
-  
+
   console.log("Equipes with AtletasEquipa:", JSON.stringify(equipes, null, 2));
-  
+
   /* try {
     console.log("Fetching escaloes...");
     const escaloes = await models.escalao.findAll(); // Fetch all escaloes
@@ -101,8 +98,122 @@ controllers.DashInfo = async (req, res) => {
   } */
 };
 
+controllers.allEquipas = async (req, res) => {
+  try {
+    const equipas = await models.equipa.findAll({
+      include: [
+        { model: models.escalao },
+        { model: models.divisao },
+        { model: models.tipoequipa }
+      ],
+      order: [['id_escalao', 'DESC'],
+      ['id_divisao', 'ASC']]
 
 
+    });
+    return res.status(200).json({ data: equipas });
+  } catch (error) {
+    console.error("Error ao procurar equipas:", error);
+    return res.status(500).json({ error: "Erro no servidor", message: error.message });
+  }
+};
+
+controllers.getEscalaoTipo = async (req, res) => {
+  try {
+    const escaloes = await models.escalao.findAll({
+      order: [['id_escalao', 'DESC']]
+    });
+
+    const tipos = await models.tipoequipa.findAll({
+      order: [['id_tipoequipa', 'DESC']]
+    });
+
+    return res.status(200).json({
+      escaloes,
+      tipos
+    });
+  } catch (error) {
+    console.error("Erro ao tentar receber escalões e tipos:", error);
+    return res.status(500).json({ error: "Erro no servidor", message: error.message });
+  }
+};
+
+controllers.createEquipa = async (req, res) => {
+  const data = req.body;
+
+  try {
+    const existingEquipas = await models.equipa.findAll({
+      where: {
+        id_escalao: data.escalao,
+        id_tipoequipa: data.tipo
+      },
+      order: [['id_divisao', 'DESC']]
+    });
+
+    let divisao = 1;
+
+    if (existingEquipas.length > 0) { // Se houver equipas
+      // Adiciona um à divisão da última equipa
+      divisao = existingEquipas[0].id_divisao + 1;
+      // Se a divisão ficar maior que 3, retorna erro
+      if (divisao > 3) {
+        return res.status(400).json({ error: "Atingiu o máximo de divisões para o tipo e escalão!" });
+      }
+    }
+    const newEquipa = await models.equipa.create({
+      id_escalao: data.escalao,
+      id_tipoequipa: data.tipo,
+      id_divisao: divisao
+    });
+
+    return res.status(200).json(newEquipa);
+  }
+  catch (error) {
+    console.error("Erro ao criar equipa:", error);
+    return res.status(500).json({ error: "Erro no servidor", message: error.message });
+
+  }
+}
+
+controllers.deleteEquipa = async (req, res) => {
+  const id = req.params.id;
+  try {
+    // Find the equipa being deleted
+    const equipaRemover = await models.equipa.findOne({ where: { id_equipa: id } });
+
+    if (!equipaRemover) {
+      return res.status(404).json({ error: "Equipa não encontrada" });
+    }
+
+    const { id_tipoequipa, id_escalao, id_divisao } = equipaRemover;
+
+    // Se não for da 3 divisao (C), edita as outras equipas uma divisao acima
+    if (id_divisao !== 3) {
+      await models.equipa.update(
+        { id_divisao: literal('id_divisao - 1') },
+        {
+          where: {
+            id_tipoequipa,
+            id_escalao,
+            id_divisao: {
+              [Op.gt]: id_divisao
+            }
+          }
+        }
+      );
+    }
+
+    await models.EquipaAtleta.destroy({ where: { id_equipa: id } });
+    await models.equipa.destroy({ where: { id_equipa: id } });
+
+    return res.status(200).json({ message: "Equipa eliminada com sucesso!" });
+  } catch (e) {
+    {
+      console.error("Erro ao eliminar equipa:", e);
+      return res.status(500).json({ error: "Erro no servidor", message: e.message });
+    }
+  }
+}
 /*
 // Criar a equipa -- Falta escalão
 controllers.createEquipa = async (req, res) => {

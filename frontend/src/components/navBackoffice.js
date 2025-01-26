@@ -1,8 +1,16 @@
-import React from 'react';
-import { NavLink } from "react-router-dom";
+import { useState } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
 import './navBackoffice.css';
+import Cookies from 'js-cookie';
 
 export default function NavBackoffice() {
+    const navigate = useNavigate();
+    if (localStorage.getItem('userData')==null) {
+        navigate('/erro')
+    }
+    const user = JSON.parse(localStorage.getItem('userData'));
+
+
     return (
         <div className='navbar-back'>
             <NavLink to="/home" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
@@ -40,7 +48,7 @@ export default function NavBackoffice() {
                 </span>
                 Jogos
             </NavLink>
-            <div><div>utilizador</div></div>
+            <div><div>{user && user.nome}</div></div>
         </div>
     );
 };

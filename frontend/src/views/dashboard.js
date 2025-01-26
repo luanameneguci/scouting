@@ -1,6 +1,7 @@
 import "./dashboard.css";
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { setupContentNavbarMargin } from './utils';
 
 export default function Dashboard() {
   // State for storing game data
@@ -88,6 +89,8 @@ export default function Dashboard() {
     setRatingMedio(ratingMedioData);
 
   }, []); // Empty dependency array ensures it runs only once
+
+        setupContentNavbarMargin('dashboard');
 
   // JSX rendering
   return (

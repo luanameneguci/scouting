@@ -36,7 +36,7 @@ const Login = () => {
         await axios.post(`${url}/auth/login`, { email: formData.email, password: formData.password }).then((response) => {
           if (response.status == 200) {
             Cookies.set('token', response.data.token, { expires: 1 });
-            localStorage.setItem('userData', response.data.user);
+            localStorage.setItem('userData', JSON.stringify(response.data.user));
             console.log('Login realizado com sucesso.');
             navigate('/home');
           }

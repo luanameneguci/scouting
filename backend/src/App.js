@@ -34,14 +34,14 @@ app.use((req, res, next) => {
         method: req.method,
         url: req.url,
         body: req.body,
-        headers: req.headers,
+        headers: req.headers
     });
     next();
 });
 
 // Routers
 app.use('/', homeRouter);
-app.use('/equipa', equipasRouter);
+app.use('/', equipasRouter);
 app.use('/jogo', jogoRouter);
 app.use('/atleta', atletaRouter); 
 app.use('/relatorio', relatorioRouter); 
