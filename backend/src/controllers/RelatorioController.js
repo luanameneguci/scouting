@@ -82,7 +82,7 @@ controllers.relatoriosData = async (req, res) => {
     const now = new Date();
 
     // Fetch report count and unique athlete count in parallel
-    const [totalReports, uniqueAthletes] = await Promise.all([
+    const data = await Promise.all([
       Relatorio.count({
         where: {
           data: {
@@ -104,8 +104,7 @@ controllers.relatoriosData = async (req, res) => {
     // Send the response with the fetched data
     res.json({
       success: true,
-      quantidadeRelatorios: totalReports,
-      quantidadeAtletasAvaliados: uniqueAthletes,
+      data
     });
   } catch (error) {
     console.error("Error fetching relatorios data:", error);

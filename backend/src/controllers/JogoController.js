@@ -176,7 +176,7 @@ controllers.listarDash = async (req, res) => {
         {
           model: models.utilizador,
           as: "RelatedJogoUtilizador",
-          attributes: ["nome"], // Replace with actual Atleta fields
+          attributes: ["nome"], 
         },
       ],
     },
@@ -188,7 +188,7 @@ controllers.listarDash = async (req, res) => {
         {
           model: models.clube,
           as: "RelatedClube",
-          attributes: [ "nome"], // Replace with actual Clube fields
+          attributes: [ "nome"],
         },
       ],
     },

@@ -16,7 +16,7 @@ controllers.DashInfo = async (req, res) => {
     const escaloes = await models.escalao.findAll(); // Fetch all escaloes
     
 
-    const equipasPropriasData = await Promise.all(
+    const data = await Promise.all(
       escaloes.map(async (escalao) => {
         try {
          
@@ -57,7 +57,7 @@ controllers.DashInfo = async (req, res) => {
         }
       })
     );
-    res.status(200).json(equipasPropriasData);
+    res.status(200).json({success: true, data});
   } catch (error) {
     console.error("Error in DashInfo:", error);
     res
