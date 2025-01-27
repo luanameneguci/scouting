@@ -5,6 +5,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import Cookies from 'js-cookie';
 import './login.css';
+import LoadingAnim from '../components/loadingAnim';
 
 
 const Login = () => {
@@ -128,7 +129,7 @@ const Login = () => {
           {/* Botão de Login */}
           <div>
             <button type="submit" className="login-submit-button rounded-pill font-bold" disabled={loading}>
-              {!loading ? 'Continuar' : 'A carregar...'}
+              {!loading ? 'Continuar' : <LoadingAnim />}
 
             </button>
           </div>

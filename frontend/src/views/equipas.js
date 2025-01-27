@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Replaced useHistory with useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { setupContentNavbarMargin } from './utils';
 import './equipas.css';
 import RadioFunctions from '../components/equipas/radioFunctions';
@@ -7,31 +8,53 @@ import FootballField from '../components/equipas/footballField';
 import PlayerTable from '../components/equipas/playerTable';
 import FilterModal from '../components/equipas/filterModal';
 import GerirEquipasModal from '../components/equipas/gerirEquipas';
-import { CollectionsBookmarkRounded } from '@mui/icons-material';
+import LoadingAnim from '../components/loadingAnim';
 
 export default function Equipas() {
-    const { idEquipa } = useParams();
-    const navigate = useNavigate(); // Replaced useHistory with useNavigate
-    const [selectedFunction, setSelectedFunction] = useState(null);
-    const [rating, setRating] = useState(0);
-    const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-    const [gerirEquipas, setGerirEquipas] = useState(false);
-    const [isSombra, setIsSombra] = useState(false); // New state for "Própria" or "Sombra"
-    const [escalao, setEscalao] = useState(0); // New state for "escalão"
-    const [page, setPage] = useState(1); // Página atual
-    const [totalPages, setTotalPages] = useState(0); // Total de páginas
-    const refGerir = useRef(null);
-
-
-    useEffect(() => { // Margem top depenendo da altura da navbar
+    const navigate = useNavigate();
+    const url = process.env.REACT_APP_API_URL;
+    // Margem top depenendo da altura da navbar
+    useEffect(() => {
         setupContentNavbarMargin('equipas-wrapper');
-        refGerir.current.close();
     }, []);
 
-    useEffect(() => { // Quando, nos filtros, o rating é alterado
-        console.log(`Current rating: ${rating}`);
-    }, [rating]);
 
+    // ID da equipa selecionada
+    const { idEquipa } = useParams();
+    // Equipa selecionada
+    //bla bla
+    // Equipa selecionada é sombra?
+    const [isSombra, setIsSombra] = useState(false); // New state for "Própria" or "Sombra"
+    // Escalao da equipa selecionada?
+    const [escalao, setEscalao] = useState(0); // New state for "escalão"
+
+
+    // Modal de filtro
+    const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+    // Função selecionada (ATA, MED, ...)?
+    const [selectedFunction, setSelectedFunction] = useState(null);
+    // Rating selecionado?
+    const [rating, setRating] = useState(0);
+    // Filtros completos
+    const [filtros, setFiltros] = useState({});
+
+    // Modal de gerir equipas (estado)
+    const [gerirEquipas, setGerirEquipas] = useState(false);
+    // Referência para o modal de gerir equipas (para poder fechar e abrir)
+    const refGerir = useRef(null);
+    // Função para abrir e fechar o modal de gerir equipas
+    const handleGerirModal = () => {
+        if (refGerir.current) {
+            if (gerirEquipas) refGerir.current.close();
+            else refGerir.current.showModal();
+            setGerirEquipas(!gerirEquipas);
+        }
+
+    };
+
+    // Paginação
+    const [page, setPage] = useState(1); // Página atual
+    const [totalPages, setTotalPages] = useState(0); // Total de páginas
     // Funções de navegação
     const handlePreviousPage = () => {
         if (page > 1) setPage(page - 1);
@@ -41,6 +64,33 @@ export default function Equipas() {
         if (page < totalPages) setPage(page + 1);
     };
 
+
+    // Atletas
+    const [atletas, setAtletas] = useState(null);
+
+    useEffect(() => {
+        const fetchAtletas = async () => {
+            try {
+                await axios.post(`${url}/atleta/todos/${idEquipa}`,{page}, { withCredentials: true }).then((res) => {
+                    if (res.status === 200) {
+
+                        setAtletas(res.data.atletas);
+                        setTotalPages(res.data.totalPages);
+                    } else {
+                        throw new Error(res.data.message);
+                    }
+                });
+
+            } catch (error) {
+                console.error("Erro ao receber informação: ", error);
+            }
+        }
+        fetchAtletas();
+    }, [idEquipa, page]);
+
+
+
+
     useEffect(() => { // Quando o isSombra ou o escalao é alterado
         // Falta a função para que quando o utilize altere o escalao ou o isSombra, encontrar o id da equipa e atualizar a página com a info da mesma
         if (idEquipa) {
@@ -49,14 +99,7 @@ export default function Equipas() {
     }, [isSombra, escalao]);
 
 
-    const handleGerirModal = () => {
-        if (refGerir.current) {
-            if (gerirEquipas) refGerir.current.close();
-            else refGerir.current.showModal();
-            setGerirEquipas(!gerirEquipas);
-        }
 
-    };
 
 
     useEffect(() => {
@@ -75,9 +118,10 @@ export default function Equipas() {
 
     };
 
+    if (!atletas) return <div className='equipas-wrapper'><LoadingAnim /></div>;
     return (
         <div className='equipas-wrapper'>
-            <GerirEquipasModal ref={refGerir} closeModal={handleGerirModal} isOpen={gerirEquipas}/>
+            <GerirEquipasModal ref={refGerir} closeModal={handleGerirModal} isOpen={gerirEquipas} />
             <div className="sidebar">
                 <div className='field-options'>
                     <h1>Equipas</h1>
@@ -98,7 +142,7 @@ export default function Equipas() {
                         </select>
                     </div>
                 </div>
-                <FootballField players={{}} />
+                <FootballField id={idEquipa} />
             </div>
             <div className="content">
                 <div className='table-options'>
@@ -116,13 +160,14 @@ export default function Equipas() {
                 </div>
                 <div className='table-container'>
                     {/* Tabela de jogadores */}
-                    <PlayerTable players={{}} />
-
+                    <PlayerTable players={atletas} />
+                    
                     {/* Botões de Paginação */}
                     <div className="pagination">
                         <button
                             onClick={handlePreviousPage}
                             disabled={page === 1} // Desativa o botão se for a primeira página
+                            className='rounded-pill'
                         >
                             Anterior
                         </button>
@@ -132,6 +177,8 @@ export default function Equipas() {
                         <button
                             onClick={handleNextPage}
                             disabled={page === totalPages} // Desativa o botão se for a última página
+                            className='rounded-pill'
+
                         >
                             Próxima
                         </button>

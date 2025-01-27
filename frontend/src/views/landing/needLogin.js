@@ -11,9 +11,9 @@ export default function NeedLogin() {
                     <h1>Falha na Autenticação</h1>
                     <p>A sua sessão expirou ou é inválida. Por favor, autentique-se novamente para continuar. </p>
                     <Link to="/login" className='font-bold'>Autenticar</Link></div>
-
+                <Footer />
             </div>
-            <Footer />
+
         </>
     );
 }

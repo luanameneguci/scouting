@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
     designacao: {
       type: DataTypes.STRING(1024),
       allowNull: false
+    },
+    id_funcao: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     }
   }, {
     sequelize,

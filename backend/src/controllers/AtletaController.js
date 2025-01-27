@@ -1,4 +1,3 @@
-const express = require("express");
 const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
@@ -95,8 +94,8 @@ controllers.editar = async (req, res) => {
   });
 };
 
-controllers.averageRating = async (req,res) =>{
-  try{
+controllers.averageRating = async (req, res) => {
+  try {
     const averageRating = await models.atleta.findOne({
       attributes: [[fn("AVG", col("ratinggeral")), "average_ratinggeral"]],
     });
@@ -108,11 +107,11 @@ controllers.averageRating = async (req,res) =>{
       data: avgRating,
     });
   }
-  catch(err){
+  catch (err) {
     res
-    .status(500)
-    .json({ success: false, message: "Erro.", err });
-}
+      .status(500)
+      .json({ success: false, message: "Erro.", err });
+  }
 };
 
 // Listar todos os atletas
@@ -166,8 +165,8 @@ controllers.listar = async (req, res) => {
   }
 };
 
-controllers.getTotalAthletes = async (req,res)=>{
-  try{
+controllers.getTotalAthletes = async (req, res) => {
+  try {
     const result = await sequelize.query("SELECT * FROM atleta", {
       type: sequelize.QueryTypes.SELECT, // To return raw data
     });
@@ -281,46 +280,112 @@ controllers.apagar = async (req, res) => {
   const { id_atleta } = req.body; // Captura o id_atleta
 
   if (!id_atleta) {
-      return res.status(400).json({
-          success: false,
-          message: "ID do atleta não fornecido.",
-      });
+    return res.status(400).json({
+      success: false,
+      message: "ID do atleta não fornecido.",
+    });
   }
 
   try {
-      const deleted = await Atleta.destroy({
-          where: { id_atleta },
-      });
+    const deleted = await Atleta.destroy({
+      where: { id_atleta },
+    });
 
-      if (deleted) {
-          return res.json({
-              success: true,
-              message: "Atleta apagado com sucesso.",
-          });
-      } else {
-          return res.status(404).json({
-              success: false,
-              message: "Atleta não encontrado.",
-          });
-      }
-  } catch (error) {
-      console.error("Erro ao apagar atleta:", error);
-      return res.status(500).json({
-          success: false,
-          message: "Erro ao apagar atleta.",
+    if (deleted) {
+      return res.json({
+        success: true,
+        message: "Atleta apagado com sucesso.",
       });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Atleta não encontrado.",
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao apagar atleta:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro ao apagar atleta.",
+    });
   }
 };
 
 // APAGAR ISSO DEPOIS SO TO TESTANDO PORRA Q N VAI VOU EXPLODIR
 controllers.testarModelo = async (req, res) => {
   try {
-      const atletas = await Atleta.findAll({ limit: 1 });
-      res.json({ success: true, data: atletas });
+    const atletas = await Atleta.findAll({ limit: 1 });
+    res.json({ success: true, data: atletas });
   } catch (error) {
-      console.error("Erro ao acessar o modelo Atleta:", error);
-      res.status(500).json({ success: false, message: "Erro no modelo Atleta.", error });
+    console.error("Erro ao acessar o modelo Atleta:", error);
+    res.status(500).json({ success: false, message: "Erro no modelo Atleta.", error });
   }
 };
 
+controllers.atletasParaEquipa = async (req, res) => {
+  const idEquipa = req.params.idEquipa;
+  const filtros = req.body;
+  const limit = 12;
+  const offset = (filtros.page - 1) * limit;
+  try {
+    const equipa = await models.equipa.findOne({ where: { id_equipa: idEquipa } });
+
+    if (!equipa) {
+      return res.status(404).json({ success: false, message: "Equipa não encontrada." });
+    }
+    else {
+      // Count total number of records
+      const totalAtletas = await models.atleta.count({
+        where: {
+          id_escalao: {
+            [Op.lte]: equipa.id_escalao,
+          },
+        }
+      });
+
+      // Calculate total number of pages
+      const totalPages = Math.ceil(totalAtletas / limit);
+      const atletas = await models.atleta.findAll({
+        where: {
+          id_escalao: {
+            // Os escalões estão ordenados por id: 1 - mais novo, ultimo - mais velho, por isso apenas vamos receber os atletas com menor (ou igual) id_escalao
+            [Op.lte]: equipa.id_escalao,
+          },
+        },
+        include: [
+          { model: models.escalao },
+          { model: models.clube },
+          {
+            model: models.nacionalidade,
+            through: { attributes: [] }
+          },
+          {
+            model: models.posicao,
+            through: { attributes: [] },
+            include: { model: models.funcao }
+          }
+        ],
+        attributes: {
+          include: [
+            [
+              Sequelize.literal(`(
+                atleta.id_atleta IN (SELECT id_atleta FROM "EquipaAtleta" WHERE id_equipa = ${idEquipa})
+              )`),
+              'isInEquipa'
+            ]
+          ]
+        },
+        order: [[Sequelize.col('isInEquipa'), 'DESC']],
+        limit: limit,
+        offset: offset,
+
+      });
+
+      return res.status(200).json({ success: true, atletas, totalPages });
+    }
+  } catch (error) {
+    console.error("Erro ao listar atletas por escalão:", error);
+    res.status(500).json({ success: false, message: "Erro ao listar atletas por escalão.", error });
+  }
+}
 module.exports = controllers;

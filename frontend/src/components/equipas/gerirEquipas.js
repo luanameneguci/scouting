@@ -1,6 +1,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import './gerirEquipas.css';
+import LoadingAnim from '../loadingAnim';
 
 const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
     const url = process.env.REACT_APP_API_URL;
@@ -168,7 +169,7 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
                             </span>
                         </button>
                     </div>
-                    <p>A carregar...</p>
+                    <LoadingAnim />
                 </div>
             </dialog>
 
