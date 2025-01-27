@@ -4,21 +4,18 @@ import axios from 'axios';
 import { setupContentNavbarMargin } from './utils';
 
 export default function Dashboard() {
-  // State for storing game data
   const [games, setGames] = useState([]);
   const [ratings, setRatings] = useState([]);
   const [ages, setAges] = useState([]);
   const [totalAthletes, setTotalAthletes] = useState([]);
   const [relatorios, setRelatorios] = useState({});
-  const [equipasProprias, setEquipasProprias] = useState({});
-  const [equipasSombra, setEquipasSombra] = useState({});
+  const [equipasProprias, setEquipasProprias] = useState([]);
+  const [equipasSombra, setEquipasSombra] = useState([]);
   const [ratingMedio, setRatingMedio] = useState([]);
-
-   //-------------------------Fetching data from jogos
-   useEffect(() => {
+  // State for storing game data
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data from multiple endpoints concurrently
         const [
           gamesRes,
           ratingsRes,
@@ -26,54 +23,32 @@ export default function Dashboard() {
           totalAthletesRes,
           relatoriosRes,
           equipasSombraRes,
-          equipasPropriasRes
+          equipasPropriasRes,
         ] = await Promise.all([
-          axios.get("http://localhost:8080/jogo"),
-          axios.get("http://localhost:8080/atleta/getRatingsData"),
-          axios.get("http://localhost:8080/atleta/getAgesData"),
-          axios.get("http://localhost:8080/atleta/getTotalAthletes"),
-          axios.get("http://localhost:8080/relatorio/relatoriosData"),
-          axios.get("http://localhost:8080/equipa/dashInfo"+1),
-          axios.get("http://localhost:8080/equipa/dashInfo"+2),
+          axios.get("http://localhost:8080/jogo/dash", { withCredentials: true }),
+          axios.get("http://localhost:8080/atleta/getRatingsData", { withCredentials: true }),
+          axios.get("http://localhost:8080/atleta/getAgesData", { withCredentials: true }),
+          axios.get("http://localhost:8080/atleta/getTotalAthletes", { withCredentials: true }),
+          axios.get("http://localhost:8080/relatorio/relatoriosData", { withCredentials: true }),
+          axios.get("http://localhost:8080/equipa/dashInfo" + 1, { withCredentials: true }),
+          axios.get("http://localhost:8080/equipa/dashInfo" + 2, { withCredentials: true }),
         ]);
   
-        // Debugging: log each API response to check their data
-        console.log("Games Response: ", gamesRes.data);
-        console.log("Ratings Response: ", ratingsRes.data);
-        console.log("Ages Response: ", agesRes.data);
-        console.log("Total Athletes Response: ", totalAthletesRes.data);
-        console.log("Relatorios Response: ", relatoriosRes.data);
+        const updateState = (response, setter) => {
+          if (response.data.success) {
+            setter(response.data.data);
+          }
+        };
   
-        // Check if each API response is successful and update state
-        if (gamesRes.data.success) {
-          setGames(gamesRes.data.data);
-        } 
-  
-        if (ratingsRes.data.success) {
-          setRatings(ratingsRes.data.data);
-        } 
-  
-        if (agesRes.data.success) {
-          setAges(agesRes.data.data);
-        } 
-  
-        if (totalAthletesRes.data.success) {
-          setTotalAthletes(totalAthletesRes.data.data);
-        } 
-  
-        if (relatoriosRes.data.success) {
-          setRelatorios(relatoriosRes.data);
-        } 
-
-        if (equipasSombraRes.data.success) {
-          setEquipasSombra(equipasPropriasRes.data);
-        }
-
-        if (equipasPropriasRes.data.success) {
-          setEquipasProprias(equipasPropriasRes.data);
-        }
+        updateState(gamesRes, setGames);
+        updateState(ratingsRes, setRatings);
+        updateState(agesRes, setAges);
+        updateState(totalAthletesRes, setTotalAthletes);
+        updateState(relatoriosRes, setRelatorios);
+        updateState(equipasSombraRes, setEquipasSombra);
+        updateState(equipasPropriasRes, setEquipasProprias);
       } catch (error) {
-        console.error("Error fetching data: ", error); // Log the complete error object
+        console.error("Error fetching data: ", error.response || error.message || error);
         alert("Error fetching data");
       }
     };
@@ -189,7 +164,7 @@ export default function Dashboard() {
               <p>
                 Foram criados{" "}
                 <span className="numeroReports">
-                {relatorios.quantidadeRelatorios}
+                {relatorios?.quantidadeRelatorios || 0}
                 </span>{" "}
                 relatórios nos últimos 7 dias
               </p>
@@ -200,7 +175,7 @@ export default function Dashboard() {
               <p>
                 Foram avaliados{" "}
                 <span className="numeroReports">
-                  {relatorios.quantidadeAtletasAvaliados}
+                {relatorios?.quantidadeAtletasAvaliados || 0}
                 </span>{" "}
                 atletas nos últimos 7 dias
               </p>
@@ -210,11 +185,12 @@ export default function Dashboard() {
         <div className="stat teams">
           <h3>Equipas Próprias</h3>
           <div className="teams-content">           
-              <div>
-                <span>{equipasProprias.escalao}</span>
-                <span>{equipasProprias.quantidadeAtletasEscalao}</span>
+          {equipasProprias.map((equipa, index) => (
+              <div key={index}>
+                <span>{equipa.escalao}</span>
+                <span>{equipa.quantidadeAtletasEscalao}</span>
               </div>
-   
+            ))}    
           </div>
           <p className="total-athletes">
           {/*   {totalAtletasPropria} atletas no total */}
@@ -223,10 +199,12 @@ export default function Dashboard() {
         <div className="stat teams">
           <h3>Equipas Sombra</h3>
           <div className="teams-content">           
-              <div>
-                <span>{equipasSombra.escalao}</span>
-                <span>{equipasSombra.quantidadeAtletasEscalao}</span>
-              </div>        
+          {equipasSombra.map((equipa, index) => (
+              <div key={index}>
+                <span>{equipa.escalao}</span>
+                <span>{equipa.quantidadeAtletasEscalao}</span>
+              </div>
+            ))}    
           </div>
           <p className="total-athletes">
            {/*  {totalAtletasSombra} atletas no total */}

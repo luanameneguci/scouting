@@ -140,7 +140,7 @@
 
 .dashboard .athletes-card h3 {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 1em;
   margin-bottom: 20px;
   font-weight: bold;
 }
@@ -154,7 +154,7 @@
 .dashboard .ages {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 
 .dashboard .ratings div,
@@ -188,4 +188,8 @@
 .dashboard .numeroReports {
   font-size: x-large;
   font-weight: bold;
+}
+
+.dashboard .athletes-content{
+  font-size: 0.8em;
 }

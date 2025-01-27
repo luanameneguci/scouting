@@ -57,7 +57,7 @@ authController.register = async (req, res) => {
 
 
         return res.status(200).json({
-            message: "Registo realizado com sucesso.", token});
+            message: "Registo realizado com sucesso."});
 
     } catch (error) {
         console.error("Erro no servidor durante o registo:", error.message, error.stack);

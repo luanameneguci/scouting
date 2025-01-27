@@ -162,36 +162,73 @@ const addAtletaToJogo = async (req, res) => {
   }
 }; */
 
+controllers.listarDash = async (req, res) => {
+  try{
+  const data = await models.jogo.findAll({
+  include: [
+    {
+      model: models.JogoAtleta,
+      as: "JogoAtletas",
+      attributes: ["id_jogo", "id_atleta"], // Ensure attributes are included
+      include: [
+        {
+          model: models.atleta,
+          as: "RelatedAtleta",
+          attributes: ["id_atleta", "nome"], // Replace with actual Atleta fields
+        },
+      ],
+    },
+    {
+      model: models.JogoClube,
+      as: "JogoClubes",
+      attributes: ["id_jogo", "id_clube"], // Ensure attributes are included
+      include: [
+        {
+          model: models.clube,
+          as: "RelatedClube",
+          attributes: ["id_clube", "nome"], // Replace with actual Clube fields
+        },
+      ],
+    },
+  ],
+
+})
+res.status(200).json({ success: true, data });
+}
+catch (error) {
+  // Handle errors
+  res.status(500).json({
+    success: false,
+    message: "Erro no servidor",
+    error: error.message,
+  });
+}};
+
 controllers.listar = async (req, res) => {
   try {
 
 
-    // Fetch all games with associated data  //-------------------------------------------------------------------NÃO MEXER AQUI
+    // Fetch all games with associated data  
     const data = await models.jogo.findAll({
       include: [
         {
-          model: models.JogoAtleta,
-          as: "JogoAtletas",
-          include: [
-            {
-              model: models.atleta,
-              as: "RelatedAtleta",
-            },
-          ],
+          model: models.atleta,
+
         },
         {
-          model: models.JogoClube,
-          as: "JogoClubes",
-          include: [
-            {
-              model: models.clube,
-              as: "RelatedClube",
-            },
-          ],
+          model: models.clube,
+
+        },
+        {
+          model: models.escalao,
+
+        },
+        {
+          model: models.utilizador,
+
         },
       ],
     });
-  //-------------------------------------------------------------------NÃO MEXER AQUI
 
     // Respond with fetched data
     res.status(200).json({ success: true, data });
