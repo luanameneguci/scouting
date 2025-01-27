@@ -23,4 +23,7 @@ router.delete("/apagar", atletaController.apagar);
 // aAPPORRAAAAAAA
 router.get("/testarModelo", atletaController.testarModelo);
 
+// Página de equipas, apenas atletas com escalao inferior ou igual à da equipa (e filtros)
+router.post("/todos/:idEquipa", atletaController.atletasParaEquipa);
+
 module.exports = router;

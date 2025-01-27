@@ -1,7 +1,7 @@
 const express = require("express");
 const sequelize = require("../models/database");
 
-const { Sequelize, Op, literal, Model, DataTypes } = require('sequelize');
+const { Sequelize, Op, literal, Model, DataTypes, where } = require('sequelize');
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
 
@@ -247,12 +247,33 @@ controllers.deleteEquipa = async (req, res) => {
 
     return res.status(200).json({ message: "Equipa eliminada com sucesso!" });
   } catch (e) {
-    {
-      console.error("Erro ao eliminar equipa:", e);
-      return res.status(500).json({ error: "Erro no servidor", message: e.message });
-    }
+    console.error("Erro ao eliminar equipa:", e);
+    return res.status(500).json({ error: "Erro no servidor", message: e.message });
   }
 }
+
+controllers.atletasEquipa = async (req, res) => {
+  const idEquipa = req.params.id;
+  try {
+
+    const atletas = await models.EquipaAtleta.findAll({
+      where: { id_equipa: idEquipa },
+      include: {
+        model: models.atleta,
+        as: 'RelatedEquipaAtleta'
+      },
+      order: [['posicaoformacao', 'ASC']]
+    })
+    res.status(200).json({ atletas });
+  }
+  catch (error) {
+    console.error("Erro ao procurar atletas da equipa:", error);
+    return res.status(500).json({ error: "Erro no servidor", message: error.message });
+  }
+}
+
+
+
 /*
 // Criar a equipa -- Falta escalão
 controllers.createEquipa = async (req, res) => {

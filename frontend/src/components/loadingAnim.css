@@ -1,0 +1,32 @@
+.loading-wrapper {
+    display: flex;
+    gap: .1rem;
+    flex-direction: row;
+    color: var(--white-color);
+    text-align:center;
+    justify-content: center;
+    width: 100%;
+}
+.loading-wrapper span {
+    animation: loading 1.2s infinite ease-in-out;
+    font-size: 2.4rem;
+    line-height: 1.2rem;
+    display: block;
+}
+
+@keyframes loading {
+    0%, 80%, 100%{
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+}
+
+.loading-wrapper span:nth-child(2) {
+    animation-delay: .12s;
+}
+.loading-wrapper span:nth-child(3) {
+    animation-delay: .24s;
+}

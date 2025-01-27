@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { setupContentNavbarMargin } from '../views/utils';
+import LoadingAnim from './loadingAnim';
+
 const url = process.env.REACT_APP_API_URL;
 
 const ProtectedRoute = ({ children }) => {
@@ -28,13 +30,13 @@ const ProtectedRoute = ({ children }) => {
             }
         };
         checkAuth();
-        setupContentNavbarMargin('login-validation');
+        setupContentNavbarMargin('loading-auth');
 
     }, []);
 
     if (isAuthenticated === null) {
         // Render a loading state while checking authentication
-        return <div className='login-validation'> A carregar... </div>;
+        return <div className='loading-auth width-100'> <LoadingAnim /> </div>;
     }
 
     if (isAuthenticated) {

@@ -16,6 +16,8 @@ router.get("/equipas/info", authMiddleware, EquipaController.getEscalaoTipo);
 router.post("/equipa", authMiddleware, EquipaController.createEquipa);
 
 router.delete("/equipa/:id", authMiddleware, EquipaController.deleteEquipa);
+
+router.get("/equipa/:id/atletas", authMiddleware, EquipaController.atletasEquipa);
 /*
 
 
