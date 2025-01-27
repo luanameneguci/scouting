@@ -45,6 +45,8 @@ export default function Dashboard() {
         updateState(agesRes, setAges);
         updateState(totalAthletesRes, setTotalAthletes);
         updateState(relatoriosRes, setRelatorios);
+        console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj'+relatorios);
+
         updateState(equipasSombraRes, setEquipasSombra);
         updateState(equipasPropriasRes, setEquipasProprias);
       } catch (error) {
@@ -86,10 +88,10 @@ export default function Dashboard() {
         <div id="game-container">
           {games.map((game, index) => {
             // Extract the club names from the "clubes" array
-            const club1 = game.clubes?.[0]?.nome || "Clube 1 Indisponível";
-            const club2 = game.clubes?.[1]?.nome || "Clube 2 Indisponível";
+            const club1 = game.JogoClubes[0]?.RelatedClube.nome || "Clube 1 Indisponível";
+            const club2 = game.JogoClubes[1]?.RelatedClube.nome || "Clube 2 Indisponível";
             const escalao = game.escalao?.designacao || "Nenhum escalão associado";
-            const utilizadores = game.utilizadors?.[0].nome || "Nenhum treinador associado";
+            const utilizadores = game.UtilizadoresJogo[0]?.RelatedJogoUtilizador.nome || "Nenhum treinador associado";
 
             return (
               <div
@@ -164,7 +166,7 @@ export default function Dashboard() {
               <p>
                 Foram criados{" "}
                 <span className="numeroReports">
-                {relatorios?.quantidadeRelatorios || 0}
+                {relatorios?.quantidadeRelatorios}
                 </span>{" "}
                 relatórios nos últimos 7 dias
               </p>

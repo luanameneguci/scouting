@@ -12,14 +12,14 @@ controllers.DashInfo = async (req, res) => {
   const { id_tipoequipa } = req.params;
 
   try {
-    console.log("Fetching escaloes...");
+   
     const escaloes = await models.escalao.findAll(); // Fetch all escaloes
-    console.log("Escaloes fetched:", escaloes);
+    
 
     const equipasPropriasData = await Promise.all(
       escaloes.map(async (escalao) => {
         try {
-          console.log(`Fetching equipes for escalao: ${escalao.designacao} (id: ${escalao.id_escalao})...`);
+         
           const equipes = await models.equipa.findAll({
             where: { id_escalao: escalao.id_escalao, id_tipoequipa: id_tipoequipa }, // Filter for equipas próprias
             include: [
@@ -36,27 +36,14 @@ controllers.DashInfo = async (req, res) => {
             ],
           });
 
-          console.log(`Equipes fetched for escalao ${escalao.designacao}:`, equipes);
-
           // Ensure that the `EquipaAtletas` property is populated
           const quantidadeAtletasEscalao = equipes.reduce((total, equipe) => {
-            if (!equipe.AtletasEquipa) {
-              console.warn(`No AtletasEquipa found for equipe ${equipe.id}`);
-              return total;
-            }
-
-            console.log(
-              `Counting athletes for equipe ${equipe.id}, athletes found:`,
-              equipe.AtletasEquipa.length
-            );
+           
+           
             return total + equipe.AtletasEquipa.length;
           }, 0);
 
-          console.log(
-            `Total athletes for escalao ${escalao.designacao}:`,
-            quantidadeAtletasEscalao
-          );
-
+         
           return {
             escalao: escalao.designacao,
             quantidadeAtletasEscalao,
@@ -70,8 +57,6 @@ controllers.DashInfo = async (req, res) => {
         }
       })
     );
-
-    console.log("Equipas próprias data:", equipasPropriasData);
     res.status(200).json(equipasPropriasData);
   } catch (error) {
     console.error("Error in DashInfo:", error);

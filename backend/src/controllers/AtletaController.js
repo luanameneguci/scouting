@@ -217,23 +217,19 @@ controllers.getAgesData = async (req, res) => {
 
     // Total number of athletes
     const totalAthletes = result.length;
-    console.log("Total athletes:", totalAthletes);
-
+    
     // Calculate age distribution
     const ageData = ageRanges.map((range) => {
       const count = result.filter((athlete) => {
         const age = calculateAge(athlete.datanascimento); // Use correct column name
-        console.log(`Athlete's age: ${age}, Range: ${range.range}`);
+      
         return age >= range.min && age <= range.max;
       }).length;
 
       const percentage = ((count / totalAthletes) * 100).toFixed(2); // Calculate percentage
-      console.log(`Range: ${range.range}, Count: ${count}, Percentage: ${percentage}`);
+    
       return { range: range.range, count, percentage };
     });
-
-    // Log final age distribution data
-    console.log("Age distribution data:", ageData);
 
     // Respond with age distribution data
     res.json({ success: true, data: ageData });

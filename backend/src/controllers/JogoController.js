@@ -167,26 +167,28 @@ controllers.listarDash = async (req, res) => {
   const data = await models.jogo.findAll({
   include: [
     {
-      model: models.JogoAtleta,
-      as: "JogoAtletas",
-      attributes: ["id_jogo", "id_atleta"], // Ensure attributes are included
+      model: models.escalao
+    },
+    {
+      model: models.UtilizadorJogo,
+      as: "UtilizadoresJogo",
       include: [
         {
-          model: models.atleta,
-          as: "RelatedAtleta",
-          attributes: ["id_atleta", "nome"], // Replace with actual Atleta fields
+          model: models.utilizador,
+          as: "RelatedJogoUtilizador",
+          attributes: ["nome"], // Replace with actual Atleta fields
         },
       ],
     },
     {
       model: models.JogoClube,
       as: "JogoClubes",
-      attributes: ["id_jogo", "id_clube"], // Ensure attributes are included
+  
       include: [
         {
           model: models.clube,
           as: "RelatedClube",
-          attributes: ["id_clube", "nome"], // Replace with actual Clube fields
+          attributes: [ "nome"], // Replace with actual Clube fields
         },
       ],
     },
