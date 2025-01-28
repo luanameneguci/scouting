@@ -15,8 +15,12 @@ export default function Atletas() {
     try {
       setLoading(true); // Inicia o estado de carregamento
       const response = await fetch(
-        `http://localhost:8080/atleta/listar?page=${page}&size=10`
-      ); // Ajusta o endpoint para passar a página e o tamanho
+        `http://localhost:8080/atleta/listar?page=${page}&size=10`,
+        {
+          method: "GET",
+          credentials: "include",  
+        }
+      );
       if (!response.ok) throw new Error("Erro ao buscar atletas");
       const data = await response.json();
       setAtletas(data.data); // Salva os atletas no estado
@@ -47,12 +51,13 @@ export default function Atletas() {
     if (!confirmacao) return;
   
     try {
-      const response = await fetch(`http://localhost:8080/atleta/apagar`, { // Corrige o endpoint
+      const response = await fetch(`http://localhost:8080/atleta/apagar`, {
         method: "DELETE",
+        credentials: "include", 
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id_atleta: id }), // O nome do campo deve ser "id_atleta"
+        body: JSON.stringify({ id_atleta: id }),
       });
   
       const data = await response.json();
