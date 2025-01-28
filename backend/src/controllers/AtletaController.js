@@ -4,6 +4,12 @@ var initModels = require("../models/init-models");
 const { Where } = require("sequelize/lib/utils");
 var models = initModels(sequelize);
 
+// Ajustando Atleta para o modelo inicializado corretamente
+var Atleta = models.atleta;
+const clube = models.clube;
+const escalao = models.escalao;
+const statusatleta = models.statusatletum; // Corrigido o alias
+
 const controllers = {};
 
 // Criar um novo atleta
