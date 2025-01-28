@@ -2,6 +2,7 @@ import "./dashboard.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { setupContentNavbarMargin } from "./utils";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const [games, setGames] = useState([]);
@@ -101,12 +102,12 @@ export default function Dashboard() {
       <title>Dashboard</title>
       <div className="sidebar">
         <h2>Ações rápidas</h2>
-        <button>Criar relatório</button>
-        <button>Adicionar jogo</button>
-        <button>Adicionar atleta a analisar num jogo</button>
-        <button>Adicionar atleta</button>
-        <button>Atletas com maior rating</button>
-        <button>Adicionar utilizador</button>
+        <NavLink to="/relatorio/confirmar" className="button">  Criar relatório </NavLink>
+        <NavLink to="/jogos/adicionarjogo" className="button">  Adicionar jogo </NavLink>
+        <NavLink to="/home" className="button">  Adicionar atleta a analisar num jogo </NavLink>
+        <NavLink to="/atletas/adicionar" className="button">  Adicionar atleta </NavLink>
+        <NavLink to="/home" className="button">  Atletas com maior rating </NavLink>
+        <NavLink to="/home" className="button">  Adicionar utilizador </NavLink>
       </div>
 
       <section className="games">
