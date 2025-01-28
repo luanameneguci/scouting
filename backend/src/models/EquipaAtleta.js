@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'EquipaAtleta',
+    tableName: 'equipaatleta',
     schema: 'public',
     timestamps: false,
     indexes: [

@@ -12,6 +12,8 @@ const authRouter = require('./routes/authRoute.js');
 /* const tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 const cookieParser = require('cookie-parser');
 
+
+
 const app = express();
 const port = 8080;
 

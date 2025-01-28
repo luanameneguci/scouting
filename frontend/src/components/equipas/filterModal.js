@@ -1,10 +1,76 @@
-export default function FilterModal({ modalVisible, rating, setRating, close }) {
-    const StarRating = ({ rating, setRating }) => {
+import React, { forwardRef, useState, useEffect } from 'react';
+import axios from 'axios';
+import LoadingAnim from '../loadingAnim';
+import './filterModal.css';
+
+const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escalaoMax }, ref) => {
+    const url = process.env.REACT_APP_API_URL;
+    const [escaloes, setEscaloes] = useState([]);
+    const [nacionalidades, setNacionalidades] = useState([]);
+    const [clubes, setClubes] = useState([]);
+
+    const fetchEscaloes = async () => {
+        try {
+            await axios.get(`${url}/equipas/info`, { withCredentials: true }).then((res) => {
+                if (res.status === 200) {
+                    setEscaloes(res.data.escaloes.filter(escalao => escalao.id_escalao <= escalaoMax));
+
+                } else {
+                    throw new Error(res.data.message);
+                }
+
+            });
+
+        } catch (error) {
+            console.error("Erro ao receber informação: ", error);
+        }
+    };
+    const fetchNacionalidades = async () => {
+        try {
+            await axios.get(`${url}/atleta/nacionalidades`, { withCredentials: true }).then((res) => {
+                if (res.status === 200) {
+                    setNacionalidades(res.data.nacionalidades);
+
+                } else {
+                    throw new Error(res.data.message);
+                }
+
+            });
+
+        } catch (error) {
+            console.error("Erro ao receber informação: ", error);
+        }
+    };
+    const fetchClubes = async () => {
+        try {
+            await axios.get(`${url}/atleta/clubes`, { withCredentials: true }).then((res) => {
+                if (res.status === 200) {
+                    setClubes(res.data.clubes);
+
+                } else {
+                    throw new Error(res.data.message);
+                }
+
+            });
+
+        } catch (error) {
+            console.error("Erro ao receber informação: ", error);
+        }
+    };
+    useEffect(() => {
+
+        fetchEscaloes();
+        fetchNacionalidades();
+        fetchClubes();
+
+    }, []);
+
+    const StarRating = () => {
         const handleStarClick = (index) => {
-            if (rating === index + 1) {
-                setRating(0); // Unselect if the same star is clicked
+            if (filtros.ratingMin === index + 1) {
+                setFiltros({ ...filtros, ratingMin: 0 });
             } else {
-                setRating(index + 1);
+                setFiltros({ ...filtros, ratingMin: index + 1 });
             }
         };
 
@@ -13,10 +79,10 @@ export default function FilterModal({ modalVisible, rating, setRating, close }) 
                 {[...Array(5)].map((_, index) => (
                     <span
                         key={index}
-                        className={`star ${index < rating ? 'filled' : ''}`}
+                        className={`star ${index < filtros.ratingMin ? 'filled' : ''}`}
                         onClick={() => handleStarClick(index)}
                     >
-                        {index < rating ? '★' : '☆'}
+                        {index < filtros.ratingMin ? '★' : '☆'}
                     </span>
                 ))}
             </div>
@@ -24,89 +90,162 @@ export default function FilterModal({ modalVisible, rating, setRating, close }) 
     };
 
 
-    return (<div className={`filters-container height-100 width-100 ${modalVisible ? '' : 'hidden'}`}>
-        <form className='filters'>
-            <div className='filters-head'>
-                <button className='filter-button rounded' type="button">
-                    Limpar Filtros
-                </button>
-                <button className="close" onClick={close}>
-                    <span className="material-symbols-outlined icon">
-                        close
+    useEffect(() => {
+        const handleClickOutside = (event) => { // Ao clicar fora fecha
+            if (ref.current) {
+                const rect = ref.current.getBoundingClientRect();
+                const isInDialog = ( // Verifica se está dentro do modal
+                    event.clientX >= rect.left &&
+                    event.clientX <= rect.right &&
+                    event.clientY >= rect.top &&
+                    event.clientY <= rect.bottom
+                );
+
+                if (!isInDialog) { // Se não estiver, fecha
+                    closeModal();
+                }
+            }
+        };
+
+
+
+
+
+
+
+
+        if (isOpen) { // Se o modal estiver aberto, adiciona o event listener
+            document.addEventListener('mousedown', handleClickOutside);
+        } else { // Se não, remove-o
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => { // Cleanup (acho q nem funciona mas yy)
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+
+    }, [isOpen, ref, closeModal]);
+
+    if (!escaloes && !nacionalidades && !clubes) {
+        return (
+            <dialog className="gerir-modal modal rounded" ref={ref}>
+                <div>
+                    <div className='header'>
+                        <h1> Filtragem de atletas </h1>
+                        <button className="btn-close" onClick={closeModal}>
+                            <span className="material-symbols-outlined icon">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <LoadingAnim />
+                </div>
+            </dialog>
+
+        )
+    }
+    return (
+        <dialog ref={ref} className='filter-modal modal rounded'>
+            <div>
+                <div className='header'>
+                    <h1> Filtragem de atletas </h1>
+                    <span>
+                        <button className='filter-button rounded' type="button">
+                            Limpar Filtros
+                        </button>
+                        <button className="btn-close" onClick={closeModal}>
+                            <span className="material-symbols-outlined icon">
+                                close
+                            </span>
+                        </button>
                     </span>
-                </button>
-            </div>
-            <div className='rating-minimo'>
-                <label className='font-bold'>Rating Mínimo:</label>
-                <hr />
-                <StarRating rating={rating} setRating={setRating} />
-            </div>
-            <div className='rating-medio-minimo'>
-                <label className='font-bold'>Rating Médio Mínimo:</label>
-                <hr />
-                <div>
-                    <input type='number' max='4' min="0" />
-                    <span className='text-secondary'>&emsp;/4</span>
+
                 </div>
-            </div>
-            <div className='ano-nascimento'>
-                <label className='font-bold'>Ano de Nascimento:</label>
-                <div>
-                    <div>
-                        <input type='number' max='2024' min="1950" />
-                        <span className='text-secondary'>&emsp;min.</span>
+
+                <form className='filters'>
+
+                    <div className='rating-minimo'>
+                        <label className='font-bold'>Rating Mínimo:</label>
+                        <hr />
+                        <StarRating />
                     </div>
-                    <hr />
-                    <div>
-                        <input type='number' max='2024' min="1950" />
-                        <span className='text-secondary'>&emsp;máx.</span>
+                    <div className='rating-medio-minimo'>
+                        <label className='font-bold'>Rating Médio Mínimo:</label>
+                        <hr />
+                        <div>
+                            <input type='number' max='4' min="0" value={filtros.ratingGeralMin} onChange={(e) => setFiltros({ ...filtros, ratingGeralMin: e.target.value })} />
+                            <span className='text-secondary'>&emsp;/4</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div className='escalao'>
-                <label className='font-bold'>Escalão:</label>
-                <div>
-                    <div>
-                        <select>
-                            <option value="seniores">Séniores</option>
-                            <option value="sub-18">SUB-18</option>
-                            <option value="sub-17">SUB-17</option>
+                    <div className='ano-nascimento'>
+                        <label className='font-bold'>Ano de Nascimento:</label>
+                        <div>
+                            <div>
+                                <input type='number' max='2025' min="0" value={filtros.anoMin} onChange={(e) => setFiltros({ ...filtros, anoMin: e.target.value })} />
+                                <span className='text-secondary'>&emsp;min.</span>
+                            </div>
+                            <hr />
+                            <div>
+                                <input type='number' max='2025' min="0" value={filtros.anoMax} onChange={(e) => setFiltros({ ...filtros, anoMax: e.target.value })} />                                <span className='text-secondary'>&emsp;máx.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='escalao'>
+                        <label className='font-bold'>Escalão:</label>
+                        <div>
+                            <div>
+                                <select value={filtros.escalaoMin} onChange={(e) => setFiltros({ ...filtros, escalaoMin: e.target.value })}>
+                                    <option value={0}>-</option>
+
+                                    {
+                                        escaloes.map(escalao => (
+                                            <option key={escalao.id_escalao} value={escalao.id_escalao}>{escalao.designacao}</option>
+                                        ))}
+
+                                </select>
+                                <span className='text-secondary'>&emsp;min.</span>
+                            </div>
+                            <hr />
+                            <div>
+                                <select value={filtros.escalaoMax} onChange={(e) => setFiltros({ ...filtros, escalaoMax: e.target.value })}>
+                                    <option value={0}>-</option>
+
+                                    {
+                                        escaloes.map(escalao => (
+                                            <option key={escalao.id_escalao} value={escalao.id_escalao}>{escalao.designacao}</option>
+                                        ))}
+                                </select>
+                                <span className='text-secondary'>&emsp;máx.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='clube'>
+                        <label className='font-bold'>Clubeaaa:</label>
+                        <select value={filtros.clube} onChange={(e) => setFiltros({ ...filtros, clube: e.target.value })}>
+                                <option value={0}>-</option>
+                                {
+                                    clubes.map(clube => (
+                                        <option key={clube.id_clube} value={clube.id_clube}>{clube.nome}</option>
+                                    ))}
+
                         </select>
-                        <span className='text-secondary'>&emsp;min.</span>
                     </div>
-                    <hr />
-                    <div>
-                        <select>
-                            <option value="seniores">Séniores</option>
-                            <option value="sub-18">SUB-18</option>
-                            <option value="sub-17">SUB-17</option>
+                    <div className='nacionalidade'>
+                        <label className='font-bold'>Nacionalidade:</label>
+                        <select value={filtros.nacionalidade} onChange={(e) => setFiltros({ ...filtros, nacionalidade: e.target.value })}>
+                            <option value={0}>-</option>
+                            {
+                                nacionalidades.map(nacionalidade => (
+                                    <option key={nacionalidade.id_nacionalidade} value={nacionalidade.id_nacionalidade}>{nacionalidade.designacao}</option>
+                                ))}
+
                         </select>
-                        <span className='text-secondary'>&emsp;máx.</span>
                     </div>
-                </div>
+                </form>
             </div>
-            <div className='posicao'>
-                <label className='font-bold'>Posição:</label>
-                <p>falta este</p>
-            </div>
-            <div className='clube'>
-                <label className='font-bold'>Clube:</label>
-                <select>
-                    <option value="fcporto">FC Porto</option>
-                    <option value="slbenfica">SL Benfica</option>
-                    <option value="sportingcp">Sporting CP</option>
-                </select>
-            </div>
-            <div className='nacionalidade'>
-                <label className='font-bold'>Nacionalidade:</label>
-                <select>
-                    <option value="portugues">Portugal</option>
-                    <option value="ingles">Inglaterra</option>
-                    <option value="frances">França</option>
-                </select>
-            </div>
-            <button className='submit-button rounded-pill font-bold' onClick={close}> Filtrar </button>
-        </form>
-    </div>
+
+        </dialog >
     );
-}
+});
+
+export default FilterModal;

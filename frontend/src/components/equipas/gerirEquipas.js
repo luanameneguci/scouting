@@ -159,7 +159,7 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
     }, []);
     if (!equipas && !escaloesTipos) {
         return (
-            <dialog className="gerir-modal rounded" ref={ref}>
+            <dialog className="gerir-modal modal rounded" ref={ref}>
                 <div>
                     <div className='header'>
                         <h1> Gestão de Equipas </h1>
@@ -176,7 +176,7 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
         )
     }
     return (
-        <dialog className="gerir-modal rounded" ref={ref}>
+        <dialog className="gerir-modal modal rounded" ref={ref}>
             <div>
                 <div className='header'>
                     <h1> Gestão de Equipas </h1>

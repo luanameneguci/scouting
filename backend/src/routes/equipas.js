@@ -9,6 +9,7 @@ const authMiddleware = authController.verifyToken;
 
 router.get("/equipa/dashInfo:id_tipoequipa", EquipaController.DashInfo);  
 
+router.get("/equipa/:id", authMiddleware, EquipaController.getEquipa);
 router.get("/equipas", authMiddleware, EquipaController.allEquipas);
 
 router.get("/equipas/info", authMiddleware, EquipaController.getEscalaoTipo);

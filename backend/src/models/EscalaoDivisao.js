@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('EscalaoDivisao', {
+  return sequelize.define('escalaodivisao', {
     id_escalao: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'EscalaoDivisao',
+    tableName: 'escalaodivisao',
     schema: 'public',
     timestamps: false,
     indexes: [

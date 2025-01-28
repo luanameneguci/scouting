@@ -1,20 +1,10 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('PosicaoAtleta', {
-    id_posicao: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-    },
-    id_atleta: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-  
-    }
+  return sequelize.define('posicaoatleta', {
+
   }, {
     sequelize,
-    tableName: 'PosicaoAtleta',
+    tableName: 'posicaoatleta',
     schema: 'public',
     timestamps: false,
     indexes: [

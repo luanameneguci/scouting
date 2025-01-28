@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
             const token = Cookies.get('token');
             if (token) {
                 try {
-                    const response = await axios.get(`${url}/auth/verify`, { withCredentials: true });
+                    const response = await axios.get(`${url}/auth/verify/admin`, { withCredentials: true });
                     if (response.status === 200) {
                         setIsAuthenticated(true);
                     } else {

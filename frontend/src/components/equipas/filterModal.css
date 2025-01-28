@@ -1,0 +1,115 @@
+
+.filter-modal .filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    height: 100%;
+    margin: auto;
+}
+
+.filter-modal .filters>* {
+    width: 100%;
+    height: 100%;
+}
+
+.filter-modal .filters .filters-head {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.filter-modal .filters .filters-head .close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.filter-modal .filters .filters-head .close span {
+    color: var(--gray-500-color);
+}
+
+.filter-modal .filters .filters-head .close:hover span {
+    color: var(--white-color);
+}
+
+.filter-modal .filters .rating-minimo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-modal .filters .rating-minimo .star-rating {
+    font-size: 1.2rem;
+}
+
+.filter-modal .filters .rating-minimo .star-rating>* {
+    cursor: pointer;
+}
+
+.filter-modal .filters hr {
+    border: 0;
+    border-bottom: 0.08rem solid var(--gray-600-color);
+    flex-grow: 1;
+    transform: translateY(-50%);
+}
+
+.filter-modal .filters .rating-medio-minimo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-modal .filters input,
+.filter-modal .filters select {
+    width: 6rem;
+    padding: 1rem 1rem;
+    height: 100%;
+    border: none;
+    border-radius: .16rem;
+    background-color: var(--gray-800-color);
+    color: var(--white-color);
+    cursor: pointer;
+    appearance: none;
+}
+
+.filter-modal .filters .ano-nascimento label,
+.filter-modal .filters .escalao label {
+    display: block;
+    margin-bottom: .8rem;
+}
+
+.filter-modal .filters .ano-nascimento>div,
+.filter-modal .filters .escalao>div {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filter-modal .filters .clube,
+.filter-modal .filters .nacionalidade {
+    display: flex;
+    gap: .8rem;
+    flex-direction: column;
+}
+
+.filter-modal .filters .clube select,
+.filter-modal .filters .nacionalidade select {
+    width: 100%;
+}
+
+.filter-modal .filters .submit-button {
+    background-color: var(--accent-color);
+    padding: .8rem 0;
+    color: var(--gray-800-color);
+    border: 0;
+    font-weight: bold;
+    transition: .1s;
+    cursor: pointer;
+
+}
+
+.filter-modal .filters .submit-button:hover {
+    background-color: var(--light-accent-color);
+}

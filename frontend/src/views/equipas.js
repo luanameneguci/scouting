@@ -22,22 +22,57 @@ export default function Equipas() {
     // ID da equipa selecionada
     const { idEquipa } = useParams();
     // Equipa selecionada
-    //bla bla
+    const [equipa, setEquipa] = useState({});
     // Equipa selecionada é sombra?
     const [isSombra, setIsSombra] = useState(false); // New state for "Própria" or "Sombra"
     // Escalao da equipa selecionada?
     const [escalao, setEscalao] = useState(0); // New state for "escalão"
+    useEffect(() => {
+        try {
+            if (idEquipa) {
+                axios.get(`${url}/equipa/${idEquipa}`, { withCredentials: true }).then((res) => {
+                    if (res.status === 200) {
+                        setEquipa(res.data.equipa);
+                    } else {
+                        throw new Error(res.data.message);
+                    }
+                });
+            }
+        }
+        catch (error) {
+            console.error("Erro ao receber informação da equipa: ", error);
+        }
+    }, [idEquipa]);
 
-
-    // Modal de filtro
-    const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-    // Função selecionada (ATA, MED, ...)?
-    const [selectedFunction, setSelectedFunction] = useState(null);
-    // Rating selecionado?
-    const [rating, setRating] = useState(0);
+    // Modal de filtro (estado)
+    const [filtroOpen, setfiltroOpen] = useState(false);
+    // Referência para o modal de filtro (para poder fechar e abrir)
+    const refFiltros = useRef(null);
+    // Nome de atleta para pesquisa
+    const [nomeSearch, setNomeSearch] = useState('');
     // Filtros completos
-    const [filtros, setFiltros] = useState({});
+    const [filtros, setFiltros] = useState({
+        nome: '',
+        funcao: 0,
+        ratingMin: 0,
+        ratingGeralMin: 0,
+        anoMax: 0,
+        anoMin: 0,
+        escalaoMax: 0,
+        escalaoMin: 0,
+        clube: 0,
+        nacionalidade: 0
+    });
 
+    // Função para abrir e fechar o modal de gerir equipas
+    const handleFiltrosModal = () => {
+        if (refFiltros.current) {
+            if (filtroOpen) refFiltros.current.close();
+            else refFiltros.current.showModal();
+            setfiltroOpen(!filtroOpen);
+        }
+
+    };
     // Modal de gerir equipas (estado)
     const [gerirEquipas, setGerirEquipas] = useState(false);
     // Referência para o modal de gerir equipas (para poder fechar e abrir)
@@ -68,14 +103,19 @@ export default function Equipas() {
     // Atletas
     const [atletas, setAtletas] = useState(null);
 
+
+    useEffect(() => {
+        setPage(1); // Muda a página, e atualiza a lista de atletas
+    }, [filtros]);
+
     useEffect(() => {
         const fetchAtletas = async () => {
             try {
-                await axios.post(`${url}/atleta/todos/${idEquipa}`,{page}, { withCredentials: true }).then((res) => {
+                await axios.post(`${url}/atleta/todos/${idEquipa}`, { page, filtros }, { withCredentials: true }).then((res) => {
                     if (res.status === 200) {
-
                         setAtletas(res.data.atletas);
-                        setTotalPages(res.data.totalPages);
+                        setTotalPages(Math.ceil(res.data.totalPages));
+
                     } else {
                         throw new Error(res.data.message);
                     }
@@ -86,7 +126,7 @@ export default function Equipas() {
             }
         }
         fetchAtletas();
-    }, [idEquipa, page]);
+    }, [idEquipa, page, filtros]);
 
 
 
@@ -101,15 +141,9 @@ export default function Equipas() {
 
 
 
-
-    useEffect(() => {
-        // Atualizar lista de jogadores para a função selecionada
-
-    }, [selectedFunction])
-
     const handleFilterButtonClick = (event) => { // Abrir e fechar o modal de filtros
         event.preventDefault();
-        setIsFilterModalVisible(!isFilterModalVisible);
+        handleFiltrosModal();
     };
 
     const handleGerirButtonClick = (event) => {
@@ -118,10 +152,11 @@ export default function Equipas() {
 
     };
 
-    if (!atletas) return <div className='equipas-wrapper'><LoadingAnim /></div>;
+    if (!atletas || !equipa) return <div className='equipas-wrapper'><LoadingAnim /></div>;
     return (
         <div className='equipas-wrapper'>
             <GerirEquipasModal ref={refGerir} closeModal={handleGerirModal} isOpen={gerirEquipas} />
+            <FilterModal ref={refFiltros} closeModal={handleFiltrosModal} isOpen={filtroOpen} filtros={filtros} setFiltros={setFiltros} escalaoMax={equipa.escalao.id_escalao} />
             <div className="sidebar">
                 <div className='field-options'>
                     <h1>Equipas</h1>
@@ -148,20 +183,26 @@ export default function Equipas() {
                 <div className='table-options'>
                     <div>
                         <div className="searchbar bg-color-gray-800 rounded-pill">
-                            <input type="text" className="form-control" placeholder="Procurar por nome de atleta" />
-                            <span className="material-symbols-outlined icon">
+                            <input type="text" className="form-control" placeholder="Procurar por nome de atleta" onChange={(e) => setNomeSearch(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        setFiltros({ ...filtros, nome: nomeSearch });
+                                    }
+                                }}
+                            />
+                            <span className="material-symbols-outlined icon" onClick={() => { setFiltros({ ...filtros, nome: nomeSearch }) }}>
                                 search
                             </span>
                         </div>
                         <button className='filter-button rounded' onClick={handleFilterButtonClick}>Filtrar</button>
                         <button className='filter-button rounded' onClick={handleGerirButtonClick}>Gerir Equipas</button>
                     </div>
-                    <RadioFunctions selectedFunction={selectedFunction} setSelectedFunction={setSelectedFunction} />
+                    <RadioFunctions filtros={filtros} setFunction={setFiltros} />
                 </div>
                 <div className='table-container'>
                     {/* Tabela de jogadores */}
                     <PlayerTable players={atletas} />
-                    
+
                     {/* Botões de Paginação */}
                     <div className="pagination">
                         <button
@@ -183,8 +224,7 @@ export default function Equipas() {
                             Próxima
                         </button>
                     </div>
-                    {/* Modal de Filtros */}
-                    <FilterModal modalVisible={isFilterModalVisible} rating={rating} setRating={setRating} close={handleFilterButtonClick} />
+                    
                 </div>
             </div>
         </div>

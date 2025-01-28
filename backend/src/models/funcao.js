@@ -8,10 +8,6 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
 
     },
-    id_posicao: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
     designacao: {
       type: DataTypes.STRING(1024),
       allowNull: false
@@ -21,7 +17,6 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'funcao',
     schema: 'public',
     timestamps: false,
-    indexes: [
-    ]
+    indexes: []
   });
 };

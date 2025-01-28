@@ -1,12 +1,10 @@
-export default function RadioFunctions({ selectedFunction, setSelectedFunction }) {
+export default function RadioFunctions({ filtros, setFunction }) {
 
     const handleRadioClick = (value) => { //Radio das opções de posição (ATA, MED, DEF, GR)
-        if (selectedFunction === value) {
-            setSelectedFunction(null);
-            console.log(`Deselected: ${value}`);
+        if (filtros.funcao === value) {
+            setFunction({ ...filtros, funcao: 0 });
         } else {
-            setSelectedFunction(value);
-            console.log(`Selected: ${value}`);
+            setFunction({ ...filtros, funcao: value });
         }
     };
 
@@ -17,8 +15,8 @@ export default function RadioFunctions({ selectedFunction, setSelectedFunction }
                 type="radio"
                 className="radio-input"
                 id="atacantes"
-                checked={selectedFunction === 'atacantes'}
-                onClick={() => handleRadioClick('atacantes')}
+                checked={filtros.funcao === 1}
+                onClick={() => handleRadioClick(1)}
             />
 
             <label htmlFor="medios" className="font-bold">MED</label>
@@ -26,8 +24,8 @@ export default function RadioFunctions({ selectedFunction, setSelectedFunction }
                 type="radio"
                 className="radio-input"
                 id="medios"
-                checked={selectedFunction === 'medios'}
-                onClick={() => handleRadioClick('medios')}
+                checked={filtros.funcao === 2}
+                onClick={() => handleRadioClick(2)}
             />
 
             <label htmlFor="defesas" className="font-bold">DEF</label>
@@ -35,8 +33,8 @@ export default function RadioFunctions({ selectedFunction, setSelectedFunction }
                 type="radio"
                 className="radio-input"
                 id="defesas"
-                checked={selectedFunction === 'defesas'}
-                onClick={() => handleRadioClick('defesas')}
+                checked={filtros.funcao === 3}
+                onClick={() => handleRadioClick(3)}
             />
 
             <label htmlFor="redes" className="font-bold">GR</label>
@@ -44,8 +42,8 @@ export default function RadioFunctions({ selectedFunction, setSelectedFunction }
                 type="radio"
                 className="radio-input"
                 id="redes"
-                checked={selectedFunction === 'redes'}
-                onClick={() => handleRadioClick('redes')}
+                checked={filtros.funcao === 4}
+                onClick={() => handleRadioClick(4)}
             />
         </div>
     );

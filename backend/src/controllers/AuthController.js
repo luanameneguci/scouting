@@ -127,5 +127,12 @@ authController.verifyToken = (req, res, next) => {
 authController.tokenValidation = (req, res) => {
     return res.status(200).json({ message: "Token válido." });
 };
-
+authController.adminValidation = (req, res) => {
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.tipo !== 2) {
+        return res.status(401).json({ message: "Acesso autorizado apenas a administradores." });
+    }
+    return res.status(200).json({ message: "Utilizador válido." });
+};
 module.exports = authController;

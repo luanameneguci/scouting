@@ -1,14 +1,8 @@
 const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
+const { Where } = require("sequelize/lib/utils");
 var models = initModels(sequelize);
-sequelize.sync({ alter: true });
-
-// Ajustando Atleta para o modelo inicializado corretamente
-var Atleta = models.atleta;
-const clube = models.clube;
-const escalao = models.escalao;
-const statusatleta = models.statusatletum; // Corrigido o alias
 
 const controllers = {};
 
@@ -216,17 +210,17 @@ controllers.getAgesData = async (req, res) => {
 
     // Total number of athletes
     const totalAthletes = result.length;
-    
+
     // Calculate age distribution
     const ageData = ageRanges.map((range) => {
       const count = result.filter((athlete) => {
         const age = calculateAge(athlete.datanascimento); // Use correct column name
-      
+
         return age >= range.min && age <= range.max;
       }).length;
 
       const percentage = ((count / totalAthletes) * 100).toFixed(2); // Calculate percentage
-    
+
       return { range: range.range, count, percentage };
     });
 
@@ -346,68 +340,112 @@ controllers.testarModelo = async (req, res) => {
 
 controllers.atletasParaEquipa = async (req, res) => {
   const idEquipa = req.params.idEquipa;
-  const filtros = req.body;
+  const filtros = req.body.filtros;
   const limit = 12;
-  const offset = (filtros.page - 1) * limit;
+  const offset = (req.body.page - 1) * limit;
+
   try {
+
+
     const equipa = await models.equipa.findOne({ where: { id_equipa: idEquipa } });
 
     if (!equipa) {
       return res.status(404).json({ success: false, message: "Equipa não encontrada." });
     }
     else {
-      // Count total number of records
-      const totalAtletas = await models.atleta.count({
-        where: {
-          id_escalao: {
-            [Op.lte]: equipa.id_escalao,
-          },
-        }
-      });
 
       // Calculate total number of pages
-      const totalPages = Math.ceil(totalAtletas / limit);
-      const atletas = await models.atleta.findAll({
-        where: {
-          id_escalao: {
-            // Os escalões estão ordenados por id: 1 - mais novo, ultimo - mais velho, por isso apenas vamos receber os atletas com menor (ou igual) id_escalao
-            [Op.lte]: equipa.id_escalao,
-          },
-        },
+      const { count, rows } = await models.atleta.findAndCountAll({
+        where: Sequelize.literal(`
+          "atleta"."id_statusatleta" = 1
+          ${filtros.nome !== '' ? `AND "atleta"."nome" ILIKE '%${filtros.nome}%'` : ''}
+          AND "atleta"."id_escalao" <= ${equipa.id_escalao}
+          ${filtros.funcao !== 0 ? `AND "atleta"."id_atleta" IN (
+            SELECT pa."id_atleta"
+            FROM "posicaoatleta" pa
+            JOIN "posicao" p ON pa."id_posicao" = p."id_posicao"
+            WHERE p."id_funcao" = ${filtros.funcao} )` : ''}
+          ${filtros.escalaoMax != 0 ? `AND "atleta"."id_escalao" <= ${filtros.escalaoMax}` : ''}
+          ${filtros.escalaoMin != 0 ? `AND "atleta"."id_escalao" >= ${filtros.escalaoMin}` : ''}
+          ${filtros.nacionalidade != 0 ? `AND "atleta"."id_atleta" IN (
+            SELECT na."id_atleta"
+            FROM "nacionalidadeatleta" na
+            WHERE na."id_nacionalidade" = ${filtros.nacionalidade}
+          )` : ''}
+          ${filtros.ratingMin != 0 ? `AND "atleta"."ratingfinal" >= ${filtros.ratingMin}` : ''}
+          ${filtros.ratingGeralMin != 0 ? `AND "atleta"."ratinggeral" >= ${filtros.ratingGeralMin}` : ''}
+          ${filtros.anoMax != 0 ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") <= ${filtros.anoMax}` : ''}
+          ${filtros.anoMin != 0 ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") >= ${filtros.anoMin}` : ''}
+          ${filtros.clube != 0 ? `AND "atleta"."id_clube" <= ${filtros.clube}` : ''}
+
+        `),
         include: [
           { model: models.escalao },
           { model: models.clube },
           {
             model: models.nacionalidade,
-            through: { attributes: [] }
+            as: 'nacionalidades',
+            through: { attributes: [] },
+            required: false
+
           },
           {
             model: models.posicao,
+            as: 'posicoes', // use the same alias here
             through: { attributes: [] },
-            include: { model: models.funcao }
+            include: { model: models.funcao, required: false },
+            required: false
           }
         ],
         attributes: {
           include: [
             [
-              Sequelize.literal(`(
-                atleta.id_atleta IN (SELECT id_atleta FROM "EquipaAtleta" WHERE id_equipa = ${idEquipa})
-              )`),
+              Sequelize.literal(`(atleta.id_atleta IN (SELECT id_atleta FROM "equipaatleta" WHERE id_equipa = ${idEquipa}))`),
               'isInEquipa'
             ]
           ]
         },
-        order: [[Sequelize.col('isInEquipa'), 'DESC']],
+        order: [[Sequelize.col('isInEquipa'), 'DESC'], ['ratingfinal', 'DESC']],
         limit: limit,
         offset: offset,
+        group: ['atleta.id_atleta']
+
 
       });
+      if (filtros.funcao !== 0) {
+        rows
+      }
 
-      return res.status(200).json({ success: true, atletas, totalPages });
+      const totalPages = Math.ceil(count.length / limit);
+      return res.status(200).json({
+        success: true, atletas: rows, totalPages
+      });
     }
   } catch (error) {
     console.error("Erro ao listar atletas por escalão:", error);
     res.status(500).json({ success: false, message: "Erro ao listar atletas por escalão.", error });
+  }
+}
+
+controllers.allNacionalidades = async (req, res) => {
+  try {
+    const nacionalidades = await models.nacionalidade.findAll({ unique: true });
+    res.status(200).json({ success: true, nacionalidades });
+  }
+  catch (error) {
+    console.error("Erro ao listar nacionalidades:", error);
+    res.status(500).json({ success: false, message: "Erro ao listar nacionalidades.", error });
+  }
+}
+
+controllers.allClubes = async (req, res) => {
+  try {
+    const clubes = await models.clube.findAll();
+    res.status(200).json({ success: true, clubes });
+  }
+  catch (error) {
+    console.error("Erro ao listar clubes:", error);
+    res.status(500).json({ success: false, message: "Erro ao listar clubes.", error });
   }
 }
 module.exports = controllers;

@@ -31,7 +31,6 @@ export default function FootballField({ id }) {
     const FootballFieldPlayers = ({ atleta }) => {
         return (
             <div className='player'>
-                <p className='position'>EE</p>
                 <div className={`font-bold rating ${atleta.ratingfinal == '5' && 'golden'}`}>{atleta.ratingfinal} ★</div>
                 <p className='name font-bold'>
                     {atleta.nome.split(' ')[0] /* Primeiro Nome*/}

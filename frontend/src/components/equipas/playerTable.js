@@ -21,9 +21,9 @@ export default function PlayerTable({ players }) {
                     {
                         players.map((player, key) => (
                             <tr key={key}>
-                                <td className="center-align">{player.isInEquipa && <><span className="material-symbols-outlined icon">
-                                    check
-                                </span></>}</td>
+                                <td className="center-align">  <span className="material-symbols-outlined icon">
+                                    {player.isInEquipa ? 'check' : 'close'}
+                                </span> </td>
                                 <td className="left-align">{player.nome}</td>
                                 <td className="left-align">{player.ratingfinal + ' '}
                                     {Array.from({ length: player.ratingfinal }, (_, i) => (
@@ -31,9 +31,10 @@ export default function PlayerTable({ players }) {
                                     ))}
                                 </td>
                                 <td className="right-align">{player.ratinggeral}<span className='text-secondary'>/4</span></td>
-                                <td className="left-align">
-                                    {player.posicaos.slice(0, 3).map(posicao => `${posicao.designacao} `)}
-                                    <span className='text-secondary'>{`(${player.posicaos.length})`}</span>
+                                <td className="left-align" title={player.posicoes.map(posicao => posicao.designacao).join(', ')}>
+                                    {player.posicoes.slice(0, 2).map(posicao => `${posicao.designacao} `)}
+                                    {player.posicoes.length > 2 && '... '}
+                                    <span className='text-secondary'>{`(${player.posicoes.length})`}</span>
 
                                 </td>
                                 <td className="right-align">{player.datanascimento.substring(0, 4)}</td>
