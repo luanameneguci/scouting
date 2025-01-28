@@ -18,11 +18,6 @@
   color: #fff;
 }
 
-/* Quick Actions Styling */
-.dashboard .quick-actions h2 {
-  margin-bottom: 10px;
-}
-
 .dashboard .sidebar button {
   background-color: #ffcc00;
   color: #000;
@@ -35,7 +30,11 @@
   text-align: left;
   min-width: 90%;
   font-weight: bold;
-  font-size: small;
+  font-size: 0.9em;
+}
+
+.dashboard .sidebar h2 {
+  margin-bottom: 15px;
 }
 
 .dashboard .sidebar button:hover {
@@ -82,7 +81,7 @@
   margin-bottom: 10px;
 }
 
-.dashboard .game-card.pending {
+.dashboard .game-card .pending {
   border: 2px solid #ffcc00;
 }
 
@@ -101,7 +100,6 @@
   padding: 15px;
   border-radius: 8px;
   color: #fff;
-  max-height: 50%;
 }
 
 .dashboard .athletes{
@@ -131,7 +129,8 @@ font-size: 0.1em;
 .dashboard .teams-content {
   display: flex;
   flex-direction: column; /* Stack rows vertically */
-  gap: 10px;
+  gap: 1px;
+  font-size: small;
 }
 
 .dashboard .teams-content div {

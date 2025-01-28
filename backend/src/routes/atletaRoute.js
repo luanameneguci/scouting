@@ -11,6 +11,7 @@ router.get("/getAgesData", atletaController.getAgesData);
 
 router.get("/getTotalAthletes", atletaController.getTotalAthletes);
 
+router.get("/avgRating", atletaController.getAverageRating);
 // Rota para criar um novo atleta
 router.post("/criar", atletaController.criar);
 

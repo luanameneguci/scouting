@@ -11,6 +11,7 @@ export default function Dashboard() {
   const [relatorios, setRelatorios] = useState({});
   const [equipasProprias, setEquipasProprias] = useState([]);
   const [equipasSombra, setEquipasSombra] = useState([]);
+  const [ratingmedio, setRatingMedio] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function Dashboard() {
           relatoriosRes,
           equipasSombraRes,
           equipasPropriasRes,
+          ratingMedioRes
         ] = await Promise.all([
           axios.get("http://localhost:8080/jogo/dash", {
             withCredentials: true,
@@ -47,6 +49,9 @@ export default function Dashboard() {
           axios.get("http://localhost:8080/equipa/dashInfo" + 2, {
             withCredentials: true,
           }),
+          axios.get("http://localhost:8080/atleta/avgRating", {
+            withCredentials: true,
+          }),
         ]);
 
         // Utility function to update state only if data is successful
@@ -63,6 +68,7 @@ export default function Dashboard() {
         updateState(relatoriosRes, setRelatorios);
         updateState(equipasSombraRes, setEquipasSombra);
         updateState(equipasPropriasRes, setEquipasProprias);
+        updateState(ratingMedioRes, setRatingMedio);
       } catch (error) {
         console.error(
           "Error fetching data: ",
@@ -203,8 +209,8 @@ export default function Dashboard() {
                 nos últimos 7 dias
               </p>
               <p>
-                O rating médio é de{" "}
-                {/*  <span className="numeroReports">{relatorios.ratingMedio}</span> */}
+                O rating geral médio é {" "}
+                  <span className="numeroReports">{ratingmedio}</span>
               </p>
             </div>
           </div>
@@ -230,7 +236,7 @@ export default function Dashboard() {
               {equipasSombra.map((equipa, index) => (
                 <div key={index}>
                   <p>{equipa.escalao}</p>
-                  <span>{equipa.quantidadeAtletasEscalao}</span>
+                  <p>{equipa.quantidadeAtletasEscalao}</p>
                 </div>
               ))}
             </div>

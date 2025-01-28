@@ -9,6 +9,7 @@ const atleta = require("../models/atleta")(sequelize, DataTypes);
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
 const controllers = {};
+const { subDays, addDays } = require('date-fns');
 
 controllers.criar = async (req, res) => {
   const { id_escalao, dataJogo, atletas, clubes } = req.body; // `atletas` is an array of athlete IDs
@@ -163,48 +164,54 @@ const addAtletaToJogo = async (req, res) => {
 }; */
 
 controllers.listarDash = async (req, res) => {
-  try{
-  const data = await models.jogo.findAll({
-  include: [
-    {
-      model: models.escalao
-    },
-    {
-      model: models.UtilizadorJogo,
-      as: "UtilizadoresJogo",
-      include: [
-        {
-          model: models.utilizador,
-          as: "RelatedJogoUtilizador",
-          attributes: ["nome"], 
-        },
-      ],
-    },
-    {
-      model: models.JogoClube,
-      as: "JogoClubes",
-  
-      include: [
-        {
-          model: models.clube,
-          as: "RelatedClube",
-          attributes: [ "nome"],
-        },
-      ],
-    },
-  ],
+  try {
+    const currentDate = new Date();
+    const sevenDaysLater = addDays(currentDate, 7);
 
-})
-res.status(200).json({ success: true, data });
-}
-catch (error) {
-  // Handle errors
-  res.status(500).json({
-    success: false,
-    message: "Erro no servidor",
-    error: error.message,
-  });
-}};
+    const data = await models.jogo.findAll({
+      where: {
+        data: {
+          [Op.between]: [currentDate, sevenDaysLater],
+        },
+      },
+      include: [
+        {
+          model: models.escalao,
+        },
+        {
+          model: models.UtilizadorJogo,
+          as: "UtilizadoresJogo",
+          include: [
+            {
+              model: models.utilizador,
+              as: "RelatedJogoUtilizador",
+              attributes: ["nome"],
+            },
+          ],
+        },
+        {
+          model: models.JogoClube,
+          as: "JogoClubes",
+          include: [
+            {
+              model: models.clube,
+              as: "RelatedClube",
+              attributes: ["nome"],
+            },
+          ],
+        },
+      ],
+    });
+
+    res.status(200).json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Erro no servidor",
+      error: error.message,
+    });
+  }
+};
 
 controllers.listar = async (req, res) => {
   try {

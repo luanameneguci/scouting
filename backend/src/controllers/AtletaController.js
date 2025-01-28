@@ -238,6 +238,28 @@ controllers.getAgesData = async (req, res) => {
   }
 };
 
+controllers.getAverageRating = async (req, res) => {
+  try {
+    const atletas = await models.atleta.findAll({
+      attributes: ['ratinggeral'],
+    });
+
+    if (atletas.length === 0) {
+      return res.status(200).json({ success: true, averageRating: 0 });
+    }
+
+    const totalRating = atletas.reduce((sum, atleta) => sum + atleta.ratinggeral, 0);
+    const data = (totalRating / atletas.length).toFixed(2);;
+
+    res.status(200).json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Erro ao calcular a média dos ratings dos atletas",
+      error: error.message,
+    });
+  }
+};
 
 controllers.getRatingsData = async (req, res) => {
   try {
