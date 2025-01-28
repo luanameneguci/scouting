@@ -2,7 +2,6 @@ const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
-sequelize.sync({ alter: true });
 
 // Ajustando Atleta para o modelo inicializado corretamente
 var Atleta = models.atleta;
