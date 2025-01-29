@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './credenciais.css';
 
-const CredentialsPage = () => {
-  const [visiblePasswords, setVisiblePasswords] = useState({});
+const API_URL = "http://localhost:8080/utilizador";
 
-  const handleAction = (action, email) => {
-    alert(`Action: ${action}, Email: ${email}`);
-  };
+const CredentialsPage = () => {
+  const [users, setUsers] = useState([]);
+  const [visiblePasswords, setVisiblePasswords] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        const fetchedUsers = response.data.map(user => ({
+          active: true, // Adapta se houver um campo para status ativo/inativo
+          name: user.nome,
+          email: user.email,
+          password: user.password,
+          phone: user.telefone,
+          profile: user.tipoUtilizador ? user.tipoUtilizador.designacao : "Desconhecido"
+        }));
+        setUsers(fetchedUsers);
+        setLoading(false);
+      } catch (error) {
+        console.error("Erro ao buscar utilizadores:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const togglePasswordVisibility = (email) => {
     setVisiblePasswords(prev => ({
@@ -21,142 +45,94 @@ const CredentialsPage = () => {
       : text;
   };
 
-  const users = [
-    { 
-      active: true, 
-      name: "John Doe", 
-      email: "johndoe@email.com", 
-      password: "soufadesopa", 
-      phone: "912334678", 
-      profile: "Treinador" 
-    },
-    { 
-      active: true, 
-      name: "John Doe", 
-      email: "johndoe2@email.com", 
-      password: "tostamistaradical!t", 
-      phone: "912334678", 
-      profile: "Treinador" 
-    },
-    { 
-      active: false, 
-      name: "John Doe", 
-      email: "johndoe3@email.com", 
-      password: "elaéovelhaelaéchoné", 
-      phone: "912334678", 
-      profile: "Administrador" 
-    },
-  ];
-
   return (
     <div className="credentials-container">
       <h1 className="credentials-title">Credenciais</h1>
-      
-      <div className="credentials-toolbar">
-        <div className="credentials-search-container">
-          <input 
-            type="text" 
-            placeholder="Pesquisar por nome do utilizador" 
-            className="credentials-search-input" 
-          />
-          {/* Ícone de Pesquisa como Botão */}
-          <button className="credentials-search-button">
-            <span className="material-symbols-outlined">search</span>
-          </button>
-        </div>
-        <button className="credentials-add-button">Adicionar</button>
-      </div>
 
-      <div className="credentials-filter">
-        <div className="credentials-radio-container">
-          <input type="radio" name="filter" id="treinador" />
-          <label htmlFor="treinador" className="credentials-radio-label">
-            Treinador
-          </label>
-        </div>
-        <div className="credentials-radio-container">
-          <input type="radio" name="filter" id="convidado" />
-          <label htmlFor="convidado" className="credentials-radio-label">
-            Convidado
-          </label>
-        </div>
-        <div className="credentials-radio-container">
-          <input type="radio" name="filter" id="administrador" />
-          <label htmlFor="administrador" className="credentials-radio-label">
-            Administrador
-          </label>
-        </div>
-      </div>
+      {loading ? <p>Carregando utilizadores...</p> : (
+        <>
+          <div className="credentials-toolbar">
+            <div className="credentials-search-container">
+              <input 
+                type="text" 
+                placeholder="Pesquisar por nome do utilizador" 
+                className="credentials-search-input" 
+              />
+              <button className="credentials-search-button">
+                <span className="material-symbols-outlined">search</span>
+              </button>
+            </div>
+            <button className="credentials-add-button">Adicionar</button>
+          </div>
 
-      <table className="credentials-table">
-        <thead>
-          <tr>
-            <th>Ativo</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Telemóvel</th>
-            <th>Cargo</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.email}>
-              <td>
-                <span 
-                  className={
-                    user.active 
-                      ? 'credentials-status-active' 
-                      : 'credentials-status-inactive'
-                  }
-                ></span>
-              </td>
-              <td>{truncateText(user.name)}</td>
-              <td>{truncateText(user.email)}</td>
-              <td className="credentials-password-cell">
-                <span className="credentials-password-text">
-                  {visiblePasswords[user.email] 
-                    ? user.password 
-                    : '*'.repeat(user.password.length)}
-                </span>
-                <button 
-                  className="credentials-view-password"
-                  onClick={() => togglePasswordVisibility(user.email)}
-                >
-                  <span className="material-symbols-outlined">
-                    {visiblePasswords[user.email] ? 'visibility_off' : 'visibility'}
-                  </span>
-                </button>
-              </td>
-              <td>{truncateText(user.phone)}</td>
-              <td>{truncateText(user.profile)}</td>
-              <td>
-                <div className="credentials-actions">
-                  <button 
-                    className="credentials-actions-button credentials-actions-edit"
-                    onClick={() => handleAction("Edit", user.email)}
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    className="credentials-actions-button credentials-actions-deactivate"
-                    onClick={() => handleAction("Deactivate", user.email)}
-                  >
-                    Deactivate
-                  </button>
-                  <button 
-                    className="credentials-actions-button credentials-actions-remove"
-                    onClick={() => handleAction("Remove", user.email)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <table className="credentials-table">
+            <thead>
+              <tr>
+                <th>Ativo</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Telemóvel</th>
+                <th>Cargo</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.email}>
+                  <td>
+                    <span 
+                      className={
+                        user.active 
+                          ? 'credentials-status-active' 
+                          : 'credentials-status-inactive'
+                      }
+                    ></span>
+                  </td>
+                  <td>{truncateText(user.name)}</td>
+                  <td>{truncateText(user.email)}</td>
+                  <td className="credentials-password-cell">
+                    <span className="credentials-password-text">
+                      {visiblePasswords[user.email] 
+                        ? user.password 
+                        : '*'.repeat(user.password.length)}
+                    </span>
+                    <button 
+                      className="credentials-view-password"
+                      onClick={() => togglePasswordVisibility(user.email)}
+                    >
+                      <span className="material-symbols-outlined">
+                        {visiblePasswords[user.email] ? 'visibility_off' : 'visibility'}
+                      </span>
+                    </button>
+                  </td>
+                  <td>{truncateText(user.phone)}</td>
+                  <td>{truncateText(user.profile)}</td>
+                  <td>
+                    <div className="credentials-actions">
+                      <button 
+                        className="credentials-actions-button credentials-actions-edit"
+                      >
+                        Edit
+                      </button>
+                      <button 
+                        className="credentials-actions-button credentials-actions-deactivate"
+                      >
+                        Deactivate
+                      </button>
+                      <button 
+                        className="credentials-actions-button credentials-actions-remove"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
     </div>
   );
 };
