@@ -333,16 +333,50 @@ controllers.apagar = async (req, res) => {
   }
 };
 
-// APAGAR ISSO DEPOIS SO TO TESTANDO PORRA Q N VAI VOU EXPLODIR
-controllers.testarModelo = async (req, res) => {
+// PAGINA DOS ATLETAS
+controllers.buscarPorId = async (req, res) => {
+  const { id_atleta } = req.params; // Obtém o ID da URL
+
   try {
-    const atletas = await Atleta.findAll({ limit: 1 });
-    res.json({ success: true, data: atletas });
+    const atleta = await Atleta.findOne({
+      where: { id_atleta }, // Busca pelo ID
+      attributes: [
+        "id_atleta",
+        "nome",
+        "datanascimento",
+        "ratingfinal",
+        "ratinggeral",
+      ],
+      include: [
+        {
+          model: models.clube,
+          as: "clube",
+          attributes: ["nome"],
+        },
+        {
+          model: models.escalao,
+          as: "escalao",
+          attributes: ["designacao"],
+        },
+        {
+          model: models.statusatleta,
+          as: "statusatletum",
+          attributes: ["designacao"],
+        },
+      ],
+    });
+
+    if (!atleta) {
+      return res.status(404).json({ message: "Atleta não encontrado" });
+    }
+
+    res.status(200).json(atleta);
   } catch (error) {
-    console.error("Erro ao acessar o modelo Atleta:", error);
-    res.status(500).json({ success: false, message: "Erro no modelo Atleta.", error });
+    console.error("Erro ao buscar atleta:", error);
+    res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
+
 
 controllers.atletasParaEquipa = async (req, res) => {
   const idEquipa = req.params.idEquipa;

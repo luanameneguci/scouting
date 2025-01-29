@@ -73,7 +73,7 @@ function AppContent() {
             <AtletasAdicionar />
           </ProtectedRoute>
         } />
-        <Route path="/atletas/pagina" element={
+        <Route path="/atletas/perfil/:id" element={
           <ProtectedRoute>
             <Atletaspersonalpage />
           </ProtectedRoute>
