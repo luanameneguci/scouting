@@ -335,15 +335,23 @@ controllers.apagar = async (req, res) => {
 
 // PAGINA DOS ATLETAS
 controllers.buscarPorId = async (req, res) => {
-  const { id_atleta } = req.params; // Obtém o ID da URL
+  const { id_atleta } = req.params;
 
   try {
     const atleta = await Atleta.findOne({
-      where: { id_atleta }, // Busca pelo ID
+      where: { id_atleta },
       attributes: [
         "id_atleta",
         "nome",
-        "datanascimento",
+        // Formatar a data diretamente na query
+        [
+          Sequelize.fn(
+            'TO_CHAR',
+            Sequelize.col('datanascimento'),
+            'DD/MM/YYYY'
+          ),
+          'datanascimento'
+        ],
         "ratingfinal",
         "ratinggeral",
       ],
@@ -370,7 +378,26 @@ controllers.buscarPorId = async (req, res) => {
       return res.status(404).json({ message: "Atleta não encontrado" });
     }
 
-    res.status(200).json(atleta);
+    // Converter para objeto simples
+    const atletaData = atleta.get({ plain: true });
+
+    // Calcular idade
+    const calculateAge = (birthday) => {
+      if (!birthday) return null;
+      const today = new Date();
+      const [day, month, year] = birthday.split('/');
+      const birthDate = new Date(`${year}-${month}-${day}`);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    };
+
+    atletaData.idade = calculateAge(atletaData.datanascimento);
+
+    res.status(200).json(atletaData);
   } catch (error) {
     console.error("Erro ao buscar atleta:", error);
     res.status(500).json({ message: "Erro interno do servidor" });
