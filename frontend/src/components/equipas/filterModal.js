@@ -89,7 +89,19 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
         );
     };
 
-
+    const handleLimparFiltros = () => {
+        setFiltros({
+            ...filtros,
+            ratingMin: 0,
+            ratingGeralMin: 0,
+            anoMin: 0,
+            anoMax: 0,
+            escalaoMin: 0,
+            escalaoMax: 0,
+            clube: 0,
+            nacionalidade: 0
+        });
+    }
     useEffect(() => {
         const handleClickOutside = (event) => { // Ao clicar fora fecha
             if (ref.current) {
@@ -143,7 +155,7 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
                 <div className='header'>
                     <h1> Filtragem de atletas </h1>
                     <span>
-                        <button className='filter-button rounded' type="button">
+                        <button className='filter-button rounded' type="button" onClick={handleLimparFiltros}>
                             Limpar Filtros
                         </button>
                         <button className="btn-close" onClick={closeModal}>
@@ -215,11 +227,11 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
                     <div className='clube'>
                         <label className='font-bold'>Clubeaaa:</label>
                         <select value={filtros.clube} onChange={(e) => setFiltros({ ...filtros, clube: e.target.value })}>
-                                <option value={0}>-</option>
-                                {
-                                    clubes.map(clube => (
-                                        <option key={clube.id_clube} value={clube.id_clube}>{clube.nome}</option>
-                                    ))}
+                            <option value={0}>-</option>
+                            {
+                                clubes.map(clube => (
+                                    <option key={clube.id_clube} value={clube.id_clube}>{clube.nome}</option>
+                                ))}
 
                         </select>
                     </div>
