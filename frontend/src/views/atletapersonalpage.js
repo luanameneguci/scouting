@@ -157,10 +157,10 @@ export default function Atletaspersonalpage() {
             <span className="atletaspersonalpage-detail-value">
               {atleta?.nacionalidades?.map((nacionalidade, index) => (
                 <span key={nacionalidade.id_nacionalidade}>
-                  {nacionalidade.nome}
+                  {nacionalidade.designacao}
                   {index < atleta.nacionalidades.length - 1 ? ', ' : ''}
                 </span>
-              )) || 'Not found'}
+              )) || 'Nacionalidade não informada'}
             </span>
           </div>
         </div>
