@@ -10,11 +10,33 @@ import {
   Tooltip,
 } from "chart.js";
 import "./atletapersonalpage.css";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 // Register required Chart.js components
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip);
 
 export default function Atletaspersonalpage() {
+  const { id } = useParams(); // Captura o ID da URL
+  const [atleta, setAtleta] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchAtleta() {
+      try {
+        const response = await fetch(`http://localhost:8080/atleta/${id}`); // Altere a URL se necessário
+        if (!response.ok) throw new Error("Atleta não encontrado");
+        const data = await response.json();
+        setAtleta(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAtleta();
+  }, [id]);
   const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
   const [ratings, setRatings] = useState({
     Tecnica: 2,
@@ -104,7 +126,9 @@ export default function Atletaspersonalpage() {
       <div className="atletaspersonalpage-card">
         <div className="atletaspersonalpage-info">
           <h2 className="atletaspersonalpage-section-title">Atleta</h2>
-          <h1 className="atletaspersonalpage-nome">Francisco Machado</h1>
+          <h1 className="atletaspersonalpage-nome">
+            {loading ? "Carregando..." : error ? "Erro ao carregar" : atleta?.nome}
+          </h1>
           <p className="atletaspersonalpage-posicao">
             Ponta de Lança (PL) <span className="atletaspersonalpage-text-secondary">Avançate</span>
           </p>
@@ -187,9 +211,8 @@ export default function Atletaspersonalpage() {
                 {[...Array(5)].map((_, index) => (
                   <span
                     key={index}
-                    className={`atletaspersonalpage-star ${
-                      index < ratings[category] ? "filled" : ""
-                    }`}
+                    className={`atletaspersonalpage-star ${index < ratings[category] ? "filled" : ""
+                      }`}
                     onClick={() => handleRatingChange(category, index + 1)}
                   >
                     ★
