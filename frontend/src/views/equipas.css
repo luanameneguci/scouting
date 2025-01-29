@@ -163,7 +163,16 @@
 .equipas-wrapper .content table td:last-child {
     border-right: none;
 }
+.equipas-wrapper .content table .actions>span{
+    color: var(--gray-500-color);
+    user-select: none;
+    transition: color .1s;
+    cursor: pointer;
+}
+.equipas-wrapper .content table .actions>span:hover{
+    color: var(--white-color);
 
+}
 .equipas-wrapper .radio-buttons {
     display: flex;
     gap: 1rem;

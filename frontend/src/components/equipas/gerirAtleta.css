@@ -1,0 +1,60 @@
+.rmv-atleta-equipa {
+    width: fit-content;
+    border: none;
+    padding: .64rem 1rem;
+    cursor: pointer;
+    transition: .1s;
+    margin-left: auto;
+    background-color: var(--red-color);
+}
+
+.rmv-atleta-equipa:hover {
+    background-color: var(--light-red-color);
+
+}
+.rmv-atleta-equipa:disabled {
+    background-color: var(--gray-600-color);
+    cursor: not-allowed;
+}
+
+.field {
+    width: 100%;
+    aspect-ratio: 1/.8;
+    min-height: 15rem;
+}
+
+.equipas-wrapper .field-wrapper.on-modal {
+    height: 100%;
+    width: 100%;
+
+}
+
+.equipas-wrapper .field-wrapper.on-modal .football-field {
+    padding: 5%;
+    padding-bottom: 2%;
+    gap: 2%;
+}
+
+.equipas-wrapper .field-wrapper.on-modal .player {
+    cursor: pointer;
+}
+
+.equipas-wrapper .field-wrapper.on-modal .player .name {
+    color: var(--gray-500-color);
+    transition: color .1s;
+
+}
+
+.equipas-wrapper .field-wrapper.on-modal .player .name.free span {
+    color: var(--green-color);
+    transition: color .1s;
+
+}
+
+.equipas-wrapper .field-wrapper.on-modal .player:hover .name:not(.free) {
+    color: var(--white-color);
+}
+
+.equipas-wrapper .field-wrapper.on-modal .player:hover .name.free span {
+    color: var(--light-green-color);
+}

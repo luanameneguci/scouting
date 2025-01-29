@@ -75,13 +75,6 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
             }
         };
 
-
-
-
-
-
-
-
         if (isOpen) { // Se o modal estiver aberto, adiciona o event listener
             document.addEventListener('mousedown', handleClickOutside);
         } else { // Se não, remove-o

@@ -19,6 +19,10 @@ router.post("/equipa", authMiddleware, EquipaController.createEquipa);
 router.delete("/equipa/:id", authMiddleware, EquipaController.deleteEquipa);
 
 router.get("/equipa/:id/atletas", authMiddleware, EquipaController.atletasEquipa);
+
+router.delete("/equipa/:idEquipa/atleta/:idAtleta", authMiddleware, EquipaController.removeAtletaEquipa);
+
+router.put("/equipa/:idEquipa/atleta/:idAtleta/posicao/:novaPosicao", authMiddleware, EquipaController.trocaPosicao);
 /*
 
 

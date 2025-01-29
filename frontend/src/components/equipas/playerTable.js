@@ -1,4 +1,4 @@
-export default function PlayerTable({ players }) {
+export default function PlayerTable({ players, selectAtleta, selectOperation }) {
     if (!players) return 'n há atletas';
     return (
         <div className='table-wrapper'>
@@ -44,7 +44,22 @@ export default function PlayerTable({ players }) {
                                     <td className="left-align">
                                         Sem nacionalidade na BD</td>}
                                 <td className="left-align">{player.clube.nome}</td>
-                                <td className="left-align">Remover Perfil</td>
+                                <td className="left-align actions">
+                                    {player.isInEquipa ?
+                                        <>
+                                            <span className="material-symbols-outlined icon"
+                                                onClick={() => { selectAtleta(player); selectOperation(2); }}>
+                                                edit
+                                            </span>
+                                            <span className="material-symbols-outlined icon" onClick={() => { selectAtleta(player); selectOperation(3); }}>
+                                                delete
+                                            </span></>
+                                        :
+                                        <span className="material-symbols-outlined icon" onClick={() => { selectAtleta(player); selectOperation(1); }}>
+                                            add
+                                        </span>}
+                                </td>
+
                             </tr>
                         ))}
 

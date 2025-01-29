@@ -8,6 +8,7 @@ import FootballField from '../components/equipas/footballField';
 import PlayerTable from '../components/equipas/playerTable';
 import FilterModal from '../components/equipas/filterModal';
 import GerirEquipasModal from '../components/equipas/gerirEquipas';
+import GerirAtletaModal from '../components/equipas/gerirAtleta';
 import LoadingAnim from '../components/loadingAnim';
 
 export default function Equipas() {
@@ -43,6 +44,22 @@ export default function Equipas() {
             console.error("Erro ao receber informação da equipa: ", error);
         }
     }, [idEquipa]);
+
+    const [atletasEquipa, setAtletasEquipa] = useState([]);
+    //Buscar os atletas da equipa
+    const fetchEquipaPlayers = async () => {
+        try {
+            await axios.get(`${url}/equipa/${idEquipa}/atletas`, { withCredentials: true }).then((res) => {
+                if (res.status === 200) {
+                    setAtletasEquipa(res.data.atletas);
+                } else {
+                    throw new Error(res.data.message);
+                }
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     // Modal de filtro (estado)
     const [filtroOpen, setfiltroOpen] = useState(false);
@@ -107,27 +124,22 @@ export default function Equipas() {
     useEffect(() => {
         setPage(1); // Muda a página, e atualiza a lista de atletas
     }, [filtros]);
+    const fetchAtletas = async () => {
+        try {
+            await axios.post(`${url}/atleta/todos/${idEquipa}`, { page, filtros }, { withCredentials: true }).then((res) => {
+                if (res.status === 200) {
+                    setAtletas(res.data.atletas);
+                    setTotalPages(Math.ceil(res.data.totalPages));
 
-    useEffect(() => {
-        const fetchAtletas = async () => {
-            try {
-                await axios.post(`${url}/atleta/todos/${idEquipa}`, { page, filtros }, { withCredentials: true }).then((res) => {
-                    if (res.status === 200) {
-                        setAtletas(res.data.atletas);
-                        setTotalPages(Math.ceil(res.data.totalPages));
+                } else {
+                    throw new Error(res.data.message);
+                }
+            });
 
-                    } else {
-                        throw new Error(res.data.message);
-                    }
-                });
-
-            } catch (error) {
-                console.error("Erro ao receber informação: ", error);
-            }
+        } catch (error) {
+            console.error("Erro ao receber informação: ", error);
         }
-        fetchAtletas();
-    }, [idEquipa, page, filtros]);
-
+    }
 
 
 
@@ -151,10 +163,44 @@ export default function Equipas() {
         handleGerirModal();
 
     };
+    // Id do atleta selecionado (para remover, editar ou adicionar)
+    const [atletaSelecionado, setAtletaSelecionado] = useState(null);
+    // Operação a realizar no atleta selecionado (1 - Adicionar, 2 - Editar, 3 - Remover)
+    const [atletaOperation, setAtletaOperation] = useState(null);
+    // Modal de gerir equipas (estado)
+    const [gerirAtleta, setGerirAtleta] = useState(false);
+    // Referência para o modal de gerir equipas (para poder fechar e abrir)
+    const refAtleta = useRef(null);
+    // Função para abrir e fechar o modal de gerir equipas
+    const handleAtletaModal = () => {
+        if (refAtleta.current) {
+            if (gerirAtleta) refAtleta.current.close();
+            else refAtleta.current.showModal();
+            setGerirAtleta(!gerirAtleta);
+        }
 
-    if (!atletas || !equipa) return <div className='equipas-wrapper'><LoadingAnim /></div>;
+    };
+    useEffect(() => {
+        if (atletaSelecionado && atletaOperation) handleAtletaModal();
+    }, [atletaSelecionado, atletaOperation]);
+
+    useEffect(() => {
+        fetchAtletas();
+        fetchEquipaPlayers();
+    }, [page, idEquipa, filtros]);
+
+    if (!atletas || !equipa || !atletasEquipa) 
+        return <div className='equipas-wrapper'><LoadingAnim /></div>;
     return (
         <div className='equipas-wrapper'>
+            <GerirAtletaModal ref={refAtleta} closeModal={() => {
+                handleAtletaModal();
+                setAtletaOperation(null);
+                setAtletaSelecionado(null); 
+                fetchAtletas();
+                fetchEquipaPlayers();
+            }} isOpen={gerirAtleta} atleta={atletaSelecionado} operation={atletaOperation} id={idEquipa} atletas={atletasEquipa}  />
+
             <GerirEquipasModal ref={refGerir} closeModal={handleGerirModal} isOpen={gerirEquipas} />
             <FilterModal ref={refFiltros} closeModal={handleFiltrosModal} isOpen={filtroOpen} filtros={filtros} setFiltros={setFiltros} escalaoMax={equipa.escalao.id_escalao} />
             <div className="sidebar">
@@ -177,7 +223,7 @@ export default function Equipas() {
                         </select>
                     </div>
                 </div>
-                <FootballField id={idEquipa} />
+                <FootballField atletas={atletasEquipa} selectAtleta={setAtletaSelecionado} selectOperation={setAtletaOperation} />
             </div>
             <div className="content">
                 <div className='table-options'>
@@ -201,7 +247,7 @@ export default function Equipas() {
                 </div>
                 <div className='table-container'>
                     {/* Tabela de jogadores */}
-                    <PlayerTable players={atletas} />
+                    <PlayerTable players={atletas} selectAtleta={setAtletaSelecionado} selectOperation={setAtletaOperation} />
 
                     {/* Botões de Paginação */}
                     <div className="pagination">
@@ -224,7 +270,7 @@ export default function Equipas() {
                             Próxima
                         </button>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

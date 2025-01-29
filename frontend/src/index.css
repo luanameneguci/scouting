@@ -7,6 +7,8 @@
   --red-color: #f02121;
   --light-red-color: #ff4e4e;
   --green-color: #1ED01B;
+  --light-green-color: #29ea26;
+
   --white-color: #fff;
   --gray-50-color: #FCFCFC;
   --gray-100-color: #f2f2f2;
@@ -20,7 +22,7 @@
   --gray-900-color: #141414;
   --gray-1000-color: #050505;
   --black-color: #000;
-  
+
   /*Font*/
   --font-size-regular: 1rem;
   --font-size-secondary: .84rem;
@@ -31,14 +33,15 @@
   accent-color: var(--accent-color);
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   color: var(--white-color);
 
 }
-h1{
+
+h1 {
   font-size: var(--font-size-title);
 }
 
@@ -46,7 +49,7 @@ body {
   font-family: "Lato", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size:  var(--font-size-regular);
+  font-size: var(--font-size-regular);
   overflow-x: hidden;
   background-color: var(--gray-700-color);
 }

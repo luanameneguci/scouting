@@ -3,34 +3,15 @@ import axios from 'axios';
 import './footballField.css';
 import LoadingAnim from '../loadingAnim';
 
-export default function FootballField({ id }) {
-    const url = process.env.REACT_APP_API_URL;
-    const [atletas, setAtletas] = useState([]);
-    const [loading, setLoading] = useState(false);
+export default function FootballField({ atletas, selectAtleta, selectOperation }) {
     const [atletasOrg, setAtletasOrg] = useState(Array(17).fill(null));
-    const fetchEquipaPlayers = async () => {
-        setLoading(true);
-        try {
-            await axios.get(`${url}/equipa/${id}/atletas`, { withCredentials: true }).then((res) => {
-                if (res.status === 200) {
-                    setAtletas(res.data.atletas);
-                } else {
-                    throw new Error(res.data.message);
-                }
-            });
-        } catch (error) {
-            console.error(error);
-        }
-        setLoading(false);
-    };
-    useEffect(() => {
-        fetchEquipaPlayers();
-    }, []);
+
+
 
 
     const FootballFieldPlayers = ({ atleta }) => {
         return (
-            <div className='player'>
+            <div className='player' onClick={() => {selectAtleta(atleta); selectOperation(2);}}>
                 <div className={`font-bold rating ${atleta.ratingfinal == '5' && 'golden'}`}>{atleta.ratingfinal} ★</div>
                 <p className='name font-bold'>
                     {atleta.nome.split(' ')[0] /* Primeiro Nome*/}
@@ -42,23 +23,27 @@ export default function FootballField({ id }) {
     };
     const FootballFieldPlayersEmpty = () => {
         return (
-            <div className='player'>
+            <div className='player empty'>
                 <div className='rating empty'>+</div>
                 <p className='text-secondary'>Espaço<br />livre</p>
             </div>
         );
     }
     useEffect(() => {
-        atletas.forEach(atleta => {
-            setAtletasOrg(prevState => {
-                const newState = [...prevState]; // Guarda o array antigo
-                newState[atleta.posicaoformacao - 1] = atleta.RelatedEquipaAtleta; // Atualiza o array
-                return newState; // Retorna o array (para o state)
+        setAtletasOrg(Array(17).fill(null))
+        if (atletas) {
+
+            atletas.forEach(atleta => {
+                setAtletasOrg(prevState => {
+                    const newState = [...prevState]; // Guarda o array antigo
+                    newState[atleta.posicaoformacao - 1] = atleta.RelatedEquipaAtleta; // Atualiza o array
+                    return newState; // Retorna o array (para o state)
+                });
             });
-        });
+        }
     }, [atletas]);
 
-    if (loading) return <div><LoadingAnim /></div>;
+    if (!atletasOrg) return <div><LoadingAnim /></div>;
     return (
         <div className='field-wrapper'>
             <div className='football-field rounded bg-color-gray-800'>

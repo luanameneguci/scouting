@@ -107,13 +107,6 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
             }
         };
 
-
-
-
-
-
-
-
         if (isOpen) { // Se o modal estiver aberto, adiciona o event listener
             document.addEventListener('mousedown', handleClickOutside);
         } else { // Se não, remove-o
