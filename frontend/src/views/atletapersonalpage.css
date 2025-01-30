@@ -231,7 +231,7 @@
   border-radius: 8px;
 }
 
-/* Star Rating Chart */
+/* ESTRELINHAS!!! */
 
 .atletaspersonalpage-graph {
   background-color: var(--gray-900);
@@ -264,9 +264,8 @@ canvas {
   border-bottom: none;
 }
 
-.atletaspersonalpage-star:last-child {
-  
-    padding-right: 20px; /* Adds padding inside the info section */
+.atletaspersonalpage-star-chart .atletaspersonalpage-star:last-child {
+  padding-right: 20px;
 }
 
 .atletaspersonalpage-star-title {
@@ -297,4 +296,14 @@ canvas {
 
 .atletaspersonalpage-star:hover {
   color: var(--accent-color);
+}
+
+
+.atletaspersonalpage-detail-container:nth-child(3) .atletaspersonalpage-detail-box {
+  align-items: baseline; /* Alinha pelo baseline do texto */
+}
+
+.atletaspersonalpage-detail-value .atletaspersonalpage-star {
+  vertical-align: middle; /* Alinha verticalmente as estrelas */
+  line-height: 1; /* Remove espaçamento extra abaixo das estrelas */
 }

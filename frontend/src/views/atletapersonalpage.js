@@ -188,11 +188,22 @@ export default function Atletaspersonalpage() {
         <div className="atletaspersonalpage-detail-container">
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Rating final</span>
-            <span className="atletaspersonalpage-detail-value">★★★★★</span>
+            <span className="atletaspersonalpage-detail-value">
+              {[...Array(5)].map((_, index) => (
+                <span
+                  key={index}
+                  className={`atletaspersonalpage-star ${index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""}`}
+                >
+                  ★
+                </span>
+              ))}
+            </span>
           </div>
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Rating médio</span>
-            <span className="atletaspersonalpage-detail-value">3.6</span>
+            <span className="atletaspersonalpage-detail-value">
+              {atleta?.ratinggeral?.toFixed(1) || 'N/A'}
+            </span>
           </div>
         </div>
         {/* Confirmation and Removal */}
