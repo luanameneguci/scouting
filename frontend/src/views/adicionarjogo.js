@@ -31,19 +31,19 @@ export default function AtletasAdicionar() {
 
   // 1) useEffect para carregar os clubes ao montar
   useEffect(() => {
-    fetch("http://localhost:8080/clube/listar") // a rota que você criou
+    fetch("http://localhost:8080/clube/listar")
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setClubes(data.data); // Preenche o array com os clubes do banco
+          setClubes(data.data);
         } else {
-          console.error("Erro ao listar clubes:", data);
+          console.error("Erro ao listar clubes:", data.message);
         }
       })
       .catch((err) => {
         console.error("Erro de rede ao listar clubes:", err);
       });
-  }, []);
+}, []);
 
   // Função de mudança dos campos
   const handleChange = (e) => {
