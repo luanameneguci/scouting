@@ -124,21 +124,21 @@ export default function Atletaspersonalpage() {
 
       {/* Main Profile Card */}
       <div className="atletaspersonalpage-card">
-      <div className="atletaspersonalpage-info">
-  <h2 className="atletaspersonalpage-section-title">Atleta</h2>
-  <h1 className="atletaspersonalpage-nome">
-    {loading ? "Carregando..." : error ? "Erro ao carregar" : atleta?.nome}
-  </h1>
-  <p className="atletaspersonalpage-posicao">
-    Ponta de Lança (PL) <span className="atletaspersonalpage-text-secondary">Avançate</span>
-  </p>
-  <p className="atletaspersonalpage-idade">
-    {atleta?.datanascimento || '--/--/----'}
-    <span className="atletaspersonalpage-text-secondary">
-      {atleta?.idade ? `${atleta.idade} anos` : 'Idade não disponível'}
-    </span>
-  </p>
-</div>
+        <div className="atletaspersonalpage-info">
+          <h2 className="atletaspersonalpage-section-title">Atleta</h2>
+          <h1 className="atletaspersonalpage-nome">
+            {loading ? "Carregando..." : error ? "Erro ao carregar" : atleta?.nome}
+          </h1>
+          <p className="atletaspersonalpage-posicao">
+            Ponta de Lança (PL) <span className="atletaspersonalpage-text-secondary">Avançate</span>
+          </p>
+          <p className="atletaspersonalpage-idade">
+            {atleta?.datanascimento || '--/--/----'}
+            <span className="atletaspersonalpage-text-secondary">
+              {atleta?.idade ? `${atleta.idade} anos` : 'Idade não disponível'}
+            </span>
+          </p>
+        </div>
         <div className="atletaspersonalpage-imagem"></div>
       </div>
 
@@ -148,22 +148,40 @@ export default function Atletaspersonalpage() {
         <div className="atletaspersonalpage-detail-container">
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Clube</span>
-            <span className="atletaspersonalpage-detail-value">Simba SC</span>
+            <span className="atletaspersonalpage-detail-value">
+              {atleta?.clube?.nome || 'Clube não informado'}
+            </span>
           </div>
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Nacionalidade</span>
-            <span className="atletaspersonalpage-detail-value">Portugal</span>
+            <span className="atletaspersonalpage-detail-value">
+              {atleta?.nacionalidades?.map((nacionalidade, index) => (
+                <span key={nacionalidade.id_nacionalidade}>
+                  {nacionalidade.designacao}
+                  {index < atleta.nacionalidades.length - 1 ? ', ' : ''}
+                </span>
+              )) || 'Nacionalidade não informada'}
+            </span>
           </div>
         </div>
         {/* Team and Escalation */}
         <div className="atletaspersonalpage-detail-container">
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Equipa</span>
-            <span className="atletaspersonalpage-detail-value">Sombra</span>
+            <span className="atletaspersonalpage-detail-value">
+              {atleta?.equipas?.map((equipa, index) => (
+                <span key={index}>
+                  {equipa.nome}
+                  {index < atleta.equipas.length - 1 ? ', ' : ''}
+                </span>
+              )) || 'Sem equipa'}
+            </span>
           </div>
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Escalão</span>
-            <span className="atletaspersonalpage-detail-value">Sub 23</span>
+            <span className="atletaspersonalpage-detail-value">
+              {atleta?.escalao?.designacao || 'Escalão não definido'}
+            </span>
           </div>
         </div>
         {/* Ratings */}

@@ -371,6 +371,12 @@ controllers.buscarPorId = async (req, res) => {
           as: "statusatletum",
           attributes: ["designacao"],
         },
+        {
+          model: models.nacionalidade,
+          as: 'nacionalidades',
+          through: { attributes: [] }, 
+          required: false
+        },
       ],
     });
 
