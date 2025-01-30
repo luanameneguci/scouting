@@ -145,6 +145,7 @@ const RelatorioAdicionar = () => {
         <div className="campoadic">
           <label>Apontamentos</label>
           <textarea
+            className="textareaRelConfir"
             placeholder="Apontamentos"
             value={apontamentos}
             onChange={(e) => setApontamentos(e.target.value)}

@@ -1,7 +1,7 @@
 .containerRelConfir {
   max-width: 800px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 100px;
   background-color: transparent;
   border-radius: 8px;
 }
@@ -88,19 +88,6 @@
   font-size: 14px;
 }
 
-.containerRelConfir .textareaRelConfir {
-  width: 100%;
-  padding: 12px;
-  border-radius: 4px;
-  background-color: #5F5F5F;
-  color: white;
-  margin-top: 10px;
-}
-
-.containerRelConfir .textareaRelConfir::placeholder {
-  color: white;
-}
-
 /* Estilo do contêiner "Atleta" + "Validar >" lado a lado */
 .atleta-containerRelConfir {
   display: flex;
@@ -134,3 +121,13 @@
   pointer-events: none; /* Impede a interação com o botão */
 }
 
+.campoadic label {
+  display: block; 
+  margin-bottom: 8px; 
+}
+
+.campoadic textarea {
+  display: block; 
+  width: 100%; 
+  margin-top: 0; 
+}

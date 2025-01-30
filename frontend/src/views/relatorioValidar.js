@@ -25,7 +25,9 @@ const RelatorioValidar = () => {
             <label>Atleta</label>
             <div className="atletasadicionar-input-groupval">
               <PersonIcon />
-              <input type="text" placeholder="John Doe" disabled />
+              <select>
+                <option>John Doe</option>
+              </select>
             </div>
           </div>
 
@@ -145,7 +147,7 @@ const RelatorioValidar = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Clube */}
           <div className="form-rowval">
             <div className="form-groupval">
