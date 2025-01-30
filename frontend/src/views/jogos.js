@@ -63,7 +63,7 @@ const Jogos = () => {
         </div>
 
         {/* Link para a página de Adicionar Jogo */}
-        <Link to={'/jogos/adicionarjogo'}>
+        <Link to={'/jogos/adicionar'}>
           <button className="jogos-add-button">Adicionar</button>
         </Link>
       </div>
