@@ -99,10 +99,12 @@
     cursor: pointer;
     transition: color .1s;
 }
+
 .equipas-wrapper .searchbar .icon:hover {
     color: var(--gray-400-color);
 }
-.equipas-wrapper .filter-button {
+
+.equipas-wrapper .text-button {
     transition: .1s;
     background: none;
     border: none;
@@ -116,7 +118,7 @@
     font-size: var(--font-size-regular);
 }
 
-.equipas-wrapper .filter-button:hover {
+.equipas-wrapper .text-button:hover {
     background-color: var(--gray-600-color);
 }
 
@@ -163,16 +165,19 @@
 .equipas-wrapper .content table td:last-child {
     border-right: none;
 }
-.equipas-wrapper .content table .actions>span{
+
+.equipas-wrapper .content table .actions>span {
     color: var(--gray-500-color);
     user-select: none;
     transition: color .1s;
     cursor: pointer;
 }
-.equipas-wrapper .content table .actions>span:hover{
+
+.equipas-wrapper .content table .actions>span:hover {
     color: var(--white-color);
 
 }
+
 .equipas-wrapper .radio-buttons {
     display: flex;
     gap: 1rem;
@@ -363,6 +368,7 @@
     justify-content: space-between;
     margin-bottom: .8rem;
 }
+
 .equipas-wrapper .modal .header>*:last-child {
     display: flex;
     align-items: center;
@@ -382,4 +388,22 @@
 
 .equipas-wrapper .modal .btn-close:hover span {
     color: var(--white-color);
+}
+.equipas-wrapper.not-found{
+    flex-direction: column;
+}
+.equipas-wrapper.not-found a {
+    background-color: var(--accent-color);
+    color: var(--gray-800-color);
+    text-decoration: none;
+    border: none;
+    transition: .1s;
+    height: fit-content;
+    padding: 1rem;
+    width:fit-content;
+}
+
+.equipas-wrapper.not-found a:hover {
+    background-color: var(--light-accent-color);
+
 }

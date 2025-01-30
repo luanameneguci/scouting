@@ -170,7 +170,7 @@ controllers.allEquipas = async (req, res) => {
 
 
     });
-    return res.status(200).json({ data: equipas });
+    return res.status(200).json({ equipas });
   } catch (error) {
     console.error("Error ao procurar equipas:", error);
     return res.status(500).json({ error: "Erro no servidor", message: error.message });
