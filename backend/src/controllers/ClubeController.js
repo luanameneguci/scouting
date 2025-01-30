@@ -1,19 +1,26 @@
-const express = require("express");
+const express = require('express');
 const sequelize = require("../models/database");
-const { Sequelize, Op, literal, Model, DataTypes } = require('sequelize');
-var initModels = require("../models/init-models");
-var models = initModels(sequelize);
+const { Sequelize, Op, Model, DataTypes } = require("sequelize");
+const clube = require("../models/clube")(sequelize, DataTypes); // Definido o modelo de clube desta forma
+const controllers = {};
 
-const clubeController = {};
-
-clubeController.listar = async (req, res) => {
-    try {
-        const clubes = await models.clube.findAll();
-        res.status(200).json({ success: true, data: clubes });
-    } catch (error) {
-        console.error("Erro ao buscar clubes:", error);
-        res.status(500).json({ success: false, message: 'Erro ao buscar clubes', error: error.message });
-    }
+// Controller para listar todos os clubes
+controllers.listar = async (req, res) => {
+  try {
+    const clubes = await clube.findAll();
+    
+    res.status(200).json({
+      success: true,
+      data: clubes,
+    });
+  } catch (error) {
+    console.error("Erro:", error);
+    res.status(500).json({
+      success: false,
+      message: "Erro ao buscar clubes",
+      error: error.message,
+    });
+  }
 };
 
-module.exports = clubeController;
+module.exports = controllers;

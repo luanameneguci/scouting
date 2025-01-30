@@ -23,7 +23,8 @@ export default function AtletasAdicionar() {
     hora: "",
     atleta: "",
   });
-  const [clubes, setClubes] = useState([]); // << NOVO state para armazenar clubes
+  const [clubes, setClubes] = useState([]); // Novo estado para armazenar clubes
+  const [escaloes, setEscaloes] = useState([]); // Novo estado para armazenar escalões
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -43,14 +44,28 @@ export default function AtletasAdicionar() {
       .catch((err) => {
         console.error("Erro de rede ao listar clubes:", err);
       });
-}, []);
+
+    // 2) useEffect para carregar os escalões ao montar
+    fetch("http://localhost:8080/escalao/listar")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setEscaloes(data.data);
+        } else {
+          console.error("Erro ao listar escalões:", data.message);
+        }
+      })
+      .catch((err) => {
+        console.error("Erro de rede ao listar escalões:", err);
+      });
+  }, []);
 
   // Função de mudança dos campos
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 2) handleSubmit enviando o form
+  // 3) handleSubmit enviando o form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -140,15 +155,12 @@ export default function AtletasAdicionar() {
                 onChange={handleChange}
                 required
               >
-                <option value="" disabled>Escalão</option>
-                <option value="1">SUB-23</option>
-                <option value="2">SUB-19</option>
-                <option value="3">SUB-16</option>
-                <option value="4">SUB-14</option>
-                <option value="5">SUB-13</option>
-                <option value="6">SUB-12</option>
-                <option value="7">SUB-11</option>
-                <option value="8">SUB-10</option>
+                <option value="" disabled>Selecione o escalão</option>
+                {escaloes.map((e) => (
+                  <option key={e.id_escalao} value={e.id_escalao}>
+                    {e.designacao}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

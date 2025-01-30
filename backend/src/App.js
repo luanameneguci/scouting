@@ -10,6 +10,7 @@ const relatorioRouter = require('./routes/relatorioRoute.js');
 const utilizadorRouter = require('./routes/utilizadorRoute'); 
 const authRouter = require('./routes/authRoute.js');
 const clubeRouter = require('./routes/clubeRoute.js');
+const escalaoRouter = require('./routes/escalaoRoute.js');
 /* const tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 const cookieParser = require('cookie-parser');
 
@@ -50,6 +51,7 @@ app.use('/atleta', atletaRouter);
 app.use('/relatorio', relatorioRouter); 
 app.use('/utilizador', utilizadorRouter);
 app.use('/clube', clubeRouter);
+app.use('/escalao', escalaoRouter);
 app.use('/auth', authRouter); // Registrando authRouter
 /* app.use('/tipoEquipa', tipoEquipasRouter); */
 

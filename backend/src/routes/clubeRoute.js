@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const clubeController = require('../controllers/ClubeController'); // Certifique-se de que o caminho está correto
+
+const ClubeController = require("../controllers/ClubeController.js");
 
 // Rota para listar todos os clubes
-router.get('/listar', clubeController.listarTodosClubes);
+router.get("/listar", ClubeController.listar);  
 
 module.exports = router;
