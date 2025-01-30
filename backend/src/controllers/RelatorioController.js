@@ -142,7 +142,7 @@ controllers.listar = async (req, res) => {
         },
         {
           model: models.utilizador,
-          as: 'id_utilizador_utilizador', // Verifique se este alias está correto
+          as: 'utilizador', // Verifique se este alias está correto
           attributes: []
         }
       ],
@@ -175,21 +175,18 @@ controllers.listar = async (req, res) => {
       attributes: [
         'id_relatorio',
         'data',
-        [
-          Sequelize.literal(`CASE 
-            WHEN atleta.id_statusatleta IS NOT NULL THEN 'Confirmado' 
-            ELSE 'Não Confirmado' 
-          END`), 
-          'confirmado'
-        ],
-        [Sequelize.col('atleta.nome'), 'nome_atleta'],
+        [Sequelize.literal(`CASE 
+          WHEN "atletum"."id_statusatleta" IS NOT NULL THEN 'Confirmado' 
+          ELSE 'Não Confirmado' 
+        END`), 'confirmado'],
+        [Sequelize.col('atletum.nome'), 'nome_atleta'],
         [Sequelize.col('utilizador.nome'), 'nome_treinador'],
-        [Sequelize.col('atleta->clube.nome'), 'clube_atleta']
+        [Sequelize.col('atletum->clube.nome'), 'clube_atleta']
       ],
       include: [
         {
           model: models.atleta,
-          as: 'atleta',
+          as: 'atletum', // Alias corrigido para combinar com a associação
           attributes: [],
           include: [
             {
@@ -201,7 +198,7 @@ controllers.listar = async (req, res) => {
         },
         {
           model: models.utilizador,
-          as: 'id_utilizador_utilizador',
+          as: 'utilizador',
           attributes: []
         }
       ],
@@ -209,10 +206,10 @@ controllers.listar = async (req, res) => {
       order: [['data', 'DESC']]
     });
 
-    // Formatar data
+    // Formatar data (DATEONLY para formato ISO)
     const formattedData = relatorios.rows.map(relatorio => ({
       ...relatorio,
-      data: new Date(relatorio.data).toLocaleDateString('pt-PT')
+      data: new Date(relatorio.data).toISOString().split('T')[0] // Formato YYYY-MM-DD
     }));
 
     res.status(200).json({
@@ -222,14 +219,16 @@ controllers.listar = async (req, res) => {
       totalPages: Math.ceil(relatorios.count / limit),
       currentPage: parseInt(page)
     });
+
   } catch (error) {
     console.error("Erro ao listar relatórios:", error);
-    res.status(500).json({ 
-      success: false, 
-      message: "Erro ao listar relatórios.",
-      error: error.message 
+    res.status(500).json({
+      success: false,
+      message: "Erro ao listar relatórios",
+      error: error.message
     });
   }
 };
+
 
 module.exports = controllers;
