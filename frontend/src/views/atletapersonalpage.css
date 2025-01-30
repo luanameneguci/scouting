@@ -1,128 +1,147 @@
 :root {
-    --gray-800: #333;
-    --gray-900: #1c1c1c;
-    --text-color: #fff;
-    --accent-color: #ffcc00;
-    --gray-700: #4d4d4d;
-    --gray-600: #666;
-  }
-  
-  
+  --gray-800: #333;
+  --gray-900: #1c1c1c;
+  --text-color: #fff;
+  --accent-color: #ffcc00;
+  --gray-700: #4d4d4d;
+  --gray-600: #666;
+}
+
+
 /* Ensure the main container and details align perfectly */
 .atletaspersonalpage-container {
-    width: 80%; /* Adjust width to match the overall page layout */
-    max-width: 1200px;
-    margin: 40px auto;
-  }
-  
-  .atletaspersonalpage-actions {
-    margin-top: 70px;
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .atletaspersonalpage-action-button-left,
-  .atletaspersonalpage-action-button-right {
-    padding: 10px 20px;
-    background: var(--gray-900);
-    border: 2px solid var(--text-color);
-    color: var(--text-color);
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-  }
-  
-  .atletaspersonalpage-action-button-right {
-    background-color: #fff;
-    color: #000;
-    border: none;
-  }
-  
-  .atletaspersonalpage-action-button-left:hover {
-    background-color: var(--text-color);
-    color: #000;
-  }
-  
-  .atletaspersonalpage-action-button-right:hover {
-    background-color: #ddd;
-  }
-  
-  .atletaspersonalpage-card {
-    width: 100%; /* Matches the width of the parent container */
-    background-color: var(--gray-900);
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between; /* Space between info and image */
-    align-items: stretch; /* Makes both sections equal height */
-    padding: 0; /* Removes padding from the card */
-    margin-bottom: 20px;
-  }
-  
-  .atletaspersonalpage-info {
-    flex: 1; /* Take up remaining space */
-    padding: 20px; /* Adds padding inside the info section */
-    background-color: var(--gray-900); /* Adds a background with borders */
-    border-radius: 8px; /* Rounded corners for the info section */
-  }
-  
-  .atletaspersonalpage-imagem {
-    width: 140px; /* Adjust size as needed */
-    height: auto; /* Maintain aspect ratio */
-    background-image: url('../assets/Atleta_frame.png');
-    background-size: cover; /* Ensures the image covers the div */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents repeating */
-    border-radius: 8px; /* Removes any borders or rounding */
-    margin: 0; /* Aligns with the edge */
-  }
-  .atletaspersonalpage-section-title {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: #aaa;
-  }
-  
-  .atletaspersonalpage-nome {
-    font-size: 24px;
-    font-weight: 700;
-    margin: 5px 0;
-  }
-  
-  .atletaspersonalpage-posicao {
-    font-size: 16px;
-    margin: 5px 0;
-  }
-  
-  .atletaspersonalpage-idade {
-    font-size: 14px;
-    margin: 5px 0;
-  }
-  
-  .atletaspersonalpage-text-secondary {
-    color: #aaa;
-  }
-  
-  
-  .atletaspersonalpage-detalhes {
-    display: flex;
-    gap: 20px; /* Space between the detail containers */
-    width: 100%; /* Matches the width of the card above */
-  }
-  
+  width: 80%;
+  /* Adjust width to match the overall page layout */
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+.atletaspersonalpage-actions {
+  margin-top: 70px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.atletaspersonalpage-action-button-left,
+.atletaspersonalpage-action-button-right {
+  padding: 10px 20px;
+  background: var(--gray-900);
+  border: 2px solid var(--text-color);
+  color: var(--text-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.atletaspersonalpage-action-button-right {
+  background-color: #fff;
+  color: #000;
+  border: none;
+}
+
+.atletaspersonalpage-action-button-left:hover {
+  background-color: var(--text-color);
+  color: #000;
+}
+
+.atletaspersonalpage-action-button-right:hover {
+  background-color: #ddd;
+}
+
+.atletaspersonalpage-card {
+  width: 100%;
+  /* Matches the width of the parent container */
+  background-color: var(--gray-900);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  /* Space between info and image */
+  align-items: stretch;
+  /* Makes both sections equal height */
+  padding: 0;
+  /* Removes padding from the card */
+  margin-bottom: 20px;
+}
+
+.atletaspersonalpage-info {
+  flex: 1;
+  /* Take up remaining space */
+  padding: 20px;
+  /* Adds padding inside the info section */
+  background-color: var(--gray-900);
+  /* Adds a background with borders */
+  border-radius: 8px;
+  /* Rounded corners for the info section */
+}
+
+.atletaspersonalpage-imagem {
+  width: 140px;
+  /* Adjust size as needed */
+  height: auto;
+  /* Maintain aspect ratio */
+  background-image: url('../assets/Atleta_frame.png');
+  background-size: cover;
+  /* Ensures the image covers the div */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents repeating */
+  border-radius: 8px;
+  /* Removes any borders or rounding */
+  margin: 0;
+  /* Aligns with the edge */
+}
+
+.atletaspersonalpage-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #aaa;
+}
+
+.atletaspersonalpage-nome {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.atletaspersonalpage-posicao {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.atletaspersonalpage-idade {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.atletaspersonalpage-text-secondary {
+  color: #aaa;
+}
+
+.atletaspersonalpage-detalhes {
+  display: flex;
+  gap: 20px;
+  /* Space between the detail containers */
+  width: 100%;
+  /* Matches the width of the card above */
+}
+
 /* Set equal widths for all detail containers */
 .atletaspersonalpage-detail-container {
-    flex: 1; /* Make all containers take an equal amount of space */
-    background-color: var(--gray-900);
-    border-radius: 8px;
-    padding: 10px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  flex: 1;
+  /* Make all containers take an equal amount of space */
+  background-color: var(--gray-900);
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
- .atletaspersonalpage-detail-box {
+.atletaspersonalpage-detail-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -131,7 +150,8 @@
 .atletaspersonalpage-detail-title {
   font-size: 14px;
   color: #aaa;
-  font-weight: normal; /* Adjust if needed to match the original look */
+  font-weight: normal;
+  /* Adjust if needed to match the original look */
 }
 
 .atletaspersonalpage-detail-value {
@@ -141,88 +161,94 @@
 }
 
 .atletaspersonalpage-detail-remove {
-    font-size: 14px;
-    color: #f00;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .atletaspersonalpage-toggle-box {
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-  }
-  .atletaspersonalpage-switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-  }
-  
-  .atletaspersonalpage-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    cursor: pointer;
-  }
-  
-  .atletaspersonalpage-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--gray-600);
-    transition: .4s;
-    border-radius: 24px;
-  }
-  
-  .atletaspersonalpage-slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: #fff;
-    transition: .4s;
-    border-radius: 50%;
-  }
-  
-  .atletaspersonalpage-switch input:checked + .atletaspersonalpage-slider {
-    background-color: var(--accent-color);
-  }
-  
-  .atletaspersonalpage-switch input:checked + .atletaspersonalpage-slider:before {
-    transform: translateX(20px);
-  }
-  
-  .atletaspersonalpage-detail-remove {
-    font-size: 14px;
-    color: #f00;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
+  font-size: 14px;
+  color: #f00;
+  cursor: pointer;
+  font-weight: bold;
+}
 
+.atletaspersonalpage-toggle-box {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
 
-  /* Container for the graphs */
-  .atletaspersonalpage-graphs {
-    display: flex; /* Align child elements side by side */
-    gap: 20px; /* Space between the graph and star chart */
-    margin-top: 20px;
-    align-items: stretch; /* Ensures both child elements have the same height */
-  }
+.atletaspersonalpage-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
 
-  .atletaspersonalpage-graph,
-  .atletaspersonalpage-star-chart {
-    flex: 1; /* Both take up equal width */
-    height: 300px; /* Set a consistent height for both */
-    background-color: var(--gray-900); /* Keep the same background */
-    border-radius: 8px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
-  
-  
+.atletaspersonalpage-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+.atletaspersonalpage-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-600);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.atletaspersonalpage-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #fff;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.atletaspersonalpage-switch input:checked+.atletaspersonalpage-slider {
+  background-color: var(--accent-color);
+}
+
+.atletaspersonalpage-switch input:checked+.atletaspersonalpage-slider:before {
+  transform: translateX(20px);
+}
+
+.atletaspersonalpage-detail-remove {
+  font-size: 14px;
+  color: #f00;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Container for the graphs */
+.atletaspersonalpage-graphs {
+  display: flex;
+  /* Align child elements side by side */
+  gap: 20px;
+  /* Space between the graph and star chart */
+  margin-top: 20px;
+  align-items: stretch;
+  /* Ensures both child elements have the same height */
+}
+
+.atletaspersonalpage-graph,
+.atletaspersonalpage-star-chart {
+  flex: 1;
+  /* Both take up equal width */
+  height: 300px;
+  /* Set a consistent height for both */
+  background-color: var(--gray-900);
+  /* Keep the same background */
+  border-radius: 8px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
 
 /* Line Chart */
 .atletaspersonalpage-line-chart {
@@ -231,32 +257,41 @@
   border-radius: 8px;
 }
 
-/* Star Rating Chart */
-
+/* ESTRELINHAS!!! */
 .atletaspersonalpage-graph {
   background-color: var(--gray-900);
   border-radius: 8px;
   padding: 20px;
-  width: 100%; /* Matches container width */
+  width: 100%;
+  /* Matches container width */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 canvas {
-  max-height: 400px; /* Ensure a consistent height */
+  max-height: 400px;
+  /* Ensure a consistent height */
 }
+
 .atletaspersonalpage-star-chart {
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  justify-content: space-between; /* Distribute rows evenly */
+  flex-direction: column;
+  /* Stack items vertically */
+  justify-content: space-between;
+  /* Distribute rows evenly */
 }
 
 .atletaspersonalpage-star-row {
   display: flex;
-  justify-content: space-between; /* Espaço entre título e estrelas */
-  align-items: center; /* Centraliza verticalmente os itens */
-  padding: 10px 0; /* Espaçamento uniforme acima e abaixo */
-  flex: 1; /* Garante que todas as linhas tenham a mesma altura */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Linha divisória */
+  justify-content: space-between;
+  /* Espaço entre título e estrelas */
+  align-items: center;
+  /* Centraliza verticalmente os itens */
+  padding: 10px 0;
+  /* Espaçamento uniforme acima e abaixo */
+  flex: 1;
+  /* Garante que todas as linhas tenham a mesma altura */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  /* Linha divisória */
 }
 
 /* Remove the bottom border for the last row */
@@ -264,9 +299,8 @@ canvas {
   border-bottom: none;
 }
 
-.atletaspersonalpage-star:last-child {
-  
-    padding-right: 20px; /* Adds padding inside the info section */
+.atletaspersonalpage-star-chart .atletaspersonalpage-star:last-child {
+  padding-right: 20px;
 }
 
 .atletaspersonalpage-star-title {
@@ -275,13 +309,16 @@ canvas {
   padding-left: 20px;
   color: var(--text-color);
   text-transform: capitalize;
-  margin-top: 5px; /* Add some margin to slightly elevate the title */
+  margin-top: 5px;
+  /* Add some margin to slightly elevate the title */
 }
 
 .atletaspersonalpage-stars {
   display: flex;
-  gap: 8px; /* Space between stars */
-  margin-top: 5px; /* Align stars slightly better */
+  gap: 8px;
+  /* Space between stars */
+  margin-top: 5px;
+  /* Align stars slightly better */
 }
 
 .atletaspersonalpage-star {
@@ -297,4 +334,20 @@ canvas {
 
 .atletaspersonalpage-star:hover {
   color: var(--accent-color);
+}
+
+.atletaspersonalpage-detail-container:nth-child(3) .atletaspersonalpage-detail-box {
+  align-items: baseline;
+  /* Alinha pelo baseline do texto */
+}
+
+.atletaspersonalpage-detail-value .atletaspersonalpage-star {
+  vertical-align: middle;
+  /* Alinha verticalmente as estrelas */
+  line-height: 1;
+  /* Remove espaçamento extra abaixo das estrelas */
+}
+
+.atletaspersonalpage-card.scouting-card {
+  margin-top: 20px;
 }

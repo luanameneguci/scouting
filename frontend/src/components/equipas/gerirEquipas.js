@@ -1,4 +1,5 @@
 import React, { forwardRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './gerirEquipas.css';
 import LoadingAnim from '../loadingAnim';
@@ -33,7 +34,7 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
         try {
             await axios.get(`${url}/equipas`, { withCredentials: true }).then((res) => {
                 if (res.status === 200) {
-                    setEquipas(res.data.data);
+                    setEquipas(res.data.equipas);
                 } else {
                     throw new Error(res.data.message);
                 }
@@ -188,7 +189,7 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
                         equipas.filter((equipa) => (sombraSelected ? equipa.id_tipoequipa === 1 : equipa.id_tipoequipa === 2))
                             .map((equipa, key) => (
                                 <div >
-                                    <span key={key}>
+                                    <Link to={`/equipa/${equipa.id_equipa}`} key={key}>
                                         <p className='rounded-pill'>
                                             {equipa.tipoequipa.designacao}
                                         </p>
@@ -197,7 +198,7 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
                                                 {` (${equipa.divisao.designacao})`}
                                             </span>
                                         </p>
-                                    </span>
+                                    </Link>
                                     <button onClick={() => setEquipaRemover(equipa)}>
                                         <span className="material-symbols-outlined icon">
                                             delete
