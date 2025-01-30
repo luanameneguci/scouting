@@ -225,6 +225,8 @@ export default function Atletaspersonalpage() {
         </div>
       </div>
 
+
+
       {/* Graph Section */}
       <div className="atletaspersonalpage-graphs">
         {/* Line Graph */}
@@ -255,6 +257,27 @@ export default function Atletaspersonalpage() {
           ))}
         </div>
       </div>
+
+      <div className="atletaspersonalpage-card scouting-card">
+        <div className="atletaspersonalpage-info scouting-info">
+          <h2 className="atletaspersonalpage-section-title scouting-section-title">
+            Scouting
+          </h2>
+          <h1 className="atletaspersonalpage-nome scouting-nome">
+            Rui Marques
+          </h1>
+          <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
+            ruimarques@gmail.com
+          </span>
+          <p className="atletaspersonalpage-idade scouting-idade">
+            <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
+              912345678
+            </span>
+          </p>
+        </div>
+        <div className="atletaspersonalpage-imagem scouting-imagem"></div>
+      </div>
+
     </div>
   );
 }
