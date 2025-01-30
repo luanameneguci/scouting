@@ -24,7 +24,7 @@ export default function NavBackoffice() {
                 </span>
                 Atletas
             </NavLink>
-            <NavLink to="/equipa/1" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
+            <NavLink to="/equipa/" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
                 <span className="material-symbols-outlined icon">
                     sports_and_outdoors
                 </span>

@@ -58,7 +58,8 @@ function AppContent() {
             <Dashboard />
           </ProtectedRoute>
         } />
-        <Route path="/equipa/:idEquipa" element={
+        
+        <Route path="/equipa/:idEquipa?" element={
           <ProtectedRoute>
             <Equipas />
           </ProtectedRoute>
