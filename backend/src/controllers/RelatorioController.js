@@ -123,5 +123,113 @@ controllers.apagar = async (req, res) => {
     res.json({success:true,deleted:del});
     }
 
+controllers.listar = async (req, res) => {
+  try {
+    const data = await Relatorio.findAll({
+      attributes: [
+        'id_relatorio',
+        'data',
+        [sequelize.literal(`CASE WHEN atleta.id_statusatleta IS NOT NULL THEN 'Confirmado' ELSE 'Não Confirmado' END`), 'confirmado'],
+        [sequelize.col('atleta.nome'), 'nome_atleta'],
+        [sequelize.col('utilizador.nome'), 'nome_treinador'],
+        [sequelize.col('atleta.id_clube'), 'clube_id'] // Alterado para ID temporariamente
+      ],
+      include: [
+        {
+          model: models.atleta,
+          as: 'atleta',
+          attributes: []
+        },
+        {
+          model: models.utilizador,
+          as: 'id_utilizador_utilizador', // Verifique se este alias está correto
+          attributes: []
+        }
+      ],
+      raw: true
+    });
+
+    // Formatar data (será apenas data pois o campo é DATEONLY)
+    const formattedData = data.map(relatorio => ({
+      ...relatorio,
+      data: relatorio.data.toISOString().split('T')[0] // Formato YYYY-MM-DD
+    }));
+
+    res.json({ success: true, data: formattedData });
+  } catch (error) {
+    console.error("Erro ao listar relatórios:", error);
+    res.status(500).json({ success: false, message: "Erro ao listar relatórios." });
+  }
+};
+
+// Testando
+controllers.listar = async (req, res) => {
+  try {
+    const { page = 1, size = 10 } = req.query;
+    const limit = parseInt(size);
+    const offset = (page - 1) * limit;
+
+    const relatorios = await Relatorio.findAndCountAll({
+      limit,
+      offset,
+      attributes: [
+        'id_relatorio',
+        'data',
+        [
+          Sequelize.literal(`CASE 
+            WHEN atleta.id_statusatleta IS NOT NULL THEN 'Confirmado' 
+            ELSE 'Não Confirmado' 
+          END`), 
+          'confirmado'
+        ],
+        [Sequelize.col('atleta.nome'), 'nome_atleta'],
+        [Sequelize.col('utilizador.nome'), 'nome_treinador'],
+        [Sequelize.col('atleta->clube.nome'), 'clube_atleta']
+      ],
+      include: [
+        {
+          model: models.atleta,
+          as: 'atleta',
+          attributes: [],
+          include: [
+            {
+              model: models.clube,
+              as: 'clube',
+              attributes: []
+            }
+          ]
+        },
+        {
+          model: models.utilizador,
+          as: 'id_utilizador_utilizador',
+          attributes: []
+        }
+      ],
+      raw: true,
+      order: [['data', 'DESC']]
+    });
+
+    // Formatar data
+    const formattedData = relatorios.rows.map(relatorio => ({
+      ...relatorio,
+      data: new Date(relatorio.data).toLocaleDateString('pt-PT')
+    }));
+
+    res.status(200).json({
+      success: true,
+      data: formattedData,
+      totalItems: relatorios.count,
+      totalPages: Math.ceil(relatorios.count / limit),
+      currentPage: parseInt(page)
+    });
+  } catch (error) {
+    console.error("Erro ao listar relatórios:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Erro ao listar relatórios.",
+      error: error.message 
+    });
+  }
+};
 
 module.exports = controllers;
