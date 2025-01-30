@@ -5,17 +5,46 @@ var models = initModels(sequelize);
 
 const controllers = {};
 
-controllers.mobileSync = async (req, res) => {
-    try{
-        const EquipaAtleta = await models.EquipaAtleta.findAll();
-        const EscalaoDivisao = await models.EscalaoDivisao.findAll();
-        const JogoAtleta = await models.JogoAtleta.findAll();
-        const JogoClube = await models.JogoClube.findAll();
-        const UtilizadorJogo = await models.UtilizadorJogo.findAll();
-        const atleta = await models.atleta.findAll();
-        const clube = await models.clube.findAll();
-        const divisao = await models.divisao.findAll();
-  
-    }
-    catch{}
-}
+controllers.SyncAtletas = async (req, res) => {
+  try {
+
+    const clube = await models.clube.findAll();    
+    const escalao = await models.escalao.findAll();
+    const statusatleta = await models.statusatleta.findAll();
+    const nacionalidade = await models.nacionalidade.findAll();
+    const posicao = await models.posicao.findAll();     
+    const atleta = await models.atleta.findAll({
+        include: [
+          { model: models.clube },
+          { model: models.escalao },
+          { model: models.statusatleta },
+          { model: models.nacionalidade },
+          { model: models.posicao },
+        ],
+      });
+      const nacionalidadeatleta = await models.nacionalidadeatleta.findAll();
+      const posicaoatleta = await models.PosicaoAtleta.findAll();
+      const funcao = await models.funcao.findAll();
+
+      return res.status(200).json({
+        success: true, clube, escalao, statusatleta, nacionalidade,
+        posicao, nacionalidadeatleta, atleta, posicaoatleta, funcao
+      });} catch(error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error });
+      }
+};
+
+controllers.SyncJogos = async (req, res) => {
+    try {
+        const jogo = await models.jogo.findAll();  
+        const JogoAtleta = await models.jogoatleta.findAll();
+        const JogoClube = await models.jogoclube.findAll();
+        const utilizadores = await models.utilizador.findAll();
+        const UtilizadorJogo = await models.utilizadorjogo.findAll();
+        const notificacoes = await models.notificacoes.findAll();
+     
+    } catch {}
+  };
+
+module.exports = controllers;

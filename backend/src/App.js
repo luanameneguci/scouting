@@ -13,6 +13,7 @@ const clubeRouter = require('./routes/clubeRoute.js');
 const escalaoRouter = require('./routes/escalaoRoute.js');
 /* const tipoEquipasRouter = require('./routes/tipoEquipas.js'); */
 const cookieParser = require('cookie-parser');
+const mobileSync  = require('./routes/mobileSync.js');
 
 
 
@@ -52,7 +53,8 @@ app.use('/relatorio', relatorioRouter);
 app.use('/utilizador', utilizadorRouter);
 app.use('/clube', clubeRouter);
 app.use('/escalao', escalaoRouter);
-app.use('/auth', authRouter); // Registrando authRouter
+app.use('/auth', authRouter);
+app.use('/mobile', mobileSync); // Registrando authRouter
 /* app.use('/tipoEquipa', tipoEquipasRouter); */
 
 
