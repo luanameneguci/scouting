@@ -135,4 +135,5 @@ authController.adminValidation = (req, res) => {
     }
     return res.status(200).json({ message: "Utilizador válido." });
 };
+
 module.exports = authController;

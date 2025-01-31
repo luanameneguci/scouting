@@ -2,40 +2,50 @@ const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
+const { getUserIdFromToken } = require('./authUtil');
 
 const controllers = {};
 
-controllers.SyncAtletas = async (req, res) => {
+controllers.pagInicial = async (req, res) => {
   try {
 
-    const clube = await models.clube.findAll();    
-    const escalao = await models.escalao.findAll();
-    const statusatleta = await models.statusatleta.findAll();
-    const nacionalidade = await models.nacionalidade.findAll();
-    const posicao = await models.posicao.findAll();     
-    const atleta = await models.atleta.findAll({
-        include: [
-          { model: models.clube, as: "clube",
-            attributes: ["nome"], },
-          { model: models.escalao, as: "escalao",
-            attributes: ["designacao"], },
-          { model: models.statusatleta },
-          { model: models.nacionalidade },
-          { model: models.posicao },
-        ],
-      });
-      const nacionalidadeatleta = await models.nacionalidadeatleta.findAll();
-      const posicaoatleta = await models.PosicaoAtleta.findAll();
-      const funcao = await models.funcao.findAll();
+    const token = req.cookies.token; // Or from `req.headers['authorization']`
+    const userId = getUserIdFromToken(token);
 
+    const JogosUser = await models.UtilizadorJogo.findAll({
+        where: {
+          id_utilizador : userId
+        },
+        include: [
+            {model: models.jogo,
+             attributes: ["data"],
+            },
+            {
+                model: models
+            }
+        ]
+    })
+
+ 
       return res.status(200).json({
-        success: true, clube, escalao, statusatleta, nacionalidade,
-        posicao, nacionalidadeatleta, atleta, posicaoatleta, funcao
+        success: true, JogosUser
       });} catch(error) {
         console.error(error);
         res.status(500).json({ success: false, message: error });
       }
 };
+
+   /* const atleta = await models.atleta.findAll({
+        include: [
+          { model: models.clube, as: "clube",
+            attributes: ["nome"], },
+          { model: models.escalao, as: "escalao",
+            attributes: ["designacao"], },
+          { model: models.nacionalidade },
+          { model: models.posicao },
+        ],
+      });
+ */
 
 controllers.SyncJogos = async (req, res) => {
     try {
