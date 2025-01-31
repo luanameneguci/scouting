@@ -2,40 +2,55 @@ const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
-const { getUserIdFromToken } = require('./authUtil');
+const { getUserIdFromToken } = require("./authUtil");
 
 const controllers = {};
 
 controllers.pagInicial = async (req, res) => {
   try {
-
     const token = req.cookies.token; // Or from `req.headers['authorization']`
     const userId = getUserIdFromToken(token);
 
     const JogosUser = await models.UtilizadorJogo.findAll({
-        where: {
-          id_utilizador : userId
-        },
-        include: [
-            {model: models.jogo,
-             attributes: ["data"],
-            },
+      where: {
+        id_utilizador: userId,
+      },
+      include: [
+        {
+          model: models.jogo,
+          attributes: ["data"],        
+          include: [
             {
-                model: models
-            }
-        ]
-    })
+              model: models.JogoClube,
+              as: "JogoClubes",
+              include: [
+                {
+                  model: models.clube,
+                  as: "RelatedClube",
+                  attributes: ["nome"],
+                },
+              ],        
+            },
+          ],
+        },
+        {
+            model: models.atleta,
+            as:"RelatedAtleta",
+            attributes: ["nome"], 
+        },
+      ],
+    });
 
- 
-      return res.status(200).json({
-        success: true, JogosUser
-      });} catch(error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: error });
-      }
+    return res.status(200).json({
+      JogosUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error });
+  }
 };
 
-   /* const atleta = await models.atleta.findAll({
+/* const atleta = await models.atleta.findAll({
         include: [
           { model: models.clube, as: "clube",
             attributes: ["nome"], },
@@ -48,15 +63,14 @@ controllers.pagInicial = async (req, res) => {
  */
 
 controllers.SyncJogos = async (req, res) => {
-    try {
-        const jogo = await models.jogo.findAll();  
-        const JogoAtleta = await models.jogoatleta.findAll();
-        const JogoClube = await models.jogoclube.findAll();
-        const utilizadores = await models.utilizador.findAll();
-        const UtilizadorJogo = await models.utilizadorjogo.findAll();
-        const notificacoes = await models.notificacoes.findAll();
-     
-    } catch {}
-  };
+  try {
+    const jogo = await models.jogo.findAll();
+    const JogoAtleta = await models.jogoatleta.findAll();
+    const JogoClube = await models.jogoclube.findAll();
+    const utilizadores = await models.utilizador.findAll();
+    const UtilizadorJogo = await models.utilizadorjogo.findAll();
+    const notificacoes = await models.notificacoes.findAll();
+  } catch {}
+};
 
 module.exports = controllers;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_app/basededados.dart';
 import 'package:scouting_app/jogador.dart';
 import 'package:scouting_app/novoRelatorio.dart';
 import 'package:intl/intl.dart';
+import 'dart:async';
 
 class TarefasPage extends StatefulWidget {
   const TarefasPage({super.key});
@@ -13,25 +15,32 @@ class TarefasPage extends StatefulWidget {
 enum FilterOption { week, month, all, specificMonth }
 
 class _TarefasPageState extends State<TarefasPage> {
-  final List<String> jogadores = <String>[
-    'Jogador 1',
-    'Jogador 2',
-    'Jogador 3',
-    'Não há um jogador específico!'
-  ];
-  final List<String> clubes = <String>[
-    'Clube 1 x Clube 2',
-    'Clube 1 x Clube 2',
-    'Clube 1 x Clube 2',
-    'Clube 1 x Clube 2'
-  ];
-  final List<String> gameDays = <String>[
-    '2024-11-20',
-    '2024-11-25',
-    '2024-11-29',
-    '2025-07-10'
-  ];
-  final List<String> gameTimes = <String>['14:00', '16:00', '18:00', '20:00'];
+ final Basededados bd = Basededados(url: "http://localhost:8080/mobile/inic");
+  List<String> jogadores = [];
+  List<String> clubes = [];
+  List<String> gameDays = [];
+  List<String> gameTimes = [];
+
+ @override
+  void initState() {
+
+     Future<void> _fetchData() async {
+    await bd.fetchInitPageData();
+    setState(() {
+      jogadores = bd.jogadores;
+      clubes = bd.clubes;
+      gameDays = bd.gameDays;
+      gameTimes = bd.gameTimes;
+    });
+  }
+    super.initState();
+   _fetchData();
+
+    // Schedule periodic updates
+    Timer.periodic(Duration(seconds: 30), (timer) {
+    _fetchData();
+    });
+
 
   FilterOption selectedFilter = FilterOption.all;
   String? selectedMonth;
@@ -252,4 +261,5 @@ class _TarefasPageState extends State<TarefasPage> {
       ),
     );
   }
+}
 }

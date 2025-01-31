@@ -75,6 +75,9 @@ function initModels(sequelize) {
   jogo.belongsTo(escalao, { foreignKey: "id_escalao" });
   escalao.hasMany(jogo, { foreignKey: "id_escalao" });
 
+  UtilizadorJogo.belongsTo(atleta, { foreignKey: "id_atleta", as:"RelatedAtleta" });  
+  atleta.hasMany(UtilizadorJogo, { foreignKey: "id_atleta" });
+
 
   // Foreign keys for many-to-many junction tables NÃO MEXER AQUI --------------------------------------------------------------------
 

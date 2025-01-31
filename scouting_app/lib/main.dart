@@ -9,15 +9,19 @@ import 'package:scouting_app/novorelatorio.dart'; // Importando a nova página d
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scouting_app/login.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:scouting_app/basededados.dart';
 
-void main() async {
-  await dotenv.load(fileName: '.env'); // Load environment variables
+Future<void> main() async {
+  await dotenv.load(fileName: '.env');
+  String url = "aiaj";
+  Basededados bd = Basededados(url: url); // Load environment variables
 
-  runApp(const HomePage());
+  runApp(HomePage(bd: bd));
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.bd});
+  final Basededados bd;
 
   @override
   Widget build(BuildContext context) {
