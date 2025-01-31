@@ -10,12 +10,11 @@ import {
 
 export default function JogosAdicionar() {
   const [formData, setFormData] = useState({
-    nome: "",
     data: "",
     escalao: "",
     clube: "",
     hora: "",
-    jogadores: [],
+    jogadores: [],  // Inicializando jogadores como um array
   });
   const [clubes, setClubes] = useState([]);
   const [escaloes, setEscaloes] = useState([]);
@@ -60,7 +59,6 @@ export default function JogosAdicionar() {
       fetch(`http://localhost:8080/jogo/atletas/${formData.escalao}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);  // Adicione um log para ver a resposta
           if (data.success) {
             setJogadores(data.data);
           } else {
@@ -84,17 +82,23 @@ export default function JogosAdicionar() {
 
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
-    if (checked) {
-      setFormData((prevData) => ({
-        ...prevData,
-        jogadores: [...prevData.jogadores, value],
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        jogadores: prevData.jogadores.filter((j) => j !== value),
-      }));
-    }
+
+    // Garantir que jogadores seja sempre um array
+    setFormData((prevData) => {
+      const jogadoresArray = prevData.jogadores || []; // Se jogadores for undefined, inicialize com um array vazio
+      
+      if (checked) {
+        return {
+          ...prevData,
+          jogadores: [...jogadoresArray, value], // Adiciona o jogador
+        };
+      } else {
+        return {
+          ...prevData,
+          jogadores: jogadoresArray.filter((j) => j !== value), // Remove o jogador
+        };
+      }
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -102,20 +106,15 @@ export default function JogosAdicionar() {
     setLoading(true);
     setError(null);
 
+    const jogadoresStr = formData.jogadores.join(","); // Transformando a lista de jogadores em uma string separada por vírgulas
+    const url = `http://localhost:8080/jogo/criar?id_clube=${formData.clube}&id_escalao=${formData.escalao}&data=${formData.data}T${formData.hora}:00Z&jogadores=${jogadoresStr}`;
+
     try {
-      const response = await fetch("http://localhost:8080/jogo/criar", {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          id_clube: formData.clube,
-          id_escalao: formData.escalao,
-          nome: formData.nome,
-          data: formData.data,
-          hora: formData.hora,
-          jogadores: formData.jogadores,
-        }),
       });
 
       if (!response.ok) throw new Error("Erro ao criar jogo");
