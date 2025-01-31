@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,7 +11,6 @@ import {
 } from "chart.js";
 import "./atletapersonalpage.css";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 
 // Register required Chart.js components
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip);
@@ -22,10 +21,11 @@ export default function Atletaspersonalpage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Example: fetching the Atleta data
   useEffect(() => {
     async function fetchAtleta() {
       try {
-        const response = await fetch(`http://localhost:8080/atleta/${id}`); // Altere a URL se necessário
+        const response = await fetch(`http://localhost:8080/atleta/${id}`);
         if (!response.ok) throw new Error("Atleta não encontrado");
         const data = await response.json();
         setAtleta(data);
@@ -37,7 +37,11 @@ export default function Atletaspersonalpage() {
     }
     fetchAtleta();
   }, [id]);
+
+  // State for scouting confirmation
   const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
+
+  // Star ratings example
   const [ratings, setRatings] = useState({
     Tecnica: 2,
     Velocidade: 3,
@@ -45,7 +49,7 @@ export default function Atletaspersonalpage() {
     Inteligencia: 0,
   });
 
-  // Friendly names mapping
+  // Friendly names for display
   const friendlyNames = {
     Tecnica: "Técnica",
     Velocidade: "Velocidade",
@@ -53,10 +57,12 @@ export default function Atletaspersonalpage() {
     Inteligencia: "Inteligência",
   };
 
+  // Toggle confirmation
   const handleToggleConfirmado = () => {
     setJogadorConfirmado(!jogadorConfirmado);
   };
 
+  // Star rating update
   const handleRatingChange = (category, rating) => {
     setRatings((prevRatings) => ({
       ...prevRatings,
@@ -64,18 +70,18 @@ export default function Atletaspersonalpage() {
     }));
   };
 
-  // Line chart data and options
+  // Example data for the performance chart
   const chartData = {
     labels: ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
     datasets: [
       {
         label: "Performance",
-        data: [3, 2, 2, 3, 4, 4, 3, 4, 4, 3, 3, 2], // Replace with dynamic backend data if needed
+        data: [3, 2, 2, 3, 4, 4, 3, 4, 4, 3, 3, 2],
         fill: true,
         backgroundColor: "rgba(255, 193, 7, 0.2)",
         borderColor: "#FFC107",
         borderWidth: 2,
-        tension: 0.4, // Smooth curve
+        tension: 0.4,
       },
     ],
   };
@@ -85,7 +91,7 @@ export default function Atletaspersonalpage() {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false, // Hides the legend
+        display: false,
       },
     },
     scales: {
@@ -98,13 +104,13 @@ export default function Atletaspersonalpage() {
         },
       },
       y: {
-        min: 1, // Start at 1
-        max: 5, // End at 5
+        min: 1,
+        max: 5,
         ticks: {
-          stepSize: 1, // Increment by 1
+          stepSize: 1,
           color: "#FFF",
           callback: function (value) {
-            return value; // Display only integer values on the Y-axis
+            return value;
           },
         },
         grid: {
@@ -113,6 +119,36 @@ export default function Atletaspersonalpage() {
       },
     },
   };
+
+  // -------------------------
+  // Example Relatórios Data
+  // In real usage, fetch this data from your API
+  // e.g., GET `http://localhost:8080/relatoriosAtleta/${id}`
+  // and store it in state
+  // -------------------------
+  const [relatoriosData] = useState([
+    {
+      id: 1,
+      data: "2025-01-10",
+      competicao: "Liga Regional",
+      resultado: "3-1",
+      observacoes: "Ótima atuação no segundo tempo.",
+    },
+    {
+      id: 2,
+      data: "2025-01-24",
+      competicao: "Taça Juvenil",
+      resultado: "2-2",
+      observacoes: "Jogador se mostrou decisivo na defesa.",
+    },
+    {
+      id: 3,
+      data: "2025-02-02",
+      competicao: "Amistoso",
+      resultado: "1-0",
+      observacoes: "Boas jogadas de ataque, mas precisa melhorar finalização.",
+    },
+  ]);
 
   return (
     <div className="atletaspersonalpage-container">
@@ -133,9 +169,9 @@ export default function Atletaspersonalpage() {
             Ponta de Lança (PL) <span className="atletaspersonalpage-text-secondary">Avançate</span>
           </p>
           <p className="atletaspersonalpage-idade">
-            {atleta?.datanascimento || '--/--/----'}
+            {atleta?.datanascimento || "--/--/----"}
             <span className="atletaspersonalpage-text-secondary">
-              {atleta?.idade ? `${atleta.idade} anos` : 'Idade não disponível'}
+              {atleta?.idade ? `${atleta.idade} anos` : "Idade não disponível"}
             </span>
           </p>
         </div>
@@ -149,7 +185,7 @@ export default function Atletaspersonalpage() {
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Clube</span>
             <span className="atletaspersonalpage-detail-value">
-              {atleta?.clube?.nome || 'Clube não informado'}
+              {atleta?.clube?.nome || "Clube não informado"}
             </span>
           </div>
           <div className="atletaspersonalpage-detail-box">
@@ -158,9 +194,9 @@ export default function Atletaspersonalpage() {
               {atleta?.nacionalidades?.map((nacionalidade, index) => (
                 <span key={nacionalidade.id_nacionalidade}>
                   {nacionalidade.designacao}
-                  {index < atleta.nacionalidades.length - 1 ? ', ' : ''}
+                  {index < atleta.nacionalidades.length - 1 ? ", " : ""}
                 </span>
-              )) || 'Nacionalidade não informada'}
+              )) || "Nacionalidade não informada"}
             </span>
           </div>
         </div>
@@ -172,15 +208,15 @@ export default function Atletaspersonalpage() {
               {atleta?.equipas?.map((equipa, index) => (
                 <span key={index}>
                   {equipa.nome}
-                  {index < atleta.equipas.length - 1 ? ', ' : ''}
+                  {index < atleta.equipas.length - 1 ? ", " : ""}
                 </span>
-              )) || 'Sem equipa'}
+              )) || "Sem equipa"}
             </span>
           </div>
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Escalão</span>
             <span className="atletaspersonalpage-detail-value">
-              {atleta?.escalao?.designacao || 'Escalão não definido'}
+              {atleta?.escalao?.designacao || "Escalão não definido"}
             </span>
           </div>
         </div>
@@ -192,7 +228,9 @@ export default function Atletaspersonalpage() {
               {[...Array(5)].map((_, index) => (
                 <span
                   key={index}
-                  className={`atletaspersonalpage-star ${index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""}`}
+                  className={`atletaspersonalpage-star ${
+                    index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""
+                  }`}
                 >
                   ★
                 </span>
@@ -202,7 +240,7 @@ export default function Atletaspersonalpage() {
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Rating médio</span>
             <span className="atletaspersonalpage-detail-value">
-              {atleta?.ratinggeral?.toFixed(1) || 'N/A'}
+              {atleta?.ratinggeral?.toFixed(1) || "N/A"}
             </span>
           </div>
         </div>
@@ -225,8 +263,6 @@ export default function Atletaspersonalpage() {
         </div>
       </div>
 
-
-
       {/* Graph Section */}
       <div className="atletaspersonalpage-graphs">
         {/* Line Graph */}
@@ -245,8 +281,9 @@ export default function Atletaspersonalpage() {
                 {[...Array(5)].map((_, index) => (
                   <span
                     key={index}
-                    className={`atletaspersonalpage-star ${index < ratings[category] ? "filled" : ""
-                      }`}
+                    className={`atletaspersonalpage-star ${
+                      index < ratings[category] ? "filled" : ""
+                    }`}
                     onClick={() => handleRatingChange(category, index + 1)}
                   >
                     ★
@@ -258,14 +295,11 @@ export default function Atletaspersonalpage() {
         </div>
       </div>
 
+      {/* Scouting Card */}
       <div className="atletaspersonalpage-card scouting-card">
         <div className="atletaspersonalpage-info scouting-info">
-          <h2 className="atletaspersonalpage-section-title scouting-section-title">
-            Scouting
-          </h2>
-          <h1 className="atletaspersonalpage-nome scouting-nome">
-            Rui Marques
-          </h1>
+          <h2 className="atletaspersonalpage-section-title scouting-section-title">Scouting</h2>
+          <h1 className="atletaspersonalpage-nome scouting-nome">Rui Marques</h1>
           <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
             ruimarques@gmail.com
           </span>
@@ -278,6 +312,38 @@ export default function Atletaspersonalpage() {
         <div className="atletaspersonalpage-imagem scouting-imagem"></div>
       </div>
 
+      {/* ==================================== */}
+      {/* Relatórios Table (Below Scouting Div) */}
+      {/* ==================================== */}
+      <div className="relatorios-section">
+        <table className="custom-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Competição</th>
+              <th>Resultado</th>
+              <th>Observações</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {relatoriosData.map((relatorio) => (
+              <tr key={relatorio.id}>
+                <td>{relatorio.data}</td>
+                <td>{relatorio.competicao}</td>
+                <td>{relatorio.resultado}</td>
+                <td>{relatorio.observacoes}</td>
+                <td>
+                  <div className="action-column">
+                    <button className="action-button profile">Ver</button>
+                    <button className="action-button remove">Remover</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
