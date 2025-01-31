@@ -21,10 +21,7 @@ class _TarefasPageState extends State<TarefasPage> {
   List<String> gameDays = [];
   List<String> gameTimes = [];
 
- @override
-  void initState() {
-
-     Future<void> _fetchData() async {
+   Future<void> _fetchData() async {
     await bd.fetchInitPageData();
     setState(() {
       jogadores = bd.jogadores;
@@ -33,6 +30,9 @@ class _TarefasPageState extends State<TarefasPage> {
       gameTimes = bd.gameTimes;
     });
   }
+
+ @override
+  void initState() {
     super.initState();
    _fetchData();
 
@@ -40,6 +40,7 @@ class _TarefasPageState extends State<TarefasPage> {
     Timer.periodic(Duration(seconds: 30), (timer) {
     _fetchData();
     });
+  }
 
 
   FilterOption selectedFilter = FilterOption.all;
@@ -261,5 +262,4 @@ class _TarefasPageState extends State<TarefasPage> {
       ),
     );
   }
-}
 }
