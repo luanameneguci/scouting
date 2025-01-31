@@ -72,8 +72,38 @@
 }
 
 /* Placeholder styling */
-.atletasadicionar-input-group input::placeholder {
-  color: #aaa;
+.atletasadicionar-input-group {
+  display: flex;
+  flex-wrap: center; /* Permite que os itens se quebrem para a próxima linha */
+}
+.jogadoresadicionar-input-group{
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens se quebrem para a próxima linha */
+  gap: 12px;
+}
+
+.atleta-item {
+  flex: 1 1 calc(20% - 12px); /* 5 jogadores por linha com espaçamento */
+  display: flex;
+  align-items: center;
+  background-color: var(--gray-800-color); /* Fundo branco para contraste com o formulário */
+  border-radius: 6px; /* Bordas arredondadas */
+  padding: 8px 12px; /* Padding suave */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: background-color 0.3s; /* Efeito de transição no hover */
+  max-width: 18%; /* Limita a largura para garantir que 5 jogadores se encaixem */
+  min-width: 120px; /* Evita que o item fique muito pequeno em telas menores */
+}
+
+.atleta-item input[type="checkbox"] {
+  margin-right: 10px; /* Espaçamento entre o checkbox e o nome */
+}
+
+.atleta-item label {
+  font-size: 14px; /* Tamanho de fonte ajustado */
+  color: white; /* Cor do texto */
+  font-weight: 500;
+  display: inline-block;
 }
 
 /* Submit button */

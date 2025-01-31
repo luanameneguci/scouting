@@ -1,58 +1,20 @@
 const express = require("express");
 const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
-var Jogo = require("../models/jogo")(sequelize, DataTypes);
-var JogoAtleta = require("../models/JogoAtleta")(sequelize, DataTypes);
-var JogoClube = require("../models/JogoClube")(sequelize, DataTypes);
+const Jogo = require("../models/jogo")(sequelize, DataTypes);
+const JogoAtleta = require("../models/JogoAtleta")(sequelize, DataTypes);
+const JogoClube = require("../models/JogoClube")(sequelize, DataTypes);
 const clube = require("../models/clube")(sequelize, DataTypes);
 const atleta = require("../models/atleta")(sequelize, DataTypes);
+const Atleta = require("../models/atleta")(sequelize, DataTypes);
+const Clube = require("../models/clube")(sequelize, DataTypes);
 var initModels = require("../models/init-models");
-var models = initModels(sequelize);
+const models = initModels(sequelize);
 const controllers = {};
 const { subDays, addDays } = require('date-fns');
 
-controllers.criar = async (req, res) => {
-  const { id_escalao, dataJogo, atletas, clubes } = req.body; // `atletas` is an array of athlete IDs
 
-  try {
-    // Step 1: Create the game
-    const jogo = await Jogo.create({
-      id_escalao: id_escalao,
-      data: dataJogo,
-    });
 
-    // Step 2: Insert relationships into JogoAtleta
-    if (atletas && atletas.length > 0) {
-      const jogoAtletas = atletas.map((idAtleta) => ({
-        id_jogo: jogo.id_jogo,
-        id_atleta: idAtleta,
-      }));
-      await JogoAtleta.bulkCreate(jogoAtletas);
-    }
-
-    // Step 3: Insert relationships into JogoClube
-    if (clubes && clubes.length > 0) {
-      const jogoClubes = clubes.map((idClube) => ({
-        id_jogo: jogo.id_jogo,
-        id_clube: idClube,
-      }));
-      await JogoClube.bulkCreate(jogoClubes);
-    }
-
-    // Step 4: Return success response
-    res.status(200).json({
-      success: true,
-      data: jogo,
-    });
-  } catch (error) {
-    console.error("Erro:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to create Jogo and its relationships.",
-      error: error.message,
-    });
-  }
-};
 
 
 controllers.editar = async (req, res) => {
@@ -297,6 +259,139 @@ controllers.listarByPk = async (req, res) => {
       });
   }
 };
+
+
+controllers.getAtletasPorEscalao = async (req, res) => {
+  const { id_escalao } = req.params;
+
+  try {
+    const atletas = await Atleta.findAll({
+      where: { id_escalao: id_escalao },
+    });
+
+    if (atletas.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Nenhum atleta encontrado para este escalão.",
+      });
+    }
+
+    res.status(200).json({ success: true, data: atletas });
+  } catch (error) {
+    console.error("Erro ao buscar atletas:", error); // Log mais detalhado
+    res.status(500).json({ success: false, message: "Erro no servidor.", error: error.message });
+  }
+};
+
+controllers.addAtletaToJogo = async (req, res) => {
+  const { id_jogo, id_atleta } = req.query;  // Alterado de req.body para req.query
+
+  try {
+    // Verificar se o jogo existe
+    const jogo = await Jogo.findByPk(id_jogo);
+    if (!jogo) {
+      return res.status(404).json({
+        success: false,
+        message: "Jogo não encontrado",
+      });
+    }
+
+    // Verificar se o atleta existe
+    const atleta = await Atleta.findByPk(id_atleta);
+    if (!atleta) {
+      return res.status(404).json({
+        success: false,
+        message: "Atleta não encontrado",
+      });
+    }
+
+    // Verificar se o atleta já está associado ao jogo
+    const existingLink = await JogoAtleta.findOne({
+      where: { id_jogo, id_atleta },
+    });
+    if (existingLink) {
+      return res.status(400).json({
+        success: false,
+        message: "Atleta já está associado a este jogo",
+      });
+    }
+
+    // Adicionar o atleta ao jogo
+    await JogoAtleta.create({
+      id_jogo,
+      id_atleta,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Atleta adicionado ao jogo com sucesso",
+    });
+  } catch (error) {
+    console.error("Erro ao adicionar atleta ao jogo:", error);
+    res.status(500).json({
+      success: false,
+      message: "Falha ao adicionar atleta ao jogo",
+      error: error.message,
+    });
+  }
+};
+
+controllers.criarJogo = async (req, res) => {
+  const { id_clube, id_escalao, data, jogadores } = req.query; 
+
+  if (!id_clube || !id_escalao || !data || !jogadores) {
+    return res.status(400).json({
+      success: false,
+      message: 'Faltam parâmetros obrigatórios. Certifique-se de passar id_clube, id_escalao, data e jogadores.',
+    });
+  }
+
+  try {
+    const clube = await Clube.findByPk(id_clube);
+    if (!clube) {
+      return res.status(404).json({ success: false, message: 'Clube não encontrado.' });
+    }
+
+    // Criar o novo jogo
+    const novoJogo = await Jogo.create({
+      data,
+      id_clube,
+      id_escalao,
+    });
+
+    // Verifica se há jogadores na query string
+    const jogadoresArray = jogadores.split(','); // Converte "12,14,15" para ["12", "14", "15"]
+
+    // Verificar se os jogadores existem antes de associar
+    for (const id_atleta of jogadoresArray) {
+      const atleta = await Atleta.findByPk(id_atleta);
+      if (!atleta) {
+        return res.status(404).json({
+          success: false,
+          message: `Atleta com ID ${id_atleta} não encontrado.`,
+        });
+      }
+
+      // Associar jogador ao jogo
+      await JogoAtleta.create({
+        id_jogo: novoJogo.id_jogo,
+        id_atleta: id_atleta,
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: 'Jogo criado com sucesso e atletas associados!',
+      data: novoJogo,
+    });
+  } catch (error) {
+    console.error('Erro ao criar jogo:', error);
+    return res.status(500).json({ success: false, message: 'Erro no servidor', error: error.message });
+  }
+};
+
+
+
 
 module.exports = controllers;
 /*encontrar jogo

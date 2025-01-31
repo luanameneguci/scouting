@@ -2,35 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./atletasAdicionar.css";
 import {
-  Person as PersonIcon,
-  CalendarToday as CalendarTodayIcon,
   SportsSoccer as SportsSoccerIcon,
-  Public as PublicIcon,
-  Star as StarIcon,
-  Link as LinkIcon,
-  Phone as PhoneIcon,
+  CalendarToday as CalendarTodayIcon,
   Group as GroupIcon,
   AccessTime as AccessTimeIcon,
 } from "@mui/icons-material";
 
-export default function AtletasAdicionar() {
+export default function JogosAdicionar() {
   const [formData, setFormData] = useState({
-    nome: "",
-    dataNascimento: "",
+    data: "",
     escalao: "",
     clube: "",
-    contatoNome: "",
     hora: "",
-    atleta: "",
+    jogadores: [],  // Inicializando jogadores como um array
   });
-  const [clubes, setClubes] = useState([]); // Novo estado para armazenar clubes
-  const [escaloes, setEscaloes] = useState([]); // Novo estado para armazenar escalões
+  const [clubes, setClubes] = useState([]);
+  const [escaloes, setEscaloes] = useState([]);
+  const [jogadores, setJogadores] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  // 1) useEffect para carregar os clubes ao montar
+  // Carregar clubes e escalões na primeira renderização
   useEffect(() => {
     fetch("http://localhost:8080/clube/listar")
       .then((res) => res.json())
@@ -45,7 +39,6 @@ export default function AtletasAdicionar() {
         console.error("Erro de rede ao listar clubes:", err);
       });
 
-    // 2) useEffect para carregar os escalões ao montar
     fetch("http://localhost:8080/escalao/listar")
       .then((res) => res.json())
       .then((data) => {
@@ -60,42 +53,76 @@ export default function AtletasAdicionar() {
       });
   }, []);
 
-  // Função de mudança dos campos
+  // Atualiza os jogadores sempre que o escalão mudar
+  useEffect(() => {
+    if (formData.escalao) {
+      fetch(`http://localhost:8080/jogo/atletas/${formData.escalao}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            setJogadores(data.data);
+          } else {
+            console.error("Erro ao listar jogadores:", data.message);
+            setJogadores([]); // Caso não encontre jogadores, esvazia a lista
+          }
+        })
+        .catch((err) => {
+          console.error("Erro de rede ao listar jogadores:", err);
+          setJogadores([]); // Em caso de erro de rede, esvazia a lista
+        });
+    } else {
+      setJogadores([]); // Se não houver escalão selecionado, esvazia a lista de jogadores
+    }
+  }, [formData.escalao]);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  // 3) handleSubmit enviando o form
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+
+    // Garantir que jogadores seja sempre um array
+    setFormData((prevData) => {
+      const jogadoresArray = prevData.jogadores || []; // Se jogadores for undefined, inicialize com um array vazio
+      
+      if (checked) {
+        return {
+          ...prevData,
+          jogadores: [...jogadoresArray, value], // Adiciona o jogador
+        };
+      } else {
+        return {
+          ...prevData,
+          jogadores: jogadoresArray.filter((j) => j !== value), // Remove o jogador
+        };
+      }
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
+    const jogadoresStr = formData.jogadores.join(","); // Transformando a lista de jogadores em uma string separada por vírgulas
+    const url = `http://localhost:8080/jogo/criar?id_clube=${formData.clube}&id_escalao=${formData.escalao}&data=${formData.data}T${formData.hora}:00Z&jogadores=${jogadoresStr}`;
+
     try {
-      const response = await fetch("http://localhost:8080/atleta/criar", {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          id_clube: formData.clube,
-          id_escalao: formData.escalao,
-          id_statusatleta: 1,
-          nome: formData.nome,
-          datanascimento: formData.dataNascimento,
-          nomeencarregado: formData.contatoNome,
-          contactoencarregado: formData.contatoTelefone,
-          hora: formData.hora,
-          atleta: formData.atleta,
-        }),
       });
 
-      if (!response.ok) throw new Error("Erro ao criar atleta");
-      alert("Atleta criado com sucesso!");
-      navigate("/atletas");
+      if (!response.ok) throw new Error("Erro ao criar jogo");
+      alert("Jogo criado com sucesso!");
+      navigate("/jogos");
     } catch (err) {
-      console.error("Erro ao criar atleta:", err);
-      setError("Erro ao criar atleta. Verifique os dados e tente novamente.");
+      console.error("Erro ao criar jogo:", err);
+      setError("Erro ao criar jogo. Verifique os dados e tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -104,7 +131,6 @@ export default function AtletasAdicionar() {
   return (
     <div className="atletasadicionar-container">
       <form className="atletasadicionar-form" onSubmit={handleSubmit}>
-        
         {/* Clube */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Clube</label>
@@ -134,8 +160,8 @@ export default function AtletasAdicionar() {
               <CalendarTodayIcon />
               <input
                 type="date"
-                name="dataNascimento"
-                value={formData.dataNascimento}
+                name="data"
+                value={formData.data}
                 onChange={handleChange}
                 required
               />
@@ -166,21 +192,6 @@ export default function AtletasAdicionar() {
           </div>
         </div>
 
-        {/* Treinador */}
-        <div className="atletasadicionar-form-group">
-          <label className="atletasadicionar-label">Treinador</label>
-          <div className="atletasadicionar-input-group">
-            <PersonIcon />
-            <input
-              type="text"
-              name="contatoNome"
-              placeholder="Nome"
-              value={formData.contatoNome}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-
         {/* Hora */}
         <div className="atletasadicionar-form-group">
           <label className="atletasadicionar-label">Hora</label>
@@ -196,19 +207,26 @@ export default function AtletasAdicionar() {
           </div>
         </div>
 
-        {/* Atleta */}
+        {/* Jogadores Selecionados */}
         <div className="atletasadicionar-form-group">
-          <label className="atletasadicionar-label">Atleta</label>
-          <div className="atletasadicionar-input-group">
-            <PersonIcon />
-            <input
-              type="text"
-              name="atleta"
-              placeholder="Atleta"
-              value={formData.atleta}
-              onChange={handleChange}
-              required
-            />
+          <label className="atletasadicionar-label">Jogadores</label>
+          <div className="jogadoresadicionar-input-group">
+            {jogadores.length > 0 ? (
+              jogadores.map((jogador) => (
+                <div key={jogador.id_atleta} className="atleta-item">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={jogador.id_atleta}
+                      onChange={handleCheckboxChange}
+                    />
+                    {jogador.nome}
+                  </label>
+                </div>
+              ))
+            ) : (
+              <p>Não há jogadores disponíveis para este escalão.</p>
+            )}
           </div>
         </div>
 
@@ -218,7 +236,7 @@ export default function AtletasAdicionar() {
           className="atletasadicionar-submit-button"
           disabled={loading}
         >
-          {loading ? "Enviando..." : "Adicionar"}
+          {loading ? "Enviando..." : "Criar Jogo"}
         </button>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
