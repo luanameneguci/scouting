@@ -15,8 +15,10 @@ controllers.SyncAtletas = async (req, res) => {
     const posicao = await models.posicao.findAll();     
     const atleta = await models.atleta.findAll({
         include: [
-          { model: models.clube },
-          { model: models.escalao },
+          { model: models.clube, as: "clube",
+            attributes: ["nome"], },
+          { model: models.escalao, as: "escalao",
+            attributes: ["designacao"], },
           { model: models.statusatleta },
           { model: models.nacionalidade },
           { model: models.posicao },
