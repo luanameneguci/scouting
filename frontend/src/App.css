@@ -72,6 +72,7 @@ input::placeholder {
 
 .rounded {
   border-radius: .8rem!important;
+  overflow: hidden;
 }
 
 .rounded-pill {

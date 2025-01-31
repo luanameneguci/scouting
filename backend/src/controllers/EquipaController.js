@@ -224,8 +224,15 @@ controllers.createEquipa = async (req, res) => {
       id_tipoequipa: data.tipo,
       id_divisao: divisao
     });
-
-    return res.status(200).json(newEquipa);
+    const equipaFull = await models.equipa.findOne({
+      where: { id_equipa: newEquipa.id_equipa },
+      include: [
+        {model: models.escalao},
+        {model: models.divisao},
+        {model: models.tipoequipa}
+      ]}
+      );
+    return res.status(200).json({message: "Equipa Criada", equipa: equipaFull});
   }
   catch (error) {
     console.error("Erro ao criar equipa:", error);

@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { setupContentNavbarMargin } from './utils';
 import './equipas.css';
 import RadioFunctions from '../components/equipas/radioFunctions';
 import FootballField from '../components/equipas/footballField';
@@ -10,9 +8,10 @@ import FilterModal from '../components/equipas/filterModal';
 import GerirEquipasModal from '../components/equipas/gerirEquipas';
 import GerirAtletaModal from '../components/equipas/gerirAtleta';
 import LoadingAnim from '../components/loadingAnim';
+import { setupContentNavbarMargin } from './utils';
 
-export default function Equipas() {
-    const navigate = useNavigate();
+
+export default function Equipas({ equipa }) {
     const url = process.env.REACT_APP_API_URL;
 
     // Margem top dependendo da altura da navbar
@@ -20,62 +19,10 @@ export default function Equipas() {
         setupContentNavbarMargin('equipas-wrapper');
     }, []);
 
+
     // ID da equipa selecionada
-    const { idEquipa } = useParams();
-    // Equipa selecionada
-    const [equipa, setEquipa] = useState({});
-    // Equipa selecionada é sombra?
-    const [isSombra, setIsSombra] = useState(false);
-    // Escalão da equipa selecionada
-    const [escalao, setEscalao] = useState(0);
-    // Estado para verificar se a equipa existe
-    const [equipaExists, setEquipaExists] = useState(true);
-    // Estado para verificar se existem equipas
-    const [hasEquipas, setHasEquipas] = useState(true);
+    const idEquipa = equipa.id_equipa;
 
-    // Estado para o formulário de adicionar equipa
-    const [addForm, setAddForm] = useState(false);
-    const [addFormData, setAddFormData] = useState({ tipo: 0, escalao: 0 });
-    const [addFormError, setAddFormError] = useState('');
-    const [addFormResponse, setAddFormResponse] = useState({ message: '', needsConfirmation: false });
-    const [loadingAddForm, setLoadingAddForm] = useState(false);
-    const [escaloesTipos, setEscaloesTipos] = useState({ tipos: [], escaloes: [] });
-
-    // Efeito para buscar a informação da equipa
-    useEffect(() => {
-        try {
-            if (idEquipa) {
-                axios.get(`${url}/equipa/${idEquipa}`, { withCredentials: true }).then((res) => {
-                    if (res.status === 200) {
-                        setEquipa(res.data.equipa);
-                        setEquipaExists(true); // Equipa existe
-                    } else {
-                        setEquipaExists(false); // Equipa não existe
-                        throw new Error(res.data.message);
-                    }
-                }).catch((error) => {
-                    setEquipaExists(false); // Equipa não existe
-                    console.error("Erro ao receber informação da equipa: ", error);
-                });
-            } else {
-                axios.get(`${url}/equipas`, { withCredentials: true }).then((res) => {
-                    if (res.status === 200) {
-                        if (res.data.equipas.length > 3) {
-                            navigate('/equipa/' + res.data.equipas[0].id_equipa);
-                        } else {
-                            setHasEquipas(false); // Não existem equipas
-                        }
-                    }
-                }).catch((error) => {
-                    setEquipaExists(false); // Equipa não existe
-                    console.error("Erro ao procurar a primeira equipa: ", error);
-                });
-            }
-        } catch (error) {
-            setEquipaExists(false); // Equipa não existe
-            console.error("Erro ao receber informação da equipa: ", error);
-        }
-    }, [idEquipa]);
 
     // Estado para os atletas da equipa
     const [atletasEquipa, setAtletasEquipa] = useState([]);
@@ -175,12 +122,6 @@ export default function Equipas() {
         }
     };
 
-    // Efeito para navegar para a equipa atual quando isSombra ou escalao é alterado
-    useEffect(() => {
-        if (idEquipa) {
-            navigate(`/equipa/${idEquipa}`);
-        }
-    }, [isSombra, escalao]);
 
     // Função para abrir e fechar o modal de filtros
     const handleFilterButtonClick = (event) => {
@@ -222,96 +163,10 @@ export default function Equipas() {
         fetchEquipaPlayers();
     }, [page, idEquipa, filtros]);
 
-    // Função para buscar os tipos e escalões
-    const fetchDataInfo = async () => {
-        try {
-            await axios.get(`${url}/equipas/info`, { withCredentials: true }).then((res) => {
-                if (res.status === 200) {
-                    setEscaloesTipos(res.data);
-                    setAddFormData({ tipo: res.data.tipos[0].id_tipoequipa, escalao: res.data.escaloes[0].id_escalao });
-                } else {
-                    throw new Error(res.data.message);
-                }
-            });
-        } catch (error) {
-            console.error("Erro ao receber informação: ", error);
-        }
-    };
 
-    // Função para adicionar uma nova equipa
-    const handleAddForm = async (confirm) => {
-        setAddFormResponse('');
-        setLoadingAddForm(true);
-        setAddFormError('');
-
-        const numeroEquipasSimilares = equipa.filter(equipa => equipa.id_tipoequipa === +addFormData.tipo && equipa.id_escalao === +addFormData.escalao).length;
-        // Se já existirem 3 equipas com o mesmo tipo e escalão (divisões A B e C), não pode criar
-        if (numeroEquipasSimilares === 3) {
-            setAddFormError('Atingiu o máximo de equipas para o tipo e escalão! (divisões A, B e C).');
-            setLoadingAddForm(false);
-        }
-        // Se houverem 1 ou 2 equipas, pergunta se quer criar uma nova divisão, se já estiver confirmado passa para a criação
-        else if (!confirm && numeroEquipasSimilares > 0) {
-            setAddFormResponse({ message: 'Já existe uma equipa (tipo) com o mesmo tipo e escalão. Deseja criar uma nova divisão (B ou C).', needsConfirmation: true });
-            setLoadingAddForm(false);
-        } else {
-            try {
-                await axios.post(`${url}/equipa`, { tipo: addFormData.tipo, escalao: addFormData.escalao }, { withCredentials: true }).then((res) => {
-                    if (res.status === 200) {
-                        navigate(`/equipa/${res.data.id_equipa}`);
-                        setAddFormResponse({ message: 'Equipa Criada!', needsConfirmation: false });
-                        setAddFormError('');
-                    } else throw new Error(res.data.message);
-                });
-            } catch (e) {
-                setAddFormError(e.response.data.message);
-            }
-        }
-        setLoadingAddForm(false);
-    };
-
-    // Renderizar conteúdo baseado na existência da equipa
-    if (!equipaExists) {
-        if (!hasEquipas) {
-            return (
-                <div className='equipas-wrapper'>
-                    <div className='adicionar-equipa rounded active'>
-                        <form>
-                            <span className='inputs-container'>
-                                <label htmlFor="tipo">Tipo:</label>
-                                <select id="tipo" name="tipo" value={addFormData.tipo} onChange={(e) => setAddFormData({ ...addFormData, tipo: e.target.value })}>
-                                    {escaloesTipos.tipos.map((tipo, key) => (
-                                        <option key={key} value={tipo.id_tipoequipa}>{tipo.designacao}</option>
-                                    ))}
-                                </select>
-                                <label htmlFor="escalao">Escalão:</label>
-                                <select id="escalao" name="escalao" value={addFormData.escalao} onChange={(e) => setAddFormData({ ...addFormData, escalao: e.target.value })}>
-                                    {escaloesTipos.escaloes.map((escalao, key) => (
-                                        <option key={key} value={escalao.id_escalao}>{escalao.designacao}</option>
-                                    ))}
-                                </select>
-                            </span>
-                            <p className='error'>{addFormError}</p>
-                            <p>{addFormResponse.message}</p>
-                        </form>
-                        {addFormResponse.needsConfirmation &&
-                            <button disabled={loadingAddForm} className='btn-add rounded-pill font-bold' onClick={() => { handleAddForm(true); }}>Confirmar</button>}
-                        <button disabled={loadingAddForm} className='btn-add rounded-pill font-bold' onClick={() => { handleAddForm(false) }}>Adicionar</button>
-                    </div>
-                </div>
-            );
-        } else {
-            return (
-                <div className='equipas-wrapper not-found'>
-                    Equipa não encontrada.
-                    <Link to='/equipa' className='rounded-pill font-bold'>Ir para uma equipa</Link>
-                </div>
-            );
-        }
-    }
 
     // Renderizar animação de carregamento se os dados ainda não foram carregados
-    if (!atletas || !equipa || !atletasEquipa)
+    if (!atletas || !atletasEquipa)
         return <div className='equipas-wrapper'><LoadingAnim /></div>;
 
     return (
@@ -324,7 +179,7 @@ export default function Equipas() {
                 fetchEquipaPlayers();
             }} isOpen={gerirAtleta} atleta={atletaSelecionado} operation={atletaOperation} id={idEquipa} atletas={atletasEquipa} />
 
-            <GerirEquipasModal ref={refGerir} closeModal={handleGerirModal} isOpen={gerirEquipas} />
+            <GerirEquipasModal equipaSelected={equipa} ref={refGerir} closeModal={handleGerirModal} isOpen={gerirEquipas} />
             <FilterModal ref={refFiltros} closeModal={handleFiltrosModal} isOpen={filtroOpen} filtros={filtros} setFiltros={setFiltros} escalaoMax={equipa.escalao.id_escalao} />
             <div className="sidebar">
                 <div className='field-options'>
@@ -372,13 +227,12 @@ export default function Equipas() {
                         <button
                             onClick={handleNextPage}
                             disabled={page === totalPages} // Desativa o botão se for a última página
-                            className='rounded-pill'
-                        >
+                            className='rounded-pill'>
                             Próxima
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
-};
+}

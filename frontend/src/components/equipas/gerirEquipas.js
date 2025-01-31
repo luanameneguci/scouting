@@ -4,7 +4,7 @@ import axios from 'axios';
 import './gerirEquipas.css';
 import LoadingAnim from '../loadingAnim';
 
-const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
+const GerirEquipasModal = forwardRef(({ equipaSelected, setEquipaSelected, isOpen, closeModal }, ref) => {
     const url = process.env.REACT_APP_API_URL;
     const [equipas, setEquipas] = useState([]);
     // Filtra por sombra ou própria
@@ -130,22 +130,24 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
     };
     const removeEquipa = async () => {
         setDeleteLoading(true);
-        try {
-            await axios.delete(`${url}/equipa/${equipaRemover.id_equipa}`, { withCredentials: true }).then((res) => {
-                if (res.status === 200) {
-                    fetchDataEquipas();
-                    setEquipaRemover(null);
-                }
-                else throw new Error(res.data.message);
-                setDeleteLoading(false);
-
-            });
-        }
-        catch (e) {
-            setAddFormError(e.response.data.message);
+        if (equipaSelected.id_equipa !== equipaRemover.id_equipa) {
+            try {
+                await axios.delete(`${url}/equipa/${equipaRemover.id_equipa}`, { withCredentials: true }).then((res) => {
+                    if (res.status === 200) {
+                        fetchDataEquipas();
+                        setEquipaRemover(null);
+                    }
+                    else throw new Error(res);
+                });
+            }
+            catch (e) {
+                alert(e.response.data.message)
+            }
             setDeleteLoading(false);
 
         }
+
+
     }
     useEffect(() => {
         fetchDataEquipas();
@@ -185,10 +187,10 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
                     <span className=" font-bold"> {sombraSelected ? 'Sombra' : 'Própria'} </span> <button className='text-secondary' onClick={() => setSombraSelected(!sombraSelected)}> {!sombraSelected ? '/ Sombra' : '/ Própria'} </button>
                 </div>
                 <div className="rounded equipas" style={addForm ? { display: 'none' } : { display: 'flex' }}>
-                    {
+                    {equipas.filter((equipa) => (sombraSelected ? equipa.id_tipoequipa === 1 : equipa.id_tipoequipa === 2)).length !== 0 ?
                         equipas.filter((equipa) => (sombraSelected ? equipa.id_tipoequipa === 1 : equipa.id_tipoequipa === 2))
                             .map((equipa, key) => (
-                                <div >
+                                equipaSelected.id_equipa == equipa.id_equipa ? <div className='selected'>
                                     <Link to={`/equipa/${equipa.id_equipa}`} key={key}>
                                         <p className='rounded-pill'>
                                             {equipa.tipoequipa.designacao}
@@ -199,14 +201,44 @@ const GerirEquipasModal = forwardRef(({ isOpen, closeModal }, ref) => {
                                             </span>
                                         </p>
                                     </Link>
-                                    <button onClick={() => setEquipaRemover(equipa)}>
-                                        <span className="material-symbols-outlined icon">
-                                            delete
-                                        </span>
-                                    </button>
-                                </div>
-                            ))
+                                    {equipaSelected.id_equipa != equipa.id_equipa ?
 
+                                        <button onClick={() => setEquipaRemover(equipa)}>
+
+                                            <span className="material-symbols-outlined icon">
+                                                delete
+                                            </span>
+                                        </button>
+                                        : ''
+                                    }
+
+                                </div> :
+                                    <div>
+                                        <Link to={`/equipa/${equipa.id_equipa}`} key={key}>
+                                            <p className='rounded-pill'>
+                                                {equipa.tipoequipa.designacao}
+                                            </p>
+                                            <p>{equipa.escalao.designacao}
+                                                <span className='text-secondary'>
+                                                    {` (${equipa.divisao.designacao})`}
+                                                </span>
+                                            </p>
+                                        </Link>
+                                        {equipaSelected.id_equipa != equipa.id_equipa ?
+
+                                            <button onClick={() => setEquipaRemover(equipa)}>
+
+                                                <span className="material-symbols-outlined icon">
+                                                    delete
+                                                </span>
+                                            </button>
+                                            : ''
+                                        }
+
+                                    </div>
+                            ))
+                        :
+                        <p>Não existem equipas deste tipo.</p>
                     }
                 </div>
                 {equipaRemover && (
