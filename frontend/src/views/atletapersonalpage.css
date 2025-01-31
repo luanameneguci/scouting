@@ -350,4 +350,69 @@ canvas {
 
 .atletaspersonalpage-card.scouting-card {
   margin-top: 20px;
+}  
+
+
+/* APAGA ABAIXOOOOOOO */
+
+/* Relatorios Table */
+.relatorios-card {
+  margin-top: 2rem;
+  background-color: var(--gray-800-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.relatorios-card h2 {
+  margin-bottom: 1.5rem;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--gray-800-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-table thead th {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--gray-700-color);
+  color: var(--white-color);
+  background-color: var(--gray-900-color);
+}
+
+.custom-table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-700-color);
+  color: var(--white-color);
+  font-size: 0.9rem;
+}
+
+.custom-table tbody tr:hover {
+  background-color: var(--gray-700-color);
+}
+
+.action-column {
+  display: flex;
+  gap: 10px;
+}
+
+.action-button {
+  color: var(--white-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.action-button:hover {
+  text-decoration: underline;
+}
+
+.action-button.remove {
+  color: var(--red-color);
 }

@@ -1,11 +1,11 @@
-.gerir-modal .select-tipo {
+.equipas-wrapper .select-tipo {
     display: flex;
     gap: .4rem;
     align-items: flex-end;
 
 }
 
-.gerir-modal .select-tipo button {
+.equipas-wrapper .select-tipo button {
     border: none;
     background: none;
     cursor: pointer;
@@ -15,11 +15,11 @@
 
 }
 
-.gerir-modal .select-tipo button:hover {
+.equipas-wrapper .select-tipo button:hover {
     text-decoration: underline;
 }
 
-.gerir-modal .equipas {
+.equipas-wrapper .equipas {
     background-color: var(--gray-800-color);
     width: 100%;
     display: flex;
@@ -27,53 +27,71 @@
 
 }
 
-.gerir-modal .equipas>div {
+.equipas-wrapper .equipas>p {
+    padding: .4rem 1rem;
+
+}
+
+.equipas-wrapper .equipas>div {
     padding: .4rem 1rem;
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 
-.gerir-modal .equipas>div:not(:last-child) {
+.equipas-wrapper .equipas>div.selected {
+    background-color: var(--gray-600-color);
+}
+
+.equipas-wrapper .equipas>div:not(:last-child) {
     border-bottom: .12rem solid var(--gray-600-color);
 }
 
-.gerir-modal .equipas>div>a {
+.equipas-wrapper .equipas>div>a {
     display: flex;
     gap: .24rem;
     align-items: center;
     text-decoration: none;
     transition: .1s;
 }
-.gerir-modal .equipas>div>a:hover{
- text-decoration: underline;
- text-decoration-thickness: 0.05rem;
- text-decoration-color: var(--gray-500-color);
+
+.equipas-wrapper .equipas>div.selected>a {
+    cursor: default;
 }
-.gerir-modal .equipas>div>a>p:first-child {
+
+.equipas-wrapper .equipas>div:not(.selected)>a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 0.05rem;
+    text-decoration-color: var(--gray-500-color);
+}
+
+.equipas-wrapper .equipas>div>a>p:first-child {
     padding: .24rem .4rem;
     background-color: var(--gray-700-color);
 
 }
 
-.gerir-modal .equipas>div button {
+.equipas-wrapper .equipas>div button {
     background: none;
     border: none;
     cursor: pointer;
     line-height: 1;
 }
 
-.gerir-modal .equipas>div button span {
+.equipas-wrapper .equipas>div button span {
     color: var(--gray-500-color);
 }
 
-.gerir-modal .equipas>div button:hover span {
+.equipas-wrapper .equipas>div button:hover span {
     color: var(--white-color);
 }
 
+.equipas-wrapper .equipas>div button:disabled {
+    background-color: var(--red-color);
+}
 
 
-.gerir-modal .confirm-delete {
+.equipas-wrapper .confirm-delete {
     background-color: var(--gray-800-color);
     display: flex;
     align-items: flex-end;
@@ -83,46 +101,46 @@
     border: .1rem solid var(--red-color);
 }
 
-.gerir-modal .confirm-delete p {
+.equipas-wrapper .confirm-delete p {
     width: 100%;
 }
 
-.gerir-modal .confirm-delete p span {
+.equipas-wrapper .confirm-delete p span {
     text-decoration: underline;
 }
 
-.gerir-modal .confirm-delete button {
+.equipas-wrapper .confirm-delete button {
     border: none;
     padding: .64rem 1rem;
     cursor: pointer;
     transition: .1s;
 }
 
-.gerir-modal .confirm-delete .btn-voltar {
+.equipas-wrapper .confirm-delete .btn-voltar {
     background-color: var(--gray-900-color);
 }
 
-.gerir-modal .confirm-delete .btn-eliminar {
+.equipas-wrapper .confirm-delete .btn-eliminar {
     margin-left: .4rem;
     background-color: var(--red-color);
     float: right;
 }
 
-.gerir-modal .confirm-delete .btn-voltar:hover {
+.equipas-wrapper .confirm-delete .btn-voltar:hover {
     background-color: var(--gray-700-color);
 }
 
-.gerir-modal .confirm-delete .btn-eliminar:hover {
+.equipas-wrapper .confirm-delete .btn-eliminar:hover {
     background-color: var(--light-red-color);
 }
 
-.gerir-modal .confirm-delete .btn-eliminar:disabled,
-.gerir-modal .confirm-delete .btn-voltar:disabled {
+.equipas-wrapper .confirm-delete .btn-eliminar:disabled,
+.equipas-wrapper .confirm-delete .btn-voltar:disabled {
     background-color: var(--gray-600-color);
     cursor: not-allowed;
 }
 
-.gerir-modal .adicionar-equipa {
+.equipas-wrapper .adicionar-equipa:not(.not-modal) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -133,17 +151,27 @@
 
 }
 
-.gerir-modal .adicionar-equipa.active {
+.equipas-wrapper .adicionar-equipa.not-modal {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-direction: column;
+    height: fit-content;
+    padding: .4rem 1rem;
+    background-color: var(--gray-800-color);
+}
+
+.equipas-wrapper .adicionar-equipa.active {
     padding: .4rem 1rem;
     background-color: var(--gray-800-color);
     border-color: var(--gray-600-color);
 }
 
-.gerir-modal .adicionar-equipa.error {
+.equipas-wrapper .adicionar-equipa.error {
     border-color: var(--red-color);
 }
 
-.gerir-modal .adicionar-equipa .btn-close {
+.equipas-wrapper .adicionar-equipa .btn-close {
     display: block;
     transition: .3s;
     visibility: hidden;
@@ -151,12 +179,12 @@
     overflow: hidden;
 }
 
-.gerir-modal .adicionar-equipa.active .btn-close {
+.equipas-wrapper .adicionar-equipa.active .btn-close {
     visibility: visible;
     max-height: 6rem;
 }
 
-.gerir-modal .adicionar-equipa form {
+.equipas-wrapper .adicionar-equipa form {
     display: block;
     transition: .3s;
     visibility: hidden;
@@ -166,30 +194,33 @@
 
 }
 
-.gerir-modal .adicionar-equipa.active form {
+.equipas-wrapper .adicionar-equipa.active form,
+.equipas-wrapper .adicionar-equipa.not-modal form {
     visibility: visible;
     max-height: 6rem;
 }
 
-.gerir-modal .adicionar-equipa.active form .inputs-container {
+.equipas-wrapper .adicionar-equipa.active form .inputs-container,
+.equipas-wrapper .adicionar-equipa.not-modal form .inputs-container {
     display: flex;
     gap: .4rem;
     align-items: center;
 
 }
 
-.gerir-modal .adicionar-equipa.active form .inputs-container select {
+.equipas-wrapper .adicionar-equipa.active form .inputs-container select,
+.equipas-wrapper .adicionar-equipa.not-modal form .inputs-container select {
     padding: .4rem;
     border: none;
     border-radius: .2rem;
     background-color: var(--gray-900-color);
 }
 
-.gerir-modal .adicionar-equipa p.error {
+.equipas-wrapper .adicionar-equipa p.error {
     color: var(--red-color);
 }
 
-.gerir-modal .adicionar-equipa .btn-add {
+.equipas-wrapper .adicionar-equipa .btn-add {
     border: none;
     padding: .64rem 1rem;
     cursor: pointer;
@@ -200,16 +231,18 @@
 
 }
 
-.gerir-modal .adicionar-equipa.active .btn-add {
+.equipas-wrapper .adicionar-equipa.active .btn-add,
+.equipas-wrapper .adicionar-equipa.not-modal .btn-add {
     background-color: var(--gray-900-color);
 
 }
 
-.gerir-modal .adicionar-equipa .btn-add:hover {
+.equipas-wrapper .adicionar-equipa .btn-add:hover {
     background-color: var(--gray-600-color);
 }
 
-.gerir-modal .adicionar-equipa.active .btn-add:disabled {
+.equipas-wrapper .adicionar-equipa.active .btn-add:disabled,
+.equipas-wrapper .adicionar-equipa.not-modal .btn-add:disabled {
     background-color: var(--gray-600-color);
     cursor: not-allowed;
 }

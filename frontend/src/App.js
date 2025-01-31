@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, NavLink, useNavigate, Routes, useLocation } from "react-router-dom";
 import './App.css';
-import Equipas from './views/equipas';
+import PreLoadEquipas from './views/preLoadEquipas';
 import Atletas from './views/atletas';
 import AtletasAdicionar from './views/atletasAdicionar';
 import Atletaspersonalpage from './views/atletapersonalpage';
@@ -61,7 +61,7 @@ function AppContent() {
         
         <Route path="/equipa/:idEquipa?" element={
           <ProtectedRoute>
-            <Equipas />
+            <PreLoadEquipas />
           </ProtectedRoute>
         } />
         <Route path="/atletas" element={
