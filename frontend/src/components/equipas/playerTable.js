@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 export default function PlayerTable({ players, selectAtleta, selectOperation }) {
     if (!players) return 'n há atletas';
     return (
@@ -24,7 +26,9 @@ export default function PlayerTable({ players, selectAtleta, selectOperation }) 
                                 <td className="center-align">  <span className="material-symbols-outlined icon">
                                     {player.isInEquipa ? 'check' : 'close'}
                                 </span> </td>
-                                <td className="left-align">{player.nome}</td>
+                                <td className="left-align nome">
+                                    <Link className='font-bold' to={`/atletas/perfil/${player.id_atleta}`}> {player.nome}</Link>
+                                    </td>
                                 <td className="left-align">{player.ratingfinal + ' '}
                                     {Array.from({ length: player.ratingfinal }, (_, i) => (
                                         '★'

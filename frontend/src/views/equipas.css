@@ -126,7 +126,9 @@
     border-collapse: collapse;
     width: 100%;
 }
-
+.equipas-wrapper .content th{
+    background-color: var(--gray-900-color);
+}
 .equipas-wrapper .content th,
 .equipas-wrapper .content td {
     border: 0.08rem solid var(--gray-600-color);
@@ -166,6 +168,12 @@
     border-right: none;
 }
 
+.equipas-wrapper .content table .nome a{
+    text-decoration: none;
+}
+.equipas-wrapper .content table .nome a:hover{
+    text-decoration: underline;
+}
 .equipas-wrapper .content table .actions>span {
     color: var(--gray-500-color);
     user-select: none;
