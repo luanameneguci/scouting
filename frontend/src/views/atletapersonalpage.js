@@ -20,6 +20,7 @@ export default function Atletaspersonalpage() {
   const [atleta, setAtleta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [relatorios, setRelatorios] = useState([]);
 
   // Example: fetching the Atleta data
   useEffect(() => {
@@ -36,6 +37,20 @@ export default function Atletaspersonalpage() {
       }
     }
     fetchAtleta();
+  }, [id]);
+
+  useEffect(() => {
+    async function fetchRelatorios() {
+      try {
+        const response = await fetch(`http://localhost:8080/relatorio/${id}`);
+        if (!response.ok) throw new Error("Erro ao buscar relatórios");
+        const data = await response.json();
+        setRelatorios(data.data);
+      } catch (error) {
+        console.error("Erro:", error);
+      }
+    }
+    fetchRelatorios();
   }, [id]);
 
   // State for scouting confirmation
@@ -228,9 +243,8 @@ export default function Atletaspersonalpage() {
               {[...Array(5)].map((_, index) => (
                 <span
                   key={index}
-                  className={`atletaspersonalpage-star ${
-                    index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""
-                  }`}
+                  className={`atletaspersonalpage-star ${index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""
+                    }`}
                 >
                   ★
                 </span>
@@ -281,9 +295,8 @@ export default function Atletaspersonalpage() {
                 {[...Array(5)].map((_, index) => (
                   <span
                     key={index}
-                    className={`atletaspersonalpage-star ${
-                      index < ratings[category] ? "filled" : ""
-                    }`}
+                    className={`atletaspersonalpage-star ${index < ratings[category] ? "filled" : ""
+                      }`}
                     onClick={() => handleRatingChange(category, index + 1)}
                   >
                     ★
@@ -298,7 +311,7 @@ export default function Atletaspersonalpage() {
       {/* Scouting Card */}
       <div className="atletaspersonalpage-card scouting-card">
         <div className="atletaspersonalpage-info scouting-info">
-          <h2 className="atletaspersonalpage-section-title scouting-section-title">Scouting</h2>
+          <h2 className="atletaspersonalpage-section-title scouting-section-title">Encaregado</h2>
           <h1 className="atletaspersonalpage-nome scouting-nome">Rui Marques</h1>
           <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
             ruimarques@gmail.com
@@ -312,38 +325,38 @@ export default function Atletaspersonalpage() {
         <div className="atletaspersonalpage-imagem scouting-imagem"></div>
       </div>
 
-      {/* ==================================== */}
-      {/* Relatórios Table (Below Scouting Div) */}
-      {/* ==================================== */}
-      <div className="relatorios-section">
-        <table className="custom-table">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Competição</th>
-              <th>Resultado</th>
-              <th>Observações</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {relatoriosData.map((relatorio) => (
-              <tr key={relatorio.id}>
-                <td>{relatorio.data}</td>
-                <td>{relatorio.competicao}</td>
-                <td>{relatorio.resultado}</td>
-                <td>{relatorio.observacoes}</td>
-                <td>
-                  <div className="action-column">
-                    <button className="action-button profile">Ver</button>
-                    <button className="action-button remove">Remover</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+{/* Tabela de Relatórios */}
+<div className="relatorios-section">
+  <table className="custom-table">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Criado Por</th>
+        <th>Morfologia</th> {/* Coluna alterada */}
+        <th>Observações</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {relatorios.map((relatorio) => (
+        <tr key={relatorio.id_relatorio}>
+          <td>{new Date(relatorio.data).toLocaleDateString()}</td>
+          <td>{relatorio["utilizador.nome"] || "N/A"}</td>
+          <td>{relatorio.morfologia || "N/A"}</td> {/* Exibe a morfologia */}
+          <td>{relatorio.apontamentos}</td>
+          <td>
+            <div className="action-column">
+              <button className="action-button profile">Ver</button>
+              <button className="action-button remove">Remover</button>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
     </div>
   );
 }

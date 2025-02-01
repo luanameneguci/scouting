@@ -163,72 +163,24 @@ controllers.listar = async (req, res) => {
 };
 
 // Testando
-controllers.listar = async (req, res) => {
+controllers.listarPorAtleta = async (req, res) => {
+  const { id_atleta } = req.params;
   try {
-    const { page = 1, size = 10 } = req.query;
-    const limit = parseInt(size);
-    const offset = (page - 1) * limit;
-
-    const relatorios = await Relatorio.findAndCountAll({
-      limit,
-      offset,
-      attributes: [
-        'id_relatorio',
-        'data',
-        [Sequelize.literal(`CASE 
-          WHEN "atletum"."id_statusatleta" IS NOT NULL THEN 'Confirmado' 
-          ELSE 'Não Confirmado' 
-        END`), 'confirmado'],
-        [Sequelize.col('atletum.nome'), 'nome_atleta'],
-        [Sequelize.col('utilizador.nome'), 'nome_treinador'],
-        [Sequelize.col('atletum->clube.nome'), 'clube_atleta']
-      ],
-      include: [
-        {
-          model: models.atleta,
-          as: 'atletum', // Alias corrigido para combinar com a associação
-          attributes: [],
-          include: [
-            {
-              model: models.clube,
-              as: 'clube',
-              attributes: []
-            }
-          ]
-        },
-        {
-          model: models.utilizador,
-          as: 'utilizador',
-          attributes: []
-        }
-      ],
-      raw: true,
-      order: [['data', 'DESC']]
+    const data = await Relatorio.findAll({
+      where: { id_atleta: id_atleta },
+      include: [{
+        model: models.utilizador,
+        attributes: ['nome']
+      }],
+      attributes: ['id_relatorio', 'data', 'morfologia', 'apontamentos'], 
+      raw: true
     });
 
-    // Formatar data (DATEONLY para formato ISO)
-    const formattedData = relatorios.rows.map(relatorio => ({
-      ...relatorio,
-      data: new Date(relatorio.data).toISOString().split('T')[0] // Formato YYYY-MM-DD
-    }));
-
-    res.status(200).json({
-      success: true,
-      data: formattedData,
-      totalItems: relatorios.count,
-      totalPages: Math.ceil(relatorios.count / limit),
-      currentPage: parseInt(page)
-    });
-
+    res.json({ success: true, data: data });
   } catch (error) {
-    console.error("Erro ao listar relatórios:", error);
-    res.status(500).json({
-      success: false,
-      message: "Erro ao listar relatórios",
-      error: error.message
-    });
+    console.error("Erro ao listar relatórios por atleta:", error);
+    res.status(500).json({ success: false, message: "Erro ao listar relatórios." });
   }
 };
-
 
 module.exports = controllers;
