@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Basededados {
   final String? url;
@@ -37,8 +38,17 @@ class Basededados {
   Future _onCreate(Database db, int version) async {}
 
   Future<void> fetchInitPageData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
     try {
-      final response = await http.get(Uri.parse(url!));
+      final response = await http.get(
+        Uri.parse(url!),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token', // Include the token here
+        },
+      );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
@@ -49,9 +59,10 @@ class Basededados {
 
           // Extract club names
           List<String> clubesNomes = jogoUser["jogo"]["JogoClubes"]
-              .map<String>((clubeData) => clubeData["RelatedClube"]["nome"])
+              .map<String>((clubeData) =>
+                  clubeData["RelatedClube"]["nome"]?.toString() ??
+                  "Unknown Club")
               .toList();
-
           // Format the clubs string
           String clubesString = '${clubesNomes[0]} x ${clubesNomes[1]}';
           clubes.add(clubesString);
@@ -59,7 +70,8 @@ class Basededados {
           // Extract game date and time
           String gameDateTime = jogoUser["jogo"]["data"];
           DateTime dateTime = DateTime.parse(gameDateTime);
-          gameDays.add('${dateTime.year}-${dateTime.month}-${dateTime.day}');
+          gameDays.add(
+              '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}');
           gameTimes.add(
               '${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}');
         }
