@@ -8,6 +8,10 @@ const controllers = {};
 
 controllers.pagInicial = async (req, res) => {
   try {
+    const { since } = req.query;
+    console.log("aosudhoashdoaushouahsodpuashd"+since);
+    const whereCondition = since ? { data: { [Op.gt]: new Date(since) } } : {};
+
     const token = req.headers['authorization']?.split(' ')[1]; // Extract token after "Bearer "
     if (!token) {
       return res.status(401).json({ message: 'Token not provided' });
@@ -16,7 +20,9 @@ controllers.pagInicial = async (req, res) => {
 
     const JogosUser = await models.UtilizadorJogo.findAll({
       where: {
-        id_utilizador: userId,
+        id_utilizador: userId, 
+        ...whereCondition
+        
       },
       include: [
         {

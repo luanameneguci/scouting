@@ -14,6 +14,8 @@ class Basededados {
   static const nomebd = "scouting.db";
   final int versao = 1;
   static Database? _basededados;
+  DateTime? lastFetchedTime;
+
 
   List<String> jogadores = [];
   List<String> clubes = [];
@@ -41,9 +43,13 @@ class Basededados {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
+      String queryParams = lastFetchedTime != null
+      ? '?since=${lastFetchedTime!.toIso8601String()}'
+      : '';
+
     try {
       final response = await http.get(
-        Uri.parse(url!),
+        Uri.parse('$url$queryParams'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token', // Include the token here
@@ -53,6 +59,7 @@ class Basededados {
         final data = jsonDecode(response.body);
 
         for (var jogoUser in data["JogosUser"]) {
+          
           // Extract atleta names
           String atletaNome = jogoUser["RelatedAtleta"]["nome"];
           jogadores.add(atletaNome);
@@ -74,6 +81,9 @@ class Basededados {
               '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}');
           gameTimes.add(
               '${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}');
+
+              if (lastFetchedTime == null || DateTime.now().isAfter(lastFetchedTime!)) {
+            lastFetchedTime = DateTime.now();}
         }
 
         // Print the lists (or do something with them)
