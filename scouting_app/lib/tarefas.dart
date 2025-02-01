@@ -4,6 +4,9 @@ import 'package:scouting_app/jogador.dart';
 import 'package:scouting_app/novoRelatorio.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class TarefasPage extends StatefulWidget {
   const TarefasPage({super.key});
@@ -15,33 +18,43 @@ class TarefasPage extends StatefulWidget {
 enum FilterOption { week, month, all, specificMonth }
 
 class _TarefasPageState extends State<TarefasPage> {
- final Basededados bd = Basededados(url: "http://localhost:8080/mobile/inic");
+  final Basededados bd =
+      Basededados(url: dotenv.env['API_URL']! + '/mobile/inic');
+
   List<String> jogadores = [];
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
 
-   Future<void> _fetchData() async {
+  Future<void> _fetchData() async {
     await bd.fetchInitPageData();
-    setState(() {
-      jogadores = bd.jogadores;
-      clubes = bd.clubes;
-      gameDays = bd.gameDays;
-      gameTimes = bd.gameTimes;
-    });
+    if (mounted) {
+      setState(() {
+        jogadores = bd.jogadores;
+        clubes = bd.clubes;
+        gameDays = bd.gameDays;
+        gameTimes = bd.gameTimes;
+      });
+    }
   }
 
- @override
+  Timer? _updateTimer;
+
+  @override
   void initState() {
     super.initState();
-   _fetchData();
-
-    // Schedule periodic updates
-    Timer.periodic(Duration(seconds: 30), (timer) {
     _fetchData();
+
+    _updateTimer = Timer.periodic(Duration(seconds: 30), (timer) {
+      _fetchData();
     });
   }
 
+  @override
+  void dispose() {
+    _updateTimer?.cancel();
+    super.dispose();
+  }
 
   FilterOption selectedFilter = FilterOption.all;
   String? selectedMonth;
@@ -127,8 +140,8 @@ class _TarefasPageState extends State<TarefasPage> {
                         child: DropdownButton<FilterOption>(
                           icon: const Icon(
                             Icons.tune, // Set the custom icon here
-                            color:
-                                Color.fromRGBO(95, 99, 104, 1), // Customize icon color if needed
+                            color: Color.fromRGBO(95, 99, 104,
+                                1), // Customize icon color if needed
                           ),
                           value: selectedFilter,
                           dropdownColor: const Color.fromARGB(255, 43, 43, 43),

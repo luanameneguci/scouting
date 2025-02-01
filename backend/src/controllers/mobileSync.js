@@ -8,7 +8,10 @@ const controllers = {};
 
 controllers.pagInicial = async (req, res) => {
   try {
-    const token = req.cookies.token; // Or from `req.headers['authorization']`
+    const token = req.headers['authorization']?.split(' ')[1]; // Extract token after "Bearer "
+    if (!token) {
+      return res.status(401).json({ message: 'Token not provided' });
+    }
     const userId = getUserIdFromToken(token);
 
     const JogosUser = await models.UtilizadorJogo.findAll({
