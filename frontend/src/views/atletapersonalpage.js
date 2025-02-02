@@ -310,20 +310,17 @@ export default function Atletaspersonalpage() {
 
       {/* Scouting Card */}
       <div className="atletaspersonalpage-card scouting-card">
-        <div className="atletaspersonalpage-info scouting-info">
-          <h2 className="atletaspersonalpage-section-title scouting-section-title">Encaregado</h2>
-          <h1 className="atletaspersonalpage-nome scouting-nome">Rui Marques</h1>
-          <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
-            ruimarques@gmail.com
-          </span>
-          <p className="atletaspersonalpage-idade scouting-idade">
-            <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
-              912345678
-            </span>
-          </p>
-        </div>
-        <div className="atletaspersonalpage-imagem scouting-imagem"></div>
-      </div>
+  <div className="atletaspersonalpage-info scouting-info">
+    <h2 className="atletaspersonalpage-section-title scouting-section-title">Encarregado</h2>
+    <h1 className="atletaspersonalpage-nome scouting-nome">
+      {loading ? "Carregando..." : error ? "Erro ao carregar" : atleta?.nomeencarregado || "Não informado"}
+    </h1>
+    <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
+      {atleta?.contactoencarregado || "Não informado"}
+    </span>
+  </div>
+  <div className="atletaspersonalpage-imagem scouting-imagem"></div>
+</div>
 
 
 {/* Tabela de Relatórios */}

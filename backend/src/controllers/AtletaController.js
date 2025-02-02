@@ -343,7 +343,8 @@ controllers.buscarPorId = async (req, res) => {
       attributes: [
         "id_atleta",
         "nome",
-        // Formatar a data diretamente na query
+        "nomeencarregado",  // <-- ADICIONADO
+        "contactoencarregado", // <-- ADICIONADO
         [
           Sequelize.fn(
             'TO_CHAR',

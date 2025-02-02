@@ -195,13 +195,13 @@ export default function AtletasAdicionar() {
 
         {/* Nome do Contato */}
         <div className="atletasadicionar-form-group">
-          <label className="atletasadicionar-label">Nome do Contato</label>
+          <label className="atletasadicionar-label">Nome do Encarregado</label>
           <div className="atletasadicionar-input-group">
             <PersonIcon />
             <input
               type="text"
               name="contatoNome"
-              placeholder="Nome do Contato"
+              placeholder="Nome do Encarregado"
               value={formData.contatoNome}
               onChange={handleChange}
             />

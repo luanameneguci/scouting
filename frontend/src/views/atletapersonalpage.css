@@ -95,6 +95,7 @@
 }
 
 .atletaspersonalpage-section-title {
+  margin-top: 12px;
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 5px;
@@ -415,4 +416,10 @@ canvas {
 
 .action-button.remove {
   color: var(--red-color);
+}
+
+.atletaspersonalpage-card.scouting-card {
+  min-height: 140px; 
+  display: flex;
+  justify-content: space-between;
 }
