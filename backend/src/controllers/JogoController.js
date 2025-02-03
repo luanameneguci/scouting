@@ -134,9 +134,9 @@ controllers.listarDash = async (req, res) => {
       where: {
         data: {
           [Op.between]: [currentDate, thirtyDaysLater],
-        },
-        limit: 10, 
+        }
       },
+      limit: 10,
       include: [
         {
           model: models.escalao,

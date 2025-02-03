@@ -21,8 +21,8 @@ class Basededados {
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
-  String username = "";
   String username2 = "";
+  int tipo = 0;
   Basededados({required this.url});
 
 //---------------------------------------
@@ -62,10 +62,6 @@ class Basededados {
         final data = jsonDecode(response.body);
 
         for (var jogoUser in data["JogosUser"]) {
-           username = jogoUser["RelatedJogoUtilizador"]?["nome"];
-           print("User Type: $username");
-
-
           // Extract athlete information
           int atletaId = jogoUser["id_atleta"];
           String atletaNome = jogoUser["RelatedAtleta"]["nome"];
@@ -149,7 +145,10 @@ class Basededados {
       if (data != null && data.containsKey("User") && data["User"] is List) {
         // Safely access the first element of the "User" array and the "nome" key
         username2 = data["User"][0]["nome"];
+        tipo = data["User"][0]["id_tipoutilizador"];
+
         print("User Name: $username2");
+        print("User Name: $tipo");
       } else {
         print("Error: 'User' key is missing, null, or not an array in the response.");
       }

@@ -28,12 +28,14 @@ class _TarefasPageState extends State<TarefasPage> {
   List<String> gameDays = [];
   List<String> gameTimes = [];
   String username = "";
+  bool isAllowed = false;
 
   Future<void> _fetchData() async {
     await bd2.fetchUserData();
     if (mounted) {
       setState(() {
         username = bd2.username2;
+        isAllowed = bd2.tipo == 1 || bd2.tipo == 2;
         print("Username in setState: $username");
       });
     }
@@ -128,6 +130,7 @@ class _TarefasPageState extends State<TarefasPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+if (isAllowed) ...[
                 // Title on the left
                 Container(
                   padding: const EdgeInsets.only(top: 0, left: 10),
@@ -212,6 +215,15 @@ class _TarefasPageState extends State<TarefasPage> {
                     ],
                   ),
                 ),
+] else ...[
+              // Display only the username if not admin
+              Center(
+                child: Text(
+                  'Conteúdo permitido apenas a scouters e admins.',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ],
               ],
             ),
             const SizedBox(height: 10),
