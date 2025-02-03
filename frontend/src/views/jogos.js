@@ -1,10 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Link } from 'react-router-dom'; // Importa o Link para navegação
 import './jogos.css';
 
 
-const Jogos = () => {
+export default function Jogos() {
   const [visiblePasswords, setVisiblePasswords] = useState({});
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [
+          gamesRes,
+        ] = await Promise.all([
+          axios.get("http://localhost:8080/jogo/dash", {
+            withCredentials: true,
+          }),
+        ]);
+
+        // Utility function to update state only if data is successful
+        const updateState = (response, setter) => {
+          if (response.data.success) {
+            setter(response.data.data);
+          }
+        };
+        updateState(gamesRes, setGames);
+
+      } catch (error) {
+        console.error(
+          "Error fetching data: ",
+          error.response || error.message || error
+        );
+        alert("Error fetching data");
+      } 
+    };
+
+    fetchData();
+  }, []);
+
 
   const handleAction = (action, identifier) => {
     alert(`Action: ${action}, Identifier: ${identifier}`);
@@ -19,32 +54,31 @@ const Jogos = () => {
   const jogos = [
     {
       atribuido: true,
-      realizado: true,
-      "data e hora": "15/12/2024 18:00",
+      data: "15/12/2024 18:00",
       treinador: "Rui Marques",
-      "clube (casa)": "SL Benfica",
-      "clube (fora)": "FC Porto",
+      clube1: "SL Benfica",
+      clube2: "FC Porto",
       acoes: ["Editar", "Remover"]
     },
     {
       atribuido: true,
-      realizado: true,
-      "data e hora": "15/12/2024 18:00",
+      data: "15/12/2024 18:00",
       treinador: "Rui Marques",
-      "clube (casa)": "FC Porto",
-      "clube (fora)": "SL Benfica",
+      clube1: "SL Benfica",
+      clube2: "FC Porto",
       acoes: ["Editar", "Remover"]
     },
     {
-      atribuido: false,
-      realizado: true,
-      "data e hora": "15/12/2024 18:00",
-      treinador: "-",
-      "clube (casa)": "SL Benfica",
-      "clube (fora)": "FC Porto",
-      acoes: ["Editar", "Remover"]
+      atribuido: true,
+      data: "15/12/2024 18:00",
+      treinador: "Rui Marques",
+      clube1: "SL Benfica",
+      clube2: "FC Porto",
+      acoes: ["Editar", "Remover", "Adicionar atleta"]
     }
   ];
+
+  const acoes = ["Editar", "Apagar", "+Atleta"]
 
   return (
     <div className="jogos-container">
@@ -72,16 +106,17 @@ const Jogos = () => {
         <thead>
           <tr>
             <th className="jogos-table-col-atribuido">Atribuído</th>
-            <th className="jogos-table-col-realizado">Realizado</th>
+{/*             <th className="jogos-table-col-realizado">Realizado</th> */}
+            <th>Escalão</th>
             <th>Data e Hora</th>
             <th>Treinador</th>
-            <th>Clube (casa)</th>
-            <th>Clube (fora)</th>
+            <th>Clube 1</th>
+            <th>Clube 2</th>
             <th className="jogos-table-col-acoes">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {jogos.map((jogo, index) => (
+          {games.map((jogo, index) => (
             <tr key={index}>
               <td className="jogos-table-col-atribuido">
                 {jogo.atribuido ? (
@@ -90,20 +125,21 @@ const Jogos = () => {
                   <span className="material-symbols-outlined jogos-status-inactive">close</span>
                 )}
               </td>
-              <td className="jogos-table-col-realizado">
-                {jogo.realizado ? (
+             {/*  <td className="jogos-table-col-realizado">
+                 ? (
                   <span className="material-symbols-outlined jogos-status-active">check</span>
                 ) : (
                   <span className="material-symbols-outlined jogos-status-inactive">close</span>
                 )}
-              </td>
-              <td>{truncateText(jogo["data e hora"])}</td>
-              <td>{truncateText(jogo.treinador)}</td>
-              <td>{truncateText(jogo["clube (casa)"])}</td>
-              <td>{truncateText(jogo["clube (fora)"])}</td>
+              </td> */}
+              <td>{jogo.escalao?.designacao}</td>
+              <td>{jogo.data}</td>
+              <td>{jogo.UtilizadoresJogo[0]?.RelatedJogoUtilizador.nome}</td>
+              <td>{jogo.JogoClubes[0]?.RelatedClube.nome }</td>
+              <td>{jogo.JogoClubes[1]?.RelatedClube.nome}</td>
               <td className="jogos-table-col-acoes">
                 <div className="jogos-actions">
-                  {jogo.acoes.map((acao, index) => (
+                   {acoes.map((acao, index) => (
                     <button 
                       key={index}
                       className={`jogos-actions-button jogos-actions-${acao.toLowerCase().replace(' ', '-')}`}
@@ -122,4 +158,3 @@ const Jogos = () => {
   );
 };
 
-export default Jogos;
