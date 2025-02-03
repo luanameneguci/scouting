@@ -15,12 +15,17 @@ module.exports = function(sequelize, DataTypes) {
    id_atleta:{
     type: DataTypes.INTEGER,
     allowNull: false,
+    },
+    lastUpdated: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW, // Default to the current timestamp
+      allowNull: false,
     }
   }, {
     sequelize,
     tableName: 'utilizadorjogo',
     schema: 'public',
-    timestamps: false,
+    timestamps: true,
     indexes: [
     ]
   });
