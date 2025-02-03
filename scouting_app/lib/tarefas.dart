@@ -20,6 +20,8 @@ enum FilterOption { week, month, all, specificMonth }
 class _TarefasPageState extends State<TarefasPage> {
   final Basededados bd =
       Basededados(url: dotenv.env['API_URL']! + '/mobile/inic');
+       final Basededados bd2 =
+      Basededados(url: dotenv.env['API_URL']! + '/mobile/userData');
 
   List<Map<String, dynamic>> jogadores = [];
   List<String> clubes = [];
@@ -28,6 +30,14 @@ class _TarefasPageState extends State<TarefasPage> {
   String username = "";
 
   Future<void> _fetchData() async {
+    await bd2.fetchUserData();
+    if (mounted) {
+      setState(() {
+        username = bd2.username2;
+        print("Username in setState: $username");
+      });
+    }
+
     await bd.fetchInitPageData();
     if (mounted) {
       setState(() {
@@ -35,8 +45,6 @@ class _TarefasPageState extends State<TarefasPage> {
         clubes = bd.clubes;
         gameDays = bd.gameDays;
         gameTimes = bd.gameTimes;
-        username = bd.username;
-        print("Username in setState: $username");
       });
     }
   }

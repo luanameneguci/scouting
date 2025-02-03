@@ -16,11 +16,11 @@ controllers.pagInicial = async (req, res) => {
     if (!token) {
       return res.status(401).json({ message: 'Token not provided' });
     }
-    const userId = getUserIdFromToken(token);
+    const user = getUserIdFromToken(token);
 
     const JogosUser = await models.UtilizadorJogo.findAll({
       where: {
-        id_utilizador: userId, 
+        id_utilizador: user.id, 
         ...whereCondition,        
       },
       include: [
@@ -74,6 +74,32 @@ controllers.pagInicial = async (req, res) => {
     res.status(500).json({ success: false, message: error });
   }
 };
+
+controllers.getUsername = async (req, res) => {
+    try {
+  
+      const token = req.headers['authorization']?.split(' ')[1]; // const user = getUserIdFromToken(token);
+      if (!token) {
+        return res.status(401).json({ message: 'Token not provided' });
+      }
+      const user = getUserIdFromToken(token);
+  
+      const User = await models.utilizador.findAll({
+        where: {
+          id_utilizador: user.id,        
+        },
+      
+      });
+  
+      return res.status(200).json({
+        User,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: error });
+    }
+  };
+
 
 /* const atleta = await models.atleta.findAll({
         include: [

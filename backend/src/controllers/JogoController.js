@@ -128,13 +128,14 @@ const addAtletaToJogo = async (req, res) => {
 controllers.listarDash = async (req, res) => {
   try {
     const currentDate = new Date();
-    const sevenDaysLater = addDays(currentDate, 7);
+    const thirtyDaysLater = addDays(currentDate, 30);
 
     const data = await models.jogo.findAll({
       where: {
         data: {
-          [Op.between]: [currentDate, sevenDaysLater],
+          [Op.between]: [currentDate, thirtyDaysLater],
         },
+        limit: 10, 
       },
       include: [
         {

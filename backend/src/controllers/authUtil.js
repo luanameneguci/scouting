@@ -6,7 +6,7 @@ const getUserIdFromToken = (token) => {
   
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    return decoded.id; // Assuming the token payload has the user ID as `id`
+    return { id: decoded.id, nome: decoded.nome, tipo: decoded.tipo }; // Explicit property names
   } catch (error) {
     throw new Error('Invalid or expired token');
   }

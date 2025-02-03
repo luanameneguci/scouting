@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Basededados {
   final String? url;
@@ -21,6 +22,7 @@ class Basededados {
   List<String> gameDays = [];
   List<String> gameTimes = [];
   String username = "";
+  String username2 = "";
   Basededados({required this.url});
 
 //---------------------------------------
@@ -121,6 +123,45 @@ class Basededados {
       print("Error fetching data: $error");
     }
   }
+
+ Future<void> fetchUserData() async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
+  
+  final String url = dotenv.env['API_URL']! + '/mobile/userData';
+
+  try {
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // Include the token here
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      // Debugging: Print the response body to inspect the structure
+      print("Response Data: $data");
+
+      // Check if the "User" key exists and is not null, and that it's an array
+      if (data != null && data.containsKey("User") && data["User"] is List) {
+        // Safely access the first element of the "User" array and the "nome" key
+        username2 = data["User"][0]["nome"];
+        print("User Name: $username2");
+      } else {
+        print("Error: 'User' key is missing, null, or not an array in the response.");
+      }
+    } else {
+      print("Failed to fetch data: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+    }
+  } catch (error) {
+    print("Error fetching data: $error");
+  }
+}
+
 }
 
 /* Future<void> inserirvalor(String title, String description, String imagePath) async {
