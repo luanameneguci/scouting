@@ -21,7 +21,7 @@ class _TarefasPageState extends State<TarefasPage> {
   final Basededados bd =
       Basededados(url: dotenv.env['API_URL']! + '/mobile/inic');
 
-  List<String> jogadores = [];
+   Map<int, String> jogadores = {};
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
@@ -248,7 +248,8 @@ class _TarefasPageState extends State<TarefasPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RelatorioScreen(),
+                                  builder: (context) => RelatorioScreen(
+                                  ),
                                 ),
                               );
                             },

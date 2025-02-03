@@ -17,7 +17,7 @@ class Basededados {
   DateTime? lastFetchedTime;
 
 
-  List<String> jogadores = [];
+  Map<int, String> jogadores = {};
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
@@ -61,8 +61,9 @@ class Basededados {
         for (var jogoUser in data["JogosUser"]) {
           
           // Extract atleta names
+          int atletaId = jogoUser["id_atleta"];
           String atletaNome = jogoUser["RelatedAtleta"]["nome"];
-          jogadores.add(atletaNome);
+          jogadores[atletaId] = atletaNome;
 
           // Extract club names
           List<String> clubesNomes = jogoUser["jogo"]["JogoClubes"]
