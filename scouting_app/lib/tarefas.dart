@@ -25,6 +25,7 @@ class _TarefasPageState extends State<TarefasPage> {
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
+  String username = "";
 
   Future<void> _fetchData() async {
     await bd.fetchInitPageData();
@@ -34,6 +35,8 @@ class _TarefasPageState extends State<TarefasPage> {
         clubes = bd.clubes;
         gameDays = bd.gameDays;
         gameTimes = bd.gameTimes;
+        username = bd.username;
+        print("Username in setState: $username");
       });
     }
   }
@@ -103,8 +106,8 @@ class _TarefasPageState extends State<TarefasPage> {
       backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 23, 23, 23),
-        title: const Text(
-          'Olá, Luana',
+        title: Text(
+          'Olá, $username',
           style: TextStyle(color: Colors.white),
         ),
       ),

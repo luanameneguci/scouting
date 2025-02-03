@@ -20,7 +20,7 @@ class Basededados {
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
-
+  String username = "";
   Basededados({required this.url});
 
 //---------------------------------------
@@ -60,6 +60,10 @@ class Basededados {
         final data = jsonDecode(response.body);
 
         for (var jogoUser in data["JogosUser"]) {
+           username = jogoUser["RelatedJogoUtilizador"]?["nome"];
+           print("User Type: $username");
+
+
           // Extract athlete information
           int atletaId = jogoUser["id_atleta"];
           String atletaNome = jogoUser["RelatedAtleta"]["nome"];

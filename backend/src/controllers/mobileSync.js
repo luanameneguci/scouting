@@ -59,6 +59,10 @@ controllers.pagInicial = async (req, res) => {
               },
             ],         
         },
+        {
+          model: models.utilizador,
+          as:"RelatedJogoUtilizador"
+        }
       ],
     });
 
