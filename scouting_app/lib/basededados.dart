@@ -20,7 +20,6 @@ class Basededados {
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
-  String username = "";
 
   Basededados({required this.url});
 
@@ -59,12 +58,6 @@ class Basededados {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-
-           int? userType = data["JogosUser"]?["RelatedJogoUtilizador"]["id_tipoutilizador"];
-           print("User Type: $userType");
-           
-           String? username = data["JogosUser"]?["RelatedJogoUtilizador"]["nome"];
-           print("User Type: $username");
 
         for (var jogoUser in data["JogosUser"]) {
           // Extract athlete information
