@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
     lastUpdated: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW, // Default to the current timestamp
-      allowNull: false,
+      allowNull: true,
     }
   }, {
     sequelize,

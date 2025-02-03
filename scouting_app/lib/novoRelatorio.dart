@@ -3,6 +3,11 @@ import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/novoJogador.dart';
 
 class RelatorioScreen extends StatefulWidget {
+  final Map<String, dynamic>? atletaData;
+
+  // Correct constructor name to match the widget class
+  RelatorioScreen({this.atletaData});
+
   @override
   _RelatorioScreenState createState() => _RelatorioScreenState();
 }
@@ -13,6 +18,20 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
   String? selectedAtleta;
   String? selectedClube;
   String? selectedJogo;
+
+   void initState() {
+    super.initState();
+
+    // Check if atletaData is not null and set the values accordingly
+    if (widget.atletaData != null) {
+       print("Atleta Data: ${widget.atletaData}");
+      setState(() {
+        selectedAtleta = widget.atletaData!['nome']; // Athlete's name
+        selectedEscalao = widget.atletaData!['escalao']; // Escalao designation
+        selectedClube = widget.atletaData!['clube']; // Clube name
+      });
+    }
+   }
   TextEditingController searchAtletaController = TextEditingController();
   TextEditingController searchClubeController = TextEditingController();
   TextEditingController searchJogoController = TextEditingController();

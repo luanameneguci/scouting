@@ -21,7 +21,7 @@ class _TarefasPageState extends State<TarefasPage> {
   final Basededados bd =
       Basededados(url: dotenv.env['API_URL']! + '/mobile/inic');
 
-   Map<int, String> jogadores = {};
+  List<Map<String, dynamic>> jogadores = [];
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
@@ -227,7 +227,7 @@ class _TarefasPageState extends State<TarefasPage> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              jogadores[gameIndex],
+                              jogadores[gameIndex]['nome'],
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             Text(
@@ -245,10 +245,13 @@ class _TarefasPageState extends State<TarefasPage> {
                           right: 0,
                           child: ElevatedButton(
                             onPressed: () {
+                              var selectedAtleta = jogadores[gameIndex];
+                              print("Selected Atleta Data: $selectedAtleta");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RelatorioScreen(
+                                     atletaData: selectedAtleta,
                                   ),
                                 ),
                               );

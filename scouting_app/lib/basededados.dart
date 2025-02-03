@@ -16,8 +16,7 @@ class Basededados {
   static Database? _basededados;
   DateTime? lastFetchedTime;
 
-
-  Map<int, String> jogadores = {};
+  List<Map<String, dynamic>> jogadores = [];
   List<String> clubes = [];
   List<String> gameDays = [];
   List<String> gameTimes = [];
@@ -43,9 +42,10 @@ class Basededados {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
-      String queryParams = lastFetchedTime != null
-      ? '?since=${lastFetchedTime!.toIso8601String()}'
-      : '';
+    // Prepare the query params for fetching the new data
+    String queryParams = lastFetchedTime != null
+        ? '?since=${lastFetchedTime!.toIso8601String()}'
+        : '';
 
     try {
       final response = await http.get(
@@ -55,15 +55,29 @@ class Basededados {
           'Authorization': 'Bearer $token', // Include the token here
         },
       );
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
         for (var jogoUser in data["JogosUser"]) {
-          
-          // Extract atleta names
+          // Extract athlete information
           int atletaId = jogoUser["id_atleta"];
           String atletaNome = jogoUser["RelatedAtleta"]["nome"];
-          jogadores[atletaId] = atletaNome;
+          String atletaEscalao =
+              jogoUser["RelatedAtleta"]["escalao"]["designacao"];
+          String atletaClube = jogoUser["RelatedAtleta"]["clube"]["nome"];
+
+          // Add athlete details to jogadores map
+          jogadores.add({
+            'id': atletaId,
+            'nome': atletaNome,
+            'escalao': atletaEscalao,
+            'clube': atletaClube
+          });
+
+          // Print athlete's additional details
+          print(
+              "Atleta: $atletaNome, Escalão: $atletaEscalao, Clube: $atletaClube");
 
           // Extract club names
           List<String> clubesNomes = jogoUser["jogo"]["JogoClubes"]
@@ -71,6 +85,7 @@ class Basededados {
                   clubeData["RelatedClube"]["nome"]?.toString() ??
                   "Unknown Club")
               .toList();
+
           // Format the clubs string
           String clubesString = '${clubesNomes[0]} x ${clubesNomes[1]}';
           clubes.add(clubesString);
@@ -83,8 +98,11 @@ class Basededados {
           gameTimes.add(
               '${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}');
 
-              if (lastFetchedTime == null || DateTime.now().isAfter(lastFetchedTime!)) {
-            lastFetchedTime = DateTime.now();}
+          // Update the last fetched time to the current time
+          if (lastFetchedTime == null ||
+              DateTime.now().isAfter(lastFetchedTime!)) {
+            lastFetchedTime = DateTime.now();
+          }
         }
 
         // Print the lists (or do something with them)
