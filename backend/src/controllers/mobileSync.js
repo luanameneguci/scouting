@@ -2,7 +2,7 @@ const sequelize = require("../models/database");
 const { Sequelize, Op, Model, DataTypes } = require("sequelize");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
-const { getUserIdFromToken } = require("./authUtil");
+const { getUserDataFromToken } = require("./authUtil");
 
 const controllers = {};
 
@@ -12,11 +12,12 @@ controllers.pagInicial = async (req, res) => {
     const { since } = req.query;
     const whereCondition = since ? { lastUpdated: { [Op.gt]: new Date(since) } } : {};
 
-    const token = req.headers['authorization']?.split(' ')[1]; // Extract token after "Bearer "
+    const token = req.headers['authorization']?.split(' ')[1]; //const token = req.cookies.token; 
     if (!token) {
       return res.status(401).json({ message: 'Token not provided' });
     }
-    const userId = getUserIdFromToken(token);
+   
+    const userId = getUserDataFromToken(token);
 
     const JogosUser = await models.UtilizadorJogo.findAll({
       where: {
@@ -59,6 +60,10 @@ controllers.pagInicial = async (req, res) => {
               },
             ],         
         },
+        {
+          model: models.utilizador,
+          as: "RelatedJogoUtilizador",
+        }
       ],
     });
 

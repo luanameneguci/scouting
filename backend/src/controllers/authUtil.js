@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || 'yourSecretKey';
 
-const getUserIdFromToken = (token) => {
+const getUserDataFromToken = (token) => {
   if (!token) throw new Error('Token not provided');
   
   try {
@@ -12,4 +12,4 @@ const getUserIdFromToken = (token) => {
   }
 };
 
-module.exports = { getUserIdFromToken };
+module.exports = { getUserDataFromToken };
