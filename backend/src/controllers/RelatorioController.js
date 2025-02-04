@@ -64,11 +64,16 @@ controllers.listarPorAtleta = async (req, res) => {
 };
 
 controllers.listar = async (req, res) => {
+  const { page } = req.params;
+  const limit = 10;
+  const offset = (page - 1) * limit;
+
   try {
-    const data = await Relatorio.findAll({
+    const { count, rows } = await models.relatorio.findAndCountAll({
       include: [
         {
-          model: models.atleta
+          model: models.atleta,
+
         },
         {
           model: models.jogo,
@@ -87,13 +92,20 @@ controllers.listar = async (req, res) => {
         {
           model: models.utilizador
         }
-      ]
+      ],
+      order: [['data', 'DESC']],
+      limit: limit,
+      offset: offset,
+      group: ['relatorio.id_relatorio']
+
     })
+    const totalPages = Math.ceil(count.length / limit);
+
+    return res.status(200).json({ success: true, relatorios: rows, totalPages:totalPages });
   }
   catch (e) {
     return res.status(500).json({ message: e.message })
   }
-  res.status(200).json({ success: true, relatorios: data });
 };
 
 controllers.relatoriosData = async (req, res) => {
@@ -144,7 +156,7 @@ controllers.apagar = async (req, res) => {
   })
   res.json({ success: true, deleted: del });
 }
-
+/*
 controllers.listar = async (req, res) => {
   try {
     const data = await Relatorio.findAll({
@@ -182,7 +194,7 @@ controllers.listar = async (req, res) => {
     console.error("Erro ao listar relatórios:", error);
     res.status(500).json({ success: false, message: "Erro ao listar relatórios." });
   }
-};
+};*/
 
 // Testando
 controllers.listarPorAtleta = async (req, res) => {
