@@ -9,13 +9,13 @@ controllers.listar = async (req, res) => {
   try {
     const escalões = await escalao.findAll();
     
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: escalões,
     });
   } catch (error) {
     console.error("Erro:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Erro ao buscar escalões",
       error: error.message,
