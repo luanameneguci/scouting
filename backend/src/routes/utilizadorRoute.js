@@ -11,5 +11,7 @@ router.get('/treinadores', UtilizadorController.listarTreinadores);
 
 // Rota para associar um utilizador a um jogo
 router.post('/associar-jogo', UtilizadorController.associarJogo); // Associar utilizador a um jogo
+router.post('/associar-jogo-existente/:id', UtilizadorController.associarJogoExistente); // Associar utilizador a um jogo existente
+
 
 module.exports = router;

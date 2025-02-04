@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './credenciais.css';
 
-const API_URL = "http://localhost:8080/utilizador";
+const API_URL = "http://localhost:8080/utilizador/";
 
 const CredentialsPage = () => {
   const [users, setUsers] = useState([]);

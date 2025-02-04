@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "./credenciais.css"; // Assuming a CSS file for table styles
 
 export default function AtribuirTreinador() {
   const { id } = useParams();
@@ -7,7 +8,7 @@ export default function AtribuirTreinador() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/treinadores/listar")
+    fetch("http://localhost:8080/utilizador/treinadores")
       .then((res) => res.json())
       .then((data) => setTreinadores(data.data || []))
       .catch(console.error);
@@ -15,11 +16,14 @@ export default function AtribuirTreinador() {
 
   const handleAssignTreinador = async (treinadorId) => {
     try {
-      const response = await fetch(`http://localhost:8080/jogos/atribuir/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ treinadorId }),
-      });
+      const response = await fetch(
+        `http://localhost:8080/utilizador/associar-jogo-existente/${treinadorId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ treinadorId }),
+        }
+      );
 
       if (!response.ok) throw new Error("Erro ao atribuir treinador");
       alert("Treinador atribuído com sucesso!");
@@ -31,18 +35,35 @@ export default function AtribuirTreinador() {
   };
 
   return (
-    <div>
-      <h1>Selecionar Treinador para o Jogo {id}</h1>
-      <ul>
-        {treinadores.map((treinador) => (
-          <li key={treinador.id}>
-            {treinador.nome}{" "}
-            <button onClick={() => handleAssignTreinador(treinador.id)}>
-              Selecionar
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="credentials-container">
+      <h1 className="credentials-title">Atribuir treinador</h1>
+      <table className="credentials-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {treinadores.map((treinador) => (
+            <tr key={treinador.email}>
+              <td>{treinador.nome}</td>
+              <td>{treinador.telefone}</td>
+              <td>{treinador.email}</td>
+              <td>
+                <button
+                  className="credentials-actions-button credentials-actions-select"
+                  onClick={() => handleAssignTreinador(treinador.id_utilizador)}
+                >
+                  Selecionar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
