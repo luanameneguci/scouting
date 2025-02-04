@@ -22,7 +22,7 @@ const RelatorioAdicionar = () => {
         {/* Atleta + Validar botão */}
         <div className="atleta-containerRelConfir">
           <label>Atleta</label>
-          <a href="/relatorio/validar" className="validar-buttonRelConfir">
+          <a href="/relatorios/validar" className="validar-buttonRelConfir">
             Validar &gt;
           </a>
         </div>
