@@ -1,16 +1,20 @@
 import { useState } from 'react';
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import './navBackoffice.css';
 import Cookies from 'js-cookie';
 
 export default function NavBackoffice() {
     const navigate = useNavigate();
-    if (localStorage.getItem('userData')==null) {
+    if (localStorage.getItem('userData') == null) {
         navigate('/erro')
     }
     const user = JSON.parse(localStorage.getItem('userData'));
-
-
+    const [dropdown, setDropdown] = useState(false);
+    const logout = () => {
+        Cookies.remove('token');
+        localStorage.removeItem('userData');
+        navigate('/');
+    }
     return (
         <div className='navbar-back'>
             <NavLink to="/home" className={({ isActive }) => `rounded font-bold ${isActive ? 'selected' : ''}`}>
@@ -48,7 +52,17 @@ export default function NavBackoffice() {
                 </span>
                 Jogos
             </NavLink>
-            <div><div>{user && user.nome}</div></div>
+            <div className="profile" >
+                <div onClick={() => setDropdown(!dropdown)} className={`rounded ${dropdown && 'selected'}`}>{user && user.nome}</div>
+                <div className={`dropdown rounded ${dropdown && 'visible'}`} >
+                    <Link className='rounded' to='/'> <span className="material-symbols-outlined icon">
+                        home
+                    </span> Página Inicial </Link>
+                    <button className='rounded' onClick={logout}><span className="material-symbols-outlined icon">
+                        logout
+                    </span></button>
+                </div></div>
+
         </div>
     );
 };
