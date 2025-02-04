@@ -7,6 +7,7 @@ import "./jogos.css";
 export default function Jogos() {
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [games, setGames] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +88,11 @@ export default function Jogos() {
                     check
                   </span>
                 ) : (
-                  <span className="material-symbols-outlined jogos-status-inactive">
+                  <span className="material-symbols-outlined jogos-status-inactive"
+                  onClick={() => navigate(`/jogos/atribuir-treinador/${jogo.id_jogo}`)}
+                  style={{ cursor: "pointer", color: "red" }}
+                  title="Atribuir Treinador"
+                >
                     close
                   </span>
                 )}
