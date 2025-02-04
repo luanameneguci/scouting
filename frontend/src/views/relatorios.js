@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'; // Importando o Link do react-router-do
 import './relatorios.css'; // Importando os estilos fornecidos
 import axios from 'axios';
 import LoadingAnim from '../components/loadingAnim';
+import generatePDF from '../components/relatorioPDF';
 
 const Relatorios = () => {
   const url = process.env.REACT_APP_API_URL;
@@ -98,6 +99,7 @@ const Relatorios = () => {
                   </Link>
                   <button
                     className="reports-actions-button reports-actions-transfer"
+                    onClick={()=>{generatePDF(report)}}
                   >
                     Transferir
                   </button>
