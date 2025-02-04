@@ -125,7 +125,7 @@ const UtilizadorController = {
     async listarTreinadores(req, res) {
       try {
         // Substitua 'id_tipoutilizador_treinador' pelo id real que representa treinadores
-        const data = await models.utilizador.findAll({
+        const treinadores = await models.utilizador.findAll({
           include: {
             model: models.tipoutilizador,
             attributes: ['designacao'], // Retorna apenas o campo necessário
@@ -135,7 +135,7 @@ const UtilizadorController = {
           },
         });
   
-        return res.status(200).json({data});
+        return res.status(200).json({treinadores});
       } catch (error) {
         return res.status(500).json({ error: 'Erro ao listar treinadores' });
       }
