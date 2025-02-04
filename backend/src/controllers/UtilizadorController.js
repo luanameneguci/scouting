@@ -98,20 +98,29 @@ const UtilizadorController = {
   },
 
   async associarJogoExistente(req, res) {
-    const {id_jogo} = req.params;
+    const { id_jogo } = req.params;
     const { id_utilizador } = req.body;
-
+  
     try {
       const jogoAssociado = await models.UtilizadorJogo.create({
         id_utilizador,
         id_jogo,
       });
-
-      return res.status(201).json(jogoAssociado);
+  
+      return res.status(201).json({
+        success: true,
+        message: "Treinador associado ao jogo com sucesso",
+        data: jogoAssociado,
+      });
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao associar utilizador a um jogo' });
+      console.error(error);
+      return res.status(500).json({
+        success: false,
+        error: "Erro ao associar utilizador a um jogo",
+      });
     }
   },
+  
     // Listar apenas os treinadores
     async listarTreinadores(req, res) {
       try {

@@ -89,9 +89,9 @@ export default function Jogos() {
                   </span>
                 ) : (
                   <span className="material-symbols-outlined jogos-status-inactive"
-                  onClick={() => navigate(`/jogos/atribuir-treinador/${jogo.id_jogo}`)}
+                 /*  onClick={() => navigate(`/jogos/atribuir-treinador/${jogo.id_jogo}`)}
                   style={{ cursor: "pointer", color: "red" }}
-                  title="Atribuir Treinador"
+                  title="Atribuir Treinador" */
                 >
                     close
                   </span>
@@ -123,7 +123,7 @@ export default function Jogos() {
                       className={`jogos-actions-button jogos-actions-${acao
                         .toLowerCase()
                         .replace(" ", "-")}`}
-                      onClick={() => handleAction(acao, jogo["data e hora"])}
+                      /* onClick={() => handleAction(acao, jogo["data e hora"])} */
                     >
                       {acao}
                     </button>

@@ -30,7 +30,6 @@ import Dashboard from "./views/dashboard";
 import NeedLogin from "./views/landing/needLogin";
 import Test from "./views/test";
 import ProtectedRoute from "./components/protectedRoute";
-import AtribuirTreinador from "./views/atribuirtreinador";
 
 function App() {
   return (
@@ -141,14 +140,6 @@ function AppContent() {
           }
         />
 
-        <Route
-          path="/jogos/atribuir-treinador/:id"
-          element={
-            <ProtectedRoute>
-              <AtribuirTreinador />
-            </ProtectedRoute>
-          }
-        />
         <Route
           path="/relatorios"
           element={

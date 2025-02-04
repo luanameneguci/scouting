@@ -14,9 +14,6 @@ const controllers = {};
 const { subDays, addDays } = require('date-fns');
 
 
-
-
-
 controllers.editar = async (req, res) => {
   // parameter get id
   const { id_jogo } = req.params;
