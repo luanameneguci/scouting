@@ -79,17 +79,17 @@ function AppContent() {
             <Atletaspersonalpage />
           </ProtectedRoute>
         } />
-        <Route path="/relatorio/confirmar" element={
+        <Route path="/relatorios/confirmar" element={
           <ProtectedRoute>
             <RelatorioConfirmar />
           </ProtectedRoute>
         } />
-        <Route path="/relatorio/validar" element={
+        <Route path="/relatorios/validar" element={
           <ProtectedRoute>
             <RelatorioValidar />
           </ProtectedRoute>
         } />
-        <Route path="/relatorio/adicionar" element={
+        <Route path="/relatorios/adicionar" element={
           <ProtectedRoute>
             <RelatorioAdicionar />
           </ProtectedRoute>
