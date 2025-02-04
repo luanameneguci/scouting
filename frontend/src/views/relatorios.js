@@ -1,18 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Importando o Link do react-router-dom
 import './relatorios.css'; // Importando os estilos fornecidos
+import axios from 'axios';
+import LoadingAnim from '../components/loadingAnim';
 
 const Relatorios = () => {
+  const url = process.env.REACT_APP_API_URL;
+  const [dados, setDados] = useState([]);
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+
+        await axios.get(url + '/relatorio/listar').then((res) => {
+          if (res.status === 200) {
+            /*setDados(res.data.relatorios) */
+            console.log(res.data)
+          }
+          else { throw new Error("Erro na resposta") }
+        })
+      }
+      catch (e) { console.error(e) }
+    }
+
+    fetchdata();
+  }, [])
   const handleSearch = () => {
     alert('Pesquisar clicado!');
   };
 
-  const reports = [
-    { id: 999, confirmed: true, athlete: "John Doe", date: "15/12/2024 18:00", coach: "Rui Marques", homeClub: "SL Benfica", awayClub: "FC Porto" },
-    { id: 998, confirmed: true, athlete: "John Doe", date: "15/12/2024 18:00", coach: "Rui Marques", homeClub: "FC Porto", awayClub: "SL Benfica" },
-    { id: 997, confirmed: false, athlete: "Joaquim Almeida", date: "15/12/2024 18:00", coach: "Rui Marques", homeClub: "SL Benfica", awayClub: "FC Porto" },
-  ];
-
+  if(!dados) {return ( <div className='reports-container'> <LoadingAnim/> </div>)}
   return (
     <div className="reports-container">
       <main>
@@ -30,7 +46,7 @@ const Relatorios = () => {
           </div>
 
           {/* botão adicionar */}
-          <Link to="/relatorio/confirmar">
+          <Link to="/relatorios/confirmar">
             <button className="reports-add-button">Adicionar</button>
           </Link>
         </div>
@@ -49,23 +65,23 @@ const Relatorios = () => {
             </tr>
           </thead>
           <tbody>
-            {reports.map((report) => (
-              <tr key={report.id}>
-                <td>{report.id}</td>
+            {dados.map((report) => (
+              <tr key={report.id_relatorio}>
+                <td>{report.id_relatorio}</td>
                 <td
                   className={report.confirmed ? "reports-status-true" : "reports-status-false"}
                 >
                   {report.confirmed ? "✓" : <span className="material-symbols-outlined">error</span>}
                 </td>
-                <td>{report.athlete}</td>
-                <td>{report.date}</td>
-                <td>{report.coach}</td>
+                <td>{report.atleta.nome}</td>
+                <td>{report.data}</td>
+                <td>{report.utilizador.nome}</td>
                 <td>{report.homeClub}</td>
                 <td>{report.awayClub}</td>
                 <td className="text-left action-column">
 
                   {/* ligação das páginas' */}
-                  <Link to={`/relatorio/adicionar`}>
+                  <Link to={`/relatorios/adicionar`}>
                     <button className="action-button view">Ver</button>
                   </Link>
                   <button

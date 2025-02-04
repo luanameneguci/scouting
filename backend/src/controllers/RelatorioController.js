@@ -64,14 +64,36 @@ controllers.listarPorAtleta = async (req, res) => {
 };
 
 controllers.listar = async (req, res) => {
-  const data = await Relatorio.findAll({})
-    .then(function (data) {
-      return data;
+  try {
+    const data = await Relatorio.findAll({
+      include: [
+        {
+          model: models.atleta
+        },
+        {
+          model: models.jogo,
+          include: [{
+            model: models.JogoClube,
+            as: "JogoClubes",
+            include: [
+              {
+                model: models.clube,
+                as: "RelatedClube",
+                attributes: ["nome"],
+              },
+            ],
+          }]
+        },
+        {
+          model: models.utilizador
+        }
+      ]
     })
-    .catch((error) => {
-      return error;
-    });
-  res.json({ success: true, data: data });
+  }
+  catch (e) {
+    return res.status(500).json({ message: e.message })
+  }
+  res.status(200).json({ success: true, relatorios: data });
 };
 
 controllers.relatoriosData = async (req, res) => {
@@ -114,14 +136,14 @@ controllers.relatoriosData = async (req, res) => {
 
 
 controllers.apagar = async (req, res) => {
-    // parâmetros por post
-    const { id_relatorio } = req.body;
-    // delete por sequelize
-    const del = await Relatorio.destroy({
-    where: { id_relatorio: id_relatorio}
-    })
-    res.json({success:true,deleted:del});
-    }
+  // parâmetros por post
+  const { id_relatorio } = req.body;
+  // delete por sequelize
+  const del = await Relatorio.destroy({
+    where: { id_relatorio: id_relatorio }
+  })
+  res.json({ success: true, deleted: del });
+}
 
 controllers.listar = async (req, res) => {
   try {
@@ -172,7 +194,7 @@ controllers.listarPorAtleta = async (req, res) => {
         model: models.utilizador,
         attributes: ['nome']
       }],
-      attributes: ['id_relatorio', 'data', 'morfologia', 'apontamentos'], 
+      attributes: ['id_relatorio', 'data', 'morfologia', 'apontamentos'],
       raw: true
     });
 
