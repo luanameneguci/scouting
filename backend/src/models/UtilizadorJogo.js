@@ -15,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
    id_atleta:{
     type: DataTypes.INTEGER,
     allowNull: false,
+    //primaryKey: true,
     },
     lastUpdated: {
       type: DataTypes.DATE,
