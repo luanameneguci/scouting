@@ -110,7 +110,7 @@
 } 
 
 .jogos-actions-button { 
-  color: var(--white-color); 
+  color: var(--yellow-color); 
   background: none; 
   border: none; 
   cursor: pointer; 
@@ -126,8 +126,12 @@
   color: var(--blue-color); 
 } 
 
-.jogos-actions-remover { 
+.jogos-actions-apagar { 
   color: var(--red-color); 
+} 
+
+.jogos-actions { 
+  color: var(--green-color); 
 } 
 
 .jogos-table tbody tr:hover { 
