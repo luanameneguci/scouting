@@ -65,22 +65,15 @@ controllers.listarPorAtleta = async (req, res) => {
 
 controllers.listar = async (req, res) => {
   const { page } = req.params;
-  const {search} = req.query;
   const limit = 10;
   const offset = (page - 1) * limit;
-  const where = search && {
-    nome: {
-      [Op.like]: `%${search}%` // Procura nomes que contenham a string fornecida
-    }
-  }
 
   try {
-
     const { count, rows } = await models.relatorio.findAndCountAll({
       include: [
         {
           model: models.atleta,
-          
+
         },
         {
           model: models.jogo,
@@ -108,7 +101,7 @@ controllers.listar = async (req, res) => {
     })
     const totalPages = Math.ceil(count.length / limit);
 
-    return res.status(200).json({ success: true, relatorios: rows, totalPages: totalPages });
+    return res.status(200).json({ success: true, relatorios: rows, totalPages:totalPages });
   }
   catch (e) {
     return res.status(500).json({ message: e.message })
@@ -156,12 +149,12 @@ controllers.relatoriosData = async (req, res) => {
 
 controllers.apagar = async (req, res) => {
   // parâmetros por post
-  const { id_relatorio } = req.params;
+  const { id_relatorio } = req.body;
   // delete por sequelize
   const del = await Relatorio.destroy({
     where: { id_relatorio: id_relatorio }
   })
-  return res.status(200).json({ success: true, deleted: del });
+  res.json({ success: true, deleted: del });
 }
 /*
 controllers.listar = async (req, res) => {
@@ -267,7 +260,7 @@ controllers.getMonthlyAverageByAttribute = async (req, res) => {
   try {
     const { id_atleta } = req.params;
     const { campo } = req.query;
-
+    
     // Se não vier na query, padrão é "tecnica"
     const atributo = campo || "tecnica";
 
