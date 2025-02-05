@@ -199,23 +199,37 @@ controllers.listar = async (req, res) => {
 // Testando
 controllers.listarPorAtleta = async (req, res) => {
   const { id_atleta } = req.params;
+  const { page = 1, limit = 5 } = req.query; // Define padrão de 5 relatórios por página
+  const offset = (page - 1) * limit;
+
   try {
-    const data = await Relatorio.findAll({
+    const { count, rows } = await Relatorio.findAndCountAll({
       where: { id_atleta: id_atleta },
       include: [{
         model: models.utilizador,
         attributes: ['nome']
       }],
       attributes: ['id_relatorio', 'data', 'morfologia', 'apontamentos'],
+      limit: parseInt(limit),
+      offset: parseInt(offset),
+      order: [['data', 'DESC']],
       raw: true
     });
 
-    res.json({ success: true, data: data });
+    const totalPages = Math.ceil(count / limit);
+
+    res.json({
+      success: true,
+      data: rows,
+      totalPages,
+      currentPage: parseInt(page),
+    });
   } catch (error) {
     console.error("Erro ao listar relatórios por atleta:", error);
     res.status(500).json({ success: false, message: "Erro ao listar relatórios." });
   }
 };
+
 
 controllers.getMonthlyAverageRatings = async (req, res) => {
   try {

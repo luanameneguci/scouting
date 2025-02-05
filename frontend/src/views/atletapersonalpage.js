@@ -21,6 +21,24 @@ export default function Atletaspersonalpage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [relatorios, setRelatorios] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    async function fetchRelatorios() {
+      try {
+        const response = await fetch(`http://localhost:8080/relatorio/${id}?page=${currentPage}&limit=5`);
+        if (!response.ok) throw new Error("Erro ao buscar relatórios");
+        const data = await response.json();
+        setRelatorios(data.data);
+        setTotalPages(data.totalPages); // Atualiza total de páginas
+      } catch (error) {
+        console.error("Erro:", error);
+      }
+    }
+    fetchRelatorios();
+  }, [id, currentPage]); // Atualiza quando mudar o atleta ou a página
+
 
   // Buscar dados do Atleta
   useEffect(() => {
@@ -452,6 +470,22 @@ useEffect(() => {
             ))}
           </tbody>
         </table>
+        <div className="pagination">
+  <button 
+    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+    disabled={currentPage === 1}
+  >
+    ◀ Anterior
+  </button>
+  <span>Página {currentPage} de {totalPages}</span>
+  <button 
+    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+    disabled={currentPage === totalPages}
+  >
+    Próxima ▶
+  </button>
+</div>
+
       </div>
     </div>
   );
