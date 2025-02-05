@@ -10,13 +10,9 @@ router.delete("/apagar/:id_relatorio", RelatorioController.apagar);
 router.get("/:id_atleta", RelatorioController.listarPorAtleta); 
 
 
-
 router.get("/mensal/:id_atleta", RelatorioController.getMonthlyAverageRatings);
 
 router.get("/mensal-atributo/:id_atleta", RelatorioController.getMonthlyAverageByAttribute);
-
-router.get("/scout/:id_utilizador", RelatorioController.listarPorScout);
-
 
 
 module.exports = router;
