@@ -59,7 +59,7 @@ const Relatorios = () => {
           </div>
 
           {/* botão adicionar */}
-          <Link to="/relatorios/confirmar">
+          <Link to="/relatorios/adicionar">
             <button className="reports-add-button">Adicionar</button>
           </Link>
         </div>

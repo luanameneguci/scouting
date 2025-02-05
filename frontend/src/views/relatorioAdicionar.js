@@ -152,6 +152,7 @@ const RelatorioAdicionar = () => {
           ></textarea>
         </div>
       </div>
+      <button className="btnval">Adicionar</button>
     </div>
   );
 };
