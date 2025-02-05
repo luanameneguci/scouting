@@ -64,14 +64,48 @@ controllers.listarPorAtleta = async (req, res) => {
 };
 
 controllers.listar = async (req, res) => {
-  const data = await Relatorio.findAll({})
-    .then(function (data) {
-      return data;
+  const { page } = req.params;
+  const limit = 10;
+  const offset = (page - 1) * limit;
+
+  try {
+    const { count, rows } = await models.relatorio.findAndCountAll({
+      include: [
+        {
+          model: models.atleta,
+
+        },
+        {
+          model: models.jogo,
+          include: [{
+            model: models.JogoClube,
+            as: "JogoClubes",
+            include: [
+              {
+                model: models.clube,
+                as: "RelatedClube",
+                attributes: ["nome"],
+              },
+            ],
+          }]
+        },
+        {
+          model: models.utilizador
+        }
+      ],
+      order: [['data', 'DESC']],
+      limit: limit,
+      offset: offset,
+      group: ['relatorio.id_relatorio']
+
     })
-    .catch((error) => {
-      return error;
-    });
-  res.json({ success: true, data: data });
+    const totalPages = Math.ceil(count.length / limit);
+
+    return res.status(200).json({ success: true, relatorios: rows, totalPages:totalPages });
+  }
+  catch (e) {
+    return res.status(500).json({ message: e.message })
+  }
 };
 
 controllers.relatoriosData = async (req, res) => {
@@ -114,15 +148,15 @@ controllers.relatoriosData = async (req, res) => {
 
 
 controllers.apagar = async (req, res) => {
-    // parâmetros por post
-    const { id_relatorio } = req.body;
-    // delete por sequelize
-    const del = await Relatorio.destroy({
-    where: { id_relatorio: id_relatorio}
-    })
-    res.json({success:true,deleted:del});
-    }
-
+  // parâmetros por post
+  const { id_relatorio } = req.body;
+  // delete por sequelize
+  const del = await Relatorio.destroy({
+    where: { id_relatorio: id_relatorio }
+  })
+  res.json({ success: true, deleted: del });
+}
+/*
 controllers.listar = async (req, res) => {
   try {
     const data = await Relatorio.findAll({
@@ -160,7 +194,7 @@ controllers.listar = async (req, res) => {
     console.error("Erro ao listar relatórios:", error);
     res.status(500).json({ success: false, message: "Erro ao listar relatórios." });
   }
-};
+};*/
 
 // Testando
 controllers.listarPorAtleta = async (req, res) => {
@@ -172,7 +206,7 @@ controllers.listarPorAtleta = async (req, res) => {
         model: models.utilizador,
         attributes: ['nome']
       }],
-      attributes: ['id_relatorio', 'data', 'morfologia', 'apontamentos'], 
+      attributes: ['id_relatorio', 'data', 'morfologia', 'apontamentos'],
       raw: true
     });
 
@@ -182,5 +216,83 @@ controllers.listarPorAtleta = async (req, res) => {
     res.status(500).json({ success: false, message: "Erro ao listar relatórios." });
   }
 };
+
+controllers.getMonthlyAverageRatings = async (req, res) => {
+  try {
+    const { id_atleta } = req.params;
+    // Leia o nome do campo da query string
+    const { campo } = req.query; // ex.: 'velocidade', 'tecnica', etc.
+
+    // Se não for enviado campo, podemos definir um padrão
+    const campoParaMedia = campo || "tecnica";
+
+    // Exemplo para Postgres (usando TO_CHAR)
+    const monthlyAverages = await Relatorio.findAll({
+      attributes: [
+        [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM"), "mes"],
+        [sequelize.fn("AVG", sequelize.col(campoParaMedia)), "mediaMensal"],
+      ],
+      where: {
+        id_atleta: id_atleta,
+      },
+      group: [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM")],
+      order: [sequelize.literal('"mes"')],
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: monthlyAverages,
+      campo: campoParaMedia, // só pra avisar qual campo foi usado
+    });
+  } catch (error) {
+    console.error("Erro getMonthlyAverageRatings:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro ao obter médias mensais de relatórios.",
+      error: error.message,
+    });
+  }
+};
+
+
+// controllers.getMonthlyAverageByAttribute
+controllers.getMonthlyAverageByAttribute = async (req, res) => {
+  try {
+    const { id_atleta } = req.params;
+    const { campo } = req.query;
+    
+    // Se não vier na query, padrão é "tecnica"
+    const atributo = campo || "tecnica";
+
+    // Versão para PostgreSQL, agrupando data por YYYY-MM
+    const monthlyAverages = await Relatorio.findAll({
+      attributes: [
+        // Converte data para 'YYYY-MM'
+        [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM"), "mes"],
+        // Faz a média do campo escolhido (tecnica, velocidade etc.)
+        [sequelize.fn("AVG", sequelize.col(atributo)), "mediaMensal"]
+      ],
+      where: { id_atleta: id_atleta },
+      group: [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM")],
+      order: [sequelize.literal('"mes"')]
+    });
+
+    // Se estiver usando MySQL, troque para DATE_FORMAT, ex.:
+    // [sequelize.fn('DATE_FORMAT', sequelize.col('data'), '%Y-%m'), 'mes'],
+
+    return res.status(200).json({
+      success: true,
+      data: monthlyAverages
+    });
+  } catch (error) {
+    console.error("Erro getMonthlyAverageByAttribute:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro ao obter médias mensais do atributo.",
+      error: error.message
+    });
+  }
+};
+
 
 module.exports = controllers;

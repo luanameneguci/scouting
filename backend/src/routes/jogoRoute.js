@@ -8,7 +8,7 @@ router.get("/", JogoController.listar);
 router.get("/dash", JogoController.listarDash);  
 
 // Rota para buscar atletas de um escalão
-router.get("/atletas/:id_escalao", JogoController.getAtletasPorEscalao);
+router.get("/atletas/:id_escalao/:id_clube1?/:id_clube2?", JogoController.getAtletasPorEscalao);
 
 
 // Rota para adicionar um atleta a um jogo

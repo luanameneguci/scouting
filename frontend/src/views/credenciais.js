@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import "./credenciais.css";
+=======
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './credenciais.css';
+
+const API_URL = "http://localhost:8080/utilizador/";
+>>>>>>> 2804864750153ecb6b5e09b4e459e67f5c972196
 
 const CredentialsPage = () => {
   const [users, setUsers] = useState([]); 

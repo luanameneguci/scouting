@@ -6,12 +6,12 @@
     padding: 0.4rem 8vw;
     width: 100vw;
     position: fixed;
-    top:0;
+    top: 0;
     z-index: 9999;
     background-color: var(--gray-800-color);
 }
 
-.navbar-landing>.login {
+.navbar-landing .login {
     background-color: var(--accent-color);
     display: flex;
     gap: 0.8rem;
@@ -19,10 +19,13 @@
     align-items: center;
     padding: 0.6rem 1.8rem;
     text-decoration: none;
+    border: none;
 }
-
-.navbar-landing>.login,
-.navbar-landing>.login * {
+.navbar-landing .login:hover{
+    cursor: pointer;
+}
+.navbar-landing .login,
+.navbar-landing .login>* {
     color: var(--gray-800-color);
 }
 
@@ -30,3 +33,7 @@
     height: 4em;
 }
 
+.navbar-landing>span {
+    display: flex;
+    gap: .6rem;
+}

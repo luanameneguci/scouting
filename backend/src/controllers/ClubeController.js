@@ -9,13 +9,13 @@ controllers.listar = async (req, res) => {
   try {
     const clubes = await clube.findAll();
     
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: clubes,
     });
   } catch (error) {
     console.error("Erro:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Erro ao buscar clubes",
       error: error.message,

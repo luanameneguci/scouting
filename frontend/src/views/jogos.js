@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Link } from 'react-router-dom'; // Importa o Link para navegação
-import './jogos.css';
-
+import { Link } from "react-router-dom"; // Importa o Link para navegação
+import "./jogos.css";
 
 export default function Jogos() {
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [games, setGames] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [
-          gamesRes,
-        ] = await Promise.all([
+        const [gamesRes] = await Promise.all([
           axios.get("http://localhost:8080/jogo/dash", {
             withCredentials: true,
           }),
@@ -27,69 +25,34 @@ export default function Jogos() {
           }
         };
         updateState(gamesRes, setGames);
-
       } catch (error) {
         console.error(
           "Error fetching data: ",
           error.response || error.message || error
         );
         alert("Error fetching data");
-      } 
+      }
     };
 
     fetchData();
   }, []);
 
-
   const handleAction = (action, identifier) => {
     alert(`Action: ${action}, Identifier: ${identifier}`);
   };
 
-  const truncateText = (text, maxLength = 30) => {
-    return text.length > maxLength 
-      ? text.substring(0, maxLength) + '...'
-      : text;
-  };
-
-  const jogos = [
-    {
-      atribuido: true,
-      data: "15/12/2024 18:00",
-      treinador: "Rui Marques",
-      clube1: "SL Benfica",
-      clube2: "FC Porto",
-      acoes: ["Editar", "Remover"]
-    },
-    {
-      atribuido: true,
-      data: "15/12/2024 18:00",
-      treinador: "Rui Marques",
-      clube1: "SL Benfica",
-      clube2: "FC Porto",
-      acoes: ["Editar", "Remover"]
-    },
-    {
-      atribuido: true,
-      data: "15/12/2024 18:00",
-      treinador: "Rui Marques",
-      clube1: "SL Benfica",
-      clube2: "FC Porto",
-      acoes: ["Editar", "Remover", "Adicionar atleta"]
-    }
-  ];
-
-  const acoes = ["Editar", "Apagar", "+Atleta"]
+  const acoes = ["Editar", "Apagar", "+Atleta"];
 
   return (
     <div className="jogos-container">
       <h1 className="jogos-title">Jogos</h1>
-      
+
       <div className="jogos-toolbar">
         <div className="jogos-search-container">
-          <input 
-            type="text" 
-            placeholder="Pesquisar por nome do treinador" 
-            className="jogos-search-input" 
+          <input
+            type="text"
+            placeholder="Pesquisar por nome do treinador"
+            className="jogos-search-input"
           />
           <button className="jogos-search-button">
             <span className="material-symbols-outlined">search</span>
@@ -97,7 +60,7 @@ export default function Jogos() {
         </div>
 
         {/* Link para a página de Adicionar Jogo */}
-        <Link to={'/jogos/adicionar'}>
+        <Link to={"/jogos/adicionar"}>
           <button className="jogos-add-button">Adicionar</button>
         </Link>
       </div>
@@ -106,7 +69,7 @@ export default function Jogos() {
         <thead>
           <tr>
             <th className="jogos-table-col-atribuido">Atribuído</th>
-{/*             <th className="jogos-table-col-realizado">Realizado</th> */}
+            {/*             <th className="jogos-table-col-realizado">Realizado</th> */}
             <th>Escalão</th>
             <th>Data e Hora</th>
             <th>Treinador</th>
@@ -117,15 +80,24 @@ export default function Jogos() {
         </thead>
         <tbody>
           {games.map((jogo, index) => (
+          
             <tr key={index}>
               <td className="jogos-table-col-atribuido">
-                {jogo.atribuido ? (
-                  <span className="material-symbols-outlined jogos-status-active">check</span>
+                {jogo.UtilizadoresJogo[0] ? (
+                  <span className="material-symbols-outlined jogos-status-active">
+                    check
+                  </span>
                 ) : (
-                  <span className="material-symbols-outlined jogos-status-inactive">close</span>
+                  <span className="material-symbols-outlined jogos-status-inactive"
+                 /*  onClick={() => navigate(`/jogos/atribuir-treinador/${jogo.id_jogo}`)}
+                  style={{ cursor: "pointer", color: "red" }}
+                  title="Atribuir Treinador" */
+                >
+                    close
+                  </span>
                 )}
               </td>
-             {/*  <td className="jogos-table-col-realizado">
+              {/*  <td className="jogos-table-col-realizado">
                  ? (
                   <span className="material-symbols-outlined jogos-status-active">check</span>
                 ) : (
@@ -133,17 +105,25 @@ export default function Jogos() {
                 )}
               </td> */}
               <td>{jogo.escalao?.designacao}</td>
-              <td>{jogo.data}</td>
+              <td>
+                {new Date(jogo.data).toLocaleDateString("pt-BR", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </td>
               <td>{jogo.UtilizadoresJogo[0]?.RelatedJogoUtilizador.nome}</td>
-              <td>{jogo.JogoClubes[0]?.RelatedClube.nome }</td>
+              <td>{jogo.JogoClubes[0]?.RelatedClube.nome}</td>
               <td>{jogo.JogoClubes[1]?.RelatedClube.nome}</td>
               <td className="jogos-table-col-acoes">
                 <div className="jogos-actions">
-                   {acoes.map((acao, index) => (
-                    <button 
+                  {acoes.map((acao, index) => (
+                    <button
                       key={index}
-                      className={`jogos-actions-button jogos-actions-${acao.toLowerCase().replace(' ', '-')}`}
-                      onClick={() => handleAction(acao, jogo["data e hora"])}
+                      className={`jogos-actions-button jogos-actions-${acao
+                        .toLowerCase()
+                        .replace(" ", "-")}`}
+                      /* onClick={() => handleAction(acao, jogo["data e hora"])} */
                     >
                       {acao}
                     </button>
@@ -156,5 +136,4 @@ export default function Jogos() {
       </table>
     </div>
   );
-};
-
+}

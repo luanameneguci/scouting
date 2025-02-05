@@ -12,7 +12,7 @@
 /* Each label + input set */
 .atletasadicionar-form-group {
   margin-bottom: 0; 
-  flex: 1; /* Make form groups share available space equally in a row */
+  flex: 1;
 }
 
 /* Labels */
@@ -24,34 +24,33 @@
   font-size: 12px;
   color: #fff;
   margin-top: 20px;
-  margin-bottom:8px;
+  margin-bottom: 8px;
 }
 
-/* Rows for fields. Use this even for single fields for consistency */
+/* Rows for fields */
 .atletasadicionar-form-row {
   display: flex;
-  align-items: flex-start; /* Aligns the top of the fields */
-  gap: 20px; /* Control vertical spacing here */
+  align-items: flex-start;
+  gap: 20px;
 }
 
 /* Input groups */
 .atletasadicionar-input-group {
   display: flex;
   align-items: center;
-  /* Remove margin-bottom here as well so the spacing is consistent and controlled by .atletasadicionar-form-row */
-  margin-bottom: 0; 
+  margin-bottom: 0;
 }
 
 /* Icons */
 .atletasadicionar-input-group svg {
-  background-color: #000; /* Black background */
-  padding-top: 10px; 
-  padding-bottom: 10px;         /* Add more padding to make the box larger */
+  background-color: #000;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  width: 39px;            /* Set a fixed width for the box */
-  height: 39px;           /* Set a fixed height for the box */
-  display: flex;          /* Ensures the SVG is centered inside the box */
+  width: 39px;
+  height: 39px;
+  display: flex;
   justify-content: center;
   align-items: center;
   padding-left: 0px;
@@ -71,39 +70,76 @@
   box-sizing: border-box;
 }
 
-/* Placeholder styling */
-.atletasadicionar-input-group {
+/* Jogadores section */
+.jogadoresadicionar-input-group {
   display: flex;
-  flex-wrap: center; /* Permite que os itens se quebrem para a próxima linha */
-}
-.jogadoresadicionar-input-group{
-  display: flex;
-  flex-wrap: wrap; /* Permite que os itens se quebrem para a próxima linha */
+  flex-wrap: wrap;
   gap: 12px;
+  background-color: var(--gray-800-color, #333);
+  padding: 12px;
+  border-radius: 4px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
+/* Atleta item styling */
 .atleta-item {
-  flex: 1 1 calc(20% - 12px); /* 5 jogadores por linha com espaçamento */
+  flex: 1 1 calc(100% - 12px); /* Modificado para ocupar toda a largura */
+  background-color: var(--gray-800-color);
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  min-width: 120px;
+  border-bottom: 1px solid var(--gray-700-color, #424242);
+}
+
+/* Nova classe para a linha do atleta */
+.atleta-row {
   display: flex;
   align-items: center;
-  background-color: var(--gray-800-color); /* Fundo branco para contraste com o formulário */
-  border-radius: 6px; /* Bordas arredondadas */
-  padding: 8px 12px; /* Padding suave */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-  transition: background-color 0.3s; /* Efeito de transição no hover */
-  max-width: 18%; /* Limita a largura para garantir que 5 jogadores se encaixem */
-  min-width: 120px; /* Evita que o item fique muito pequeno em telas menores */
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Checkbox e label do atleta */
+.atleta-item label {
+  font-size: 14px;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .atleta-item input[type="checkbox"] {
-  margin-right: 10px; /* Espaçamento entre o checkbox e o nome */
+  margin: 0;
+  width: 16px;
+  height: 16px;
 }
 
-.atleta-item label {
-  font-size: 14px; /* Tamanho de fonte ajustado */
-  color: white; /* Cor do texto */
-  font-weight: 500;
-  display: inline-block;
+/* Estilo para o select do treinador */
+.treinador-select {
+  background-color: var(--gray-700-color, #424242);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.treinador-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #ffc107;
+}
+
+.treinador-select option {
+  background-color: var(--gray-800-color, #333);
+  color: white;
+  padding: 8px;
 }
 
 /* Submit button */
@@ -117,9 +153,28 @@
   font-size: 16px;
   color: #000;
   cursor: pointer;
-  margin-top: 30px; /* Space above the button */
+  margin-top: 30px;
 }
 
 .atletasadicionar-submit-button:hover {
   background-color: #e0a800;
+}
+
+/* Scrollbar customization for the jogadores container */
+.jogadoresadicionar-input-group::-webkit-scrollbar {
+  width: 8px;
+}
+
+.jogadoresadicionar-input-group::-webkit-scrollbar-track {
+  background: var(--gray-700-color, #424242);
+  border-radius: 4px;
+}
+
+.jogadoresadicionar-input-group::-webkit-scrollbar-thumb {
+  background: var(--gray-600-color, #555);
+  border-radius: 4px;
+}
+
+.jogadoresadicionar-input-group::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500-color, #666);
 }
