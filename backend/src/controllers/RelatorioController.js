@@ -217,4 +217,82 @@ controllers.listarPorAtleta = async (req, res) => {
   }
 };
 
+controllers.getMonthlyAverageRatings = async (req, res) => {
+  try {
+    const { id_atleta } = req.params;
+    // Leia o nome do campo da query string
+    const { campo } = req.query; // ex.: 'velocidade', 'tecnica', etc.
+
+    // Se não for enviado campo, podemos definir um padrão
+    const campoParaMedia = campo || "tecnica";
+
+    // Exemplo para Postgres (usando TO_CHAR)
+    const monthlyAverages = await Relatorio.findAll({
+      attributes: [
+        [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM"), "mes"],
+        [sequelize.fn("AVG", sequelize.col(campoParaMedia)), "mediaMensal"],
+      ],
+      where: {
+        id_atleta: id_atleta,
+      },
+      group: [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM")],
+      order: [sequelize.literal('"mes"')],
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: monthlyAverages,
+      campo: campoParaMedia, // só pra avisar qual campo foi usado
+    });
+  } catch (error) {
+    console.error("Erro getMonthlyAverageRatings:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro ao obter médias mensais de relatórios.",
+      error: error.message,
+    });
+  }
+};
+
+
+// controllers.getMonthlyAverageByAttribute
+controllers.getMonthlyAverageByAttribute = async (req, res) => {
+  try {
+    const { id_atleta } = req.params;
+    const { campo } = req.query;
+    
+    // Se não vier na query, padrão é "tecnica"
+    const atributo = campo || "tecnica";
+
+    // Versão para PostgreSQL, agrupando data por YYYY-MM
+    const monthlyAverages = await Relatorio.findAll({
+      attributes: [
+        // Converte data para 'YYYY-MM'
+        [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM"), "mes"],
+        // Faz a média do campo escolhido (tecnica, velocidade etc.)
+        [sequelize.fn("AVG", sequelize.col(atributo)), "mediaMensal"]
+      ],
+      where: { id_atleta: id_atleta },
+      group: [sequelize.fn("TO_CHAR", sequelize.col("data"), "YYYY-MM")],
+      order: [sequelize.literal('"mes"')]
+    });
+
+    // Se estiver usando MySQL, troque para DATE_FORMAT, ex.:
+    // [sequelize.fn('DATE_FORMAT', sequelize.col('data'), '%Y-%m'), 'mes'],
+
+    return res.status(200).json({
+      success: true,
+      data: monthlyAverages
+    });
+  } catch (error) {
+    console.error("Erro getMonthlyAverageByAttribute:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro ao obter médias mensais do atributo.",
+      error: error.message
+    });
+  }
+};
+
+
 module.exports = controllers;
