@@ -39,6 +39,51 @@ export default function Atletaspersonalpage() {
     fetchAtleta();
   }, [id]);
 
+
+  // Buscar os últimos ratings do banco de dados
+useEffect(() => {
+  async function fetchLatestRatings() {
+    try {
+      console.log(`🔍 Buscando últimos ratings para o atleta ${id}...`);
+      const response = await fetch(`http://localhost:8080/relatorio/ultimos/${id}`);
+      
+      if (!response.ok) throw new Error("Erro ao buscar últimas avaliações");
+      
+      const json = await response.json();
+      console.log("📊 Dados recebidos do backend:", json);
+
+      if (json.success && json.data) {
+        // Se os valores forem null ou undefined, define como 0 para evitar erro
+        setRatings({
+          Tecnica: json.data.tecnica ?? 0,
+          Velocidade: json.data.velocidade ?? 0,
+          AtitudeCompetitiva: json.data.atitudecompetitiva ?? 0,
+          Inteligencia: json.data.inteligencia ?? 0,
+        });
+      } else {
+        // Se não houver dados no backend, deixa todas as estrelas apagadas (0)
+        setRatings({
+          Tecnica: 0,
+          Velocidade: 0,
+          AtitudeCompetitiva: 0,
+          Inteligencia: 0,
+        });
+      }
+    } catch (error) {
+      console.error("❌ Erro ao buscar últimas avaliações:", error);
+      // Se houver erro na requisição, deixa todas as estrelas apagadas
+      setRatings({
+        Tecnica: 0,
+        Velocidade: 0,
+        AtitudeCompetitiva: 0,
+        Inteligencia: 0,
+      });
+    }
+  }
+
+  fetchLatestRatings();
+}, [id]); // Reexecuta quando o ID do atleta mudar
+
   // Buscar relatórios (lista) do Atleta
   useEffect(() => {
     async function fetchRelatorios() {
@@ -338,26 +383,24 @@ export default function Atletaspersonalpage() {
 
         {/* Star Rating Chart */}
         <div className="atletaspersonalpage-star-chart">
-          {Object.keys(ratings).map((category) => (
-            <div className="atletaspersonalpage-star-row" key={category}>
-              <span className="atletaspersonalpage-star-title">
-                {friendlyNames[category] || category}
-              </span>
-              <div className="atletaspersonalpage-stars">
-                {[...Array(5)].map((_, index) => (
-                  <span
-                    key={index}
-                    className={`atletaspersonalpage-star ${index < ratings[category] ? "filled" : ""
-                      }`}
-                    onClick={() => handleRatingChange(category, index + 1)}
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+  {Object.keys(ratings).map((category) => (
+    <div className="atletaspersonalpage-star-row" key={category}>
+      <span className="atletaspersonalpage-star-title">
+        {friendlyNames[category] || category}
+      </span>
+      <div className="atletaspersonalpage-stars">
+        {[...Array(5)].map((_, index) => (
+          <span
+            key={index}
+            className={`atletaspersonalpage-star ${index < ratings[category] ? "filled" : ""}`}
+          >
+            ★
+          </span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
       </div>
 
       {/* Scouting Card */}

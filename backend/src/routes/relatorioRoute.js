@@ -7,12 +7,16 @@ router.get("/listar/:page", RelatorioController.listar); // Nova rota para lista
 router.get("/relatoriosData", RelatorioController.relatoriosData);
 router.post("/criar", RelatorioController.criar);
 router.delete("/apagar/:id_relatorio", RelatorioController.apagar);
-router.get("/:id_atleta", RelatorioController.listarPorAtleta); 
 
+// PEGA ULTIMOS VALORES
+router.get("/ultimos/:id_atleta", RelatorioController.getLatestRatingsByAtleta);
 
 router.get("/mensal/:id_atleta", RelatorioController.getMonthlyAverageRatings);
 
 router.get("/mensal-atributo/:id_atleta", RelatorioController.getMonthlyAverageByAttribute);
+
+// Essa rota deve ficar POR ÚLTIMO para evitar conflitos
+router.get("/:id_atleta", RelatorioController.listarPorAtleta);
 
 
 module.exports = router;

@@ -255,6 +255,40 @@ controllers.getMonthlyAverageRatings = async (req, res) => {
 };
 
 
+// PEGA OS ULTIMOS VALORES POSTADOS
+controllers.getLatestRatingsByAtleta = async (req, res) => {
+  try {
+    const { id_atleta } = req.params;
+
+    // Buscar o relatório mais recente desse atleta
+    const latestRelatorio = await Relatorio.findOne({
+      where: { id_atleta: id_atleta },
+      order: [['data', 'DESC']], // Ordenar pela data mais recente
+      attributes: ['tecnica', 'velocidade', 'atitudecompetitiva', 'inteligencia', 'data']
+    });
+
+    if (!latestRelatorio) {
+      return res.status(404).json({ success: false, message: "Nenhum relatório encontrado para esse atleta." });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: latestRelatorio
+    });
+
+  } catch (error) {
+    console.error("Erro getLatestRatingsByAtleta:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro ao obter os últimos valores gravados do atleta.",
+      error: error.message
+    });
+  }
+};
+
+
+
+
 // controllers.getMonthlyAverageByAttribute
 controllers.getMonthlyAverageByAttribute = async (req, res) => {
   try {
