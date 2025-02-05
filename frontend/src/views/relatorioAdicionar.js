@@ -5,12 +5,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import EventIcon from "@mui/icons-material/Event";
 
 const RelatorioAdicionar = () => {
-  const url = process.env.REACT_APP_API_URL;
+  const url = "http://localhost:8080"; // Alterado para mesma URL da página Atletas
   const [tecnica, setTecnica] = useState(null);
   const [velocidade, setVelocidade] = useState(null);
   const [atitude, setAtitude] = useState(null);
   const [inteligencia, setInteligencia] = useState(null);
-  const [RatingGeral, setRatingGeral] = useState(null);
+  const [ratingGeral, setRatingGeral] = useState(null);
   const [altura, setAltura] = useState(null);
   const [morfologia, setMorfologia] = useState(null);
   const [apontamentos, setApontamentos] = useState("");
@@ -22,34 +22,36 @@ const RelatorioAdicionar = () => {
   const [atletas, setAtletas] = useState([]);
 
   useEffect(() => {
-    // Buscar lista de jogos
-    axios.get(url + "/jogo/listar").then((res) => {
-      if (res.status === 200) {
-        setJogos(res.data.data);
-      }
-    });
+    console.log("Buscando dados da API...");
 
-    // Buscar lista de treinadores
-    axios.get(url + "/utilizador/treinadores").then((res) => {
-      if (res.status === 200) {
-        setTreinadores(res.data.treinadores);
-      }
-    });
+    axios.get(`${url}/jogo/listar`, { withCredentials: true })
+      .then((res) => {
+        console.log("Jogos recebidos:", res.data);
+        setJogos(res.data.data || []);
+      })
+      .catch((error) => console.error("Erro ao buscar jogos:", error));
 
-    // Buscar lista de atletas
-    axios.get(url + "/atleta/listar").then((res) => {
-      if (res.status === 200) {
-        setAtletas(res.data.data);
-      }
-    });
+    axios.get(`${url}/utilizador/treinadores`, { withCredentials: true })
+      .then((res) => {
+        console.log("Treinadores recebidos:", res.data);
+        setTreinadores(res.data.treinadores || []);
+      })
+      .catch((error) => console.error("Erro ao buscar treinadores:", error));
+
+    axios.get(`${url}/atleta/listar`, { withCredentials: true })
+      .then((res) => {
+        console.log("Atletas recebidos:", res.data);
+        setAtletas(res.data.data || []);
+      })
+      .catch((error) => console.error("Erro ao buscar atletas:", error));
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const novoRelatorio = {
-      id_utilizador: treinador, // ID do treinador
-      id_jogo: jogo, // ID do jogo selecionado
-      id_atleta: atleta, // ID do atleta selecionado
+      id_utilizador: treinador,
+      id_jogo: jogo,
+      id_atleta: atleta,
       tecnica,
       velocidade,
       atitudecompetitiva: atitude,
@@ -60,12 +62,17 @@ const RelatorioAdicionar = () => {
     };
 
     try {
-      const response = await axios.post(url + "/relatorio/criar", novoRelatorio);
+      const response = await axios.post(`${url}/relatorio/criar`, novoRelatorio, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      });
+
       if (response.status === 200) {
         alert("Relatório adicionado com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao adicionar relatório:", error);
+      alert("Erro ao enviar relatório. Verifique os dados.");
     }
   };
 
@@ -117,127 +124,41 @@ const RelatorioAdicionar = () => {
       </div>
 
       <div className="avaliacao-containeradic">
-        <div className="campoadic">
-          <label>Técnica</label>
-          <div className="opcoesadic">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-containeradic">
-                <span
-                  className={`bolaadic ${tecnica === num ? "selecionada" : ""}`}
-                  onClick={() => setTecnica(num)}
-                ></span>
-                <span className="numeroadic">{num}</span>
+        {[{ label: "Técnica", state: tecnica, setState: setTecnica },
+          { label: "Velocidade", state: velocidade, setState: setVelocidade },
+          { label: "Atitude Competitiva", state: atitude, setState: setAtitude },
+          { label: "Inteligência", state: inteligencia, setState: setInteligencia },
+          { label: "Rating Geral", state: ratingGeral, setState: setRatingGeral }]
+          .map(({ label, state, setState }) => (
+            <div key={label} className="campoadic">
+              <label>{label}</label>
+              <div className="opcoesadic">
+                {[1, 2, 3, 4].map((num) => (
+                  <div key={num} className="bola-containeradic">
+                    <span className={`bolaadic ${state === num ? "selecionada" : ""}`}
+                          onClick={() => setState(num)}>
+                    </span>
+                    <span className="numeroadic">{num}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+        ))}
 
         <div className="campoadic">
-          <label>Velocidade</label>
-          <div className="opcoesadic">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-containeradic">
-                <span
-                  className={`bolaadic ${velocidade === num ? "selecionada" : ""}`}
-                  onClick={() => setVelocidade(num)}
-                ></span>
-                <span className="numeroadic">{num}</span>
-              </div>
-            ))}
-          </div>
+          <label>Apontamentos</label>
+          <textarea
+            className="textareaRelConfir"
+            placeholder="Apontamentos"
+            value={apontamentos}
+            onChange={(e) => setApontamentos(e.target.value)}
+          ></textarea>
         </div>
 
-        <div className="campoadic">
-          <label>Atitude Competitiva</label>
-          <div className="opcoesadic">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-containeradic">
-                <span
-                  className={`bolaadic ${atitude === num ? "selecionada" : ""}`}
-                  onClick={() => setAtitude(num)}
-                ></span>
-                <span className="numeroadic">{num}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="campoadic">
-          <label>Inteligência</label>
-          <div className="opcoesadic">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-containeradic">
-                <span
-                  className={`bolaadic ${inteligencia === num ? "selecionada" : ""}`}
-                  onClick={() => setInteligencia(num)}
-                ></span>
-                <span className="numeroadic">{num}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="campoadic">
-          <label>Altura</label>
-          <div className="opcoesadic">
-            {['Baixo', 'Médio', 'Alto'].map((opcao) => (
-              <div key={opcao} className="bola-containeradic">
-                <span
-                  className={`bolaadic ${altura === opcao ? 'selecionada' : ''}`}
-                  onClick={() => setAltura(opcao)}
-                ></span>
-                <span className="textoadic">{opcao}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div>
-
-        <div className="campoadic">
-          <label>Morfologia</label>
-          <div className="opcoesadic">
-            {['Ectomorfo', 'Mesomorfo', 'Endomorfo'].map((opcao) => (
-              <div key={opcao} className="bola-containeradic">
-                <span
-                  className={`bolaadic ${morfologia === opcao ? 'selecionada' : ''}`}
-                  onClick={() => setMorfologia(opcao)}
-                ></span>
-                <span className="textoadic">{opcao}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="campoadic">
-          <label>Rating Geral</label>
-          <div className="opcoesadic">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-containeradic">
-                <span
-                  className={`bolaadic ${RatingGeral === num ? "selecionada" : ""}`}
-                  onClick={() => setRatingGeral(num)}
-                ></span>
-                <span className="numeroadic">{num}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        </div>
+        <button type="submit" className="btnval">
+          Adicionar
+        </button>
       </div>
-
-      <div className="campoadic">
-        <label>Apontamentos</label>
-        <textarea
-          className="textareaRelConfir"
-          placeholder="Apontamentos"
-          value={apontamentos}
-          onChange={(e) => setApontamentos(e.target.value)}
-        ></textarea>
-      </div>
-
-      <button type="submit" className="btnval">
-        Adicionar
-      </button>
     </form>
   );
 };

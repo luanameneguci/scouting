@@ -5,6 +5,26 @@ const initModels = require("../models/init-models"); // Inicializa os modelos
 const models = initModels(sequelize); // Vincula os modelos ao Sequelize
 
 const UtilizadorController = {
+  async listarScouting(req, res) {
+    try {
+      const scoutingUtilizadores = await models.utilizador.findAll({
+        attributes: ['nome'], // Retorna somente o campo "nome"
+        include: {
+          model: models.tipoutilizador,
+          attributes: [], // Não precisamos retornar atributos do tipoutilizador
+          where: {
+            designacao: 'Scouting' // Filtra apenas os utilizadores com designação "Scouting"
+          }
+        }
+      });
+
+      return res.status(200).json(scoutingUtilizadores);
+    } catch (error) {
+      console.error("Erro ao listar utilizadores Scouting:", error.message);
+      return res.status(500).json({ error: 'Erro ao listar utilizadores Scouting', details: error.message });
+    }
+  },
+
   async listar(req, res) {
     try {
       console.log("🔹 Chamando listar()..."); // Debug
