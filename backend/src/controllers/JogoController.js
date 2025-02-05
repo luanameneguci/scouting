@@ -192,10 +192,6 @@ controllers.listar = async (req, res) => {
           model: models.escalao,
 
         },
-        {
-          model: models.utilizador,
-
-        },
       ],
     });
 
@@ -260,11 +256,23 @@ controllers.listarByPk = async (req, res) => {
 
 
 controllers.getAtletasPorEscalao = async (req, res) => {
-  const { id_escalao } = req.params;
+  const { id_escalao, id_clube1 , id_clube2 } = req.params;
+ /* const where = {[Op.or]: [
+    id_clube1 &&{ id_clube: +id_clube1 },
+    id_clube2 &&{ id_clube: +id_clube2 }
+  ] }*/
+    let where = { id_escalao: +id_escalao };
 
+    if (id_clube1 && id_clube2) {
+      where.id_clube = { [Op.or]: [+id_clube1, +id_clube2] };
+    } else if (id_clube1) {
+      where.id_clube = +id_clube1;
+    } else if (id_clube2) {
+      where.id_clube = +id_clube2;
+    }
   try {
     const atletas = await Atleta.findAll({
-      where: { id_escalao: id_escalao },
+      where,
     });
 
     if (atletas.length === 0) {
@@ -335,58 +343,52 @@ controllers.addAtletaToJogo = async (req, res) => {
 };
 
 controllers.criarJogo = async (req, res) => {
-  const { id_clube, id_escalao, data, jogadores } = req.query; 
+  const { id_clube, id_clube2, id_escalao, data, jogadorTreinador } = req.body; 
 
-  if (!id_clube || !id_escalao || !data || !jogadores) {
+  // Verificação de parâmetros obrigatórios
+  if (!id_clube || !id_clube2 || !id_escalao || !data || !jogadorTreinador || !Array.isArray(jogadorTreinador)) {
     return res.status(400).json({
       success: false,
-      message: 'Faltam parâmetros obrigatórios. Certifique-se de passar id_clube, id_escalao, data e jogadores.',
+      message: 'Faltam parâmetros obrigatórios. Certifique-se de passar id_clube, id_clube2, id_escalao, data e um array jogadorTreinador.',
     });
   }
 
   try {
-    const clube = await Clube.findByPk(id_clube);
-    if (!clube) {
-      return res.status(404).json({ success: false, message: 'Clube não encontrado.' });
-    }
-
     // Criar o novo jogo
-    const novoJogo = await Jogo.create({
-      data,
-      id_clube,
+    const novoJogo = await models.jogo.create({
       id_escalao,
+      data
     });
 
-    // Verifica se há jogadores na query string
-    const jogadoresArray = jogadores.split(','); // Converte "12,14,15" para ["12", "14", "15"]
-
-    // Verificar se os jogadores existem antes de associar
-    for (const id_atleta of jogadoresArray) {
-      const atleta = await Atleta.findByPk(id_atleta);
-      if (!atleta) {
-        return res.status(404).json({
-          success: false,
-          message: `Atleta com ID ${id_atleta} não encontrado.`,
-        });
-      }
-
-      // Associar jogador ao jogo
-      await JogoAtleta.create({
+    // Associar os clubes ao jogo na tabela jogoclube
+    await models.JogoClube.create(
+      { id_jogo: novoJogo.id_jogo, id_clube }
+    );
+    await models.JogoClube.create(
+        { id_jogo: novoJogo.id_jogo, id_clube: id_clube2 }
+      
+    );
+    // Associar os jogadores e treinadores ao jogo na tabela utilizadorjogo
+    await models.UtilizadorJogo.bulkCreate(
+      jogadorTreinador.map(({ id_atleta, id_treinador }) => ({
         id_jogo: novoJogo.id_jogo,
-        id_atleta: id_atleta,
-      });
-    }
+        id_atleta,
+        id_utilizador: id_treinador
+      }))
+    );
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
-      message: 'Jogo criado com sucesso e atletas associados!',
+      message: 'Jogo criado com sucesso, clubes e utilizadores associados!',
       data: novoJogo,
     });
+
   } catch (error) {
     console.error('Erro ao criar jogo:', error);
     return res.status(500).json({ success: false, message: 'Erro no servidor', error: error.message });
   }
 };
+
 
 
 

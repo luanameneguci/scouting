@@ -69,8 +69,8 @@ export default function JogosAdicionar() {
   }, []);
 
   useEffect(() => {
-    if (formData.escalao) {
-      fetch(`${url}/jogo/atletas/${formData.escalao}`)
+     if (formData.escalao && (formData.clube1 || formData.clube2)) { 
+      fetch(`${url}/jogo/atletas/${formData.escalao}/${formData.clube1}/${formData.clube2}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
@@ -87,7 +87,7 @@ export default function JogosAdicionar() {
     } else {
       setJogadores([]);
     }
-  }, [formData.escalao]);
+  }, [formData.escalao, formData.clube1, formData.clube2]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -282,7 +282,7 @@ export default function JogosAdicionar() {
                       >
                         <option value="">Selecione um treinador</option>
                         {treinadores.map((treinador) => (
-                          <option key={treinador.id_treinador} value={treinador.id_treinador}>
+                          <option key={treinador.id_utilizador} value={treinador.id_utilizador}>
                             {treinador.nome}
                           </option>
                         ))}
