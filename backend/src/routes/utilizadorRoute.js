@@ -4,6 +4,10 @@ const UtilizadorController = require('../controllers/UtilizadorController');
 
 // Rotas de CRUD para Utilizador
 router.get('/', UtilizadorController.listar); // Listar todos os utilizadores
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 4b1cc8b43 (commit 2)
 /* router.post('/criar', UtilizadorController.criar); // Criar um novo utilizador */
 router.put('/:id', UtilizadorController.atualizar); // Atualizar um utilizador existente
 router.delete('/:id', UtilizadorController.remover); // Remover um utilizador
