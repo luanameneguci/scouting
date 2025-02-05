@@ -4,12 +4,15 @@ import './relatorios.css'; // Importando os estilos fornecidos
 import axios from 'axios';
 import LoadingAnim from '../components/loadingAnim';
 import generatePDF from '../components/relatorioPDF';
+import { Search } from '@mui/icons-material';
 
 const Relatorios = () => {
   const url = process.env.REACT_APP_API_URL;
   const [dados, setDados] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [atualizar, setAtualizar] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   const handlePreviousPage = () => {
     if (page > 1) setPage(page - 1);
@@ -19,11 +22,25 @@ const Relatorios = () => {
     if (page < totalPages) setPage(page + 1);
   };
 
+  const handleRemover = async (id) => {
+    setAtualizar(true)
+    try {
+      await axios.delete(url + `/relatorio/apagar/${id}`).then((res) => {
+        if (res.status === 200) {
+          alert("Removido")
+        }
+        else { throw new Error("Erro na resposta") }
+      })
+    }
+    catch (e) { console.error(e) }
+    setAtualizar(false)
+  }
+
   useEffect(() => {
     const fetchdata = async () => {
       try {
 
-        await axios.get(url + `/relatorio/listar/${page}`).then((res) => {
+        await axios.get(url + `/relatorio/listar/${page}?search=${searchValue}`).then((res) => {
           if (res.status === 200) {
             setDados(res.data.relatorios)
             setTotalPages(res.data.totalPages)
@@ -34,13 +51,11 @@ const Relatorios = () => {
       }
       catch (e) { console.error(e) }
     }
-
+    setAtualizar(false);
     fetchdata();
-  }, [page])
-  const handleSearch = () => {
-    alert('Pesquisar clicado!');
-  };
+  }, [page,atualizar,searchValue])
 
+ 
   if (!dados || !totalPages) { return (<div className='reports-container'> <LoadingAnim /> </div>) }
   return (
     <div className="reports-container">
@@ -52,8 +67,10 @@ const Relatorios = () => {
               type="text"
               placeholder="Pesquisar por nome de atleta"
               className="reports-search-input"
+              value={searchValue}
+              onChange={(e)=>{setSearchValue(e.target.value)}}
             />
-            <button className="reports-search-button" onClick={handleSearch}>
+            <button className="reports-search-button">
               <span className="material-symbols-outlined">search</span>
             </button>
           </div>
@@ -99,11 +116,11 @@ const Relatorios = () => {
                   </Link>
                   <button
                     className="reports-actions-button reports-actions-transfer"
-                    onClick={()=>{generatePDF(report)}}
+                    onClick={() => { generatePDF(report) }}
                   >
                     Transferir
                   </button>
-                  <button
+                  <button onClick={()=>{handleRemover(report.id_relatorio)}}
                     className="reports-actions-button reports-actions-remove"
                   >
                     Remover
