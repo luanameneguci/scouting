@@ -9,4 +9,9 @@ const sequelize = new Sequelize(
         dialect: 'postgres'
     }
 );
+
+sequelize.authenticate()
+    .then(() => console.log('Conectado à base de dados!'))
+    .catch(err => console.error('Erro ao conectar à base de dados:', err));
+
 module.exports = sequelize;

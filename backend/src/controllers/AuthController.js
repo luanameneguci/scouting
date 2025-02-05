@@ -136,4 +136,23 @@ authController.adminValidation = (req, res) => {
     return res.status(200).json({ message: "Utilizador válido." });
 };
 
+authController.getUsers = async (req, res) => {
+    try {
+        const users = await models.utilizador.findAll({
+            attributes: ["id_utilizador", "nome", "email", "telefone", "id_tipoutilizador"],
+            include: {
+                model: models.tipoutilizador,
+                as: "tipoUtilizador",
+                attributes: ["designacao"]
+            }
+        });
+
+        return res.status(200).json(users);
+    } catch (error) {
+        console.error("Erro ao carregar utilizadores:", error.message);
+        return res.status(500).json({ message: "Erro ao carregar utilizadores." });
+    }
+};
+
+
 module.exports = authController;
