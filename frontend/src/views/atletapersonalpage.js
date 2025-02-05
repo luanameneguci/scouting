@@ -22,7 +22,7 @@ export default function Atletaspersonalpage() {
   const [error, setError] = useState(null);
   const [relatorios, setRelatorios] = useState([]);
 
-  // Example: fetching the Atleta data
+  // Buscar dados do Atleta
   useEffect(() => {
     async function fetchAtleta() {
       try {
@@ -39,6 +39,7 @@ export default function Atletaspersonalpage() {
     fetchAtleta();
   }, [id]);
 
+  // Buscar relatórios (lista) do Atleta
   useEffect(() => {
     async function fetchRelatorios() {
       try {
@@ -53,45 +54,60 @@ export default function Atletaspersonalpage() {
     fetchRelatorios();
   }, [id]);
 
-  // State for scouting confirmation
-  const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
+  // -------------------------
+  // 1) Buscar média mensal de VELOCIDADE do back-end
+  // -------------------------
+  const [velocityData, setVelocityData] = useState([]); 
+  useEffect(() => {
+    async function fetchVelocityData() {
+      try {
+        // Exemplo de rota: GET /relatorio/mensal/123?campo=velocidade
+        const response = await fetch(
+          `http://localhost:8080/relatorio/mensal/${id}?campo=velocidade`
+        );
+        if (!response.ok) throw new Error("Erro ao buscar médias mensais de Velocidade");
+        const json = await response.json();
 
-  // Star ratings example
-  const [ratings, setRatings] = useState({
-    Tecnica: 2,
-    Velocidade: 3,
-    AtitudeCompetitiva: 1,
-    Inteligencia: 0,
+        if (json.success) {
+          // json.data = [{ mes: "2025-01", mediaMensal: "3.5" }, { mes: "2025-02", mediaMensal: "4.2" }, ...]
+          setVelocityData(json.data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar medias de velocidade:", error);
+      }
+    }
+    fetchVelocityData();
+  }, [id]);
+
+  // -------------------------
+  // 2) Montar o chartData fixando os meses Jan->Dez
+  // -------------------------
+  // Array fixo para o eixo X (meses em PT)
+  const MONTHS_PT = ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", 
+                     "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+  // (Opcional) Determinar o ano que deseja exibir. Vamos pegar o ano atual:
+  const currentYear = new Date().getFullYear();
+
+  // Para cada mês (0..11), checamos se velocityData tem esse "YYYY-MM"
+  const velocityMonthlyArray = MONTHS_PT.map((_, index) => {
+    // Constrói algo como "2025-01", "2025-02", etc. ou o ano atual
+    const monthNumber = String(index + 1).padStart(2, "0");
+    const yearMonth = `${currentYear}-${monthNumber}`; 
+    // Tenta achar se existe no array do back-end
+    const found = velocityData.find((item) => item.mes === yearMonth);
+    // Se achou, converte para Number; senão, retorna null
+    return found ? Number(found.mediaMensal) : null;
   });
 
-  // Friendly names for display
-  const friendlyNames = {
-    Tecnica: "Técnica",
-    Velocidade: "Velocidade",
-    AtitudeCompetitiva: "Atitude Competitiva",
-    Inteligencia: "Inteligência",
-  };
-
-  // Toggle confirmation
-  const handleToggleConfirmado = () => {
-    setJogadorConfirmado(!jogadorConfirmado);
-  };
-
-  // Star rating update
-  const handleRatingChange = (category, rating) => {
-    setRatings((prevRatings) => ({
-      ...prevRatings,
-      [category]: rating,
-    }));
-  };
-
-  // Example data for the performance chart
+  // Agora definimos o chartData com a array "velocityMonthlyArray"
   const chartData = {
-    labels: ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    // X-axis de "Jan" a "Dez"
+    labels: MONTHS_PT,
     datasets: [
       {
-        label: "Performance",
-        data: [3, 2, 2, 3, 4, 4, 3, 4, 4, 3, 3, 2],
+        label: "Performance",  // não muda nada no layout
+        data: velocityMonthlyArray,
         fill: true,
         backgroundColor: "rgba(255, 193, 7, 0.2)",
         borderColor: "#FFC107",
@@ -101,6 +117,7 @@ export default function Atletaspersonalpage() {
     ],
   };
 
+  // Manter o chartOptions que você já tem
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -135,11 +152,40 @@ export default function Atletaspersonalpage() {
     },
   };
 
+  // State for scouting confirmation
+  const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
+
+  // Star ratings example
+  const [ratings, setRatings] = useState({
+    Tecnica: 2,
+    Velocidade: 3,
+    AtitudeCompetitiva: 1,
+    Inteligencia: 0,
+  });
+
+  // Friendly names for display
+  const friendlyNames = {
+    Tecnica: "Técnica",
+    Velocidade: "Velocidade",
+    AtitudeCompetitiva: "Atitude Competitiva",
+    Inteligencia: "Inteligência",
+  };
+
+  // Toggle confirmation
+  const handleToggleConfirmado = () => {
+    setJogadorConfirmado(!jogadorConfirmado);
+  };
+
+  // Star rating update
+  const handleRatingChange = (category, rating) => {
+    setRatings((prevRatings) => ({
+      ...prevRatings,
+      [category]: rating,
+    }));
+  };
+
   // -------------------------
-  // Example Relatórios Data
-  // In real usage, fetch this data from your API
-  // e.g., GET `http://localhost:8080/relatoriosAtleta/${id}`
-  // and store it in state
+  // Exemplo Relatórios Data (estático)
   // -------------------------
   const [relatoriosData] = useState([
     {
@@ -181,7 +227,8 @@ export default function Atletaspersonalpage() {
             {loading ? "Carregando..." : error ? "Erro ao carregar" : atleta?.nome}
           </h1>
           <p className="atletaspersonalpage-posicao">
-            Ponta de Lança (PL) <span className="atletaspersonalpage-text-secondary">Avançate</span>
+            Ponta de Lança (PL){" "}
+            <span className="atletaspersonalpage-text-secondary">Avançate</span>
           </p>
           <p className="atletaspersonalpage-idade">
             {atleta?.datanascimento || "--/--/----"}
@@ -243,8 +290,9 @@ export default function Atletaspersonalpage() {
               {[...Array(5)].map((_, index) => (
                 <span
                   key={index}
-                  className={`atletaspersonalpage-star ${index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""
-                    }`}
+                  className={`atletaspersonalpage-star ${
+                    index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""
+                  }`}
                 >
                   ★
                 </span>
@@ -266,7 +314,7 @@ export default function Atletaspersonalpage() {
               <input
                 type="checkbox"
                 checked={jogadorConfirmado}
-                onChange={handleToggleConfirmado}
+                onChange={() => setJogadorConfirmado(!jogadorConfirmado)}
               />
               <span className="atletaspersonalpage-slider"></span>
             </label>
@@ -295,8 +343,9 @@ export default function Atletaspersonalpage() {
                 {[...Array(5)].map((_, index) => (
                   <span
                     key={index}
-                    className={`atletaspersonalpage-star ${index < ratings[category] ? "filled" : ""
-                      }`}
+                    className={`atletaspersonalpage-star ${
+                      index < ratings[category] ? "filled" : ""
+                    }`}
                     onClick={() => handleRatingChange(category, index + 1)}
                   >
                     ★
@@ -310,50 +359,54 @@ export default function Atletaspersonalpage() {
 
       {/* Scouting Card */}
       <div className="atletaspersonalpage-card scouting-card">
-  <div className="atletaspersonalpage-info scouting-info">
-    <h2 className="atletaspersonalpage-section-title scouting-section-title">Encarregado</h2>
-    <h1 className="atletaspersonalpage-nome scouting-nome">
-      {loading ? "Carregando..." : error ? "Erro ao carregar" : atleta?.nomeencarregado || "Não informado"}
-    </h1>
-    <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
-      {atleta?.contactoencarregado || "Não informado"}
-    </span>
-  </div>
-  <div className="atletaspersonalpage-imagem scouting-imagem"></div>
-</div>
+        <div className="atletaspersonalpage-info scouting-info">
+          <h2 className="atletaspersonalpage-section-title scouting-section-title">
+            Encarregado
+          </h2>
+          <h1 className="atletaspersonalpage-nome scouting-nome">
+            {loading
+              ? "Carregando..."
+              : error
+              ? "Erro ao carregar"
+              : atleta?.nomeencarregado || "Não informado"}
+          </h1>
+          <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
+            {atleta?.contactoencarregado || "Não informado"}
+          </span>
+        </div>
+        <div className="atletaspersonalpage-imagem scouting-imagem"></div>
+      </div>
 
-
-{/* Tabela de Relatórios */}
-<div className="relatorios-section">
-  <table className="custom-table">
-    <thead>
-      <tr>
-        <th>Data</th>
-        <th>Criado Por</th>
-        <th>Morfologia</th> {/* Coluna alterada */}
-        <th>Observações</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      {relatorios.map((relatorio) => (
-        <tr key={relatorio.id_relatorio}>
-          <td>{new Date(relatorio.data).toLocaleDateString()}</td>
-          <td>{relatorio["utilizador.nome"] || "N/A"}</td>
-          <td>{relatorio.morfologia || "N/A"}</td> {/* Exibe a morfologia */}
-          <td>{relatorio.apontamentos}</td>
-          <td>
-            <div className="action-column">
-              <button className="action-button profile">Ver</button>
-              <button className="action-button remove">Remover</button>
-            </div>
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
+      {/* Tabela de Relatórios */}
+      <div className="relatorios-section">
+        <table className="custom-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Criado Por</th>
+              <th>Morfologia</th> {/* Coluna alterada */}
+              <th>Observações</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {relatorios.map((relatorio) => (
+              <tr key={relatorio.id_relatorio}>
+                <td>{new Date(relatorio.data).toLocaleDateString()}</td>
+                <td>{relatorio["utilizador.nome"] || "N/A"}</td>
+                <td>{relatorio.morfologia || "N/A"}</td> {/* Exibe a morfologia */}
+                <td>{relatorio.apontamentos}</td>
+                <td>
+                  <div className="action-column">
+                    <button className="action-button profile">Ver</button>
+                    <button className="action-button remove">Remover</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
