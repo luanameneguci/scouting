@@ -79,22 +79,22 @@
   /* Rounded corners for the info section */
 }
 
-.atletaspersonalpage-imagem {
+/* Estiliza a imagem padrão do atleta */
+.atletaspersonalpage-card .atletaspersonalpage-imagem {
   width: 140px;
-  /* Adjust size as needed */
   height: auto;
-  /* Maintain aspect ratio */
   background-image: url('../assets/Atleta_frame.png');
   background-size: cover;
-  /* Ensures the image covers the div */
   background-position: center;
-  /* Centers the image */
   background-repeat: no-repeat;
-  /* Prevents repeating */
   border-radius: 8px;
-  /* Removes any borders or rounding */
   margin: 0;
-  /* Aligns with the edge */
+}
+
+.atletaspersonalpage-card.scouting-card .atletaspersonalpage-imagem {
+  background-image: url('../assets/Scouting_frame.png') !important;
+  background-position: center bottom; /* Move um pouco para baixo */
+  margin-top: 10px; /* Adiciona um leve espaço interno na parte inferior */
 }
 
 .atletaspersonalpage-section-title {
