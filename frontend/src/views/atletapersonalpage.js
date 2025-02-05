@@ -316,20 +316,22 @@ export default function Atletaspersonalpage() {
         <div className="atletaspersonalpage-graph">
           {/* SELECT MINÚSCULO no topo, canto direito */}
           <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-            <select
-              className="performance-select"
-              value={campoSelecionado}
-              onChange={(e) => setCampoSelecionado(e.target.value)}
-            >
-              <option value="velocidade">Velocidade</option>
-              <option value="tecnica">Técnica</option>
-              <option value="atitudecompetitiva">Atitude Competitiva</option>
-              <option value="inteligencia">Inteligência</option>
-            </select>
+          <select
+    className="performance-select"
+    value={campoSelecionado}
+    onChange={(e) => setCampoSelecionado(e.target.value)}
+  >
+    <option value="velocidade">Velocidade</option>
+    <option value="tecnica">Técnica</option>
+    <option value="atitudecompetitiva">Atitude Competitiva</option>
+    <option value="inteligencia">Inteligência</option>
+  </select>
+  <span className="dropdown-arrow">▼</span>
           </div>
 
-
+          <div className="atletaspersonalpage-graph" style={{ height: "250px" }}>
           <Line data={chartData} options={chartOptions} />
+          </div>
         </div>
 
         {/* Star Rating Chart */}

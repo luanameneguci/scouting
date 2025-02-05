@@ -68,7 +68,10 @@
 .atletaspersonalpage-info {
   flex: 1;
   /* Take up remaining space */
-  padding: 20px;
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
   /* Adds padding inside the info section */
   background-color: var(--gray-900);
   /* Adds a background with borders */
@@ -449,8 +452,8 @@ canvas {
 }
 
 .performance-select {
-  font-family: "Lato", sans-serif; /* Use a fonte Lato */
-  font-size: 0.65rem;
+  font-family: 'Lato', sans-serif !important;
+  font-size: 0.75rem;
   color: #fff;                 /* Texto branco */
   background-color: #1c1c1c;   /* Fundo preto (ou tom de cinza escuro) */
   border: none;                /* Remove borda */
@@ -458,12 +461,17 @@ canvas {
   cursor: pointer;
   margin: 0 5px 5px 0;         /* Pequena margem */
   padding: 2px 4px;            /* Ajuste se quiser mais/menos espaço */
+  text-align: right; /* Alinha o texto dentro do select */
+  text-align-last: right; /* Garante que o último item também fique alinhado */
+  direction: rtl; /* Inverte a direção do texto dentro do select */
+  
   
   /* Remove setas padrão em Chrome/Firefox/Edge */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
+
 
 /* Remover outline forçado quando o <select> ganha foco (alguns browsers) */
 .performance-select:focus {
@@ -473,10 +481,14 @@ canvas {
 
 /* As opções do dropdown quando aberto */
 .performance-select option {
+  font-family: 'Lato', sans-serif !important;
   background-color: #1c1c1c; /* fundo preto no menu suspenso também */
   color: #fff;               /* texto branco */
   font-family: "Lato", sans-serif;
   font-size: 0.65rem;
+  background-color: #2a2a2a !important; /* Cinza escuro para um visual mais moderno */
+  border: none !important; /* Remove bordas */
+  overflow: hidden;  /* Evita o scroll */
 }
 
 /* Ajuste para IE/Edge antigas (ocultar setinha) */
@@ -484,13 +496,11 @@ canvas {
   display: none;
 }
 
-
-
-
-
-
-
-
+.performance-select:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 
 .performance-dropdown {
@@ -510,4 +520,13 @@ canvas {
 .performance-dropdown option {
   background-color: black;
   color: white;
+}
+
+.dropdown-arrow {
+  font-size: 8px; 
+  color: white;
+  padding-right: 20px; 
+  line-height: 1;
+  margin-top: 6px; 
+  display: inline-block; 
 }
