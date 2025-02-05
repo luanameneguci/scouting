@@ -8,8 +8,8 @@ const CredentialsPage = () => {
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [search, setSearch] = useState(""); // Estado para pesquisa
   const [filteredUsers, setFilteredUsers] = useState([]); // Estado para usuários filtrados
-  const [page, setPage] = useState(1); // Estado para paginação
-  const [cargoFilter, setCargoFilter] = useState(""); // Estado para filtro por tipo de utilizador
+  const [page, setPage] = useState(1); // Página atual
+  const [cargoFilter, setCargoFilter] = useState(""); // Filtro por cargo
   const USERS_PER_PAGE = 10; // Máximo de utilizadores por página
 
   // 🔹 Buscar utilizadores
@@ -64,9 +64,23 @@ const CredentialsPage = () => {
     }));
   };
 
+  // 🔹 Alternar filtro por cargo (selecionar/deselecionar)
+  const handleCargoFilter = (tipo) => {
+    setCargoFilter(cargoFilter === tipo ? "" : tipo);
+  };
+
   // 🔹 Lógica de Paginação
   const totalPages = Math.ceil(filteredUsers.length / USERS_PER_PAGE);
   const paginatedUsers = filteredUsers.slice((page - 1) * USERS_PER_PAGE, page * USERS_PER_PAGE);
+
+  // 🔹 Controle dos botões da paginação
+  const handlePreviousPage = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) setPage(page + 1);
+  };
 
   return (
     <div className="credentials-container">
@@ -98,7 +112,7 @@ const CredentialsPage = () => {
               name="filter"
               id={tipo}
               checked={cargoFilter === tipo}
-              onChange={() => setCargoFilter(cargoFilter === tipo ? "" : tipo)}
+              onChange={() => handleCargoFilter(tipo)}
             />
             <label htmlFor={tipo} className="credentials-radio-label">{tipo}</label>
           </div>
@@ -114,6 +128,7 @@ const CredentialsPage = () => {
           <table className="credentials-table">
             <thead>
               <tr>
+                <th>Ativo</th>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Password</th>
@@ -125,6 +140,9 @@ const CredentialsPage = () => {
             <tbody>
               {paginatedUsers.map(user => (
                 <tr key={user.id_utilizador}>
+                  <td>
+                    <span className={user.ativo ? "credentials-status-active" : "credentials-status-inactive"}></span>
+                  </td>
                   <td>{user.nome}</td>
                   <td>{user.email}</td>
                   <td>
@@ -154,18 +172,20 @@ const CredentialsPage = () => {
             </tbody>
           </table>
 
-          {/* Paginação */}
-          <div className="pagination">
+          {/* 🔹 Paginação estilizada como na página de Atletas */}
+          <div className="pagination atletas-page">
             <button
-              onClick={() => setPage(page - 1)}
+              onClick={handlePreviousPage}
               disabled={page === 1}
+              className="pagination-button"
             >
               Anterior
             </button>
-            <span>Página {page} de {totalPages}</span>
+            <span className="pagination-info">Página {page} de {totalPages}</span>
             <button
-              onClick={() => setPage(page + 1)}
+              onClick={handleNextPage}
               disabled={page === totalPages}
+              className="pagination-button"
             >
               Próxima
             </button>
