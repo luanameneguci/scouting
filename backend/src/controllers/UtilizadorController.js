@@ -6,19 +6,23 @@ const models = initModels(sequelize); // Vincula os modelos ao Sequelize
 sequelize.sync({ alter: true }); // Sincroniza o banco de dados
 
 const UtilizadorController = {
-  // Listar todos os utilizadores
   async listar(req, res) {
     try {
+      console.log("🔹 Chamando listar()..."); // Debug
+
       const utilizadores = await models.utilizador.findAll({
         include: {
           model: models.tipoutilizador,
-          as: 'tipoUtilizador', // Alias definido no init-models.js
-          attributes: ['designacao'], // Retorna apenas o campo necessário
-        },
+          as: 'tipoutilizador', 
+          attributes: ['designacao'],
+      },
       });
+
+      console.log("✅ Utilizadores carregados:", utilizadores.length);
       return res.status(200).json(utilizadores);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao listar utilizadores' });
+      console.error("❌ Erro ao listar utilizadores:", error.message, error.stack);
+      return res.status(500).json({ error: 'Erro ao listar utilizadores', details: error.message });
     }
   },
 
