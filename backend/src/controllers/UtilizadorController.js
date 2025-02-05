@@ -134,7 +134,7 @@ const UtilizadorController = {
             model: models.tipoutilizador,
             attributes: ['designacao'], // Retorna apenas o campo necessário
             where: {
-              designacao: 'Scouting', // Filtra apenas os utilizadores com tipo "Treinador"
+              designacao: 'Scout', // Filtra apenas os utilizadores com tipo "Treinador"
             }
           },
         });
