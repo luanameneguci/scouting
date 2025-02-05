@@ -102,11 +102,11 @@ export default function Dashboard() {
       <title>Dashboard</title>
       <div className="sidebar">
         <h2>Ações rápidas</h2>
-        <NavLink to="/relatorio/confirmar" className="button">  Criar relatório </NavLink>
-        <NavLink to="/jogos/adicionarjogo" className="button">  Adicionar jogo </NavLink>
+        <NavLink to="/relatorio/adicionar" className="button">  Criar relatório </NavLink>
+        <NavLink to="/jogos/adicionar" className="button">  Adicionar jogo </NavLink>
         <NavLink to="/home" className="button">  Adicionar atleta a analisar num jogo </NavLink>
         <NavLink to="/atletas/adicionar" className="button">  Adicionar atleta </NavLink>
-        <NavLink to="/home" className="button">  Atletas com maior rating </NavLink>
+        <NavLink to="/atletas/atletasrating" className="button">  Atletas com maior rating </NavLink>
         <NavLink to="/home" className="button">  Adicionar utilizador </NavLink>
       </div>
 

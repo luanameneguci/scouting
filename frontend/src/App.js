@@ -26,6 +26,7 @@ import Contactos from "./views/contactos";
 import Credenciais from "./views/credenciais";
 import AdicionarUtilizador from "./views/adicionarutilizador";
 import Jogos from "./views/jogos";
+import AtletasRating from "./views/atletasrating";
 import Dashboard from "./views/dashboard";
 import NeedLogin from "./views/landing/needLogin";
 import Test from "./views/test";
@@ -88,6 +89,14 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <Atletas />
+            </ProtectedRoute>
+          }
+        />
+           <Route
+          path="/atletas/atletasrating"
+          element={
+            <ProtectedRoute>
+              <AtletasRating />
             </ProtectedRoute>
           }
         />

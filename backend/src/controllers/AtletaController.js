@@ -238,19 +238,20 @@ controllers.getAgesData = async (req, res) => {
   }
 };
 
+controllers.computeAverageRating = async () => {
+  const atletas = await models.atleta.findAll({
+    attributes: ['ratinggeral'],
+  });
+
+  if (atletas.length === 0) return 0;
+
+  const totalRating = atletas.reduce((sum, atleta) => sum + atleta.ratinggeral, 0);
+  return parseFloat((totalRating / atletas.length).toFixed(2));
+};
+
 controllers.getAverageRating = async (req, res) => {
   try {
-    const atletas = await models.atleta.findAll({
-      attributes: ['ratinggeral'],
-    });
-
-    if (atletas.length === 0) {
-      return res.status(200).json({ success: true, averageRating: 0 });
-    }
-
-    const totalRating = atletas.reduce((sum, atleta) => sum + atleta.ratinggeral, 0);
-    const data = (totalRating / atletas.length).toFixed(2);;
-
+    const data = await controllers.computeAverageRating();
     res.status(200).json({ success: true, data });
   } catch (error) {
     res.status(500).json({
@@ -259,7 +260,33 @@ controllers.getAverageRating = async (req, res) => {
       error: error.message,
     });
   }
+}
+;
+
+controllers.getAboveAverage = async (req, res) => {
+  try {
+    const averageRating = await controllers.computeAverageRating();
+
+    const atletas = await models.atleta.findAll({
+          raw: true,
+    });
+
+    const aboveAverageAthletes = atletas.filter(atleta => atleta.ratinggeral > averageRating);
+
+    res.status(200).json({
+      success: true,
+      averageRating: averageRating.toFixed(2),
+      data: aboveAverageAthletes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Erro ao obter atletas com rating acima da média",
+      error: error.message,
+    });
+  }
 };
+
 
 controllers.getRatingsData = async (req, res) => {
   try {

@@ -6,6 +6,8 @@ const authMiddleware = authController.verifyToken;
 // Rota para listar todos os atletas
 router.get("/listar", atletaController.listar);
 
+router.get("/listarPorRating", atletaController.getAboveAverage);
+
 router.get("/getRatingsData", atletaController.getRatingsData);
 
 router.get("/getAgesData", atletaController.getAgesData);
