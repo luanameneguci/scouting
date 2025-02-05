@@ -115,6 +115,7 @@ controllers.listar = async (req, res) => {
   }
 };
 
+
 controllers.relatoriosData = async (req, res) => {
   try {
     // Calculate the date 7 days ago
@@ -298,6 +299,28 @@ controllers.getMonthlyAverageByAttribute = async (req, res) => {
       message: "Erro ao obter médias mensais do atributo.",
       error: error.message
     });
+  }
+};
+
+controllers.listarPorScout = async (req, res) => {
+  const {id_utilizador}=req.params
+
+  try {
+
+    const data = await models.relatorio.findAll({
+      where: {id_utilizador},
+      include: [
+        {
+          model: models.atleta,
+          
+        },
+      ],
+      order: [['data', 'DESC']],
+    })
+    return res.status(200).json({ success: true, relatorios: data});
+  }
+  catch (e) {
+    return res.status(500).json({ message: e.message })
   }
 };
 
