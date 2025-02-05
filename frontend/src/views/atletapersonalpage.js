@@ -130,19 +130,21 @@ export default function Atletaspersonalpage() {
         },
       },
       y: {
-        min: 1,
-        max: 5,
+        min: 0.8,
+        max: 5.2,
         ticks: {
+          color: "#fff", // Cor branca para o eixo Y
           stepSize: 1,
-          color: "#FFF",
-          callback: function (value) {
+          callback: function(value) {
+            if (value < 1) return 1;
+            if (value > 5) return 5;
             return value;
-          },
+          }
         },
         grid: {
-          color: "rgba(255, 255, 255, 0.1)",
-        },
-      },
+          color: "rgba(255, 255, 255, 0.1)"
+        }
+      }
     },
   };
 
