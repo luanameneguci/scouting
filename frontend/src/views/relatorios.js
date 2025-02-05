@@ -14,6 +14,24 @@ const Relatorios = () => {
   const [atualizar, setAtualizar] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${url}/relatorio/listar/${page}`);
+        if (res.status === 200) {
+          setDados(res.data.relatorios);
+          setTotalPages(res.data.totalPages);
+        } else {
+          throw new Error("Erro na resposta da API");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar relatórios:", error);
+      }
+    };
+
+    fetchData();
+  }, [page]);
+
   const handlePreviousPage = () => {
     if (page > 1) setPage(page - 1);
   };
@@ -75,7 +93,7 @@ const Relatorios = () => {
             </button>
           </div>
 
-          {/* botão adicionar */}
+          {/* Botão Adicionar */}
           <Link to="/relatorios/adicionar">
             <button className="reports-add-button">Adicionar</button>
           </Link>
@@ -98,10 +116,8 @@ const Relatorios = () => {
             {dados.map((report) => (
               <tr key={report.id_relatorio}>
                 <td>{report.id_relatorio}</td>
-                <td
-                  className={report.atletum.id_statusatleta == 1 ? "reports-status-true" : "reports-status-false"}
-                >
-                  {report.atletum.id_statusatleta == 1 ? "✓" : <span className="material-symbols-outlined">error</span>}
+                <td className={report.atletum.id_statusatleta === 1 ? "reports-status-true" : "reports-status-false"}>
+                  {report.atletum.id_statusatleta === 1 ? "✓" : <span className="material-symbols-outlined">error</span>}
                 </td>
                 <td>{report.atletum.nome}</td>
                 <td>{report.data}</td>
@@ -109,8 +125,6 @@ const Relatorios = () => {
                 <td>{report.jogo.JogoClubes[0].RelatedClube.nome}</td>
                 <td>{report.jogo.JogoClubes[1].RelatedClube.nome}</td>
                 <td className="text-left action-column">
-
-                  {/* ligação das páginas' */}
                   <Link to={`/relatorios/confirmar/${report.id_relatorio}`}>
                     <button className="action-button view">Ver</button>
                   </Link>
@@ -130,22 +144,14 @@ const Relatorios = () => {
             ))}
           </tbody>
         </table>
+
         {/* Botões de Paginação */}
         <div className="pagination">
-          <button
-            onClick={handlePreviousPage}
-            disabled={page === 1} // Desativa o botão se for a primeira página
-            className='rounded-pill'
-          >
+          <button onClick={handlePreviousPage} disabled={page === 1} className="rounded-pill">
             Anterior
           </button>
-          <span>
-            Página {page} de {totalPages}
-          </span>
-          <button
-            onClick={handleNextPage}
-            disabled={page === totalPages} // Desativa o botão se for a última página
-            className='rounded-pill'>
+          <span>Página {page} de {totalPages}</span>
+          <button onClick={handleNextPage} disabled={page === totalPages} className="rounded-pill">
             Próxima
           </button>
         </div>

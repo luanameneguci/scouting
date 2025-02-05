@@ -10,6 +10,7 @@ const RelatorioAdicionar = () => {
   const [velocidade, setVelocidade] = useState(4);
   const [atitude, setAtitude] = useState(4);
   const [inteligencia, setInteligencia] = useState(4);
+  const [RatingGeral, setRatingGeral] = useState(4);
   const [altura, setAltura] = useState('Alto');
   const [morfologia, setMorfologia] = useState('Endomorfo');
   const [apontamentos, setApontamentos] = useState('');
@@ -19,7 +20,6 @@ const RelatorioAdicionar = () => {
   return (
     <div className="containerRelConfir contentRelConfir">
       <div className="form-group">
-        {/* Atleta + Validar botão */}
         <div className="atleta-containerRelConfir">
           <label>Atleta</label>
           <a href="/relatorios/validar" className="validar-buttonRelConfir">
@@ -28,13 +28,12 @@ const RelatorioAdicionar = () => {
         </div>
         <div className="atletasadicionar-input-groupRelConfir">
           <PersonIcon className="icon" />
-          <input
-            type="text"
-            value={atleta}
-            onChange={(e) => setAtleta(e.target.value)}
-            placeholder="Digite o nome do atleta"
-            disabled={isBlocked} // Desativa o campo input
-          />
+          <select value={atleta} onChange={(e) => setAtleta(e.target.value)}> 
+            <option value="">Selecione um atleta</option>
+            <option value="Atleta 1">Atleta 1</option>
+            <option value="Atleta 2">Atleta 2</option>
+            <option value="Atleta 3">Atleta 3</option>
+          </select>
         </div>
       </div>
 
@@ -156,6 +155,21 @@ const RelatorioAdicionar = () => {
           </div>
         </div>
 
+        <div className="campoRelConfir">
+          <label>Inteligência</label>
+          <div className="opcoesRelConfir">
+            {[1, 2, 3, 4].map((num) => (
+              <div key={num} className="bola-containerRelConfir">
+                <span
+                  className={`bolaRelConfir ${RatingGeral === num ? 'selecionada' : ''}`}
+                  onClick={() => setRatingGeral(num)}
+                  style={{ pointerEvents: isBlocked ? 'none' : 'auto' }} // Desativa o clique nas bolas
+                ></span>
+                <span className="numeroRelConfir">{num}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="campoadic">
           <label>Apontamentos</label>
