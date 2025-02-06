@@ -228,70 +228,46 @@ controllers.listar = async (req, res) => {
 };
 
 
-// ---------------------------------------------------------------------
-// 9) **NOVO**: FILTRAR ATLETAS INDEPENDENTE DE EQUIPA
-// ---------------------------------------------------------------------
 controllers.filtrarAtletas = async (req, res) => {
   try {
-    // Recebe paginação. Se não vier, por padrão page=1 e size=12
     const { page = 1, size = 12 } = req.query;
     const limit = parseInt(size);
     const offset = (page - 1) * limit;
-
-    // Recebe filtros no corpo. Você pode ajustar conforme sua estrutura
-    // Exemplo: 
-    // {
-    //   filtros: {
-    //     nome: 'João',
-    //     posicao: 2,   // id_posicao
-    //     clube: 5,     // id_clube
-    //     ratingMin: 3, // ratingfinal >= 3
-    //     escalaoMin: 2, 
-    //     escalaoMax: 4, 
-    //     anoMin: 1990,
-    //     anoMax: 2000
-    //   }
-    // }
     const { filtros } = req.body;
     if (!filtros) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Filtros não fornecidos." });
+      return res.status(400).json({ success: false, message: "Filtros não fornecidos." });
     }
-
-    // Monta o literal dinâmico como no atletasParaEquipa.
-    // Observação: substituí `<=` por `=` em alguns casos, dependendo do sentido do filtro.
-    // Ajuste se precisar.
     const whereLiteral = `
       1=1
       ${filtros.nome ? `AND "atleta"."nome" ILIKE '%${filtros.nome}%'` : ""}
-      ${filtros.posicao
-        ? `AND "atleta"."id_atleta" IN (
-            SELECT pa."id_atleta"
-            FROM "posicaoatleta" pa
-            WHERE pa."id_posicao" = ${filtros.posicao}
-          )`
-        : ""}
-      ${filtros.clube
-        ? `AND "atleta"."id_clube" = ${filtros.clube}`
-        : ""}
-      ${filtros.ratingMin
-        ? `AND "atleta"."ratingfinal" >= ${filtros.ratingMin}`
-        : ""}
-      ${filtros.escalaoMin
-        ? `AND "atleta"."id_escalao" >= ${filtros.escalaoMin}`
-        : ""}
-      ${filtros.escalaoMax
-        ? `AND "atleta"."id_escalao" <= ${filtros.escalaoMax}`
-        : ""}
-      ${filtros.anoMin
-        ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") >= ${filtros.anoMin}`
-        : ""}
-      ${filtros.anoMax
-        ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") <= ${filtros.anoMax}`
-        : ""}
+      ${
+        filtros.posicao
+          ? `AND "atleta"."id_atleta" IN (
+              SELECT pa."id_atleta"
+              FROM "posicaoatleta" pa
+              WHERE pa."id_posicao" = ${filtros.posicao}
+            )`
+          : ""
+      }
+      ${filtros.clube ? `AND "atleta"."id_clube" = ${filtros.clube}` : ""}
+      ${
+        filtros.ratingMin
+          ? `AND floor("atleta"."ratingfinal") = ${filtros.ratingMin}`
+          : ""
+      }
+      ${filtros.escalaoMin ? `AND "atleta"."id_escalao" >= ${filtros.escalaoMin}` : ""}
+      ${filtros.escalaoMax ? `AND "atleta"."id_escalao" <= ${filtros.escalaoMax}` : ""}
+      ${
+        filtros.anoMin
+          ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") >= ${filtros.anoMin}`
+          : ""
+      }
+      ${
+        filtros.anoMax
+          ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") <= ${filtros.anoMax}`
+          : ""
+      }
     `;
-
     const { count, rows } = await models.atleta.findAndCountAll({
       where: Sequelize.literal(whereLiteral),
       include: [
@@ -315,10 +291,7 @@ controllers.filtrarAtletas = async (req, res) => {
       limit,
       offset,
     });
-
-    // Calcula total de páginas
     const totalPages = Math.ceil(count / limit);
-
     return res.status(200).json({
       success: true,
       atletas: rows,
@@ -328,7 +301,7 @@ controllers.filtrarAtletas = async (req, res) => {
     });
   } catch (error) {
     console.error("Erro ao filtrar atletas:", error);
-    res
+    return res
       .status(500)
       .json({ success: false, message: "Erro ao filtrar atletas.", error });
   }
@@ -715,6 +688,21 @@ controllers.listarNacionalidades = async (req, res) => {
   }
 };
 
+
+controllers.listarPosicoes = async (req, res) => {
+  try {
+    // Supondo que seu initModels tenha: var posicao = _posicao(...)
+    const posicoes = await models.posicao.findAll();
+
+    // Retorna no formato { success: true, data: [...] }
+    return res.status(200).json({ success: true, data: posicoes });
+  } catch (error) {
+    console.error("Erro ao listar posicoes:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Erro ao listar posicoes." });
+  }
+};
 
 controllers.allClubes = async (req, res) => {
   try {

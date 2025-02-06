@@ -13,6 +13,7 @@ router.get("/getRatingsData", atletaController.getRatingsData);
 router.get("/getAgesData", atletaController.getAgesData);
 router.get("/getTotalAthletes", atletaController.getTotalAthletes);
 router.get("/avgRating", atletaController.getAverageRating);
+router.get("/posicoes", atletaController.listarPosicoes);
 
 // 2) Criação e edição de atleta
 router.post("/criar", atletaController.criar);

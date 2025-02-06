@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class JogadoresFiltrosPage extends StatefulWidget {
   const JogadoresFiltrosPage({Key? key}) : super(key: key);
@@ -8,25 +10,119 @@ class JogadoresFiltrosPage extends StatefulWidget {
 }
 
 class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
-  String? selectedPosicao;
-  String? selectedClube;
+  // Listas dinâmicas vindas do backend
+  List<dynamic> listaPosicoes = [];
+  List<dynamic> listaClubes = [];
+  List<dynamic> listaEscaloes = [];
+
+  // IDs selecionados para cada dropdown dinâmico
+  String? selectedPosicaoId;
+  String? selectedClubeId;
+  String? selectedEscalaoId;
+
+  // Filtro para rating e ano
   int? selectedRating;
-  String? selectedEscalao;
   int? selectedAnoNascimento;
 
-  final List<String> posicoes = ['Ataque', 'Meio-Campo', 'Defesa', 'Goleiro'];
-  final List<String> clubes = ['Clube A', 'Clube B', 'Clube C'];
+  // Lista de ratings fixos (1 a 5)
   final List<int> ratings = [1, 2, 3, 4, 5];
-  final List<String> escaloes = ['Sub 15', 'Sub 17', 'Sub 20', 'Profissional'];
-  final List<int> anos =
-      List.generate(10, (index) => DateTime.now().year - index);
 
+  // Gerando anos de nascimento até 90 anos atrás
+  late final List<int> anos;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Gera anos desde o ano atual até 90 anos atrás
+    final int currentYear = DateTime.now().year; // se estamos em 2025, ex.
+    final int startYear = currentYear - 90; // 1935 se 90 anos
+    anos = [
+      for (int y = currentYear; y >= startYear; y--) y,
+    ];
+
+    _fetchPosicoes(); // GET /atleta/posicoes
+    _fetchClubes(); // GET /clube/listar
+    _fetchEscaloes(); // GET /escalao/listar
+  }
+
+  // ---------------------------------------------------------
+  // 1) BUSCAR POSIÇÕES (/atleta/posicoes)
+  // ---------------------------------------------------------
+  Future<void> _fetchPosicoes() async {
+    try {
+      final url = Uri.parse('http://localhost:8080/atleta/posicoes');
+      final resp = await http.get(url);
+      if (resp.statusCode == 200) {
+        final jsonBody = json.decode(resp.body);
+        if (jsonBody['success'] == true) {
+          setState(() {
+            listaPosicoes = jsonBody['data'];
+          });
+        }
+      } else {
+        print('Erro ao buscar posicoes: ${resp.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao conectar no endpoint posicoes: $e');
+    }
+  }
+
+  // ---------------------------------------------------------
+  // 2) BUSCAR CLUBES (/clube/listar)
+  // ---------------------------------------------------------
+  Future<void> _fetchClubes() async {
+    try {
+      final url = Uri.parse('http://localhost:8080/clube/listar');
+      final resp = await http.get(url);
+      if (resp.statusCode == 200) {
+        final jsonBody = json.decode(resp.body);
+        if (jsonBody['success'] == true) {
+          setState(() {
+            listaClubes = jsonBody['data'];
+          });
+        }
+      } else {
+        print('Erro ao buscar clubes: ${resp.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao conectar no endpoint clubes: $e');
+    }
+  }
+
+  // ---------------------------------------------------------
+  // 3) BUSCAR ESCALÕES (/escalao/listar)
+  // ---------------------------------------------------------
+  Future<void> _fetchEscaloes() async {
+    try {
+      final url = Uri.parse('http://localhost:8080/escalao/listar');
+      final resp = await http.get(url);
+      if (resp.statusCode == 200) {
+        final jsonBody = json.decode(resp.body);
+        if (jsonBody['success'] == true) {
+          setState(() {
+            listaEscaloes = jsonBody['data'];
+          });
+        }
+      } else {
+        print('Erro ao buscar escalões: ${resp.statusCode}');
+      }
+    } catch (e) {
+      print('Erro ao conectar no endpoint escalões: $e');
+    }
+  }
+
+  // ---------------------------------------------------------
+  // Ao clicar em "Aplicar Filtros"
+  // ---------------------------------------------------------
   void _aplicarFiltros() {
+    // Retornamos um Map para a tela anterior
+    // Observação: no JogadoresPage, converteremos ID strings -> int
     Navigator.pop(context, {
-      'posicao': selectedPosicao,
-      'clube': selectedClube,
-      'rating': selectedRating,
-      'escalao': selectedEscalao,
+      'posicaoId': selectedPosicaoId,
+      'clubeId': selectedClubeId,
+      'escalaoId': selectedEscalaoId,
+      'rating': selectedRating, // exato
       'anoNascimento': selectedAnoNascimento,
     });
   }
@@ -49,9 +145,8 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Contêiner dos filtros selecionados
+            // 1) CHIPs de filtros já aplicados
             Container(
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
@@ -61,12 +156,12 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
               child: Wrap(
                 spacing: 8.0,
                 runSpacing: 4.0,
-                children: [..._buildSelectedFilters()],
+                children: _buildSelectedFilters(),
               ),
             ),
             const SizedBox(height: 16),
 
-            // Container para os filtros
+            // 2) Dropdowns
             Container(
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(
@@ -75,38 +170,26 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
               ),
               child: Column(
                 children: [
-                  _buildFilterRow('Posição', posicoes, selectedPosicao,
-                      (String? value) {
-                    setState(() => selectedPosicao = value);
-                  }),
-                  _buildFilterRow('Clube', clubes, selectedClube,
-                      (String? value) {
-                    setState(() => selectedClube = value);
-                  }),
-                  _buildFilterRow(
-                      'Rating',
-                      ratings.map((e) => e.toString()).toList(),
-                      selectedRating?.toString(), (String? value) {
-                    setState(() => selectedRating =
-                        value != null ? int.tryParse(value) : null);
-                  }),
-                  _buildFilterRow('Escalão', escaloes, selectedEscalao,
-                      (String? value) {
-                    setState(() => selectedEscalao = value);
-                  }),
-                  _buildFilterRow(
-                      'Ano de nascimento',
-                      anos.map((e) => e.toString()).toList(),
-                      selectedAnoNascimento?.toString(), (String? value) {
-                    setState(() => selectedAnoNascimento =
-                        value != null ? int.tryParse(value) : null);
-                  }),
+                  // (A) Posição
+                  _buildRowPosicao(),
+
+                  // (B) Clube
+                  _buildRowClube(),
+
+                  // (C) Escalão
+                  _buildRowEscalao(),
+
+                  // (D) Rating (fixo de 1 a 5, para filtrar exato ratingfinal)
+                  _buildRowRating(),
+
+                  // (E) Ano de nascimento
+                  _buildRowAnoNascimento(),
                 ],
               ),
             ),
             const SizedBox(height: 20),
 
-            // Botão aplicar filtros
+            // Botão "Aplicar filtros"
             ElevatedButton(
               onPressed: _aplicarFiltros,
               style: ElevatedButton.styleFrom(
@@ -128,19 +211,21 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
     );
   }
 
-  // Constrói os chips de filtros selecionados
+  // -------------------------------------------------
+  // CHIPs com os nomes dos filtros aplicados
+  // -------------------------------------------------
   List<Widget> _buildSelectedFilters() {
-    List<Widget> selectedFilters = [];
-    if (selectedPosicao != null) selectedFilters.add(_filtroChip('Posição'));
-    if (selectedClube != null) selectedFilters.add(_filtroChip('Clube'));
-    if (selectedRating != null) selectedFilters.add(_filtroChip('Rating'));
-    if (selectedEscalao != null) selectedFilters.add(_filtroChip('Escalão'));
-    if (selectedAnoNascimento != null)
-      selectedFilters.add(_filtroChip('Ano de nascimento'));
-    return selectedFilters;
+    final chips = <Widget>[];
+    if (selectedPosicaoId != null) chips.add(_filtroChip('Posição'));
+    if (selectedClubeId != null) chips.add(_filtroChip('Clube'));
+    if (selectedEscalaoId != null) chips.add(_filtroChip('Escalão'));
+    if (selectedRating != null) chips.add(_filtroChip('Rating'));
+    if (selectedAnoNascimento != null) {
+      chips.add(_filtroChip('Ano de nascimento'));
+    }
+    return chips;
   }
 
-  // Widget para exibir os filtros aplicados como chips removíveis
   Widget _filtroChip(String label) {
     return Chip(
       label: Text(label, style: const TextStyle(color: Colors.white)),
@@ -148,19 +233,140 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
       deleteIcon: const Icon(Icons.close, color: Colors.white),
       onDeleted: () {
         setState(() {
-          if (label == 'Posição') selectedPosicao = null;
-          if (label == 'Clube') selectedClube = null;
-          if (label == 'Rating') selectedRating = null;
-          if (label == 'Escalão') selectedEscalao = null;
-          if (label == 'Ano de nascimento') selectedAnoNascimento = null;
+          switch (label) {
+            case 'Posição':
+              selectedPosicaoId = null;
+              break;
+            case 'Clube':
+              selectedClubeId = null;
+              break;
+            case 'Escalão':
+              selectedEscalaoId = null;
+              break;
+            case 'Rating':
+              selectedRating = null;
+              break;
+            case 'Ano de nascimento':
+              selectedAnoNascimento = null;
+              break;
+          }
         });
       },
     );
   }
 
-  // Constrói cada linha da lista de filtros
-  Widget _buildFilterRow(String label, List<String> items,
-      String? selectedValue, ValueChanged<String?> onChanged) {
+  // -------------------------------------------------
+  // Posição (dinâmico)
+  // -------------------------------------------------
+  Widget _buildRowPosicao() {
+    return _buildDynamicDropdownRow(
+      label: 'Posição',
+      items: listaPosicoes,
+      selectedValue: selectedPosicaoId,
+      getValue: (pos) => pos['id_posicao']?.toString() ?? '',
+      getLabel: (pos) => pos['designacao'] ?? 'Sem nome',
+      onChanged: (String? val) {
+        setState(() {
+          selectedPosicaoId = val;
+        });
+      },
+    );
+  }
+
+  // -------------------------------------------------
+  // Clube (dinâmico)
+  // -------------------------------------------------
+  Widget _buildRowClube() {
+    return _buildDynamicDropdownRow(
+      label: 'Clube',
+      items: listaClubes,
+      selectedValue: selectedClubeId,
+      getValue: (clube) => clube['id_clube']?.toString() ?? '',
+      getLabel: (clube) => clube['nome'] ?? 'Sem nome',
+      onChanged: (String? val) {
+        setState(() {
+          selectedClubeId = val;
+        });
+      },
+    );
+  }
+
+  // -------------------------------------------------
+  // Escalão (dinâmico)
+  // -------------------------------------------------
+  Widget _buildRowEscalao() {
+    return _buildDynamicDropdownRow(
+      label: 'Escalão',
+      items: listaEscaloes,
+      selectedValue: selectedEscalaoId,
+      getValue: (esc) => esc['id_escalao']?.toString() ?? '',
+      getLabel: (esc) => esc['designacao'] ?? 'Sem nome',
+      onChanged: (String? val) {
+        setState(() {
+          selectedEscalaoId = val;
+        });
+      },
+    );
+  }
+
+  // -------------------------------------------------
+  // Rating (fixo) de 1..5 para filtrar exato ratingfinal
+  // -------------------------------------------------
+  Widget _buildRowRating() {
+    final items = ratings.map((r) => r.toString()).toList();
+    return _buildFixedDropdownRow(
+      label: 'Rating',
+      items: items,
+      selectedValue: selectedRating?.toString(),
+      onChanged: (String? val) {
+        setState(() {
+          // Ex.: se o user escolher "4", stored int = 4
+          selectedRating = val != null ? int.tryParse(val) : null;
+        });
+      },
+    );
+  }
+
+  // -------------------------------------------------
+  // Ano de nascimento (fixo)
+  // -------------------------------------------------
+  Widget _buildRowAnoNascimento() {
+    final items = anos.map((year) => year.toString()).toList();
+    return _buildFixedDropdownRow(
+      label: 'Ano de nascimento',
+      items: items,
+      selectedValue: selectedAnoNascimento?.toString(),
+      onChanged: (String? val) {
+        setState(() {
+          selectedAnoNascimento = val != null ? int.tryParse(val) : null;
+        });
+      },
+    );
+  }
+
+  // -------------------------------------------------
+  // Dropdown DINÂMICO (Posição, Clube, Escalão)
+  // -------------------------------------------------
+  Widget _buildDynamicDropdownRow({
+    required String label,
+    required List<dynamic> items,
+    required String? selectedValue,
+    required String Function(dynamic) getValue,
+    required String Function(dynamic) getLabel,
+    required ValueChanged<String?> onChanged,
+  }) {
+    final dropdownItems = items.map<DropdownMenuItem<String>>((item) {
+      final value = getValue(item); // ex.: "2"
+      final labelItem = getLabel(item); // ex.: "SL Benfica"
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(
+          labelItem,
+          style: const TextStyle(color: Colors.white),
+        ),
+      );
+    }).toList();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
@@ -180,21 +386,68 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                color: Colors.grey[700], // Cor do dropdown
+                color: Colors.grey[700],
                 borderRadius: BorderRadius.circular(8),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   value: selectedValue,
-                  items: items.map((item) {
-                    return DropdownMenuItem<String>(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    );
-                  }).toList(),
+                  items: dropdownItems,
+                  onChanged: onChanged,
+                  dropdownColor: Colors.grey[900],
+                  isExpanded: true,
+                  icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // -------------------------------------------------
+  // Dropdown FIXO (Rating, Ano)
+  // -------------------------------------------------
+  Widget _buildFixedDropdownRow({
+    required String label,
+    required List<String> items,
+    required String? selectedValue,
+    required ValueChanged<String?> onChanged,
+  }) {
+    final dropdownItems = items.map<DropdownMenuItem<String>>((item) {
+      return DropdownMenuItem<String>(
+        value: item,
+        child: Text(item, style: const TextStyle(color: Colors.white)),
+      );
+    }).toList();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              label,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              decoration: BoxDecoration(
+                color: Colors.grey[700],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: selectedValue,
+                  items: dropdownItems,
                   onChanged: onChanged,
                   dropdownColor: Colors.grey[900],
                   isExpanded: true,
