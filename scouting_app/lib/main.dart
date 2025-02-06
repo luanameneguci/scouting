@@ -4,6 +4,7 @@ import 'package:scouting_app/perfil.dart';
 import 'package:scouting_app/tarefas.dart';
 import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/jogadores.dart';
+import 'package:scouting_app/jogadoresfiltros.dart';
 import 'package:scouting_app/jogador.dart';
 import 'package:scouting_app/novorelatorio.dart'; // Importando a nova página de relatório
 import 'package:google_fonts/google_fonts.dart';
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
         colorScheme: const ColorScheme.dark(
           primary: Color.fromARGB(255, 30, 30, 30),
           secondary: Color.fromARGB(255, 255, 208, 0),
-          error:  Color.fromARGB(255, 220, 0, 0),
+          error: Color.fromARGB(255, 220, 0, 0),
         ),
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme,
@@ -114,6 +115,7 @@ class HomePage extends StatelessWidget {
         '/': (context) => const LoginPage(),
         '/jogador': (context) => const JogadorPage(),
         '/novo_relatorio': (context) => RelatorioScreen(),
+        '/jogadores_filtros': (context) => JogadoresFiltrosPage(),
       },
     );
   }
