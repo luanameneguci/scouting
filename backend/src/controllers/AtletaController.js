@@ -155,8 +155,9 @@ controllers.averageRating = async (req, res) => {
   }
 };
 
-// Listar todos os atletas
-// Listar todos os atletas
+// ---------------------------------------------------------------------
+// 4) LISTAR ATLETAS (com paginação) - CORRIGIDO para incluir POSIÇÕES
+// ---------------------------------------------------------------------
 controllers.listar = async (req, res) => {
   try {
     const { page = 1, size = 10 } = req.query;
@@ -189,13 +190,25 @@ controllers.listar = async (req, res) => {
           as: "statusatletum",
           attributes: ["designacao"],
         },
-        // ADICIONE ISTO ↓↓↓
         {
           model: models.nacionalidade,
           as: "nacionalidades",
-          through: { attributes: [] }, 
-          required: false
-        }
+          through: { attributes: [] },
+          required: false,
+        },
+        // ---- INCLUIR POSIÇÕES AQUI ----
+        {
+          model: models.posicao,
+          as: "posicoes",
+          through: { attributes: [] }, // não exibe colunas extras da pivot
+          required: false, // se quiser que atletas sem posição também apareçam
+          include: [
+            {
+              model: models.funcao,
+              required: false, // se quiser trazer a "função" associada
+            },
+          ],
+        },
       ],
     });
 
@@ -211,6 +224,86 @@ controllers.listar = async (req, res) => {
     res
       .status(500)
       .json({ success: false, message: "Erro ao listar atletas.", error });
+  }
+};
+
+
+controllers.filtrarAtletas = async (req, res) => {
+  try {
+    const { page = 1, size = 12 } = req.query;
+    const limit = parseInt(size);
+    const offset = (page - 1) * limit;
+    const { filtros } = req.body;
+    if (!filtros) {
+      return res.status(400).json({ success: false, message: "Filtros não fornecidos." });
+    }
+    const whereLiteral = `
+      1=1
+      ${filtros.nome ? `AND "atleta"."nome" ILIKE '%${filtros.nome}%'` : ""}
+      ${
+        filtros.posicao
+          ? `AND "atleta"."id_atleta" IN (
+              SELECT pa."id_atleta"
+              FROM "posicaoatleta" pa
+              WHERE pa."id_posicao" = ${filtros.posicao}
+            )`
+          : ""
+      }
+      ${filtros.clube ? `AND "atleta"."id_clube" = ${filtros.clube}` : ""}
+      ${
+        filtros.ratingMin
+          ? `AND floor("atleta"."ratingfinal") = ${filtros.ratingMin}`
+          : ""
+      }
+      ${filtros.escalaoMin ? `AND "atleta"."id_escalao" >= ${filtros.escalaoMin}` : ""}
+      ${filtros.escalaoMax ? `AND "atleta"."id_escalao" <= ${filtros.escalaoMax}` : ""}
+      ${
+        filtros.anoMin
+          ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") >= ${filtros.anoMin}`
+          : ""
+      }
+      ${
+        filtros.anoMax
+          ? `AND EXTRACT(YEAR FROM "atleta"."datanascimento") <= ${filtros.anoMax}`
+          : ""
+      }
+    `;
+    const { count, rows } = await models.atleta.findAndCountAll({
+      where: Sequelize.literal(whereLiteral),
+      include: [
+        { model: models.escalao },
+        { model: models.clube },
+        {
+          model: models.nacionalidade,
+          as: "nacionalidades",
+          through: { attributes: [] },
+          required: false,
+        },
+        {
+          model: models.posicao,
+          as: "posicoes",
+          through: { attributes: [] },
+          include: { model: models.funcao, required: false },
+          required: false,
+        },
+      ],
+      order: [["ratingfinal", "DESC"]],
+      limit,
+      offset,
+    });
+    const totalPages = Math.ceil(count / limit);
+    return res.status(200).json({
+      success: true,
+      atletas: rows,
+      totalItems: count,
+      totalPages,
+      currentPage: parseInt(page),
+    });
+  } catch (error) {
+    console.error("Erro ao filtrar atletas:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Erro ao filtrar atletas.", error });
   }
 };
 
@@ -418,7 +511,7 @@ controllers.apagar = async (req, res) => {
 };
 
 // PAGINA DOS ATLETAS
-/*controllers.buscarPorId = async (req, res) => {
+controllers.buscarPorId = async (req, res) => {
   const { id_atleta } = req.params;
 
   try {
@@ -494,7 +587,7 @@ controllers.apagar = async (req, res) => {
     res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
-*/
+
 
 controllers.atletasParaEquipa = async (req, res) => {
   const idEquipa = req.params.idEquipa;
@@ -595,6 +688,21 @@ controllers.listarNacionalidades = async (req, res) => {
   }
 };
 
+
+controllers.listarPosicoes = async (req, res) => {
+  try {
+    // Supondo que seu initModels tenha: var posicao = _posicao(...)
+    const posicoes = await models.posicao.findAll();
+
+    // Retorna no formato { success: true, data: [...] }
+    return res.status(200).json({ success: true, data: posicoes });
+  } catch (error) {
+    console.error("Erro ao listar posicoes:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Erro ao listar posicoes." });
+  }
+};
 
 controllers.allClubes = async (req, res) => {
   try {
