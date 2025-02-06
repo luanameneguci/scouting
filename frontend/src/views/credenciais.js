@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./credenciais.css";
+import { useNavigate } from "react-router-dom"; // Importa a função de navegação
 
 const CredentialsPage = () => {
   const [users, setUsers] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visiblePasswords, setVisiblePasswords] = useState({});
-  const [search, setSearch] = useState(""); // Estado para pesquisa
-  const [filteredUsers, setFilteredUsers] = useState([]); // Estado para usuários filtrados
-  const [page, setPage] = useState(1); // Página atual
-  const [cargoFilter, setCargoFilter] = useState(""); // Filtro por cargo
-  const USERS_PER_PAGE = 10; // Máximo de utilizadores por página
+  const [visiblePasswords, setVisiblePasswords] = useState({}); 
+  const [search, setSearch] = useState(""); 
+  const [filteredUsers, setFilteredUsers] = useState([]); 
+  const [page, setPage] = useState(1); 
+  const [cargoFilter, setCargoFilter] = useState("Todos"); 
+  const [activeStatus, setActiveStatus] = useState({}); 
+  const USERS_PER_PAGE = 10; 
+  const navigate = useNavigate(); // Hook para navegação
+
+  // 🔹 Carregar status salvo no localStorage
+  const loadActiveStatus = () => {
+    const storedStatus = localStorage.getItem("userActiveStatus");
+    return storedStatus ? JSON.parse(storedStatus) : {};
+  };
 
   // 🔹 Buscar utilizadores
   const fetchUsers = async () => {
@@ -27,13 +36,69 @@ const CredentialsPage = () => {
 
       const data = await response.json();
       setUsers(data);
-      setFilteredUsers(data); // Inicializa lista filtrada
+      setFilteredUsers(data);
+
+      // 🔹 Carregar status do localStorage ou definir como ativo por padrão
+      const storedStatus = loadActiveStatus();
+      const initialStatus = {};
+      data.forEach(user => {
+        initialStatus[user.id_utilizador] = storedStatus[user.id_utilizador] ?? true; 
+      });
+      setActiveStatus(initialStatus);
     } catch (error) {
       console.error("Erro ao buscar utilizadores:", error.message);
       setError(error.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  // 🔹 Alternar status e salvar no localStorage
+  const toggleUserStatus = (id) => {
+    setActiveStatus(prevStatus => {
+      const newStatus = { ...prevStatus, [id]: !prevStatus[id] };
+      localStorage.setItem("userActiveStatus", JSON.stringify(newStatus)); 
+      return newStatus;
+    });
+  };
+
+  // 🔹 Alternar visibilidade da password
+  const togglePasswordVisibility = (email) => {
+    setVisiblePasswords(prev => ({
+      ...prev,
+      [email]: !prev[email]
+    }));
+  };
+
+  // 🔹 Remover utilizador com confirmação
+  const removerUtilizador = async (id) => {
+    const confirmacao = window.confirm("Tem certeza que deseja remover este utilizador?");
+    if (!confirmacao) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/utilizador/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ao remover utilizador: ${response.status}`);
+      }
+
+      alert("Utilizador removido com sucesso!"); 
+      fetchUsers();
+    } catch (error) {
+      console.error("Erro ao remover utilizador:", error.message);
+      alert("Erro ao remover utilizador.");
+    }
+  };
+
+  // 🔹 Ajustar os nomes dos cargos para comparação correta
+  const cargoMapping = {
+    "Scout": "Scout",
+    "Convidado": "Convidado",
+    "Administrador": "Admin",
+    "Todos": null 
   };
 
   // 🔹 Filtrar utilizadores com base na pesquisa e filtro por cargo
@@ -44,29 +109,24 @@ const CredentialsPage = () => {
       result = result.filter(user => user.nome.toLowerCase().includes(search.toLowerCase()));
     }
 
-    if (cargoFilter) {
-      result = result.filter(user => user.tipoutilizador?.designacao === cargoFilter);
+    if (cargoFilter !== "Todos") {
+      result = result.filter(user => {
+        const cargoUser = user.tipoutilizador?.designacao;
+        return cargoUser && cargoUser === cargoMapping[cargoFilter];
+      });
     }
 
     setFilteredUsers(result);
-    setPage(1); // Sempre volta para a primeira página após filtrar
+    setPage(1);
   }, [search, cargoFilter, users]);
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // 🔹 Alternar visibilidade da password
-  const togglePasswordVisibility = (email) => {
-    setVisiblePasswords(prev => ({
-      ...prev,
-      [email]: !prev[email]
-    }));
-  };
-
-  // 🔹 Alternar filtro por cargo (selecionar/deselecionar)
+  // 🔹 Atualizar filtro por cargo
   const handleCargoFilter = (tipo) => {
-    setCargoFilter(cargoFilter === tipo ? "" : tipo);
+    setCargoFilter(tipo);
   };
 
   // 🔹 Lógica de Paginação
@@ -86,7 +146,7 @@ const CredentialsPage = () => {
     <div className="credentials-container">
       <h1 className="credentials-title">Credenciais</h1>
 
-      {/* Barra de Pesquisa e Botão Adicionar */}
+      {/* 🔹 Barra de Pesquisa, Botão Adicionar e Filtro Alinhados */}
       <div className="credentials-toolbar">
         <div className="credentials-search-container">
           <input
@@ -100,23 +160,30 @@ const CredentialsPage = () => {
             <span className="material-symbols-outlined">search</span>
           </button>
         </div>
-        <button className="credentials-add-button">Adicionar</button>
-      </div>
 
-      {/* Filtro por Tipo de Utilizador */}
-      <div className="credentials-filter">
-        {["Scout", "Convidado", "Administrador"].map((tipo) => (
-          <div key={tipo} className="credentials-radio-container">
-            <input
-              type="radio"
-              name="filter"
-              id={tipo}
-              checked={cargoFilter === tipo}
-              onChange={() => handleCargoFilter(tipo)}
-            />
-            <label htmlFor={tipo} className="credentials-radio-label">{tipo}</label>
-          </div>
-        ))}
+         {/* 🔹 Redirecionar ao clicar no botão */}
+         <button className="credentials-add-button" onClick={() => navigate("/adicionarutilizador")}>
+          Adicionar
+        </button>
+
+
+        <div className="spacer"></div> 
+
+        {/* Filtro por Tipo de Utilizador - Agora com "Todos" */}
+        <div className="credentials-filter">
+          {["Todos", "Scout", "Convidado", "Administrador"].map((tipo) => (
+            <div key={tipo} className="credentials-radio-container">
+              <input
+                type="radio"
+                name="filter"
+                id={tipo}
+                checked={cargoFilter === tipo} 
+                onChange={() => handleCargoFilter(tipo)}
+              />
+              <label htmlFor={tipo} className="credentials-radio-label">{tipo}</label>
+            </div>
+          ))}
+        </div>
       </div>
 
       {loading && <p>Carregando...</p>}
@@ -141,7 +208,7 @@ const CredentialsPage = () => {
               {paginatedUsers.map(user => (
                 <tr key={user.id_utilizador}>
                   <td>
-                    <span className={user.ativo ? "credentials-status-active" : "credentials-status-inactive"}></span>
+                    <span className={activeStatus[user.id_utilizador] ? "credentials-status-active" : "credentials-status-inactive"}></span>
                   </td>
                   <td>{user.nome}</td>
                   <td>{user.email}</td>
@@ -163,33 +230,24 @@ const CredentialsPage = () => {
                   <td>
                     <div className="credentials-actions">
                       <button className="credentials-actions-button credentials-actions-edit">Editar</button>
-                      <button className="credentials-actions-button credentials-actions-deactivate">Desativar</button>
-                      <button className="credentials-actions-button credentials-actions-remove">Eliminar</button>
+                      <button 
+                        className="credentials-actions-button credentials-actions-deactivate"
+                        onClick={() => toggleUserStatus(user.id_utilizador)}
+                      >
+                        {activeStatus[user.id_utilizador] ? "Desativar" : "Ativar"}
+                      </button>
+                      <button 
+                        className="credentials-actions-button credentials-actions-remove"
+                        onClick={() => removerUtilizador(user.id_utilizador)} 
+                      >
+                        Remover
+                      </button>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
-          {/* 🔹 Paginação estilizada como na página de Atletas */}
-          <div className="pagination atletas-page">
-            <button
-              onClick={handlePreviousPage}
-              disabled={page === 1}
-              className="pagination-button"
-            >
-              Anterior
-            </button>
-            <span className="pagination-info">Página {page} de {totalPages}</span>
-            <button
-              onClick={handleNextPage}
-              disabled={page === totalPages}
-              className="pagination-button"
-            >
-              Próxima
-            </button>
-          </div>
         </>
       )}
     </div>
