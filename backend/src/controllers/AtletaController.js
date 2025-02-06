@@ -418,7 +418,7 @@ controllers.apagar = async (req, res) => {
 };
 
 // PAGINA DOS ATLETAS
-controllers.buscarPorId = async (req, res) => {
+/*controllers.buscarPorId = async (req, res) => {
   const { id_atleta } = req.params;
 
   try {
@@ -494,14 +494,14 @@ controllers.buscarPorId = async (req, res) => {
     res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
-
+*/
 
 controllers.atletasParaEquipa = async (req, res) => {
   const idEquipa = req.params.idEquipa;
   const filtros = req.body.filtros;
   const limit = 12;
   const offset = (req.body.page - 1) * limit;
-
+  console.log(filtros)
   try {
 
 
@@ -516,8 +516,8 @@ controllers.atletasParaEquipa = async (req, res) => {
       const { count, rows } = await models.atleta.findAndCountAll({
         where: Sequelize.literal(`
           "atleta"."id_statusatleta" = 1
-          ${filtros.nome !== '' ? `AND "atleta"."nome" ILIKE '%${filtros.nome}%'` : ''}
           AND "atleta"."id_escalao" <= ${equipa.id_escalao}
+          ${filtros.nome !== '' ? `AND "atleta"."nome" ILIKE '%${filtros.nome}%'` : ''}
           ${filtros.funcao !== 0 ? `AND "atleta"."id_atleta" IN (
             SELECT pa."id_atleta"
             FROM "posicaoatleta" pa

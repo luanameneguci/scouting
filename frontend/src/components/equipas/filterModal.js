@@ -29,7 +29,7 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
         try {
             await axios.get(`${url}/atleta/nacionalidades`, { withCredentials: true }).then((res) => {
                 if (res.status === 200) {
-                    setNacionalidades(res.data.nacionalidades);
+                    setNacionalidades(res.data.data);
 
                 } else {
                     throw new Error(res.data.message);
@@ -155,7 +155,7 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
                 <div className='header'>
                     <h1> Filtragem de atletas </h1>
                     <span>
-                        <button className='filter-button rounded' type="button" onClick={handleLimparFiltros}>
+                        <button className='text-button rounded' type="button" onClick={handleLimparFiltros}>
                             Limpar Filtros
                         </button>
                         <button className="btn-close" onClick={closeModal}>
@@ -225,7 +225,7 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
                         </div>
                     </div>
                     <div className='clube'>
-                        <label className='font-bold'>Clubeaaa:</label>
+                        <label className='font-bold'>Clube:</label>
                         <select value={filtros.clube} onChange={(e) => setFiltros({ ...filtros, clube: e.target.value })}>
                             <option value={0}>-</option>
                             {

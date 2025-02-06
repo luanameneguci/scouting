@@ -538,7 +538,7 @@ canvas {
 
 
 
-.pagination {
+.atletaspersonalpage-container .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -546,7 +546,7 @@ canvas {
   gap: 10px; /* Espaço entre os itens */
 }
 
-.pagination button {
+.atletaspersonalpage-container .pagination button {
   background-color: #666; /* Cinza escuro igual à imagem */
   color: #fff;
   border: none;
@@ -557,18 +557,18 @@ canvas {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.pagination button:hover {
+.atletaspersonalpage-container .pagination button:hover {
   background-color: #444; /* Cinza mais escuro no hover */
   transform: scale(1.05); /* Pequeno zoom no hover */
 }
 
-.pagination button:disabled {
+.atletaspersonalpage-container .pagination button:disabled {
   background-color: #444; /* Mesmo tom de cinza para disabled */
   color: #999; /* Texto mais claro */
   cursor: not-allowed;
 }
 
-.pagination span {
+.atletaspersonalpage-container .pagination span {
   font-size: 16px;
   color: #fff; /* Mantém o texto branco */
 }

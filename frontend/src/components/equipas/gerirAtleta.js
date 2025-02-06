@@ -13,7 +13,7 @@ const GerirAtletaModal = forwardRef(({ id, atleta, atletas, operation, isOpen, c
 
     useEffect(() => {
         setAtletasOrg(Array(17).fill(null));
-        if (atletas) {
+        if (atletas.length!==0) {
             atletas.forEach(atleta => {
                 setAtletasOrg(prevState => {
                     const newState = [...prevState]; // Guarda o array antigo

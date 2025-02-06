@@ -28,10 +28,10 @@ router.post("/criar", atletaController.criar);
 router.put("/editar/:id_atleta", atletaController.editar);
 
 // Página para fazer os atletas, e rota para buscar um atleta pelo ID
-router.get("/:id_atleta", atletaController.buscarPorId);
+/*router.get("/:id_atleta", atletaController.buscarPorId);*/
 
 // Página de equipas, apenas atletas com escalao inferior ou igual à da equipa (e filtros)
-router.post("/todos/:idEquipa", authMiddleware, atletaController.atletasParaEquipa);
+router.post("/except/:idEquipa", authMiddleware, atletaController.atletasParaEquipa);
 
 router.get("/clubes", authMiddleware, atletaController.allClubes);
 module.exports = router;
