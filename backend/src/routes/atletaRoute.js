@@ -3,35 +3,28 @@ const router = express.Router();
 const atletaController = require("../controllers/AtletaController");
 const authController = require("../controllers/AuthController");
 const authMiddleware = authController.verifyToken;
-// Rota para listar todos os atletas
 
+// 1) Rotas "fixas"
 router.get("/nacionalidades", atletaController.listarNacionalidades);
-
-// Rota para apagar um atleta
 router.delete("/apagar", atletaController.apagar);
-
 router.get("/listar", atletaController.listar);
-
 router.get("/listarPorRating", atletaController.getAboveAverage);
-
 router.get("/getRatingsData", atletaController.getRatingsData);
-
 router.get("/getAgesData", atletaController.getAgesData);
-
 router.get("/getTotalAthletes", atletaController.getTotalAthletes);
-
 router.get("/avgRating", atletaController.getAverageRating);
-// Rota para criar um novo atleta
-router.post("/criar", atletaController.criar);
 
-// Rota para editar um atleta
+// 2) Criação e edição de atleta
+router.post("/criar", atletaController.criar);
 router.put("/editar/:id_atleta", atletaController.editar);
 
-// Página para fazer os atletas, e rota para buscar um atleta pelo ID
-/*router.get("/:id_atleta", atletaController.buscarPorId);*/
-
-// Página de equipas, apenas atletas com escalao inferior ou igual à da equipa (e filtros)
+// 3) Filtrar atletas (POST), e rotas exclusivas
+router.post("/filtrar", atletaController.filtrarAtletas);
 router.post("/except/:idEquipa", authMiddleware, atletaController.atletasParaEquipa);
-
 router.get("/clubes", authMiddleware, atletaController.allClubes);
+
+// 4) Rotas genericas
+router.get("/:id_atleta", atletaController.buscarPorId);
+
 module.exports = router;
+
