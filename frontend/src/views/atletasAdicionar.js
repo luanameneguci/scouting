@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Redirecionamento
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./atletasAdicionar.css";
 import {
   Person as PersonIcon,
@@ -26,9 +26,27 @@ export default function AtletasAdicionar() {
     contatoTelefone: "",
   });
 
+  // NOVO: Guardar a lista de nacionalidades que vem do backend
+  const [listaNacionalidades, setListaNacionalidades] = useState([]);
+
+  // Para loading/erro do POST
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  // NOVO: useEffect para carregar nacionalidades assim que a tela montar
+  useEffect(() => {
+    fetch("http://localhost:8080/atleta/nacionalidades")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setListaNacionalidades(data.data);
+        } else {
+          console.error("Erro ao carregar nacionalidades:", data.message);
+        }
+      })
+      .catch((err) => console.error("Erro ao buscar nacionalidades:", err));
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,13 +74,17 @@ export default function AtletasAdicionar() {
           ratinggeral: formData.rating,
           nomeencarregado: formData.contatoNome,
           contactoencarregado: formData.contatoTelefone,
-          nacionalidade: formData.nacionalidade, // Adicionando nacionalidade
+
+          // IMPORTANTE:
+          // Seu backend espera "nacionalidades" como array
+          // Se for apenas 1 nacionalidade, enviamos como array de 1 elemento
+          nacionalidades: [formData.nacionalidade],
         }),
       });
 
       if (!response.ok) throw new Error("Erro ao criar atleta");
       alert("Atleta criado com sucesso!");
-      navigate("/atletas"); // Redireciona para a página atletas
+      navigate("/atletas");
     } catch (err) {
       console.error("Erro ao criar atleta:", err);
       setError("Erro ao criar atleta. Verifique os dados e tente novamente.");
@@ -154,8 +176,11 @@ export default function AtletasAdicionar() {
               required
             >
               <option value="" disabled>Nacionalidade</option>
-              <option value="Portugal">Portugal</option>
-              <option value="Brasil">Brasil</option>
+              {listaNacionalidades.map((nat) => (
+                <option key={nat.id_nacionalidade} value={nat.id_nacionalidade}>
+                  {nat.designacao}
+                </option>
+              ))}
             </select>
           </div>
         </div>

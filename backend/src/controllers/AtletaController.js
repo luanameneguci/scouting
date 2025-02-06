@@ -1,54 +1,95 @@
 const sequelize = require("../models/database");
-const { Sequelize, Op, Model, DataTypes } = require("sequelize");
-var initModels = require("../models/init-models");
-const { Where } = require("sequelize/lib/utils");
-var models = initModels(sequelize);
+const { Sequelize, Op, Model, DataTypes, fn, col } = require("sequelize");
+const initModels = require("../models/init-models");
+const models = initModels(sequelize);
 
-// Ajustando Atleta para o modelo inicializado corretamente
-var Atleta = models.atleta;
-const clube = models.clube;
-const escalao = models.escalao;
-const statusatleta = models.statusatletum; // Corrigido o alias
+// MODELOS PRINCIPAIS
+const Atleta = models.atleta;
+const Clube = models.clube;
+const Nacionalidade = models.nacionalidade;
 
+// TABELAS PIVÔS/RELACIONADAS A ID_ATLETA
+const EquipaAtleta = models.EquipaAtleta;
+const JogoAtleta = models.JogoAtleta;
+const PosicaoAtleta = models.PosicaoAtleta;
+const NacionalidadeAtleta = models.nacionalidadeatleta;
+const UtilizadorJogo = models.UtilizadorJogo;
+const Relatorio = models.relatorio;
+
+// (Opcionalmente, se quiser importar todas as pivot/tabelas, mesmo que não use para deletar:)
+const EscalaoDivisao = models.EscalaoDivisao;
+const JogoClube = models.JogoClube;
+
+// CONTROLLERS
 const controllers = {};
 
-// Criar um novo atleta
+// Criar um novo atleta e associar nacionalidades corretamente
 controllers.criar = async (req, res) => {
-  const {
-    id_clube,
-    id_escalao,
-    id_statusatleta,
-    nome,
-    datanascimento,
-    link,
-    ratingfinal,
-    ratinggeral,
-    nomeencarregado,
-    contactoencarregado,
-  } = req.body;
+  try {
+    const {
+      id_clube,
+      id_escalao,
+      id_statusatleta,
+      nome,
+      datanascimento,
+      link,
+      ratingfinal,
+      ratinggeral,
+      nomeencarregado,
+      contactoencarregado,
+      nacionalidades, // Array de IDs de nacionalidade
+    } = req.body;
 
-  const data = await Atleta.create({
-    id_clube: id_clube,
-    id_escalao: id_escalao,
-    id_statusatleta: id_statusatleta,
-    nome: nome,
-    datanascimento: datanascimento,
-    link: link,
-    ratingfinal: ratingfinal,
-    ratinggeral: ratinggeral,
-    nomeencarregado: nomeencarregado,
-    contactoencarregado: contactoencarregado,
-  })
-    .then((data) => data)
-    .catch((error) => {
-      console.log("Erro: " + error);
-      return error;
+    // Criar o atleta primeiro
+    const novoAtleta = await Atleta.create({
+      id_clube,
+      id_escalao,
+      id_statusatleta,
+      nome,
+      datanascimento,
+      link,
+      ratingfinal,
+      ratinggeral,
+      nomeencarregado,
+      contactoencarregado,
     });
-  res.status(200).json({
-    success: true,
-    data: data,
-  });
+
+    // Se houver nacionalidades, associar ao atleta na tabela nacionalidadeatleta
+    if (nacionalidades && nacionalidades.length > 0) {
+      const nacionalidadesEncontradas = await Nacionalidade.findAll({
+        where: { id_nacionalidade: nacionalidades }, // Busca pelas IDs enviadas
+      });
+
+      if (nacionalidadesEncontradas.length > 0) {
+        await novoAtleta.addNacionalidades(nacionalidadesEncontradas); // Associação Many-to-Many
+      }
+    }
+
+    // Buscar o atleta com as nacionalidades associadas
+    const atletaCriado = await Atleta.findByPk(novoAtleta.id_atleta, {
+      include: {
+        model: Nacionalidade,
+        as: "nacionalidades", // Deve ser igual ao alias definido no `initModels.js`
+        attributes: ["id_nacionalidade", "designacao"],
+        through: { attributes: [] }, // Remove colunas extras da tabela intermediária
+      },
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Atleta criado com sucesso!",
+      data: atletaCriado, // Retornamos o atleta já com nacionalidades associadas
+    });
+  } catch (error) {
+    console.error("Erro ao criar atleta:", error);
+    res.status(500).json({
+      success: false,
+      message: "Erro ao criar atleta",
+      error: error.message,
+    });
+  }
 };
+
 
 // Editar atleta corrigido
 controllers.editar = async (req, res) => {
@@ -115,11 +156,12 @@ controllers.averageRating = async (req, res) => {
 };
 
 // Listar todos os atletas
+// Listar todos os atletas
 controllers.listar = async (req, res) => {
   try {
-    const { page = 1, size = 10 } = req.query; // Obtem página e tamanho por query string
-    const limit = parseInt(size); // Número de registros por página
-    const offset = (page - 1) * limit; // Registros a pular
+    const { page = 1, size = 10 } = req.query;
+    const limit = parseInt(size);
+    const offset = (page - 1) * limit;
 
     const atletas = await models.atleta.findAndCountAll({
       limit,
@@ -147,15 +189,22 @@ controllers.listar = async (req, res) => {
           as: "statusatletum",
           attributes: ["designacao"],
         },
+        // ADICIONE ISTO ↓↓↓
+        {
+          model: models.nacionalidade,
+          as: "nacionalidades",
+          through: { attributes: [] }, 
+          required: false
+        }
       ],
     });
 
     res.status(200).json({
       success: true,
-      data: atletas.rows, // Dados da página atual
-      totalItems: atletas.count, // Total de registros na tabela
-      totalPages: Math.ceil(atletas.count / limit), // Total de páginas
-      currentPage: parseInt(page), // Página atual
+      data: atletas.rows,
+      totalItems: atletas.count,
+      totalPages: Math.ceil(atletas.count / limit),
+      currentPage: parseInt(page),
     });
   } catch (error) {
     console.error("Erro ao listar atletas: ", error.message);
@@ -323,10 +372,9 @@ controllers.getRatingsData = async (req, res) => {
   }
 };
 
-// Apagar atleta corrigido
 controllers.apagar = async (req, res) => {
-  console.log("Dados recebidos no req.body:", req.body); // Log para depuração
-  const { id_atleta } = req.body; // Captura o id_atleta
+  console.log("Dados recebidos no req.body:", req.body);
+  const { id_atleta } = req.body;
 
   if (!id_atleta) {
     return res.status(400).json({
@@ -336,6 +384,15 @@ controllers.apagar = async (req, res) => {
   }
 
   try {
+    // 1) Apagar relacionamentos nas tabelas que fazem referência direta ao atleta
+    await EquipaAtleta.destroy({ where: { id_atleta } });
+    await JogoAtleta.destroy({ where: { id_atleta } });
+    await PosicaoAtleta.destroy({ where: { id_atleta } });
+    await NacionalidadeAtleta.destroy({ where: { id_atleta } });
+    await UtilizadorJogo.destroy({ where: { id_atleta } });
+    await Relatorio.destroy({ where: { id_atleta } });
+
+    // 2) Agora podemos apagar o atleta
     const deleted = await Atleta.destroy({
       where: { id_atleta },
     });
@@ -528,16 +585,16 @@ controllers.atletasParaEquipa = async (req, res) => {
   }
 }
 
-controllers.allNacionalidades = async (req, res) => {
+controllers.listarNacionalidades = async (req, res) => {
   try {
-    const nacionalidades = await models.nacionalidade.findAll({ unique: true });
-    res.status(200).json({ success: true, nacionalidades });
-  }
-  catch (error) {
+    const nacionalidades = await Nacionalidade.findAll();
+    return res.status(200).json({ success: true, data: nacionalidades });
+  } catch (error) {
     console.error("Erro ao listar nacionalidades:", error);
-    res.status(500).json({ success: false, message: "Erro ao listar nacionalidades.", error });
+    return res.status(500).json({ success: false, message: "Erro ao listar nacionalidades." });
   }
-}
+};
+
 
 controllers.allClubes = async (req, res) => {
   try {
@@ -549,4 +606,5 @@ controllers.allClubes = async (req, res) => {
     res.status(500).json({ success: false, message: "Erro ao listar clubes.", error });
   }
 }
+
 module.exports = controllers;
