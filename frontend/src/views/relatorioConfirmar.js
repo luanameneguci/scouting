@@ -156,7 +156,7 @@ const RelatorioAdicionar = () => {
         </div>
 
         <div className="campoRelConfir">
-          <label>Inteligência</label>
+          <label>Rating Geral</label>
           <div className="opcoesRelConfir">
             {[1, 2, 3, 4].map((num) => (
               <div key={num} className="bola-containerRelConfir">
