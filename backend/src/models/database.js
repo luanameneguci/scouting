@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 const sequelize = new Sequelize(
     'scouting',
     'postgres',
-    'postgres',
+    '123', //lembrete para mudar depois lol :P
     {
         host: 'localhost',
         port: '5432',

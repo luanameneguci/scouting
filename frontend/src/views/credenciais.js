@@ -162,7 +162,7 @@ const CredentialsPage = () => {
         </div>
 
          {/* 🔹 Redirecionar ao clicar no botão */}
-         <button className="credentials-add-button" onClick={() => navigate("/adicionarutilizador")}>
+         <button className="credentials-add-button" onClick={() => navigate("/credenciais/adicionar")}>
           Adicionar
         </button>
 
