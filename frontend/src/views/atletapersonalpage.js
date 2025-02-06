@@ -10,13 +10,14 @@ import {
   Tooltip,
 } from "chart.js";
 import "./atletapersonalpage.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // ADICIONE useNavigate
 
 // Register required Chart.js components
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip);
 
 export default function Atletaspersonalpage() {
   const { id } = useParams(); // Captura o ID da URL
+  const navigate = useNavigate(); // Para redirecionar via React
   const [atleta, setAtleta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,10 +25,42 @@ export default function Atletaspersonalpage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Função para remover o atleta (mesma lógica da outra página)
+  const removerAtleta = async () => {
+    const confirmacao = window.confirm("Tem certeza que deseja remover este atleta?");
+    if (!confirmacao) return;
+
+    try {
+      const response = await fetch("http://localhost:8080/atleta/apagar", {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id_atleta: id }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Atleta removido com sucesso.");
+        navigate("/atletas"); 
+        // ou se preferir:
+        // window.location.href = "http://localhost:3000/atletas";
+      } else {
+        alert("Erro ao remover atleta: " + data.message);
+      }
+    } catch (error) {
+      console.error("Erro ao remover atleta:", error);
+      alert("Erro ao se conectar ao servidor.");
+    }
+  };
+
   useEffect(() => {
     async function fetchRelatorios() {
       try {
-        const response = await fetch(`http://localhost:8080/relatorio/${id}?page=${currentPage}&limit=5`);
+        const response = await fetch(
+          `http://localhost:8080/relatorio/${id}?page=${currentPage}&limit=5`
+        );
         if (!response.ok) throw new Error("Erro ao buscar relatórios");
         const data = await response.json();
         setRelatorios(data.data);
@@ -37,8 +70,7 @@ export default function Atletaspersonalpage() {
       }
     }
     fetchRelatorios();
-  }, [id, currentPage]); // Atualiza quando mudar o atleta ou a página
-
+  }, [id, currentPage]);
 
   // Buscar dados do Atleta
   useEffect(() => {
@@ -57,29 +89,41 @@ export default function Atletaspersonalpage() {
     fetchAtleta();
   }, [id]);
 
-
   // Buscar os últimos ratings do banco de dados
-useEffect(() => {
-  async function fetchLatestRatings() {
-    try {
-      console.log(`🔍 Buscando últimos ratings para o atleta ${id}...`);
-      const response = await fetch(`http://localhost:8080/relatorio/ultimos/${id}`);
-      
-      if (!response.ok) throw new Error("Erro ao buscar últimas avaliações");
-      
-      const json = await response.json();
-      console.log("📊 Dados recebidos do backend:", json);
+  const [ratings, setRatings] = useState({
+    Tecnica: 2,
+    Velocidade: 3,
+    AtitudeCompetitiva: 1,
+    Inteligencia: 0,
+  });
 
-      if (json.success && json.data) {
-        // Se os valores forem null ou undefined, define como 0 para evitar erro
-        setRatings({
-          Tecnica: json.data.tecnica ?? 0,
-          Velocidade: json.data.velocidade ?? 0,
-          AtitudeCompetitiva: json.data.atitudecompetitiva ?? 0,
-          Inteligencia: json.data.inteligencia ?? 0,
-        });
-      } else {
-        // Se não houver dados no backend, deixa todas as estrelas apagadas (0)
+  useEffect(() => {
+    async function fetchLatestRatings() {
+      try {
+        console.log(`🔍 Buscando últimos ratings para o atleta ${id}...`);
+        const response = await fetch(`http://localhost:8080/relatorio/ultimos/${id}`);
+        if (!response.ok) throw new Error("Erro ao buscar últimas avaliações");
+
+        const json = await response.json();
+        console.log("📊 Dados recebidos do backend:", json);
+
+        if (json.success && json.data) {
+          setRatings({
+            Tecnica: json.data.tecnica ?? 0,
+            Velocidade: json.data.velocidade ?? 0,
+            AtitudeCompetitiva: json.data.atitudecompetitiva ?? 0,
+            Inteligencia: json.data.inteligencia ?? 0,
+          });
+        } else {
+          setRatings({
+            Tecnica: 0,
+            Velocidade: 0,
+            AtitudeCompetitiva: 0,
+            Inteligencia: 0,
+          });
+        }
+      } catch (error) {
+        console.error("❌ Erro ao buscar últimas avaliações:", error);
         setRatings({
           Tecnica: 0,
           Velocidade: 0,
@@ -87,20 +131,9 @@ useEffect(() => {
           Inteligencia: 0,
         });
       }
-    } catch (error) {
-      console.error("❌ Erro ao buscar últimas avaliações:", error);
-      // Se houver erro na requisição, deixa todas as estrelas apagadas
-      setRatings({
-        Tecnica: 0,
-        Velocidade: 0,
-        AtitudeCompetitiva: 0,
-        Inteligencia: 0,
-      });
     }
-  }
-
-  fetchLatestRatings();
-}, [id]); // Reexecuta quando o ID do atleta mudar
+    fetchLatestRatings();
+  }, [id]);
 
   // Buscar relatórios (lista) do Atleta
   useEffect(() => {
@@ -117,9 +150,7 @@ useEffect(() => {
     fetchRelatorios();
   }, [id]);
 
-  // ---------------------------------------
   // Dropdown: selecionar qual atributo mostrar
-  // ---------------------------------------
   const [campoSelecionado, setCampoSelecionado] = useState("velocidade");
   const [campoMensalData, setCampoMensalData] = useState([]);
 
@@ -127,15 +158,14 @@ useEffect(() => {
   useEffect(() => {
     async function fetchCampoMensal() {
       try {
-        // Exemplo: GET /relatorio/mensal/3?campo=velocidade
         const response = await fetch(
           `http://localhost:8080/relatorio/mensal/${id}?campo=${campoSelecionado}`
         );
-        if (!response.ok) throw new Error("Erro ao buscar médias mensais de " + campoSelecionado);
+        if (!response.ok)
+          throw new Error("Erro ao buscar médias mensais de " + campoSelecionado);
         const json = await response.json();
 
         if (json.success) {
-          // json.data = [{ mes: "2025-01", mediaMensal: "3.5" }, ...]
           setCampoMensalData(json.data);
         }
       } catch (error) {
@@ -146,8 +176,20 @@ useEffect(() => {
   }, [id, campoSelecionado]);
 
   // Array fixo para o eixo X (meses em PT)
-  const MONTHS_PT = ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun",
-    "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  const MONTHS_PT = [
+    "Jan",
+    "Fev",
+    "Mar",
+    "Abril",
+    "Maio",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Set",
+    "Out",
+    "Nov",
+    "Dez",
+  ];
   const currentYear = new Date().getFullYear();
 
   // Para cada mês do ano atual, busca mediaMensal no array retornado do back-end
@@ -174,7 +216,7 @@ useEffect(() => {
     ],
   };
 
-  // Mantém suas opções originais
+  // Opções do gráfico
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -196,71 +238,37 @@ useEffect(() => {
         min: 0.8,
         max: 5.2,
         ticks: {
-          color: "#fff", // Cor branca para o eixo Y
+          color: "#fff",
           stepSize: 1,
-          callback: function(value) {
+          callback: function (value) {
             if (value < 1) return 1;
             if (value > 5) return 5;
             return value;
-          }
+          },
         },
         grid: {
-          color: "rgba(255, 255, 255, 0.1)"
-        }
-      }
+          color: "rgba(255, 255, 255, 0.1)",
+        },
+      },
     },
   };
 
-  // State for scouting confirmation
+  // State para jogador confirmado
   const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
   const handleToggleConfirmado = () => {
     setJogadorConfirmado(!jogadorConfirmado);
   };
 
-  // Star ratings example
-  const [ratings, setRatings] = useState({
-    Tecnica: 2,
-    Velocidade: 3,
-    AtitudeCompetitiva: 1,
-    Inteligencia: 0,
-  });
+  // Star ratings local
   const friendlyNames = {
     Tecnica: "Técnica",
     Velocidade: "Velocidade",
     AtitudeCompetitiva: "Atitude Competitiva",
     Inteligencia: "Inteligência",
   };
-  const handleRatingChange = (category, rating) => {
-    setRatings((prevRatings) => ({
-      ...prevRatings,
-      [category]: rating,
-    }));
-  };
 
-  // Exemplo Relatórios Data (estático)
-  const [relatoriosData] = useState([
-    {
-      id: 1,
-      data: "2025-01-10",
-      competicao: "Liga Regional",
-      resultado: "3-1",
-      observacoes: "Ótima atuação no segundo tempo.",
-    },
-    {
-      id: 2,
-      data: "2025-01-24",
-      competicao: "Taça Juvenil",
-      resultado: "2-2",
-      observacoes: "Jogador se mostrou decisivo na defesa.",
-    },
-    {
-      id: 3,
-      data: "2025-02-02",
-      competicao: "Amistoso",
-      resultado: "1-0",
-      observacoes: "Boas jogadas de ataque, mas precisa melhorar finalização.",
-    },
-  ]);
+  // Exemplo de dados estáticos de relatórios (substituídos pelo fetchRelatorios)
+  // const [relatoriosData] = useState([...]);
 
   return (
     <div className="atletaspersonalpage-container">
@@ -304,12 +312,14 @@ useEffect(() => {
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Nacionalidade</span>
             <span className="atletaspersonalpage-detail-value">
-              {atleta?.nacionalidades?.map((nacionalidade, index) => (
-                <span key={nacionalidade.id_nacionalidade}>
-                  {nacionalidade.designacao}
-                  {index < atleta.nacionalidades.length - 1 ? ", " : ""}
-                </span>
-              )) || "Nacionalidade não informada"}
+              {atleta?.nacionalidades?.length
+                ? atleta.nacionalidades.map((nacionalidade, index) => (
+                    <span key={nacionalidade.id_nacionalidade}>
+                      {nacionalidade.designacao}
+                      {index < atleta.nacionalidades.length - 1 ? ", " : ""}
+                    </span>
+                  ))
+                : "Nacionalidade não informada"}
             </span>
           </div>
         </div>
@@ -318,12 +328,15 @@ useEffect(() => {
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Equipa</span>
             <span className="atletaspersonalpage-detail-value">
-              {atleta?.equipas?.map((equipa, index) => (
-                <span key={index}>
-                  {equipa.nome}
-                  {index < atleta.equipas.length - 1 ? ", " : ""}
-                </span>
-              )) || "Sem equipa"}
+              {/* Exemplo se tiver um array de equipas */}
+              {atleta?.equipas?.length
+                ? atleta.equipas.map((equipa, index) => (
+                    <span key={index}>
+                      {equipa.nome}
+                      {index < atleta.equipas.length - 1 ? ", " : ""}
+                    </span>
+                  ))
+                : "Sem equipa"}
             </span>
           </div>
           <div className="atletaspersonalpage-detail-box">
@@ -341,8 +354,9 @@ useEffect(() => {
               {[...Array(5)].map((_, index) => (
                 <span
                   key={index}
-                  className={`atletaspersonalpage-star ${index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""
-                    }`}
+                  className={`atletaspersonalpage-star ${
+                    index < Math.floor(atleta?.ratingfinal || 0) ? "filled" : ""
+                  }`}
                 >
                   ★
                 </span>
@@ -370,7 +384,13 @@ useEffect(() => {
             </label>
           </div>
           <div className="atletaspersonalpage-detail-box">
-            <span className="atletaspersonalpage-detail-remove">Remover Jogador</span>
+            {/* Substituir o <span> por <button> para chamar removerAtleta */}
+            <button
+              className="atletaspersonalpage-detail-remove"
+              onClick={removerAtleta}
+            >
+              Remover Jogador
+            </button>
           </div>
         </div>
       </div>
@@ -379,46 +399,48 @@ useEffect(() => {
       <div className="atletaspersonalpage-graphs">
         {/* Line Graph */}
         <div className="atletaspersonalpage-graph">
-          {/* SELECT MINÚSCULO no topo, canto direito */}
+          {/* SELECT para escolher campo (velocidade, técnica, etc.) */}
           <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-          <select
-    className="performance-select"
-    value={campoSelecionado}
-    onChange={(e) => setCampoSelecionado(e.target.value)}
-  >
-    <option value="velocidade">Velocidade</option>
-    <option value="tecnica">Técnica</option>
-    <option value="atitudecompetitiva">Atitude Competitiva</option>
-    <option value="inteligencia">Inteligência</option>
-  </select>
-  <span className="dropdown-arrow">▼</span>
+            <select
+              className="performance-select"
+              value={campoSelecionado}
+              onChange={(e) => setCampoSelecionado(e.target.value)}
+            >
+              <option value="velocidade">Velocidade</option>
+              <option value="tecnica">Técnica</option>
+              <option value="atitudecompetitiva">Atitude Competitiva</option>
+              <option value="inteligencia">Inteligência</option>
+            </select>
+            <span className="dropdown-arrow">▼</span>
           </div>
 
           <div className="atletaspersonalpage-graph" style={{ height: "250px" }}>
-          <Line data={chartData} options={chartOptions} />
+            <Line data={chartData} options={chartOptions} />
           </div>
         </div>
 
         {/* Star Rating Chart */}
         <div className="atletaspersonalpage-star-chart">
-  {Object.keys(ratings).map((category) => (
-    <div className="atletaspersonalpage-star-row" key={category}>
-      <span className="atletaspersonalpage-star-title">
-        {friendlyNames[category] || category}
-      </span>
-      <div className="atletaspersonalpage-stars">
-        {[...Array(5)].map((_, index) => (
-          <span
-            key={index}
-            className={`atletaspersonalpage-star ${index < ratings[category] ? "filled" : ""}`}
-          >
-            ★
-          </span>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
+          {Object.keys(ratings).map((category) => (
+            <div className="atletaspersonalpage-star-row" key={category}>
+              <span className="atletaspersonalpage-star-title">
+                {friendlyNames[category] || category}
+              </span>
+              <div className="atletaspersonalpage-stars">
+                {[...Array(5)].map((_, index) => (
+                  <span
+                    key={index}
+                    className={`atletaspersonalpage-star ${
+                      index < ratings[category] ? "filled" : ""
+                    }`}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Scouting Card */}
@@ -431,8 +453,8 @@ useEffect(() => {
             {loading
               ? "Carregando..."
               : error
-                ? "Erro ao carregar"
-                : atleta?.nomeencarregado || "Não informado"}
+              ? "Erro ao carregar"
+              : atleta?.nomeencarregado || "Não informado"}
           </h1>
           <span className="atletaspersonalpage-text-secondary scouting-text-secondary">
             {atleta?.contactoencarregado || "Não informado"}
@@ -471,23 +493,23 @@ useEffect(() => {
           </tbody>
         </table>
         <div className="pagination">
-  <button 
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    disabled={currentPage === 1}
-  >
-    ◀ Anterior
-  </button>
-  <span>Página {currentPage} de {totalPages}</span>
-  <button 
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    disabled={currentPage === totalPages}
-  >
-    Próxima ▶
-  </button>
-</div>
-
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            ◀ Anterior
+          </button>
+          <span>
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Próxima ▶
+          </button>
+        </div>
       </div>
     </div>
   );
 }
-

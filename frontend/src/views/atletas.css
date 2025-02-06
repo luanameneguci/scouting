@@ -62,9 +62,6 @@
   font-weight: bold;
   cursor: pointer;
   height: 3rem; /* Matches the height of the search bar */
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transition: background-color 0.3s ease;
   width: 10rem;
 }
