@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./atletas.css";
 import { Link } from "react-router-dom";
+import ReactCountryFlag from "react-country-flag";
 
 export default function Atletas() {
-  const [atletas, setAtletas] = useState([]); // Estado para armazenar os atletas
-  const [loading, setLoading] = useState(true); // Estado para o carregamento
-  const [error, setError] = useState(null); // Estado para erros
-  const [search, setSearch] = useState(""); // Estado para a pesquisa
-  const [page, setPage] = useState(1); // Página atual
-  const [totalPages, setTotalPages] = useState(0); // Total de páginas
+  const [atletas, setAtletas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
-  // Função para buscar atletas da API
-  const fetchAtletas = async (page = 1) => {
+  // Função para buscar atletas
+  const fetchAtletas = async (pageNum = 1) => {
     try {
-      setLoading(true); // Inicia o estado de carregamento
+      setLoading(true);
       const response = await fetch(
-        `http://localhost:8080/atleta/listar?page=${page}&size=10`,
+        `http://localhost:8080/atleta/listar?page=${pageNum}&size=10`,
         {
           method: "GET",
           credentials: "include",
@@ -23,35 +24,33 @@ export default function Atletas() {
       );
       if (!response.ok) throw new Error("Erro ao buscar atletas");
       const data = await response.json();
-      setAtletas(data.data); // Salva os atletas no estado
-      setTotalPages(data.totalPages); // Atualiza o total de páginas
+      setAtletas(data.data);
+      setTotalPages(data.totalPages);
     } catch (err) {
       console.error("Erro ao buscar atletas:", err);
       setError(err.message);
     } finally {
-      setLoading(false); // Finaliza o carregamento
+      setLoading(false);
     }
   };
 
-  // useEffect para carregar os dados quando a página carregar
+  // Carrega os atletas quando a página muda
   useEffect(() => {
-    fetchAtletas(page); // Busca os atletas para a página atual
+    fetchAtletas(page);
   }, [page]);
 
-  // Filtra os atletas conforme a pesquisa
+  // Filtro por nome
   const filteredAtletas = atletas.filter((atleta) =>
     atleta.nome.toLowerCase().includes(search.toLowerCase())
   );
 
-
-
-  // Remover Atletas!!
+  // Remover Atleta
   const removerAtleta = async (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja remover este atleta?");
     if (!confirmacao) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/atleta/apagar`, {
+      const response = await fetch("http://localhost:8080/atleta/apagar", {
         method: "DELETE",
         credentials: "include",
         headers: {
@@ -63,7 +62,7 @@ export default function Atletas() {
       const data = await response.json();
       if (data.success) {
         alert("Atleta removido com sucesso.");
-        fetchAtletas(page); // Atualiza a lista de atletas
+        fetchAtletas(page); // Recarrega a lista
       } else {
         alert("Erro ao remover atleta: " + data.message);
       }
@@ -73,12 +72,10 @@ export default function Atletas() {
     }
   };
 
-
-  // Funções de navegação
+  // Paginação
   const handlePreviousPage = () => {
     if (page > 1) setPage(page - 1);
   };
-
   const handleNextPage = () => {
     if (page < totalPages) setPage(page + 1);
   };
@@ -86,6 +83,7 @@ export default function Atletas() {
   return (
     <div className="atletas-page">
       <h1 className="TituloEquipas">Atletas</h1>
+
       <div className="searchbar-wrapper-atletas">
         <div className="searchbar bg-color-gray-800 rounded-pill">
           <input
@@ -93,7 +91,7 @@ export default function Atletas() {
             className="form-control"
             placeholder="Procurar por nome de atleta"
             value={search}
-            onChange={(e) => setSearch(e.target.value)} // Atualiza o estado da pesquisa
+            onChange={(e) => setSearch(e.target.value)}
           />
           <span className="material-symbols-outlined icon">search</span>
         </div>
@@ -102,7 +100,6 @@ export default function Atletas() {
         </Link>
       </div>
 
-      {/* Tabela */}
       <table className="custom-table">
         <thead>
           <tr>
@@ -131,27 +128,27 @@ export default function Atletas() {
                 <td>Ativo</td>
                 <td>{atleta.nome}</td>
                 <td>{atleta.ratinggeral} ★</td>
-
-                {/* Posição ainda está fixa como "PL ATA" (se quiser buscar do backend, faça outro include) */}
                 <td>PL ATA</td>
-
-                {/* Ano: pega o ano de datanascimento (formato YYYY-MM-DD) */}
                 <td>{atleta.datanascimento.split("-")[0]}</td>
+                <td>{atleta.escalao?.designacao || "Sem Escalão"}</td>
 
-                {/* Escalão: usar .escalao?.designacao ou fallback */}
+                {/* Nacionalidade (usa react-country-flag) */}
                 <td>
-                  {atleta.escalao && atleta.escalao.designacao
-                    ? atleta.escalao.designacao
-                    : "Sem Escalão"
-                  }
-                </td>
-
-                {/* Nacionalidade: se vier ao menos 1 no array, faz join, senão mostra algo */}
-                <td>
-                  {atleta.nacionalidades && atleta.nacionalidades.length > 0
-                    ? atleta.nacionalidades.map(n => n.designacao).join(", ")
-                    : "Sem Nacionalidade"
-                  }
+                  {atleta.nacionalidades && atleta.nacionalidades.length > 0 ? (
+                    atleta.nacionalidades.map((n) => (
+                      <span key={n.id_nacionalidade} style={{ marginRight: "6px" }}>
+                        {/* Se n.abreviatura for "BR", "PT", etc. */}
+                        <ReactCountryFlag
+                          countryCode={n.abreviatura || "BR"} 
+                          svg
+                          style={{ width: "1.25em", height: "1.25em", marginRight: "4px" }}
+                        />
+                        {n.designacao}
+                      </span>
+                    ))
+                  ) : (
+                    "Sem Nacionalidade"
+                  )}
                 </td>
 
                 <td>
@@ -171,21 +168,14 @@ export default function Atletas() {
         </tbody>
       </table>
 
-      {/* Botões de Paginação */}
       <div className="pagination">
-        <button
-          onClick={handlePreviousPage}
-          disabled={page === 1} // Desativa o botão se for a primeira página
-        >
+        <button onClick={handlePreviousPage} disabled={page === 1}>
           Anterior
         </button>
         <span>
           Página {page} de {totalPages}
         </span>
-        <button
-          onClick={handleNextPage}
-          disabled={page === totalPages} // Desativa o botão se for a última página
-        >
+        <button onClick={handleNextPage} disabled={page === totalPages}>
           Próxima
         </button>
       </div>
