@@ -31,7 +31,7 @@ export default function FootballField({ atletas, selectAtleta, selectOperation }
     }
     useEffect(() => {
         setAtletasOrg(Array(17).fill(null))
-        if (atletas) {
+        if (atletas.length!==0) {
 
             atletas.forEach(atleta => {
                 setAtletasOrg(prevState => {

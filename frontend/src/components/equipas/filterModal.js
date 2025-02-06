@@ -29,7 +29,7 @@ const FilterModal = forwardRef(({ filtros, setFiltros, isOpen, closeModal, escal
         try {
             await axios.get(`${url}/atleta/nacionalidades`, { withCredentials: true }).then((res) => {
                 if (res.status === 200) {
-                    setNacionalidades(res.data.nacionalidades);
+                    setNacionalidades(res.data.data);
 
                 } else {
                     throw new Error(res.data.message);

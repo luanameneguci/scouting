@@ -31,6 +31,7 @@ export default function Equipas({ equipa }) {
     const fetchEquipaPlayers = async () => {
         try {
             await axios.get(`${url}/equipa/${idEquipa}/atletas`, { withCredentials: true }).then((res) => {
+                console.log(res.data);
                 if (res.status === 200) {
                     setAtletasEquipa(res.data.atletas);
                 } else {
@@ -99,7 +100,7 @@ export default function Equipas({ equipa }) {
     };
 
     // Estado para os atletas
-    const [atletas, setAtletas] = useState(null);
+    const [atletas, setAtletas] = useState([]);
 
     // Efeito para mudar a página e atualizar a lista de atletas
     useEffect(() => {
@@ -109,12 +110,14 @@ export default function Equipas({ equipa }) {
     // Função para buscar os atletas
     const fetchAtletas = async () => {
         try {
-            await axios.post(`${url}/atleta/todos/${idEquipa}`, { page, filtros }, { withCredentials: true }).then((res) => {
+            await axios.post(`${url}/atleta/except/${idEquipa}`, { page, filtros }, { withCredentials: true }).then((res) => {
+                console.log(res.data);
                 if (res.status === 200) {
                     setAtletas(res.data.atletas);
                     setTotalPages(Math.ceil(res.data.totalPages));
                 } else {
                     throw new Error(res.data.message);
+
                 }
             });
         } catch (error) {
@@ -166,7 +169,7 @@ export default function Equipas({ equipa }) {
 
 
     // Renderizar animação de carregamento se os dados ainda não foram carregados
-    if (!atletas || !atletasEquipa)
+    if (atletas === null || atletasEquipa === null || totalPages === null)
         return <div className='equipas-wrapper'><LoadingAnim /></div>;
 
     return (
