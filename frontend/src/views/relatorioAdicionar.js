@@ -125,10 +125,9 @@ const RelatorioAdicionar = () => {
 
       <div className="avaliacao-containeradic">
         {[{ label: "Técnica", state: tecnica, setState: setTecnica },
-          { label: "Velocidade", state: velocidade, setState: setVelocidade },
-          { label: "Atitude Competitiva", state: atitude, setState: setAtitude },
-          { label: "Inteligência", state: inteligencia, setState: setInteligencia },
-          { label: "Rating Geral", state: ratingGeral, setState: setRatingGeral }]
+        { label: "Velocidade", state: velocidade, setState: setVelocidade },
+        { label: "Atitude Competitiva", state: atitude, setState: setAtitude },
+        { label: "Inteligência", state: inteligencia, setState: setInteligencia }]
           .map(({ label, state, setState }) => (
             <div key={label} className="campoadic">
               <label>{label}</label>
@@ -136,14 +135,46 @@ const RelatorioAdicionar = () => {
                 {[1, 2, 3, 4].map((num) => (
                   <div key={num} className="bola-containeradic">
                     <span className={`bolaadic ${state === num ? "selecionada" : ""}`}
-                          onClick={() => setState(num)}>
+                      onClick={() => setState(num)}>
                     </span>
                     <span className="numeroadic">{num}</span>
                   </div>
                 ))}
               </div>
             </div>
-        ))}
+          ))}
+
+        {[{ label: "Altura", state: altura, setState: setAltura, options: ['Baixo', 'Médio', 'Alto'] },
+        { label: "Morfologia", state: morfologia, setState: setMorfologia, options: ['Ectomorfo', 'Mesomorfo', 'Endomorfo'] }]
+          .map(({ label, state, setState, options }) => (
+            <div key={label} className="campoadic">
+              <label>{label}</label>
+              <div className="opcoesadic">
+                {options.map((opcao) => (
+                  <div key={opcao} className="bola-containeradic">
+                    <span className={`bolaadic ${state === opcao ? "selecionada" : ""}`}
+                      onClick={() => setState(opcao)}>
+                    </span>
+                    <span className="textoadic">{opcao}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+        <div className="campoadic">
+          <label>Rating Geral</label>
+          <div className="opcoesadic">
+            {[1, 2, 3, 4].map((num) => (
+              <div key={num} className="bola-containeradic">
+                <span className={`bolaadic ${ratingGeral === num ? "selecionada" : ""}`}
+                  onClick={() => setRatingGeral(num)}>
+                </span>
+                <span className="numeroadic">{num}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="campoadic">
           <label>Apontamentos</label>
