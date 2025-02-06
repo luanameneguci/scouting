@@ -18,7 +18,7 @@ export default function Atletas() {
         `http://localhost:8080/atleta/listar?page=${page}&size=10`,
         {
           method: "GET",
-          credentials: "include",  
+          credentials: "include",
         }
       );
       if (!response.ok) throw new Error("Erro ao buscar atletas");
@@ -49,17 +49,17 @@ export default function Atletas() {
   const removerAtleta = async (id) => {
     const confirmacao = window.confirm("Tem certeza que deseja remover este atleta?");
     if (!confirmacao) return;
-  
+
     try {
       const response = await fetch(`http://localhost:8080/atleta/apagar`, {
         method: "DELETE",
-        credentials: "include", 
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id_atleta: id }),
       });
-  
+
       const data = await response.json();
       if (data.success) {
         alert("Atleta removido com sucesso.");
@@ -72,7 +72,7 @@ export default function Atletas() {
       alert("Erro ao se conectar ao servidor.");
     }
   };
-  
+
 
   // Funções de navegação
   const handlePreviousPage = () => {
@@ -131,21 +131,40 @@ export default function Atletas() {
                 <td>Ativo</td>
                 <td>{atleta.nome}</td>
                 <td>{atleta.ratinggeral} ★</td>
+
+                {/* Posição ainda está fixa como "PL ATA" (se quiser buscar do backend, faça outro include) */}
                 <td>PL ATA</td>
+
+                {/* Ano: pega o ano de datanascimento (formato YYYY-MM-DD) */}
                 <td>{atleta.datanascimento.split("-")[0]}</td>
-                <td>Sub-17</td>
-                <td>🇵🇹 Portugal</td>
+
+                {/* Escalão: usar .escalao?.designacao ou fallback */}
                 <td>
-  <button
-    className="action-button remove"
-    onClick={() => removerAtleta(atleta.id_atleta)} // Conecta a função ao botão
-  >
-    Remover
-  </button>
-  <Link to={`/atletas/perfil/${atleta.id_atleta}`}>
-    <button className="action-button profile">Perfil</button>
-  </Link>
-</td>
+                  {atleta.escalao && atleta.escalao.designacao
+                    ? atleta.escalao.designacao
+                    : "Sem Escalão"
+                  }
+                </td>
+
+                {/* Nacionalidade: se vier ao menos 1 no array, faz join, senão mostra algo */}
+                <td>
+                  {atleta.nacionalidades && atleta.nacionalidades.length > 0
+                    ? atleta.nacionalidades.map(n => n.designacao).join(", ")
+                    : "Sem Nacionalidade"
+                  }
+                </td>
+
+                <td>
+                  <button
+                    className="action-button remove"
+                    onClick={() => removerAtleta(atleta.id_atleta)}
+                  >
+                    Remover
+                  </button>
+                  <Link to={`/atletas/perfil/${atleta.id_atleta}`}>
+                    <button className="action-button profile">Perfil</button>
+                  </Link>
+                </td>
               </tr>
             ))
           )}
