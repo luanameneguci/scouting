@@ -6,20 +6,23 @@ const CredentialsPage = () => {
   const [users, setUsers] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [visiblePasswords, setVisiblePasswords] = useState({}); 
   const [search, setSearch] = useState(""); 
   const [filteredUsers, setFilteredUsers] = useState([]); 
   const [page, setPage] = useState(1); 
   const [cargoFilter, setCargoFilter] = useState("Todos"); 
-  const [activeStatus, setActiveStatus] = useState({}); 
   const USERS_PER_PAGE = 10; 
   const navigate = useNavigate(); // Hook para navegação
 
-  // 🔹 Carregar status salvo no localStorage
-  const loadActiveStatus = () => {
-    const storedStatus = localStorage.getItem("userActiveStatus");
-    return storedStatus ? JSON.parse(storedStatus) : {};
-  };
+  document.addEventListener("DOMContentLoaded", function () {
+    const botoesEditar = document.querySelectorAll(".editar-utilizador");
+  
+    botoesEditar.forEach((botao) => {
+      botao.addEventListener("click", function () {
+        const idUtilizador = this.getAttribute("data-id");
+        window.location.href = `http://localhost:3000/credenciais/editar?id=${idUtilizador}`;
+      });
+    });
+  });
 
   // 🔹 Buscar utilizadores
   const fetchUsers = async () => {
@@ -37,37 +40,12 @@ const CredentialsPage = () => {
       const data = await response.json();
       setUsers(data);
       setFilteredUsers(data);
-
-      // 🔹 Carregar status do localStorage ou definir como ativo por padrão
-      const storedStatus = loadActiveStatus();
-      const initialStatus = {};
-      data.forEach(user => {
-        initialStatus[user.id_utilizador] = storedStatus[user.id_utilizador] ?? true; 
-      });
-      setActiveStatus(initialStatus);
-    } catch (error) {
+      } catch (error) {
       console.error("Erro ao buscar utilizadores:", error.message);
       setError(error.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  // 🔹 Alternar status e salvar no localStorage
-  const toggleUserStatus = (id) => {
-    setActiveStatus(prevStatus => {
-      const newStatus = { ...prevStatus, [id]: !prevStatus[id] };
-      localStorage.setItem("userActiveStatus", JSON.stringify(newStatus)); 
-      return newStatus;
-    });
-  };
-
-  // 🔹 Alternar visibilidade da password
-  const togglePasswordVisibility = (email) => {
-    setVisiblePasswords(prev => ({
-      ...prev,
-      [email]: !prev[email]
-    }));
   };
 
   // 🔹 Remover utilizador com confirmação
@@ -195,10 +173,8 @@ const CredentialsPage = () => {
           <table className="credentials-table">
             <thead>
               <tr>
-                <th>Ativo</th>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Password</th>
                 <th>Telefone</th>
                 <th>Tipo de Utilizador</th>
                 <th>Ações</th>
@@ -207,43 +183,26 @@ const CredentialsPage = () => {
             <tbody>
               {paginatedUsers.map(user => (
                 <tr key={user.id_utilizador}>
-                  <td>
-                    <span className={activeStatus[user.id_utilizador] ? "credentials-status-active" : "credentials-status-inactive"}></span>
-                  </td>
                   <td>{user.nome}</td>
                   <td>{user.email}</td>
-                  <td>
-                    <span className="credentials-password-text">
-                      {visiblePasswords[user.email] ? user.password : "*".repeat(8)}
-                    </span>
-                    <button 
-                      className="credentials-view-password"
-                      onClick={() => togglePasswordVisibility(user.email)}
-                    >
-                      <span className="material-symbols-outlined">
-                        {visiblePasswords[user.email] ? "visibility_off" : "visibility"}
-                      </span>
-                    </button>
-                  </td>
                   <td>{user.telefone}</td>
                   <td>{user.tipoutilizador?.designacao || "Desconhecido"}</td>
                   <td>
-                    <div className="credentials-actions">
-                      <button className="credentials-actions-button credentials-actions-edit">Editar</button>
-                      <button 
-                        className="credentials-actions-button credentials-actions-deactivate"
-                        onClick={() => toggleUserStatus(user.id_utilizador)}
-                      >
-                        {activeStatus[user.id_utilizador] ? "Desativar" : "Ativar"}
-                      </button>
-                      <button 
-                        className="credentials-actions-button credentials-actions-remove"
-                        onClick={() => removerUtilizador(user.id_utilizador)} 
-                      >
-                        Remover
-                      </button>
-                    </div>
-                  </td>
+  <div className="credentials-actions">
+    <button 
+      className="credentials-actions-button credentials-actions-edit"
+      onClick={() => navigate(`/credenciais/editar/${user.id_utilizador}`)} // Redireciona para a página de edição
+    >
+      Editar
+    </button>
+    <button 
+      className="credentials-actions-button credentials-actions-remove"
+      onClick={() => removerUtilizador(user.id_utilizador)} 
+    >
+      Remover
+    </button>
+  </div>
+</td>
                 </tr>
               ))}
             </tbody>

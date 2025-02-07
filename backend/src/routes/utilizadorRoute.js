@@ -4,7 +4,8 @@ const UtilizadorController = require('../controllers/UtilizadorController');
 
 // Rotas de CRUD para Utilizador
 router.get('/', UtilizadorController.listar); // Listar todos os utilizadores
-/* router.post('/criar', UtilizadorController.criar); // Criar um novo utilizador */
+router.post('/', UtilizadorController.criar); // Criar um novo utilizador
+router.get('/:id', UtilizadorController.getUtilizador); // Listar todos os utilizadores
 router.put('/:id', UtilizadorController.atualizar); // Atualizar um utilizador existente
 router.delete('/:id', UtilizadorController.remover); // Remover um utilizador
 router.get('/treinadores', UtilizadorController.listarTreinadores);
