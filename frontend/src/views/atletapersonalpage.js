@@ -27,24 +27,18 @@ export default function Atletaspersonalpage() {
   const [escalao, setEscalao] = useState(null);
   const [posicao, setPosicao] = useState(null);
 
-  // ★ Novo estado: "equipa" para armazenar a designação do tipoequipa
+  // Estado para designação da equipa (tipoequipa)
   const [equipa, setEquipa] = useState(null);
 
-  // ---------------------------------------------------------
-  // 1) Buscar o "nome" (na verdade 'designacao') da equipa
-  //    via /equipa/byatleta/:id
-  // ---------------------------------------------------------
+  // ------------------------- [1] Buscar equipa byAtleta
   useEffect(() => {
     async function fetchEquipaAtleta() {
       try {
-        // Ajuste a rota conforme seu EquipaRouter:
-        // Se for "GET /equipa/byatleta/:id", use a URL abaixo:
         const response = await fetch(`http://localhost:8080/equipa/byatleta/${id}`);
         if (!response.ok) throw new Error("Equipa do atleta não encontrada");
         const data = await response.json();
-        // data.equipa.designacao é o que definimos no Controller
         if (data.equipa) {
-          setEquipa(data.equipa.designacao); // Ex: "FC Barcelona"
+          setEquipa(data.equipa.designacao); 
         }
       } catch (error) {
         console.error("Erro ao buscar equipa do atleta:", error);
@@ -53,9 +47,7 @@ export default function Atletaspersonalpage() {
     fetchEquipaAtleta();
   }, [id]);
 
-  // ---------------------------------------------------------
-  // 2) Buscar dados do Atleta (já existia)
-  // ---------------------------------------------------------
+  // ------------------------- [2] Buscar dados do Atleta
   useEffect(() => {
     async function fetchAtleta() {
       try {
@@ -77,7 +69,8 @@ export default function Atletaspersonalpage() {
     fetchAtleta();
   }, [id]);
 
-    useEffect(() => {
+  // ------------------------- [3] Buscar dados do Atleta (repetido para posicoes)
+  useEffect(() => {
     async function fetchAtleta() {
       try {
         const response = await fetch(`http://localhost:8080/atleta/${id}`);
@@ -85,12 +78,9 @@ export default function Atletaspersonalpage() {
         const data = await response.json();
         setAtleta(data);
 
-        // Armazena a primeira posição do atleta (se houver)
         if (data.posicoes?.length > 0) {
           setPosicao(data.posicoes[0].designacao);
         }
-
-        // Verifica se o escalão do atleta está disponível
         if (data.escalao) {
           setEscalao(data.escalao.designacao);
         }
@@ -103,7 +93,7 @@ export default function Atletaspersonalpage() {
     fetchAtleta();
   }, [id]);
 
-
+  // ------------------------- [4] Buscar relatórios com paginação
   useEffect(() => {
     async function fetchRelatorios() {
       try {
@@ -121,9 +111,7 @@ export default function Atletaspersonalpage() {
     fetchRelatorios();
   }, [id, currentPage]);
 
-  // ---------------------------------------------------------
-  // 3) Buscar dados do Atleta (novamente, para posicoes, etc.)
-  // ---------------------------------------------------------
+  // ------------------------- [5] Buscar dados do Atleta outra vez
   useEffect(() => {
     async function fetchAtleta() {
       try {
@@ -140,9 +128,7 @@ export default function Atletaspersonalpage() {
     fetchAtleta();
   }, [id]);
 
-  // ---------------------------------------------------------
-  // 4) Buscar últimos ratings (sem mudanças)
-  // ---------------------------------------------------------
+  // ------------------------- [6] Buscar últimos ratings
   const [ratings, setRatings] = useState({
     Tecnica: 2,
     Velocidade: 3,
@@ -187,9 +173,7 @@ export default function Atletaspersonalpage() {
     fetchLatestRatings();
   }, [id]);
 
-  // ---------------------------------------------------------
-  // 5) Buscar relatórios (lista) do Atleta
-  // ---------------------------------------------------------
+  // ------------------------- [7] Buscar relatórios (lista) do Atleta
   useEffect(() => {
     async function fetchRelatorios() {
       try {
@@ -204,9 +188,7 @@ export default function Atletaspersonalpage() {
     fetchRelatorios();
   }, [id]);
 
-  // ---------------------------------------------------------
-  // 6) Dropdown: selecionar qual atributo mostrar (velocidade, etc.)
-  // ---------------------------------------------------------
+  // ------------------------- [8] Dropdown de campo selecionado
   const [campoSelecionado, setCampoSelecionado] = useState("velocidade");
   const [campoMensalData, setCampoMensalData] = useState([]);
 
@@ -253,6 +235,7 @@ export default function Atletaspersonalpage() {
       },
     ],
   };
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -279,9 +262,7 @@ export default function Atletaspersonalpage() {
     },
   };
 
-  // ---------------------------------------------------------
-  // 7) Botão de removerAtleta
-  // ---------------------------------------------------------
+  // ------------------------- [9] Botão Remover
   const removerAtleta = async () => {
     const confirmacao = window.confirm("Tem certeza que deseja remover este atleta?");
     if (!confirmacao) return;
@@ -305,11 +286,10 @@ export default function Atletaspersonalpage() {
     }
   };
 
-  // Jogador confirmado
+  // Confirmado
   const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
   const handleToggleConfirmado = () => setJogadorConfirmado(!jogadorConfirmado);
 
-  // Star ratings local
   const friendlyNames = {
     Tecnica: "Técnica",
     Velocidade: "Velocidade",
@@ -317,11 +297,21 @@ export default function Atletaspersonalpage() {
     Inteligencia: "Inteligência",
   };
 
+  // ==================== RENDER ====================
   return (
     <div className="atletaspersonalpage-container">
       {/* Top Action Buttons */}
       <div className="atletaspersonalpage-actions">
-        <button className="atletaspersonalpage-action-button-left">Editar</button>
+        {/* 
+          Altera o onClick do botão Editar para 
+          navegar até /atletas/editar/:id
+        */}
+        <button
+          className="atletaspersonalpage-action-button-left"
+          onClick={() => navigate(`/atletas/editar/${id}`)}>
+          Editar
+        </button>
+
         <button className="atletaspersonalpage-action-button-right">Arquivar</button>
       </div>
 
@@ -368,12 +358,11 @@ export default function Atletaspersonalpage() {
           </div>
         </div>
 
-        {/* Equipa (via "equipa" state) e Escalão */}
+        {/* Equipa */}
         <div className="atletaspersonalpage-detail-container">
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Equipa</span>
             <span className="atletaspersonalpage-detail-value">
-              {/* Mostra a designacao do tipoequipa (ex "FC Barcelona") */}
               {equipa || "Sem equipa"}
             </span>
           </div>
@@ -550,5 +539,3 @@ export default function Atletaspersonalpage() {
     </div>
   );
 }
-
-  
