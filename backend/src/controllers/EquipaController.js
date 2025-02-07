@@ -380,4 +380,58 @@ controllers.trocaPosicao = async (req, res) => {
   }
 };
 
+// apagar se nao funfar
+controllers.getEquipaByAtleta = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const eqAtleta = await models.EquipaAtleta.findOne({
+      where: { id_atleta: id },
+      include: [
+        {
+          model: models.equipa,
+          as: "RelatedAtletaEquipa",
+          include: [
+            {
+              model: models.tipoequipa,
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!eqAtleta || !eqAtleta.RelatedAtletaEquipa) {
+      return res.status(404).json({ error: "Nenhuma equipe encontrada para este atleta." });
+    }
+
+    const equipe = eqAtleta.RelatedAtletaEquipa;
+
+    // 1) Faça o console.log para ver no terminal como o Sequelize chama "tipoequipa"
+    console.log("=== EQUIPE DEBUG ===");
+    console.log(JSON.stringify(equipe, null, 2));
+
+    // 2) Descubra a chave exata (normalmente "tipoequipum" ou algo similar)
+    // Por exemplo:
+    const tipo = equipe["tipoequipum"]; // Ajustar se o log mostrar outro nome
+
+    if (!tipo) {
+      return res.status(200).json({
+        equipa: { id_equipa: equipe.id_equipa, designacao: null },
+      });
+    }
+
+    return res.status(200).json({
+      equipa: {
+        id_equipa: equipe.id_equipa,
+        designacao: tipo.designacao || null,
+      },
+    });
+  } catch (error) {
+    console.error("Erro ao buscar equipa do atleta:", error);
+    return res.status(500).json({
+      error: "Erro no servidor",
+      message: error.message,
+    });
+  }
+};
+
 module.exports = controllers;

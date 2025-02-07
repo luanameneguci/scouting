@@ -10,50 +10,99 @@ import {
   Tooltip,
 } from "chart.js";
 import "./atletapersonalpage.css";
-import { useParams, useNavigate } from "react-router-dom"; // ADICIONE useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 
-// Register required Chart.js components
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Title, Tooltip);
 
 export default function Atletaspersonalpage() {
-  const { id } = useParams(); // Captura o ID da URL
-  const navigate = useNavigate(); // Para redirecionar via React
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [atleta, setAtleta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [relatorios, setRelatorios] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [escalao, setEscalao] = useState(null);
+  const [posicao, setPosicao] = useState(null);
 
-  // Função para remover o atleta (mesma lógica da outra página)
-  const removerAtleta = async () => {
-    const confirmacao = window.confirm("Tem certeza que deseja remover este atleta?");
-    if (!confirmacao) return;
+  // ★ Novo estado: "equipa" para armazenar a designação do tipoequipa
+  const [equipa, setEquipa] = useState(null);
 
-    try {
-      const response = await fetch("http://localhost:8080/atleta/apagar", {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id_atleta: id }),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        alert("Atleta removido com sucesso.");
-        navigate("/atletas"); 
-        // ou se preferir:
-        // window.location.href = "http://localhost:3000/atletas";
-      } else {
-        alert("Erro ao remover atleta: " + data.message);
+  // ---------------------------------------------------------
+  // 1) Buscar o "nome" (na verdade 'designacao') da equipa
+  //    via /equipa/byatleta/:id
+  // ---------------------------------------------------------
+  useEffect(() => {
+    async function fetchEquipaAtleta() {
+      try {
+        // Ajuste a rota conforme seu EquipaRouter:
+        // Se for "GET /equipa/byatleta/:id", use a URL abaixo:
+        const response = await fetch(`http://localhost:8080/equipa/byatleta/${id}`);
+        if (!response.ok) throw new Error("Equipa do atleta não encontrada");
+        const data = await response.json();
+        // data.equipa.designacao é o que definimos no Controller
+        if (data.equipa) {
+          setEquipa(data.equipa.designacao); // Ex: "FC Barcelona"
+        }
+      } catch (error) {
+        console.error("Erro ao buscar equipa do atleta:", error);
       }
-    } catch (error) {
-      console.error("Erro ao remover atleta:", error);
-      alert("Erro ao se conectar ao servidor.");
     }
-  };
+    fetchEquipaAtleta();
+  }, [id]);
+
+  // ---------------------------------------------------------
+  // 2) Buscar dados do Atleta (já existia)
+  // ---------------------------------------------------------
+  useEffect(() => {
+    async function fetchAtleta() {
+      try {
+        const response = await fetch(`http://localhost:8080/atleta/${id}`);
+        if (!response.ok) throw new Error("Atleta não encontrado");
+        const data = await response.json();
+        setAtleta(data);
+
+        // Se houver escalão
+        if (data.escalao) {
+          setEscalao(data.escalao.designacao);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAtleta();
+  }, [id]);
+
+    useEffect(() => {
+    async function fetchAtleta() {
+      try {
+        const response = await fetch(`http://localhost:8080/atleta/${id}`);
+        if (!response.ok) throw new Error("Atleta não encontrado");
+        const data = await response.json();
+        setAtleta(data);
+
+        // Armazena a primeira posição do atleta (se houver)
+        if (data.posicoes?.length > 0) {
+          setPosicao(data.posicoes[0].designacao);
+        }
+
+        // Verifica se o escalão do atleta está disponível
+        if (data.escalao) {
+          setEscalao(data.escalao.designacao);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAtleta();
+  }, [id]);
+
 
   useEffect(() => {
     async function fetchRelatorios() {
@@ -64,7 +113,7 @@ export default function Atletaspersonalpage() {
         if (!response.ok) throw new Error("Erro ao buscar relatórios");
         const data = await response.json();
         setRelatorios(data.data);
-        setTotalPages(data.totalPages); // Atualiza total de páginas
+        setTotalPages(data.totalPages);
       } catch (error) {
         console.error("Erro:", error);
       }
@@ -72,7 +121,9 @@ export default function Atletaspersonalpage() {
     fetchRelatorios();
   }, [id, currentPage]);
 
-  // Buscar dados do Atleta
+  // ---------------------------------------------------------
+  // 3) Buscar dados do Atleta (novamente, para posicoes, etc.)
+  // ---------------------------------------------------------
   useEffect(() => {
     async function fetchAtleta() {
       try {
@@ -89,7 +140,9 @@ export default function Atletaspersonalpage() {
     fetchAtleta();
   }, [id]);
 
-  // Buscar os últimos ratings do banco de dados
+  // ---------------------------------------------------------
+  // 4) Buscar últimos ratings (sem mudanças)
+  // ---------------------------------------------------------
   const [ratings, setRatings] = useState({
     Tecnica: 2,
     Velocidade: 3,
@@ -100,12 +153,11 @@ export default function Atletaspersonalpage() {
   useEffect(() => {
     async function fetchLatestRatings() {
       try {
-        console.log(`🔍 Buscando últimos ratings para o atleta ${id}...`);
+        console.log(`Buscando últimos ratings para o atleta ${id}...`);
         const response = await fetch(`http://localhost:8080/relatorio/ultimos/${id}`);
         if (!response.ok) throw new Error("Erro ao buscar últimas avaliações");
-
         const json = await response.json();
-        console.log("📊 Dados recebidos do backend:", json);
+        console.log("Dados recebidos do backend:", json);
 
         if (json.success && json.data) {
           setRatings({
@@ -123,7 +175,7 @@ export default function Atletaspersonalpage() {
           });
         }
       } catch (error) {
-        console.error("❌ Erro ao buscar últimas avaliações:", error);
+        console.error("Erro ao buscar últimas avaliações:", error);
         setRatings({
           Tecnica: 0,
           Velocidade: 0,
@@ -135,7 +187,9 @@ export default function Atletaspersonalpage() {
     fetchLatestRatings();
   }, [id]);
 
-  // Buscar relatórios (lista) do Atleta
+  // ---------------------------------------------------------
+  // 5) Buscar relatórios (lista) do Atleta
+  // ---------------------------------------------------------
   useEffect(() => {
     async function fetchRelatorios() {
       try {
@@ -150,11 +204,12 @@ export default function Atletaspersonalpage() {
     fetchRelatorios();
   }, [id]);
 
-  // Dropdown: selecionar qual atributo mostrar
+  // ---------------------------------------------------------
+  // 6) Dropdown: selecionar qual atributo mostrar (velocidade, etc.)
+  // ---------------------------------------------------------
   const [campoSelecionado, setCampoSelecionado] = useState("velocidade");
   const [campoMensalData, setCampoMensalData] = useState([]);
 
-  // Sempre que id ou campoSelecionado mudar, buscamos a média mensal desse campo
   useEffect(() => {
     async function fetchCampoMensal() {
       try {
@@ -164,7 +219,6 @@ export default function Atletaspersonalpage() {
         if (!response.ok)
           throw new Error("Erro ao buscar médias mensais de " + campoSelecionado);
         const json = await response.json();
-
         if (json.success) {
           setCampoMensalData(json.data);
         }
@@ -175,24 +229,9 @@ export default function Atletaspersonalpage() {
     fetchCampoMensal();
   }, [id, campoSelecionado]);
 
-  // Array fixo para o eixo X (meses em PT)
-  const MONTHS_PT = [
-    "Jan",
-    "Fev",
-    "Mar",
-    "Abril",
-    "Maio",
-    "Jun",
-    "Jul",
-    "Ago",
-    "Set",
-    "Out",
-    "Nov",
-    "Dez",
-  ];
+  // chart config
+  const MONTHS_PT = ["Jan","Fev","Mar","Abril","Maio","Jun","Jul","Ago","Set","Out","Nov","Dez"];
   const currentYear = new Date().getFullYear();
-
-  // Para cada mês do ano atual, busca mediaMensal no array retornado do back-end
   const campoMonthlyArray = MONTHS_PT.map((_, index) => {
     const monthNumber = String(index + 1).padStart(2, "0");
     const yearMonth = `${currentYear}-${monthNumber}`;
@@ -200,7 +239,6 @@ export default function Atletaspersonalpage() {
     return found ? Number(found.mediaMensal) : null;
   });
 
-  // chartData usa o array "campoMonthlyArray"
   const chartData = {
     labels: MONTHS_PT,
     datasets: [
@@ -215,24 +253,14 @@ export default function Atletaspersonalpage() {
       },
     ],
   };
-
-  // Opções do gráfico
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
+    plugins: { legend: { display: false } },
     scales: {
       x: {
-        ticks: {
-          color: "#FFF",
-        },
-        grid: {
-          color: "rgba(255, 255, 255, 0.1)",
-        },
+        ticks: { color: "#FFF" },
+        grid: { color: "rgba(255, 255, 255, 0.1)" },
       },
       y: {
         min: 0.8,
@@ -246,18 +274,40 @@ export default function Atletaspersonalpage() {
             return value;
           },
         },
-        grid: {
-          color: "rgba(255, 255, 255, 0.1)",
-        },
+        grid: { color: "rgba(255, 255, 255, 0.1)" },
       },
     },
   };
 
-  // State para jogador confirmado
-  const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
-  const handleToggleConfirmado = () => {
-    setJogadorConfirmado(!jogadorConfirmado);
+  // ---------------------------------------------------------
+  // 7) Botão de removerAtleta
+  // ---------------------------------------------------------
+  const removerAtleta = async () => {
+    const confirmacao = window.confirm("Tem certeza que deseja remover este atleta?");
+    if (!confirmacao) return;
+    try {
+      const response = await fetch("http://localhost:8080/atleta/apagar", {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id_atleta: id }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        alert("Atleta removido com sucesso.");
+        navigate("/atletas");
+      } else {
+        alert("Erro ao remover atleta: " + data.message);
+      }
+    } catch (error) {
+      console.error("Erro ao remover atleta:", error);
+      alert("Erro ao se conectar ao servidor.");
+    }
   };
+
+  // Jogador confirmado
+  const [jogadorConfirmado, setJogadorConfirmado] = useState(true);
+  const handleToggleConfirmado = () => setJogadorConfirmado(!jogadorConfirmado);
 
   // Star ratings local
   const friendlyNames = {
@@ -266,9 +316,6 @@ export default function Atletaspersonalpage() {
     AtitudeCompetitiva: "Atitude Competitiva",
     Inteligencia: "Inteligência",
   };
-
-  // Exemplo de dados estáticos de relatórios (substituídos pelo fetchRelatorios)
-  // const [relatoriosData] = useState([...]);
 
   return (
     <div className="atletaspersonalpage-container">
@@ -286,11 +333,13 @@ export default function Atletaspersonalpage() {
             {loading ? "Carregando..." : error ? "Erro ao carregar" : atleta?.nome}
           </h1>
           <p className="atletaspersonalpage-posicao">
-            Ponta de Lança (PL){" "}
-            <span className="atletaspersonalpage-text-secondary">Avançate</span>
+            Posição {posicao ? `(${posicao})` : "(Posição não definida)"}{" "}
+            <span className="atletaspersonalpage-text-secondary">
+              {escalao || "Escalão não definido"}
+            </span>
           </p>
           <p className="atletaspersonalpage-idade">
-            {atleta?.datanascimento || "--/--/----"}
+            {atleta?.datanascimento || "--/--/----"}{" "}
             <span className="atletaspersonalpage-text-secondary">
               {atleta?.idade ? `${atleta.idade} anos` : "Idade não disponível"}
             </span>
@@ -312,31 +361,20 @@ export default function Atletaspersonalpage() {
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Nacionalidade</span>
             <span className="atletaspersonalpage-detail-value">
-              {atleta?.nacionalidades?.length
-                ? atleta.nacionalidades.map((nacionalidade, index) => (
-                    <span key={nacionalidade.id_nacionalidade}>
-                      {nacionalidade.designacao}
-                      {index < atleta.nacionalidades.length - 1 ? ", " : ""}
-                    </span>
-                  ))
+              {atleta?.nacionalidades?.length > 0
+                ? atleta.nacionalidades[0].designacao
                 : "Nacionalidade não informada"}
             </span>
           </div>
         </div>
-        {/* Team and Escalation */}
+
+        {/* Equipa (via "equipa" state) e Escalão */}
         <div className="atletaspersonalpage-detail-container">
           <div className="atletaspersonalpage-detail-box">
             <span className="atletaspersonalpage-detail-title">Equipa</span>
             <span className="atletaspersonalpage-detail-value">
-              {/* Exemplo se tiver um array de equipas */}
-              {atleta?.equipas?.length
-                ? atleta.equipas.map((equipa, index) => (
-                    <span key={index}>
-                      {equipa.nome}
-                      {index < atleta.equipas.length - 1 ? ", " : ""}
-                    </span>
-                  ))
-                : "Sem equipa"}
+              {/* Mostra a designacao do tipoequipa (ex "FC Barcelona") */}
+              {equipa || "Sem equipa"}
             </span>
           </div>
           <div className="atletaspersonalpage-detail-box">
@@ -346,6 +384,7 @@ export default function Atletaspersonalpage() {
             </span>
           </div>
         </div>
+
         {/* Ratings */}
         <div className="atletaspersonalpage-detail-container">
           <div className="atletaspersonalpage-detail-box">
@@ -370,6 +409,7 @@ export default function Atletaspersonalpage() {
             </span>
           </div>
         </div>
+
         {/* Confirmation and Removal */}
         <div className="atletaspersonalpage-detail-container">
           <div className="atletaspersonalpage-detail-box">
@@ -384,7 +424,6 @@ export default function Atletaspersonalpage() {
             </label>
           </div>
           <div className="atletaspersonalpage-detail-box">
-            {/* Substituir o <span> por <button> para chamar removerAtleta */}
             <button
               className="atletaspersonalpage-detail-remove"
               onClick={removerAtleta}
@@ -399,7 +438,6 @@ export default function Atletaspersonalpage() {
       <div className="atletaspersonalpage-graphs">
         {/* Line Graph */}
         <div className="atletaspersonalpage-graph">
-          {/* SELECT para escolher campo (velocidade, técnica, etc.) */}
           <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
             <select
               className="performance-select"
@@ -413,7 +451,6 @@ export default function Atletaspersonalpage() {
             </select>
             <span className="dropdown-arrow">▼</span>
           </div>
-
           <div className="atletaspersonalpage-graph" style={{ height: "250px" }}>
             <Line data={chartData} options={chartOptions} />
           </div>
@@ -513,3 +550,5 @@ export default function Atletaspersonalpage() {
     </div>
   );
 }
+
+  

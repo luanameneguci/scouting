@@ -155,9 +155,8 @@ controllers.averageRating = async (req, res) => {
   }
 };
 
-// ---------------------------------------------------------------------
-// 4) LISTAR ATLETAS (com paginação) - CORRIGIDO para incluir POSIÇÕES
-// ---------------------------------------------------------------------
+
+// LALALALALA
 controllers.listar = async (req, res) => {
   try {
     const { page = 1, size = 10 } = req.query;
@@ -555,6 +554,13 @@ controllers.buscarPorId = async (req, res) => {
           through: { attributes: [] }, 
           required: false
         },
+        {
+          model: models.posicao, // ✅ ADICIONADO POSIÇÃO
+          as: "posicoes",
+          attributes: ["designacao"], // Apenas a designação da posição
+          through: { attributes: [] }, // Remove colunas extras da pivot
+          required: false
+        },
       ],
     });
 
@@ -587,6 +593,7 @@ controllers.buscarPorId = async (req, res) => {
     res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
+
 
 
 controllers.atletasParaEquipa = async (req, res) => {

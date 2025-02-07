@@ -23,6 +23,8 @@ router.get("/equipa/:id/atletas", authMiddleware, EquipaController.atletasEquipa
 router.delete("/equipa/:idEquipa/atleta/:idAtleta", authMiddleware, EquipaController.removeAtletaEquipa);
 
 router.put("/equipa/:idEquipa/atleta/:idAtleta/posicao/:novaPosicao", authMiddleware, EquipaController.trocaPosicao);
+
+router.get("/byatleta/:id", EquipaController.getEquipaByAtleta);
 /*
 
 
