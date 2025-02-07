@@ -5,7 +5,7 @@ import {
   Person as PersonIcon,
   CalendarToday as CalendarTodayIcon,
   SportsSoccer as SportsSoccerIcon,
-  Public as PublicIcon,
+  Public as PublicIcon,     // (Usando de novo para "Posição")
   Star as StarIcon,
   Link as LinkIcon,
   Phone as PhoneIcon,
@@ -18,6 +18,7 @@ export default function AtletasAdicionar() {
     dataNascimento: "",
     escalao: "",
     clube: "",
+    // Adicionando/Usando "posicao" para ID da posição selecionada
     posicao: "",
     nacionalidade: "",
     link: "",
@@ -26,15 +27,16 @@ export default function AtletasAdicionar() {
     contatoTelefone: "",
   });
 
-  // NOVO: Guardar a lista de nacionalidades que vem do backend
+  // Lista de nacionalidades
   const [listaNacionalidades, setListaNacionalidades] = useState([]);
+  // ★ NOVO: Lista de posicoes
+  const [listaPosicoes, setListaPosicoes] = useState([]);
 
-  // Para loading/erro do POST
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // NOVO: useEffect para carregar nacionalidades assim que a tela montar
+  // Carregar nacionalidades
   useEffect(() => {
     fetch("http://localhost:8080/atleta/nacionalidades")
       .then((res) => res.json())
@@ -46,6 +48,20 @@ export default function AtletasAdicionar() {
         }
       })
       .catch((err) => console.error("Erro ao buscar nacionalidades:", err));
+  }, []);
+
+  // ★ NOVO: Carregar posicoes
+  useEffect(() => {
+    fetch("http://localhost:8080/atleta/posicoes")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setListaPosicoes(data.data);
+        } else {
+          console.error("Erro ao carregar posicoes:", data.message);
+        }
+      })
+      .catch((err) => console.error("Erro ao buscar posicoes:", err));
   }, []);
 
   const handleChange = (e) => {
@@ -74,11 +90,10 @@ export default function AtletasAdicionar() {
           ratinggeral: formData.rating,
           nomeencarregado: formData.contatoNome,
           contactoencarregado: formData.contatoTelefone,
-
-          // IMPORTANTE:
-          // Seu backend espera "nacionalidades" como array
-          // Se for apenas 1 nacionalidade, enviamos como array de 1 elemento
+          // Se for apenas 1 nacionalidade
           nacionalidades: [formData.nacionalidade],
+          // ★ NOVO: Mandar posicoes como array [ ID ]
+          posicoes: [formData.posicao],
         }),
       });
 
@@ -137,7 +152,9 @@ export default function AtletasAdicionar() {
                 onChange={handleChange}
                 required
               >
-                <option value="" disabled>Escalão</option>
+                <option value="" disabled>
+                  Escalão
+                </option>
                 <option value="1">SUB-16</option>
                 <option value="2">SUB-17</option>
                 <option value="3">SUB-18</option>
@@ -157,7 +174,9 @@ export default function AtletasAdicionar() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>Clube</option>
+              <option value="" disabled>
+                Clube
+              </option>
               <option value="1">SL Benfica</option>
               <option value="2">FC Porto</option>
             </select>
@@ -175,10 +194,35 @@ export default function AtletasAdicionar() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>Nacionalidade</option>
+              <option value="" disabled>
+                Nacionalidade
+              </option>
               {listaNacionalidades.map((nat) => (
                 <option key={nat.id_nacionalidade} value={nat.id_nacionalidade}>
                   {nat.designacao}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* ★ NOVO: Posição */}
+        <div className="atletasadicionar-form-group">
+          <label className="atletasadicionar-label">Posição</label>
+          <div className="atletasadicionar-input-group">
+            <PublicIcon /> {/* Usei o mesmo ícone PublicIcon, mas pode trocar */}
+            <select
+              name="posicao"
+              value={formData.posicao}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Selecionar posição
+              </option>
+              {listaPosicoes.map((pos) => (
+                <option key={pos.id_posicao} value={pos.id_posicao}>
+                  {pos.designacao}
                 </option>
               ))}
             </select>
