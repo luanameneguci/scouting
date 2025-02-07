@@ -101,7 +101,7 @@ controllers.listar = async (req, res) => {
     })
     const totalPages = Math.ceil(count.length / limit);
 
-    return res.status(200).json({ success: true, relatorios: rows, totalPages:totalPages });
+    return res.status(200).json({ success: true, relatorios: rows, totalPages: totalPages });
   }
   catch (e) {
     return res.status(500).json({ message: e.message })
@@ -308,7 +308,7 @@ controllers.getMonthlyAverageByAttribute = async (req, res) => {
   try {
     const { id_atleta } = req.params;
     const { campo } = req.query;
-    
+
     // Se não vier na query, padrão é "tecnica"
     const atributo = campo || "tecnica";
 
@@ -337,6 +337,37 @@ controllers.getMonthlyAverageByAttribute = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Erro ao obter médias mensais do atributo.",
+      error: error.message
+    });
+  }
+};
+
+controllers.getRelatorio = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const relatorio = await models.relatorio.findOne({
+      where: { id_relatorio: id }, include:
+        [{ model: models.atleta },
+        { model: models.utilizador },
+        {
+          model: models.jogo,
+          include: [{ model: models.clube, through: { attributes: [] } }]
+        }]
+    });
+
+    if (!relatorio) {
+      return res.status(404).json({
+        success: false,
+        message: "Relatório não encontrado."
+      });
+    }
+
+    return res.status(200).json(relatorio);
+  } catch (error) {
+    console.error("Erro getRelatorio:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Erro ao procurar relatório.",
       error: error.message
     });
   }

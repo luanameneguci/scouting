@@ -127,7 +127,7 @@ function AppContent() {
           }
         />
         <Route
-          path="/relatorios/confirmar"
+          path="/relatorios/confirmar/:id"
           element={
             <ProtectedRoute>
               <RelatorioConfirmar />
