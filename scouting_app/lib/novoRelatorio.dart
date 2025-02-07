@@ -1,6 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app/relatorios.dart';
 import 'package:scouting_app/novoJogador.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<void> criarRelatorio({
+  required int idUtilizador,
+  required int idJogo,
+  required int idAtleta,
+  required int tecnica,
+  required int velocidade,
+  required int atitudeCompetitiva,
+  required int inteligencia,
+  required String altura,
+  required String morfologia,
+  required String apontamentos,
+}) async {
+  final url = Uri.parse("http://localhost:8080/relatorio/criar"); // 🔹 Ajustado para a tua rota correta
+
+  try {
+    final response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "id_utilizador": idUtilizador,
+        "id_jogo": idJogo,
+        "id_atleta": idAtleta,
+        "tecnica": tecnica,
+        "velocidade": velocidade,
+        "atitudecompetitiva": atitudeCompetitiva,
+        "inteligencia": inteligencia,
+        "altura": altura,
+        "morfologia": morfologia,
+        "apontamentos": apontamentos,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("✅ Relatório criado com sucesso!");
+    } else {
+      print("❌ Erro ao criar relatório: ${response.body}");
+    }
+  } catch (error) {
+    print("❌ Erro na requisição: $error");
+  }
+}
+
+Future<List<Map<String, dynamic>>> fetchEscaloes() async {
+  final url = Uri.parse("http://localhost:8080/escalao/listar"); // Altere conforme necessário
+
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((e) => {"id": e["id_escalao"], "nome": e["nome"]}).toList();
+    } else {
+      print("❌ Erro ao buscar escalões: ${response.body}");
+      return [];
+    }
+  } catch (error) {
+    print("❌ Erro na requisição: $error");
+    return [];
+  }
+}
 
 class RelatorioScreen extends StatefulWidget {
   final Map<String, dynamic>? atletaData;
@@ -445,32 +508,40 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
             SizedBox(height: 16),
             // Confirm Button
             SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _isFormValid()
-                    ? () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => RelatoriosPage()),
-                        );
-                      }
-                    : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amber,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  "Confirmar",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+  width: double.infinity,
+  child: ElevatedButton(
+    onPressed: () async {
+      if (_isFormValid()) {
+        await criarRelatorio(
+          idUtilizador: 1, // 🔹 Ajuste com o ID do utilizador autenticado
+          idJogo: 2, // 🔹 Ajuste conforme o jogo selecionado
+          idAtleta: 3, // 🔹 Ajuste conforme o atleta selecionado
+          tecnica: tecnica,
+          velocidade: velocidade,
+          atitudeCompetitiva: atitudeCompetitiva,
+          inteligencia: inteligencia,
+          altura: altura!,
+          morfologia: morfologia!,
+          apontamentos: "Anotações sobre o jogador",
+        );
+        Navigator.pop(context); // Voltar para a tela anterior após o envio
+      } else {
+        print("⚠️ Formulário incompleto!");
+      }
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.amber,
+      padding: EdgeInsets.symmetric(vertical: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+    child: Text(
+      "Confirmar",
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    ),
+  ),
+),
           ],
         ),
       ),

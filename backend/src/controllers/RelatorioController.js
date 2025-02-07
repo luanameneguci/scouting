@@ -5,6 +5,7 @@ var initModels = require("../models/init-models");
 var models = initModels(sequelize);
 var Relatorio = models.relatorio;
 const controllers = {};
+const RelatorioController = {};
 
 controllers.criar = async (req, res) => {
   const {
@@ -19,6 +20,50 @@ controllers.criar = async (req, res) => {
     morfologia,
     apontamentos,
   } = req.body;
+
+  RelatorioController.criar = async (req, res) => {
+    try {
+      const {
+        id_utilizador,
+        id_jogo,
+        id_atleta,
+        tecnica,
+        velocidade,
+        atitudecompetitiva,
+        inteligencia,
+        altura,
+        morfologia,
+        apontamentos,
+      } = req.body;
+
+     // Validar campos obrigatórios
+    if (!id_utilizador || !id_jogo || !id_atleta) {
+      return res.status(400).json({ message: "Campos obrigatórios ausentes." });
+    }
+    // Criar o relatório na base de dados
+    const novoRelatorio = await models.relatorio.create({
+      id_utilizador,
+      id_jogo,
+      id_atleta,
+      tecnica,
+      velocidade,
+      atitudecompetitiva,
+      inteligencia,
+      altura,
+      morfologia,
+      apontamentos,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Relatório criado com sucesso.",
+      data: novoRelatorio,
+    });
+  } catch (error) {
+    console.error("Erro ao criar relatório:", error.message);
+    return res.status(500).json({ message: "Erro no servidor." });
+  }
+};
 
   const data_criacao = new Date();
 
