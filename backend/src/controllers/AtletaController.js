@@ -38,9 +38,10 @@ controllers.criar = async (req, res) => {
       nomeencarregado,
       contactoencarregado,
       nacionalidades, // Array de IDs de nacionalidade
+      posicoes       // Array de IDs de posição (NOVA PROPRIEDADE)
     } = req.body;
 
-    // Criar o atleta primeiro
+    // 1) Criar o atleta
     const novoAtleta = await Atleta.create({
       id_clube,
       id_escalao,
@@ -54,31 +55,50 @@ controllers.criar = async (req, res) => {
       contactoencarregado,
     });
 
-    // Se houver nacionalidades, associar ao atleta na tabela nacionalidadeatleta
+    // 2) Se houver nacionalidades, associar na pivot "nacionalidadeatleta"
     if (nacionalidades && nacionalidades.length > 0) {
       const nacionalidadesEncontradas = await Nacionalidade.findAll({
-        where: { id_nacionalidade: nacionalidades }, // Busca pelas IDs enviadas
+        where: { id_nacionalidade: nacionalidades },
       });
-
       if (nacionalidadesEncontradas.length > 0) {
-        await novoAtleta.addNacionalidades(nacionalidadesEncontradas); // Associação Many-to-Many
+        await novoAtleta.addNacionalidades(nacionalidadesEncontradas);
       }
     }
 
-    // Buscar o atleta com as nacionalidades associadas
+    // 3) Se houver posicoes, associar na pivot "posicaoatleta"
+    if (posicoes && posicoes.length > 0) {
+      const posicoesEncontradas = await models.posicao.findAll({
+        where: { id_posicao: posicoes },
+      });
+      if (posicoesEncontradas.length > 0) {
+        await novoAtleta.addPosicoes(posicoesEncontradas);
+      }
+    }
+
+    // 4) Buscar o atleta com nacionalidades associadas
+    //    (se quiser também trazer as posições associadas, inclua-as aqui)
     const atletaCriado = await Atleta.findByPk(novoAtleta.id_atleta, {
-      include: {
-        model: Nacionalidade,
-        as: "nacionalidades", // Deve ser igual ao alias definido no `initModels.js`
-        attributes: ["id_nacionalidade", "designacao"],
-        through: { attributes: [] }, // Remove colunas extras da tabela intermediária
-      },
+      include: [
+        {
+          model: Nacionalidade,
+          as: "nacionalidades",
+          attributes: ["id_nacionalidade", "designacao"],
+          through: { attributes: [] },
+        },
+        {
+          model: models.posicao,          // SE quiser retornar as posicoes
+          as: "posicoes",
+          attributes: ["id_posicao","designacao"],
+          through: { attributes: [] },
+          required: false,
+        },
+      ],
     });
 
     res.status(201).json({
       success: true,
       message: "Atleta criado com sucesso!",
-      data: atletaCriado, // Retornamos o atleta já com nacionalidades associadas
+      data: atletaCriado,
     });
   } catch (error) {
     console.error("Erro ao criar atleta:", error);
