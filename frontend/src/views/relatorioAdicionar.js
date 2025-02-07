@@ -5,7 +5,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import EventIcon from "@mui/icons-material/Event";
 
 const RelatorioAdicionar = () => {
-  const url = "http://localhost:8080"; // Alterado para mesma URL da página Atletas
+  const url = process.env.REACT_APP_API_URL // Alterado para mesma URL da página Atletas
   const [tecnica, setTecnica] = useState(null);
   const [velocidade, setVelocidade] = useState(null);
   const [atitude, setAtitude] = useState(null);
@@ -24,7 +24,7 @@ const RelatorioAdicionar = () => {
   useEffect(() => {
     console.log("Buscando dados da API...");
 
-    axios.get(`${url}/jogo/listar`, { withCredentials: true })
+    axios.get(`${url}/jogo`, { withCredentials: true })
       .then((res) => {
         console.log("Jogos recebidos:", res.data);
         setJogos(res.data.data || []);
@@ -76,6 +76,7 @@ const RelatorioAdicionar = () => {
     }
   };
 
+  if(!jogos||!atletas||!treinadores) return <div>carregar</div>
   return (
     <form onSubmit={handleSubmit} className="containeradic contentadic">
       <div className="form-group">
@@ -101,7 +102,7 @@ const RelatorioAdicionar = () => {
             <option value="">Selecione um jogo</option>
             {jogos.map((jogo) => (
               <option key={jogo.id_jogo} value={jogo.id_jogo}>
-                {jogo.nome}
+                {jogo.data} - {jogo.clubes[0].nome} - {jogo.clubes[1].nome}
               </option>
             ))}
           </select>
@@ -161,20 +162,6 @@ const RelatorioAdicionar = () => {
               </div>
             </div>
           ))}
-
-        <div className="campoadic">
-          <label>Rating Geral</label>
-          <div className="opcoesadic">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="bola-containeradic">
-                <span className={`bolaadic ${ratingGeral === num ? "selecionada" : ""}`}
-                  onClick={() => setRatingGeral(num)}>
-                </span>
-                <span className="numeroadic">{num}</span>
-              </div>
-            ))}
-          </div>
-        </div>
 
         <div className="campoadic">
           <label>Apontamentos</label>

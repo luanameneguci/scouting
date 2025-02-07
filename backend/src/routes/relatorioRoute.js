@@ -18,5 +18,5 @@ router.get("/mensal-atributo/:id_atleta", RelatorioController.getMonthlyAverageB
 // Essa rota deve ficar POR ÚLTIMO para evitar conflitos
 router.get("/:id_atleta", RelatorioController.listarPorAtleta);
 
-
+router.get("/unico/:id", RelatorioController.getRelatorio)
 module.exports = router;

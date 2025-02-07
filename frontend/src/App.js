@@ -31,7 +31,7 @@ import Dashboard from "./views/dashboard";
 import NeedLogin from "./views/landing/needLogin";
 import Test from "./views/test";
 import ProtectedRoute from "./components/protectedRoute";
-import AtletasEditar from "./views/adicionarutilizador";
+import EditarUtilizador from "./views/editarutilizador";
 
 function App() {
   return (
@@ -127,7 +127,7 @@ function AppContent() {
           }
         />
         <Route
-          path="/relatorios/confirmar"
+          path="/relatorios/confirmar/:id"
           element={
             <ProtectedRoute>
               <RelatorioConfirmar />
@@ -183,6 +183,16 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/credenciais/editar/:id"
+          element={
+            <ProtectedRoute>
+              <EditarUtilizador/>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/jogos"
           element={

@@ -23,49 +23,6 @@ const createToken = (id, nome, email, telefone, tipo) => {
     );
 }
 
-// Função para registar um novo utilizador
-authController.register = async (req, res) => {
-    try {
-        const { nome, email, password, telefone, id_tipoutilizador } = req.body;
-
-        // Validar campos obrigatórios
-        if (!nome || !email || !password || !telefone) {
-            return res.status(400).json({ message: "Todos os campos são obrigatórios." });
-        }
-
-        // Verificar se o utilizador já existe
-        const existingUser = await models.utilizador.findOne({ where: { email } });
-        if (existingUser) {
-            console.log("Erro: Email já registrado");
-            return res.status(400).json({ message: "Email já registado." });
-        }
-
-        // Encriptar a palavra-passe
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const tipoUtilizador = id_tipoutilizador ? id_tipoutilizador : 1; // Se não for fornecido, assume o tipo 1 (scout)
-
-
-        // Criar novo utilizador
-        const newUser = await models.utilizador.create({
-            nome,
-            email,
-            password: hashedPassword,
-            telefone,
-            id_tipoutilizador: tipoUtilizador,
-        });
-
-
-        return res.status(200).json({
-            message: "Registo realizado com sucesso."});
-
-    } catch (error) {
-        console.error("Erro no servidor durante o registo:", error.message, error.stack);
-        return res.status(500).json({ message: "Erro no servidor.", error: error.message });
-    }
-};
-
-
 // Função para login
 authController.login = async (req, res) => {
     try {
@@ -135,24 +92,5 @@ authController.adminValidation = (req, res) => {
     }
     return res.status(200).json({ message: "Utilizador válido." });
 };
-
-authController.getUsers = async (req, res) => {
-    try {
-        const users = await models.utilizador.findAll({
-            attributes: ["id_utilizador", "nome", "email", "telefone", "id_tipoutilizador"],
-            include: {
-                model: models.tipoutilizador,
-                as: "tipoUtilizador",
-                attributes: ["designacao"]
-            }
-        });
-
-        return res.status(200).json(users);
-    } catch (error) {
-        console.error("Erro ao carregar utilizadores:", error.message);
-        return res.status(500).json({ message: "Erro ao carregar utilizadores." });
-    }
-};
-
 
 module.exports = authController;
