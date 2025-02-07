@@ -175,7 +175,7 @@ if (isAllowed) ...[
                             ),
                             DropdownMenuItem(
                               value: FilterOption.specificMonth,
-                              child: Text('Select Month'),
+                              child: Text('Escolher mês'),
                             ),
                           ],
                           onChanged: (FilterOption? newValue) {
