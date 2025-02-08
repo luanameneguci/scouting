@@ -51,7 +51,7 @@ const AdicionarUtilizador = () => {
         <label>Nome</label>
         <div className="atletasadicionar-input-groupadic">
           <PersonIcon className="icon" />
-          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Mete o nome" required />
+          <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome" required />
         </div>
       </div>
 
@@ -59,7 +59,7 @@ const AdicionarUtilizador = () => {
         <label>Email</label>
         <div className="atletasadicionar-input-groupadic">
           <EmailIcon className="icon" />
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Mete o email" required />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
         </div>
       </div>
 
@@ -67,7 +67,7 @@ const AdicionarUtilizador = () => {
         <label>Telefone</label>
         <div className="atletasadicionar-input-groupadic">
           <PhoneIcon className="icon" />
-          <input type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="Mete o telefone" required />
+          <input type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="Telefone" required />
         </div>
       </div>
 
@@ -75,7 +75,7 @@ const AdicionarUtilizador = () => {
         <label>Password</label>
         <div className="atletasadicionar-input-groupadic">
           <LockIcon className="icon" />
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mete a password" required />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
         </div>
       </div>
 

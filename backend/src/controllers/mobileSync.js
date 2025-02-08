@@ -9,8 +9,7 @@ const controllers = {};
 controllers.pagInicial = async (req, res) => {
   try {
     
-    const { since } = req.query;
-    const whereCondition = since ? { lastUpdated: { [Op.gt]: new Date(since) } } : {};
+
 
     const token = req.headers['authorization']?.split(' ')[1]; // Extract token after "Bearer "
     if (!token) {
@@ -20,8 +19,7 @@ controllers.pagInicial = async (req, res) => {
 
     const JogosUser = await models.UtilizadorJogo.findAll({
       where: {
-        id_utilizador: user.id, 
-        ...whereCondition,        
+        id_utilizador: user.id,        
       },
       include: [
         {

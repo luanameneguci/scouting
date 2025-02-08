@@ -29,8 +29,15 @@ class _TarefasPageState extends State<TarefasPage> {
   List<String> gameTimes = [];
   String username = "";
   bool isAllowed = false;
+  Timer? _updateTimer;
 
   Future<void> _fetchData() async {
+        setState(() {
+      jogadores.clear();
+      clubes.clear();
+      gameDays.clear();
+      gameTimes.clear();
+    });
     await bd2.fetchUserData();
     if (mounted) {
       setState(() {
@@ -50,8 +57,6 @@ class _TarefasPageState extends State<TarefasPage> {
       });
     }
   }
-
-  Timer? _updateTimer;
 
   @override
   void initState() {

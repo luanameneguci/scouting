@@ -44,14 +44,9 @@ class Basededados {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
-    // Prepare the query params for fetching the new data
-    String queryParams = lastFetchedTime != null
-        ? '?since=${lastFetchedTime!.toIso8601String()}'
-        : '';
-
     try {
       final response = await http.get(
-        Uri.parse('$url$queryParams'),
+        Uri.parse('$url'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token', // Include the token here
@@ -100,11 +95,6 @@ class Basededados {
           gameTimes.add(
               '${dateTime.hour}:${dateTime.minute.toString().padLeft(2, '0')}');
 
-          // Update the last fetched time to the current time
-          if (lastFetchedTime == null ||
-              DateTime.now().isAfter(lastFetchedTime!)) {
-            lastFetchedTime = DateTime.now();
-          }
         }
 
         // Print the lists (or do something with them)
