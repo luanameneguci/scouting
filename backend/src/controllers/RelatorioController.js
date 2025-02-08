@@ -194,12 +194,12 @@ controllers.relatoriosData = async (req, res) => {
 
 controllers.apagar = async (req, res) => {
   // parâmetros por post
-  const { id_relatorio } = req.body;
+  const { id_relatorio } = req.params;
   // delete por sequelize
   const del = await Relatorio.destroy({
     where: { id_relatorio: id_relatorio }
   })
-  res.json({ success: true, deleted: del });
+  return res.status(200).json({ success: true, deleted: del });
 }
 /*
 controllers.listar = async (req, res) => {
