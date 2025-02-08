@@ -56,7 +56,7 @@ export default function JogosAdicionar() {
     }
 
     try {
-      axios.get(url + '/utilizador/treinadores').then((res) => {
+      axios.get(url + '/utilizadores/treinadores').then((res) => {
         if (res.status === 200) {
           setTreinadores(res.data.treinadores);
         } else {

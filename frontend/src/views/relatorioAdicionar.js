@@ -31,7 +31,7 @@ const RelatorioAdicionar = () => {
       })
       .catch((error) => console.error("Erro ao buscar jogos:", error));
 
-    axios.get(`${url}/utilizador/treinadores`, { withCredentials: true })
+    axios.get(`${url}/utilizadores/treinadores`, { withCredentials: true })
       .then((res) => {
         console.log("Treinadores recebidos:", res.data);
         setTreinadores(res.data.treinadores || []);

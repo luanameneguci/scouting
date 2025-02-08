@@ -165,12 +165,10 @@ const UtilizadorController = {
   async listarTreinadores(req, res) {
     try {
       const treinadores = await models.utilizador.findAll({
+        where: { id_tipoutilizador: 1 },
         include: {
           model: models.tipoutilizador,
-          attributes: ['designacao'],
-          where: {
-            designacao: 'Scout',
-          }
+          attributes: ['designacao']
         },
       });
 

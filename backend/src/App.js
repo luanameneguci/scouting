@@ -436,7 +436,7 @@ app.use('/', equipasRouter);
 app.use('/jogo', jogoRouter);
 app.use('/atleta', atletaRouter);
 app.use('/relatorio', relatorioRouter);
-app.use('/utilizador', utilizadorRouter);
+app.use('/', utilizadorRouter);
 app.use('/clube', clubeRouter);
 app.use('/escalao', escalaoRouter);
 app.use('/auth', authRouter);
