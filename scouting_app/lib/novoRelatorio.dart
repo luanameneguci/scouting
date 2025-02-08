@@ -16,7 +16,7 @@ Future<void> criarRelatorio({
   required String morfologia,
   required String apontamentos,
 }) async {
-  final url = Uri.parse("http://localhost:8080/relatorio/criar"); // 🔹 Ajustado para a tua rota correta
+  final url = Uri.parse("http://localhost:8080/relatorio/criar");
 
   try {
     final response = await http.post(
@@ -47,7 +47,7 @@ Future<void> criarRelatorio({
 }
 
 Future<List<Map<String, dynamic>>> fetchEscaloes() async {
-  final url = Uri.parse("http://localhost:8080/escalao/listar"); // Altere conforme necessário
+  final url = Uri.parse("http://localhost:8080/escalao/listar");
 
   try {
     final response = await http.get(url);
@@ -65,10 +65,49 @@ Future<List<Map<String, dynamic>>> fetchEscaloes() async {
   }
 }
 
+Future<List<Map<String, dynamic>>> fetchAtletas() async {
+  final url = Uri.parse("http://localhost:8080/atleta/listar");
+
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      print("Atletas retornados: $data");
+      return data.map((e) => {"id": e["id_atleta"], "nome": e["nome"]}).toList();
+    } else {
+      print("❌ Erro ao buscar atletas: ${response.body}");
+      return [];
+    }
+  } catch (error) {
+    print("❌ Erro na requisição: $error");
+    return [];
+  }
+}
+
+Future<List<Map<String, dynamic>>> fetchClubes() async {
+  final url = Uri.parse("http://localhost:8080/clube/listar"); // Ajuste conforme necessário
+
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      print("Clubes retornados: $data");
+      return data.map((e) => {"id": e["id_clube"], "nome": e["nome"]}).toList();
+    } else {
+      print("❌ Erro ao buscar clubes: ${response.body}");
+      return [];
+    }
+  } catch (error) {
+    print("❌ Erro na requisição: $error");
+    return [];
+  }
+}
+
 class RelatorioScreen extends StatefulWidget {
   final Map<String, dynamic>? atletaData;
 
-  // Correct constructor name to match the widget class
   RelatorioScreen({this.atletaData});
 
   @override
@@ -82,19 +121,37 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
   String? selectedClube;
   String? selectedJogo;
 
-   void initState() {
+  List<Map<String, dynamic>> atletasList = [];
+  List<Map<String, dynamic>> clubesList = [];
+
+  @override
+  void initState() {
     super.initState();
 
-    // Check if atletaData is not null and set the values accordingly
     if (widget.atletaData != null) {
-       print("Atleta Data: ${widget.atletaData}");
+      print("Atleta Data: ${widget.atletaData}");
       setState(() {
-        selectedAtleta = widget.atletaData!['nome']; // Athlete's name
-        selectedEscalao = widget.atletaData!['escalao']; // Escalao designation
-        selectedClube = widget.atletaData!['clube']; // Clube name
+        selectedAtleta = widget.atletaData!['nome'];
+        selectedEscalao = widget.atletaData!['escalao'];
+        selectedClube = widget.atletaData!['clube'];
       });
     }
-   }
+
+    fetchAtletas().then((fetchedAtletas) {
+      print("Atletas buscados: $fetchedAtletas");
+      setState(() {
+        atletasList = fetchedAtletas;
+      });
+    });
+
+    fetchClubes().then((fetchedClubes) {
+      print("Clubes buscados: $fetchedClubes");
+      setState(() {
+        clubesList = fetchedClubes;
+      });
+    });
+  }
+
   TextEditingController searchAtletaController = TextEditingController();
   TextEditingController searchClubeController = TextEditingController();
   TextEditingController searchJogoController = TextEditingController();
@@ -120,26 +177,6 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
     "Sub 10": ["Time17 x Time18 11:00"]
   };
 
-  List<String> atletas = [
-    "Fernando Machado",
-    "Carlos Silva",
-    "João Santos",
-    "André Pereira",
-    "Miguel Oliveira",
-    "Rui Costa",
-    "Pedro Santos",
-    "Luís Fernandes"
-  ];
-  List<String> clubes = [
-    "Clube 1",
-    "Clube 2",
-    "Clube 3",
-    "Clube 4",
-    "Clube 5",
-    "Clube 6",
-    "Clube 7",
-    "Clube 8"
-  ];
   List<String> jogos = [];
 
   @override
@@ -179,7 +216,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
 
   bool _isFormValid() {
     return selectedEscalao != null &&
-                selectedAtleta != null &&
+        selectedAtleta != null &&
         selectedClube != null &&
         selectedJogo != null &&
         tecnica > 0 &&
@@ -374,35 +411,35 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                           Container(
                             height: 200,
                             child: ListView(
-                              children: [
-                                ...atletas
-                                    .where((atleta) => atleta.toLowerCase().contains(searchAtletaController.text.toLowerCase()))
-                                    .take(5)
-                                    .map((atleta) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedAtleta = atleta;
-                                        isAtletaDropdownOpen = false;
-                                      });
-                                    },
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                                      margin: EdgeInsets.only(top: 4),
-                                      decoration: BoxDecoration(
-                                        color: Colors.black,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Text(
-                                        atleta,
-                                        style: TextStyle(color: Colors.white),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ],
+                              children: atletasList.isNotEmpty
+                                  ? atletasList
+                                      .where((atleta) => atleta['nome'].toLowerCase().contains(searchAtletaController.text.toLowerCase()))
+                                      .take(5)
+                                      .map((atleta) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedAtleta = atleta['nome'];
+                                              isAtletaDropdownOpen = false;
+                                            });
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                                            margin: EdgeInsets.only(top: 4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              atleta['nome'],
+                                              style: TextStyle(color: Colors.white),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()
+                                  : [Text("Nenhum atleta encontrado", style: TextStyle(color: Colors.white))],
                             ),
                           ),
                           Divider(color: Colors.grey),
@@ -410,7 +447,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => NovoJogadorScreen()), // Navegação para a página de novo jogador
+                                MaterialPageRoute(builder: (context) => NovoJogadorScreen()),
                               );
                             },
                             child: Row(
@@ -445,33 +482,35 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                           Container(
                             height: 200,
                             child: ListView(
-                              children: clubes
-                                  .where((clube) => clube.toLowerCase().contains(searchClubeController.text.toLowerCase()))
-                                  .take(5)
-                                  .map((clube) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedClube = clube;
-                                      isClubeDropdownOpen = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                                    margin: EdgeInsets.only(top: 4),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      clube,
-                                      style: TextStyle(color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
+                              children: clubesList.isNotEmpty
+                                  ? clubesList
+                                      .where((clube) => clube['nome'].toLowerCase().contains(searchClubeController.text.toLowerCase()))
+                                      .take(5)
+                                      .map((clube) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedClube = clube['nome'];
+                                              isClubeDropdownOpen = false;
+                                            });
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                                            margin: EdgeInsets.only(top: 4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              clube['nome'],
+                                              style: TextStyle(color: Colors.white),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()
+                                  : [Text("Nenhum clube encontrado", style: TextStyle(color: Colors.white))],
                             ),
                           ),
                         ],
@@ -483,7 +522,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
             // Rating Rows
             _buildRatingRow("Técnica", tecnica, (val) => setState(() => tecnica = val)),
             _buildRatingRow("Velocidade", velocidade, (val) => setState(() => velocidade = val)),
-                        _buildRatingRow("Atitude Competitiva", atitudeCompetitiva, (val) => setState(() => atitudeCompetitiva = val)),
+            _buildRatingRow("Atitude Competitiva", atitudeCompetitiva, (val) => setState(() => atitudeCompetitiva = val)),
             _buildRatingRow("Inteligência", inteligencia, (val) => setState(() => inteligencia = val)),
             SizedBox(height: 16),
             // Option Rows
@@ -508,40 +547,40 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
             SizedBox(height: 16),
             // Confirm Button
             SizedBox(
-  width: double.infinity,
-  child: ElevatedButton(
-    onPressed: () async {
-      if (_isFormValid()) {
-        await criarRelatorio(
-          idUtilizador: 1, // 🔹 Ajuste com o ID do utilizador autenticado
-          idJogo: 2, // 🔹 Ajuste conforme o jogo selecionado
-          idAtleta: 3, // 🔹 Ajuste conforme o atleta selecionado
-          tecnica: tecnica,
-          velocidade: velocidade,
-          atitudeCompetitiva: atitudeCompetitiva,
-          inteligencia: inteligencia,
-          altura: altura!,
-          morfologia: morfologia!,
-          apontamentos: "Anotações sobre o jogador",
-        );
-        Navigator.pop(context); // Voltar para a tela anterior após o envio
-      } else {
-        print("⚠️ Formulário incompleto!");
-      }
-    },
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.amber,
-      padding: EdgeInsets.symmetric(vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-    ),
-    child: Text(
-      "Confirmar",
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-    ),
-  ),
-),
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (_isFormValid()) {
+                    await criarRelatorio(
+                      idUtilizador: 1, // Ajuste com o ID do utilizador autenticado
+                      idJogo: 2, // Ajuste conforme o jogo selecionado
+                      idAtleta: 3, // Ajuste conforme o atleta selecionado
+                      tecnica: tecnica,
+                      velocidade: velocidade,
+                      atitudeCompetitiva: atitudeCompetitiva,
+                      inteligencia: inteligencia,
+                      altura: altura!,
+                      morfologia: morfologia!,
+                      apontamentos: "Anotações sobre o jogador",
+                    );
+                    Navigator.pop(context); // Voltar para a tela anterior após o envio
+                  } else {
+                    print("⚠️ Formulário incompleto!");
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  "Confirmar",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -640,7 +679,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                                                color: selectedOption == option ? Colors.amber : Colors.grey,
+                        color: selectedOption == option ? Colors.amber : Colors.grey,
                         width: 2,
                       ),
                     ),
