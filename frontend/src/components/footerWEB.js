@@ -16,8 +16,8 @@ function Footer() {
       {/* Links principais */}
       <div className="footer-content">
         <Link to="/" className="footer-link">PÁGINA PRINCIPAL</Link>
-        <Link to="/Privacidade" className="footer-link">POLÍTICAS DE PRIVACIDADE</Link>
-        <Link to="/Contactos" className="footer-link">CONTACTOS</Link>
+        <Link to="/privacidade" className="footer-link">POLÍTICAS DE PRIVACIDADE</Link>
+        <Link to="/contactos" className="footer-link">CONTACTOS</Link>
       </div>
 
       
