@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flag/flag.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class JogadoresPage extends StatefulWidget {
   const JogadoresPage({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _JogadoresPageState extends State<JogadoresPage> {
 
     try {
       final url =
-          Uri.parse('http://localhost:8080/atleta/listar?size=50&page=1');
+          Uri.parse(dotenv.env['API_URL']! +'/atleta/listar?size=50&page=1');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -78,7 +79,7 @@ class _JogadoresPageState extends State<JogadoresPage> {
 
     try {
       final url =
-          Uri.parse('http://localhost:8080/atleta/filtrar?size=50&page=1');
+          Uri.parse(dotenv.env['API_URL']! + '/atleta/filtrar?size=50&page=1');
 
       final body = {
         "filtros": _ajustarFiltrosParaBackend(filtros),

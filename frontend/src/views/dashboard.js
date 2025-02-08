@@ -107,7 +107,7 @@ export default function Dashboard() {
         <NavLink to="/home" className="button">  Adicionar atleta a analisar num jogo </NavLink>
         <NavLink to="/atletas/adicionar" className="button">  Adicionar atleta </NavLink>
         <NavLink to="/atletas/atletasrating" className="button">  Atletas com maior rating </NavLink>
-        <NavLink to="/home" className="button">  Adicionar utilizador </NavLink>
+        <NavLink to="/credenciais/adicionar" className="button">  Adicionar utilizador </NavLink>
       </div>
 
       <section className="games">
