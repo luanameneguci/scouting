@@ -86,7 +86,7 @@ Future<List<Map<String, dynamic>>> fetchAtletas() async {
 }
 
 Future<List<Map<String, dynamic>>> fetchClubes() async {
-  final url = Uri.parse("http://localhost:8080/clube/listar"); // Ajuste conforme necessário
+  final url = Uri.parse("http://localhost:8080/clube/listar");
 
   try {
     final response = await http.get(url);
@@ -97,6 +97,26 @@ Future<List<Map<String, dynamic>>> fetchClubes() async {
       return data.map((e) => {"id": e["id_clube"], "nome": e["nome"]}).toList();
     } else {
       print("❌ Erro ao buscar clubes: ${response.body}");
+      return [];
+    }
+  } catch (error) {
+    print("❌ Erro na requisição: $error");
+    return [];
+  }
+}
+
+Future<List<Map<String, dynamic>>> fetchJogos(int idEscalao) async {
+  final url = Uri.parse("http://localhost:8080/jogo/listarPorEscalao/$idEscalao");
+
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      print("Jogos retornados: $data");
+      return data.map((e) => {"id": e["id_jogo"], "data": e["dataJogo"]}).toList();
+    } else {
+      print("❌ Erro ao buscar jogos: ${response.body}");
       return [];
     }
   } catch (error) {
@@ -123,6 +143,8 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
 
   List<Map<String, dynamic>> atletasList = [];
   List<Map<String, dynamic>> clubesList = [];
+  List<Map<String, dynamic>> jogosList = [];
+  List<Map<String, dynamic>> escaloesList = []; // Adicionando a lista de escalões
 
   @override
   void initState() {
@@ -137,19 +159,32 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
       });
     }
 
-    fetchAtletas().then((fetchedAtletas) {
+    // Carregar dados
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    try {
+      final fetchedAtletas = await fetchAtletas();
       print("Atletas buscados: $fetchedAtletas");
       setState(() {
         atletasList = fetchedAtletas;
       });
-    });
 
-    fetchClubes().then((fetchedClubes) {
+      final fetchedClubes = await fetchClubes();
       print("Clubes buscados: $fetchedClubes");
       setState(() {
         clubesList = fetchedClubes;
       });
-    });
+
+      final fetchedEscaloes = await fetchEscaloes();
+      print("Escalões buscados: $fetchedEscaloes");
+      setState(() {
+        escaloesList = fetchedEscaloes; // Armazenando os escalões
+      });
+    } catch (error) {
+      print("❌ Erro ao carregar dados: $error");
+    }
   }
 
   TextEditingController searchAtletaController = TextEditingController();
@@ -165,19 +200,6 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
   bool isAtletaDropdownOpen = false;
   bool isClubeDropdownOpen = false;
   bool isJogosDropdownOpen = false;
-
-  final Map<String, List<String>> jogosPorEscalao = {
-    "Profissional": ["Porto x Benfica 19:30", "Sporting x Braga 20:30"],
-    "Sub 23": ["Time1 x Time2 17:00", "Time3 x Time4 18:30"],
-    "Sub 19": ["Time5 x Time6 16:00", "Time7 x Time8 17:30"],
-    "Sub 16": ["Time9 x Time10 15:00"],
-    "Sub 14": ["Time11 x Time12 14:00"],
-    "Sub 12": ["Time13 x Time14 13:00"],
-    "Sub 11": ["Time15 x Time16 12:00"],
-    "Sub 10": ["Time17 x Time18 11:00"]
-  };
-
-  List<String> jogos = [];
 
   @override
   void dispose() {
@@ -313,12 +335,16 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                         spacing: 8.0,
                         runSpacing: 8.0,
                         children: [
-                          for (var escalao in jogosPorEscalao.keys)
+                          for (var escalao in escaloesList) // Acesse a lista de escalões
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  temporaryEscalao = escalao;
-                                  jogos = jogosPorEscalao[escalao] ?? [];
+                                  temporaryEscalao = escalao['id']; // Acesse o ID corretamente
+                                  fetchJogos(int.parse(temporaryEscalao!)).then((fetchedJogos) {
+                                    setState(() {
+                                      jogosList = fetchedJogos;
+                                    });
+                                  });
                                   isEscalaoDropdownOpen = false;
                                   isJogosDropdownOpen = true;
                                   selectedJogo = null; // Limpa a seleção do jogo anterior.
@@ -333,7 +359,7 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    escalao,
+                                    escalao['nome'], // Acesse o nome do escalão
                                     style: TextStyle(color: Colors.white, fontSize: 14),
                                     textAlign: TextAlign.center,
                                   ),
@@ -360,35 +386,35 @@ class _RelatorioScreenState extends State<RelatorioScreen> {
                           Container(
                             height: 200,
                             child: ListView(
-                              children: jogos
-                                  .where((jogo) => jogo.toLowerCase().contains(searchJogoController.text.toLowerCase()))
-                                  .take(5)
-                                  .map((jogo) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedJogo = jogo;
-                                      selectedEscalao = temporaryEscalao; // Confirma o escalão ao selecionar o jogo.
-                                      isJogosDropdownOpen = false;
-                                      temporaryEscalao = null; // Limpa a variável temporária.
-                                    });
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                                    margin: EdgeInsets.only(top: 4),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      jogo,
-                                      style: TextStyle(color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
+                              children: jogosList.isNotEmpty
+                                  ? jogosList
+                                      .where((jogo) => jogo['data'].toLowerCase().contains(searchJogoController.text.toLowerCase()))
+                                      .take(5)
+                                      .map((jogo) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedJogo = jogo['data'];
+                                              isJogosDropdownOpen = false;
+                                            });
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                                            margin: EdgeInsets.only(top: 4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              jogo['data'],
+                                              style: TextStyle(color: Colors.white),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()
+                                  : [Text("Nenhum jogo encontrado", style: TextStyle(color: Colors.white))],
                             ),
                           ),
                         ],
