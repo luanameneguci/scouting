@@ -1,7 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flag/flag.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class JogadorPage extends StatefulWidget {
@@ -16,28 +16,42 @@ class JogadorPage extends StatefulWidget {
 class _JogadorPageState extends State<JogadorPage> {
   Map<String, dynamic>? atletaData;
   bool isLoading = true;
+  String? errorMsg;
 
   @override
   void initState() {
     super.initState();
-    _fetchAtletaData();
+    _fetchJogador();
   }
 
-  Future<void> _fetchAtletaData() async {
-    // Carrega as variáveis de ambiente
-    await dotenv.load(fileName: ".env");
+  Future<void> _fetchJogador() async {
+    setState(() {
+      isLoading = true;
+      errorMsg = null;
+    });
 
-    final response = await http.get(
-      Uri.parse('${dotenv.env['API_URL']}/atleta/listar?size=50&page=1'),
-    );
+    try {
+      final url = Uri.parse('${dotenv.env['API_URL']}/atleta/${widget.jogadorId}');
+      final response = await http.get(url);
 
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        setState(() {
+          atletaData = json.decode(response.body);
+          isLoading = false;
+        });
+      } else if (response.statusCode == 404) {
+        setState(() {
+          errorMsg = "Atleta não encontrado.";
+          isLoading = false;
+        });
+      } else {
+        throw Exception("Erro HTTP ${response.statusCode}");
+      }
+    } catch (e) {
       setState(() {
-        atletaData = json.decode(response.body);
+        errorMsg = "Erro ao carregar atleta: $e";
         isLoading = false;
       });
-    } else {
-      throw Exception('Falha ao carregar dados do atleta');
     }
   }
 
@@ -54,9 +68,20 @@ class _JogadorPageState extends State<JogadorPage> {
       );
     }
 
+    if (errorMsg != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Erro'),
+        ),
+        body: Center(
+          child: Text(errorMsg!, style: TextStyle(color: Colors.white)),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jogador ID: ${widget.jogadorId}'),
+        title: Text(atletaData?['nome'] ?? 'Jogador'),
       ),
       backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       body: SingleChildScrollView(
@@ -81,7 +106,9 @@ class _JogadorPageState extends State<JogadorPage> {
                     Row(
                       children: [
                         Flag.fromString(
-                          'PT', // Código do país (Portugal)
+                          atletaData?['nacionalidades']?.isNotEmpty ?? false
+                              ? atletaData!['nacionalidades'][0]['designacao'].substring(0, 2).toUpperCase()
+                              : 'PT',
                           width: 30,
                           height: 20,
                         ),
@@ -110,7 +137,9 @@ class _JogadorPageState extends State<JogadorPage> {
                 TableRow(
                   children: [
                     _buildTableCell('Posição', true),
-                    _buildTableCell(atletaData?['posicoes']?[0]?['designacao'] ?? 'Posição não disponível', false),
+                    _buildTableCell(atletaData?['posicoes']?.isNotEmpty ?? false
+                        ? atletaData!['posicoes'][0]['designacao']
+                        : 'Posição não disponível', false),
                   ],
                 ),
                 TableRow(
@@ -140,7 +169,9 @@ class _JogadorPageState extends State<JogadorPage> {
                 TableRow(
                   children: [
                     _buildTableCell('Nacionalidade', true),
-                    _buildTableCell(atletaData?['nacionalidades']?[0]?['designacao'] ?? 'Nacionalidade não disponível', false),
+                    _buildTableCell(atletaData?['nacionalidades']?.isNotEmpty ?? false
+                        ? atletaData!['nacionalidades'][0]['designacao']
+                        : 'Nacionalidade não disponível', false),
                   ],
                 ),
               ],
