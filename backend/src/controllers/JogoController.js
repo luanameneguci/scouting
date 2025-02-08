@@ -128,11 +128,11 @@ controllers.listarDash = async (req, res) => {
     const thirtyDaysLater = addDays(currentDate, 30);
 
     const data = await models.jogo.findAll({
-      where: {
+       where: {
         data: {
           [Op.between]: [currentDate, thirtyDaysLater],
         }
-      },
+      }, 
       limit: 10,
       include: [
         {
@@ -192,6 +192,17 @@ controllers.listar = async (req, res) => {
           model: models.escalao,
 
         },
+        {
+          model: models.UtilizadorJogo,
+          as: "UtilizadoresJogo",
+          include: [
+            {
+              model: models.utilizador,
+              as: "RelatedJogoUtilizador",
+              attributes: ["nome"],
+            },
+          ],
+        }
       ],
     });
 

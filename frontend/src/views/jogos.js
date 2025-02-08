@@ -13,7 +13,7 @@ export default function Jogos() {
     const fetchData = async () => {
       try {
         const [gamesRes] = await Promise.all([
-          axios.get("http://localhost:8080/jogo/dash", {
+          axios.get("http://localhost:8080/jogo/", {
             withCredentials: true,
           }),
         ]);
@@ -72,7 +72,6 @@ export default function Jogos() {
             {/*             <th className="jogos-table-col-realizado">Realizado</th> */}
             <th>Escalão</th>
             <th>Data e Hora</th>
-            <th>Treinador</th>
             <th>Clube 1</th>
             <th>Clube 2</th>
             <th className="jogos-table-col-acoes">Ações</th>
@@ -112,9 +111,9 @@ export default function Jogos() {
                   day: "numeric",
                 })}
               </td>
-              <td>{jogo.UtilizadoresJogo[0]?.RelatedJogoUtilizador.nome}</td>
-              <td>{jogo.JogoClubes[0]?.RelatedClube.nome}</td>
-              <td>{jogo.JogoClubes[1]?.RelatedClube.nome}</td>
+              
+              <td>{jogo.clubes[0]?.nome}</td>
+              <td>{jogo.clubes[1]?.nome}</td>
               <td className="jogos-table-col-acoes">
                 <div className="jogos-actions">
                   {acoes.map((acao, index) => (
