@@ -185,16 +185,6 @@ function initModels(sequelize) {
     });
 
 
-  jogo.belongsToMany(utilizador, {
-    through: UtilizadorJogo,
-    foreignKey: "id_jogo",
-    otherKey: "id_utilizador",
-  });
-  utilizador.belongsToMany(jogo, {
-    through: UtilizadorJogo,
-    foreignKey: "id_utilizador",
-    otherKey: "id_jogo",
-  });
 
   return {
     atleta,

@@ -44,7 +44,7 @@ export default function PlayerTable({ players, selectAtleta, selectOperation }) 
                                 <td className="right-align">{player.datanascimento.substring(0, 4)}</td>
                                 <td className="left-align">{player.escalao.designacao}</td>
                                 {player.nacionalidades.length !== 0 ?
-                                    <td className="left-align">{player.nacionalidades[0].designacao}<span className='text-secondary'>{` (${player.nacionalidades.length})`}</span></td> :
+                                    <td className="left-align" title={player.nacionalidades.map(nacionalidade => nacionalidade.designacao).join(', ')}>{player.nacionalidades[0].designacao}<span className='text-secondary'>{` (${player.nacionalidades.length})`}</span></td> :
                                     <td className="left-align">
                                         Sem nacionalidade na BD</td>}
                                 <td className="left-align">{player.clube.nome}</td>
