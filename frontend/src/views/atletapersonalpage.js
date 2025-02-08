@@ -308,7 +308,8 @@ export default function Atletaspersonalpage() {
         */}
         <button
           className="atletaspersonalpage-action-button-left"
-          onClick={() => navigate(`/atletas/editar/${id}`)}>
+          onClick={() => navigate(`/atletas/editar/${id}`)}
+        >
           Editar
         </button>
 

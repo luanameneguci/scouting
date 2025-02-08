@@ -5,11 +5,13 @@ import "./relatorios.css";
 import LoadingAnim from "../components/loadingAnim";
 import generatePDF from "../components/relatorioPDF";
 
+
 const Relatorios = () => {
   const url = process.env.REACT_APP_API_URL;
   const [dados, setDados] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [atualizar, setAtualizar] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,8 +28,23 @@ const Relatorios = () => {
       }
     };
 
+
     fetchData();
-  }, [page]);
+  }, [page, atualizar]);
+
+  const handleRemover = async (id) => {
+    setAtualizar(true)
+    try {
+      await axios.delete(url + `/relatorio/apagar/${id}`).then((res) => {
+        if (res.status === 200) {
+          alert("Removido")
+        }
+        else { throw new Error("Erro na resposta") }
+      })
+    }
+    catch (e) { console.error(e) }
+    setAtualizar(false)
+  }
 
   const handlePreviousPage = () => {
     if (page > 1) setPage(page - 1);
@@ -104,7 +121,7 @@ const Relatorios = () => {
                   <button className="reports-actions-button reports-actions-transfer" onClick={() => generatePDF(report)}>
                     Transferir
                   </button>
-                  <button className="reports-actions-button reports-actions-remove">
+                  <button onClick={()=>{handleRemover(report.id_relatorio)}}className="reports-actions-button reports-actions-remove">
                     Remover
                   </button>
                 </td>
