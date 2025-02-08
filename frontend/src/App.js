@@ -11,6 +11,7 @@ import "./App.css";
 import PreLoadEquipas from "./views/preLoadEquipas";
 import Atletas from "./views/atletas";
 import AtletasAdicionar from "./views/atletasAdicionar";
+import AtletasEditar from "./views/atletasEditar";
 import Atletaspersonalpage from "./views/atletapersonalpage";
 import RelatorioValidar from "./views/relatorioValidar";
 import RelatorioConfirmar from "./views/relatorioConfirmar";
@@ -78,7 +79,7 @@ function AppContent() {
         />
 
         <Route
-          path="/atletas/editar/:id"
+          path="/utilizador/editar/:id"
           element={
             <ProtectedRoute>
               <AdicionarUtilizador/>
@@ -115,6 +116,14 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <AtletasAdicionar />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/atletas/editar/:id"
+          element={
+            <ProtectedRoute>
+              <AtletasEditar />
             </ProtectedRoute>
           }
         />
