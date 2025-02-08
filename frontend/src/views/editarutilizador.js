@@ -187,8 +187,8 @@ export default function EditarUtilizador() {
               onChange={handleChange}
               required
             >
-              <option value="1">Administrador</option>
-              <option value="2">Scout</option>
+              <option value="2">Administrador</option>
+              <option value="1">Scout</option>
               <option value="3">Convidado</option>
             </select>
           </div>
