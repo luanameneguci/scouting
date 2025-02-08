@@ -225,7 +225,7 @@ if (isAllowed) ...[
               Center(
                 child: Text(
                   'Conteúdo permitido apenas a scouters e admins.',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: Colors.grey, fontSize: 15),
                 ),
               ),
             ],
