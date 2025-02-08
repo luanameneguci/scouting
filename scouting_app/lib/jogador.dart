@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flag/flag.dart'; // Usando o pacote flag corretamente
+import 'package:flag/flag.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class JogadorPage extends StatefulWidget {
   final int jogadorId;
-  
+
   const JogadorPage({super.key, required this.jogadorId});
 
   @override
@@ -11,13 +14,51 @@ class JogadorPage extends StatefulWidget {
 }
 
 class _JogadorPageState extends State<JogadorPage> {
+  Map<String, dynamic>? atletaData;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAtletaData();
+  }
+
+  Future<void> _fetchAtletaData() async {
+    // Carrega as variáveis de ambiente
+    await dotenv.load(fileName: ".env");
+
+    final response = await http.get(
+      Uri.parse('${dotenv.env['API_URL']}/atleta/listar?size=50&page=1'),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        atletaData = json.decode(response.body);
+        isLoading = false;
+      });
+    } else {
+      throw Exception('Falha ao carregar dados do atleta');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Carregando...'),
+        ),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jogador ID: ${widget.jogadorId}'), // Mostra o ID no título
+        title: Text('Jogador ID: ${widget.jogadorId}'),
       ),
-      backgroundColor: const Color.fromARGB(255, 30, 30, 30), // Fundo escuro
+      backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18.0),
         child: Column(
@@ -29,7 +70,7 @@ class _JogadorPageState extends State<JogadorPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Francisco Machado', // Aqui você pode substituir por um nome vindo do backend
+                      atletaData?['nome'] ?? 'Nome não disponível',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
@@ -46,7 +87,7 @@ class _JogadorPageState extends State<JogadorPage> {
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          '22/07/2005', // Substituir pelo dado correto do jogador
+                          atletaData?['datanascimento'] ?? 'Data não disponível',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
@@ -69,37 +110,37 @@ class _JogadorPageState extends State<JogadorPage> {
                 TableRow(
                   children: [
                     _buildTableCell('Posição', true),
-                    _buildTableCell('Atacante', false), // Substituir pelo dado real
+                    _buildTableCell(atletaData?['posicoes']?[0]?['designacao'] ?? 'Posição não disponível', false),
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Clube', true),
-                    _buildTableCell('AC Viseu', false), // Substituir pelo dado real
+                    _buildTableCell(atletaData?['clube']?['nome'] ?? 'Clube não disponível', false),
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Rating Final', true),
-                    _buildTableCell('4', false), // Substituir pelo dado real
+                    _buildTableCell(atletaData?['ratingfinal']?.toString() ?? 'Rating não disponível', false),
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Escalão', true),
-                    _buildTableCell('Sub 23', false), // Substituir pelo dado real
+                    _buildTableCell(atletaData?['escalao']?['designacao'] ?? 'Escalão não disponível', false),
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Idade', true),
-                    _buildTableCell('19', false), // Substituir pelo dado real
+                    _buildTableCell(atletaData?['idade']?.toString() ?? 'Idade não disponível', false),
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Nacionalidade', true),
-                    _buildTableCell('Portugal', false), // Substituir pelo dado real
+                    _buildTableCell(atletaData?['nacionalidades']?[0]?['designacao'] ?? 'Nacionalidade não disponível', false),
                   ],
                 ),
               ],
@@ -107,11 +148,10 @@ class _JogadorPageState extends State<JogadorPage> {
             const SizedBox(height: 12),
             ElevatedButton.icon(
               onPressed: () {
-                // Agora abre a página de outro jogador passando o ID correto
                 Navigator.pushNamed(
                   context,
                   '/jogador',
-                  arguments: {"jogadorId": widget.jogadorId + 1}, // Muda o ID dinamicamente
+                  arguments: {"jogadorId": widget.jogadorId + 1},
                 );
               },
               icon: const Icon(Icons.person, color: Colors.black),
