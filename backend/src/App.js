@@ -48,7 +48,8 @@ app.use((req, res, next) => {
 });
 
 
-// Route to log something to the console when /inicial is accessed
+/*
+// Route para criar os dados iniciais é favor não descomentar
 app.get('/inicial', async (req, res) => {
     const query1 = `
         INSERT INTO tipoutilizador (designacao) VALUES 
@@ -244,12 +245,12 @@ INSERT INTO equipaatleta (id_equipa, id_atleta, posicaoformacao) VALUES
 (1, 11, 9);
 
 INSERT INTO jogo (id_escalao, data) VALUES
-(11, '2024-02-01 15:00:00'),  -- Porto Benfica - Jogo em Fevereiro
-(11, '2024-02-07 16:30:00'),  -- Sporting Braga - Jogo nos útlimos 7 dias
-(11, '2024-02-08 14:30:00'),  --  - Jogo nos útlimos 7 dias
-(11, '2024-02-11 16:20:00'),  --  - Jogo nos útlimos 7 dias
-(11, '2024-02-12 19:50:00'),  --  - Jogo nos próximos 7 dias
-(11, '2024-03-02 20:00:00');  --  - Jogo em março
+(11, '2025-02-01 15:00:00'),  -- Porto Benfica - Jogo em Fevereiro
+(11, '2025-02-07 16:30:00'),  -- Sporting Braga - Jogo nos útlimos 7 dias
+(11, '2025-02-08 14:30:00'),  --  - Jogo nos útlimos 7 dias
+(11, '2025-02-11 16:20:00'),  --  - Jogo nos útlimos 7 dias
+(11, '2025-02-12 19:50:00'),  --  - Jogo nos próximos 7 dias
+(11, '2025-03-02 20:00:00');  --  - Jogo em março
 
 INSERT INTO jogoclube (id_jogo, id_clube) VALUES
 (1, 1),  -- PORTO benfica
@@ -407,9 +408,9 @@ INSERT INTO relatorio ( id_utilizador, id_jogo, id_atleta, tecnica, velocidade, 
 
 
 INSERT INTO notificacoes (id_utilizador, data, texto) VALUES
-(1, '2024-01-15 16:00:00', 'Relatório pendente para o jogo FC Porto vs SL Benfica'),
-(2, '2024-01-20 17:30:00', 'Novo jogo adicionado ao sistema'),
-(3, '2024-01-20 18:00:00', 'Bem-vindo ao sistema de scouting');
+(1, '2025-01-15 16:00:00', 'Relatório pendente para o jogo FC Porto vs SL Benfica'),
+(2, '2025-01-20 17:30:00', 'Novo jogo adicionado ao sistema'),
+(3, '2025-01-20 18:00:00', 'Bem-vindo ao sistema de scouting');
 
     `;
     await sequelize.query(query1);
@@ -427,6 +428,7 @@ INSERT INTO notificacoes (id_utilizador, data, texto) VALUES
         message: 'Funcionou'
     });
 });
+*/
 
 // Routers
 app.use('/', homeRouter);

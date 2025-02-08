@@ -1,10 +1,10 @@
 var Sequelize = require('sequelize');
 const sequelize = new Sequelize(
-    'scouting_rgm7',
+    'scouting_ndx2',
     'postgres1',
-    '2ukz3mKanUHGHwLeDlihtKiNll0ozn8b', //lembrete para mudar depois lol :P
+    'zwUIicku5eF7Gi9wxHczQNd8IsAeBc3s', //lembrete para mudar depois lol :P
     {
-        host: 'dpg-cujctjd2ng1s73b4utb0-a.frankfurt-postgres.render.com',
+        host: 'dpg-cujknpbv2p9s7382ngsg-a.frankfurt-postgres.render.com',
         port: '5432',
         dialect: 'postgres',
         dialectOptions: {
