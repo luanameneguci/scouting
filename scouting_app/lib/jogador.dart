@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flag/flag.dart'; // Usando o pacote flag corretamente
 
 class JogadorPage extends StatefulWidget {
-  const JogadorPage({super.key});
+  final int jogadorId;
+  
+  const JogadorPage({super.key, required this.jogadorId});
 
   @override
   _JogadorPageState createState() => _JogadorPageState();
@@ -13,11 +15,11 @@ class _JogadorPageState extends State<JogadorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jogador'),
+        title: Text('Jogador ID: ${widget.jogadorId}'), // Mostra o ID no título
       ),
-      backgroundColor: const Color.fromARGB(255, 30, 30, 30), // Fundo do ecrã cinzento escuro
+      backgroundColor: const Color.fromARGB(255, 30, 30, 30), // Fundo escuro
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18.0), // Adiciona o padding de 18 px
+        padding: const EdgeInsets.all(18.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -27,10 +29,10 @@ class _JogadorPageState extends State<JogadorPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Francisco Machado',
+                      'Francisco Machado', // Aqui você pode substituir por um nome vindo do backend
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20.0, // Diminuir o tamanho da fonte
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -44,7 +46,7 @@ class _JogadorPageState extends State<JogadorPage> {
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          '22/07/2005',
+                          '22/07/2005', // Substituir pelo dado correto do jogador
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,
@@ -67,37 +69,37 @@ class _JogadorPageState extends State<JogadorPage> {
                 TableRow(
                   children: [
                     _buildTableCell('Posição', true),
-                    _buildTableCell('Atacante', false),
+                    _buildTableCell('Atacante', false), // Substituir pelo dado real
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Clube', true),
-                    _buildTableCell('AC Viseu', false),
+                    _buildTableCell('AC Viseu', false), // Substituir pelo dado real
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Rating Final', true),
-                    _buildTableCell('4', false),
+                    _buildTableCell('4', false), // Substituir pelo dado real
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Escalão', true),
-                    _buildTableCell('Sub 23', false),
+                    _buildTableCell('Sub 23', false), // Substituir pelo dado real
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Idade', true),
-                    _buildTableCell('19', false),
+                    _buildTableCell('19', false), // Substituir pelo dado real
                   ],
                 ),
                 TableRow(
                   children: [
                     _buildTableCell('Nacionalidade', true),
-                    _buildTableCell('Portugal', false),
+                    _buildTableCell('Portugal', false), // Substituir pelo dado real
                   ],
                 ),
               ],
@@ -105,18 +107,23 @@ class _JogadorPageState extends State<JogadorPage> {
             const SizedBox(height: 12),
             ElevatedButton.icon(
               onPressed: () {
-                Navigator.pushNamed(context, '/novo_relatorio');
+                // Agora abre a página de outro jogador passando o ID correto
+                Navigator.pushNamed(
+                  context,
+                  '/jogador',
+                  arguments: {"jogadorId": widget.jogadorId + 1}, // Muda o ID dinamicamente
+                );
               },
-              icon: const Icon(Icons.add, color: Colors.black),
+              icon: const Icon(Icons.person, color: Colors.black),
               label: const Text(
-                'Novo relatório',
+                'Ver próximo jogador',
                 style: TextStyle(color: Colors.black),
               ),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.black,
                 backgroundColor: Colors.amber,
                 padding: const EdgeInsets.symmetric(
-                  vertical: 16.0, // Aumentar o tamanho do botão
+                  vertical: 16.0,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -131,7 +138,7 @@ class _JogadorPageState extends State<JogadorPage> {
 
   Widget _buildTableCell(String text, bool isHeader) {
     return Container(
-      padding: const EdgeInsets.all(16.0), // Aumentar o espaço nas linhas
+      padding: const EdgeInsets.all(16.0),
       color: isHeader ? const Color.fromARGB(255, 50, 50, 50) : const Color.fromARGB(255, 0, 0, 0),
       child: Text(
         text,

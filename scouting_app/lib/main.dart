@@ -112,11 +112,26 @@ class HomePage extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginPage(),
-        '/jogador': (context) => const JogadorPage(),
-        '/novo_relatorio': (context) => RelatorioScreen(),
-        '/jogadores_filtros': (context) => JogadoresFiltrosPage(),
-      },
+  '/': (context) => const LoginPage(),
+  '/novo_relatorio': (context) => RelatorioScreen(),
+  '/jogadores_filtros': (context) => JogadoresFiltrosPage(),
+},
+onGenerateRoute: (settings) {
+  if (settings.name == '/jogador') {
+    final args = settings.arguments as Map<String, dynamic>?;
+
+    if (args != null && args.containsKey('jogadorId')) {
+      return MaterialPageRoute(
+        builder: (context) => JogadorPage(jogadorId: args['jogadorId']),
+      );
+    } else {
+      return MaterialPageRoute(
+        builder: (context) => JogadorPage(jogadorId: 1), // Define um ID padrão se nenhum for passado
+      );
+    }
+  }
+  return null; // Retorna null se a rota não for encontrada
+},
     );
   }
 }

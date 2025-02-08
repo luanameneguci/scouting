@@ -333,43 +333,50 @@ class _JogadoresPageState extends State<JogadoresPage> {
                             return Container();
                           }
 
-                          return Card(
-                            elevation: 2,
-                            color: const Color.fromARGB(255, 35, 35, 35),
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 4.0,
-                              horizontal: 0.0,
-                            ),
-                            child: ListTile(
-                              leading: Flag.fromString(
-                                paisCode,
-                                width: 30,
-                                height: 30,
-                              ),
-                              title: Text(
-                                nome,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              subtitle: Text(
-                                '$posicao | $idade anos',
-                                style: const TextStyle(color: Colors.grey),
-                              ),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: List.generate(
-                                  estrelas,
-                                  (_) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 20.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
+return Card(
+  elevation: 2,
+  color: const Color.fromARGB(255, 35, 35, 35),
+  margin: const EdgeInsets.symmetric(
+    vertical: 4.0,
+    horizontal: 0.0,
+  ),
+  child: ListTile(
+    onTap: () { // 📌 ADICIONA A NAVEGAÇÃO AO CLICAR
+      Navigator.pushNamed(
+        context,
+        '/jogador',
+        arguments: {"jogadorId": jogador['id']}, // PASSA O ID DO JOGADOR
+      );
+    },
+    leading: Flag.fromString(
+      paisCode,
+      width: 30,
+      height: 30,
+    ),
+    title: Text(
+      nome,
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    subtitle: Text(
+      '$posicao | $idade anos',
+      style: const TextStyle(color: Colors.grey),
+    ),
+    trailing: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(
+        estrelas,
+        (_) => const Icon(
+          Icons.star,
+          color: Colors.amber,
+          size: 20.0,
+        ),
+      ),
+    ),
+  ),
+);
                         },
                       ),
               ),
