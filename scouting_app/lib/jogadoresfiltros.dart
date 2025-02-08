@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class JogadoresFiltrosPage extends StatefulWidget {
   const JogadoresFiltrosPage({Key? key}) : super(key: key);
@@ -51,7 +52,7 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
   // ---------------------------------------------------------
   Future<void> _fetchPosicoes() async {
     try {
-      final url = Uri.parse('http://localhost:8080/atleta/posicoes');
+      final url = Uri.parse(dotenv.env['API_URL']! + '/atleta/posicoes');
       final resp = await http.get(url);
       if (resp.statusCode == 200) {
         final jsonBody = json.decode(resp.body);
@@ -73,7 +74,7 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
   // ---------------------------------------------------------
   Future<void> _fetchClubes() async {
     try {
-      final url = Uri.parse('http://localhost:8080/clube/listar');
+      final url = Uri.parse(dotenv.env['API_URL']! + '/clube/listar');
       final resp = await http.get(url);
       if (resp.statusCode == 200) {
         final jsonBody = json.decode(resp.body);
@@ -95,7 +96,7 @@ class _JogadoresFiltrosPageState extends State<JogadoresFiltrosPage> {
   // ---------------------------------------------------------
   Future<void> _fetchEscaloes() async {
     try {
-      final url = Uri.parse('http://localhost:8080/escalao/listar');
+      final url = Uri.parse(dotenv.env['API_URL']! + '/escalao/listar');
       final resp = await http.get(url);
       if (resp.statusCode == 200) {
         final jsonBody = json.decode(resp.body);
