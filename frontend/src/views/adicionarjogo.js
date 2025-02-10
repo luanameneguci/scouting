@@ -68,7 +68,7 @@ export default function JogosAdicionar() {
     }
   }, []);
 
-  useEffect(() => {
+  useEffect(() => { //ir buscar os atletas dependendo do escalao e clube ao servidor 
      if (formData.escalao && (formData.clube1 || formData.clube2)) { 
       fetch(`${url}/jogo/atletas/${formData.escalao}/${formData.clube1}/${formData.clube2}`)
         .then((res) => res.json())
@@ -94,7 +94,7 @@ export default function JogosAdicionar() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = (e) => { //depois de escolher o atleta para ir buscar o treinador 
     const { value, checked } = e.target;
 
     setFormData((prevData) => {
@@ -119,7 +119,7 @@ export default function JogosAdicionar() {
     });
   };
 
-  const handleTrainerSelect = (jogadorId, treinadorId) => {
+  const handleTrainerSelect = (jogadorId, treinadorId) => { //escolhe o treinador
     setFormData(prevData => ({
       ...prevData,
       jogadorTreinador: {
@@ -129,7 +129,7 @@ export default function JogosAdicionar() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { //botao de confirmar
     e.preventDefault();
     setLoading(true);
     setError(null);

@@ -6,14 +6,14 @@ import LoadingAnim from "../components/loadingAnim";
 import generatePDF from "../components/relatorioPDF";
 
 
-const Relatorios = () => {
+const Relatorios = () => { //criar variaveis
   const url = process.env.REACT_APP_API_URL;
   const [dados, setDados] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [atualizar, setAtualizar] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => {  //pedido ao servidor para buscar os relatorios e guardar nas variaveis
     const fetchData = async () => {
       try {
         const res = await axios.get(`${url}/relatorio/listar/${page}`);
@@ -27,14 +27,12 @@ const Relatorios = () => {
         console.error("Erro ao buscar relatórios:", error);
       }
     };
-
-
     fetchData();
   }, [page, atualizar]);
 
-  const handleRemover = async (id) => {
+  const handleRemover = async (id) => { //botao para remover
     setAtualizar(true)
-    try {
+    try {  //pedido ao servidor para remover o relatorio
       await axios.delete(url + `/relatorio/apagar/${id}`).then((res) => {
         if (res.status === 200) {
           alert("Removido")
@@ -59,7 +57,7 @@ const Relatorios = () => {
     alert("Pesquisar clicado!");
   };
 
-  if (!dados || !totalPages) {
+  if (!dados || !totalPages) { //se ainda nao tiver dados faz a animaçao Loading
     return (
       <div className="reports-container">
         <LoadingAnim />
